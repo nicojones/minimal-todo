@@ -1,0 +1,35 @@
+@import 'variables';
+
+body, html {
+  height: 100%;
+}
+
+#root {
+  display: flex;
+  place-items: center;
+  flex-direction: column;
+}
+
+button, .button {
+  background: transparent;
+  border: none;
+
+  &.danger {
+    background: $danger-color;
+    color: $danger-color-bg-text;
+  }
+  &.primary {
+    background: $primary-color;
+    color: $primary-color-bg-text;
+  }
+}
+
+.center {
+  display: flex;
+  place-items: center;
+  flex-direction: column;
+}
+
+.left-align {
+  text-align: left;
+}
