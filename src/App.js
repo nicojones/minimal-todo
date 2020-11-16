@@ -1,11 +1,11 @@
 import React from 'react';
-import Todo from './Todo/Todo';
+import Todo from './components/Todo/Todo';
 
 function App () {
 
   return (
     <React.Fragment>
-      <div className="center" id="todo">
+      <div className="container" id="todo">
         <Todo />
       </div>
     </React.Fragment>
