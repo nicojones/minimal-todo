@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import './_todo.scss';
-import todoRenderer from './Todo-view';
-import { db } from '../../services/firebase';
+import todoRenderer from 'components/Todo/Todo-view';
+import { db } from 'services/firebase';
+import createTaskObject from 'functions/createTaskObject';
 
 function Todo () {
 
   const [tasks, setTasks] = useState([]);
-
+  const [showCompleted, setShowCompleted] = useState(false);
 
   const open = tasks.filter((task) => !task.checked);
   const completed = tasks.filter((task) => !!task.checked);
@@ -14,19 +15,8 @@ function Todo () {
   let taskName = '';
   let input;
 
-  const text = {
-    ph: 'Enter task name and press enter',
-    btn: 'Add task',
-    title: 'My Todo List',
-    uncompleted: 'My tasks',
-    uncompletedNo: 'All tasks completed!',
-    completed: 'Completed',
-    completedNo: 'No completed tasks'
-  };
-
   useEffect(() => {
     try {
-      console.log('recalled, resubscribed');
       db.ref('todos').on('value', (snapshot) => {
         const tasks = [];
         snapshot.forEach((snap) => {
@@ -35,7 +25,6 @@ function Todo () {
             key: snap.key
           });
         });
-        console.log('loaded tasks from WS! ', tasks)
         setTasks(tasks);
       });
     } catch (error) {
@@ -52,13 +41,7 @@ function Todo () {
     e.preventDefault();
 
     try {
-      await db.ref('todos').push({
-        name: taskName,
-        checked: false,
-        timestamp: new Date(),
-        subtasks: [], // will not be saved in the DB. here just for reference...
-        notes: ''
-      });
+      await db.ref('todos').push(createTaskObject({ name: taskName }));
       // this.setState({ content: '' });
     } catch (error) {
       // this.setState({ writeError: error.message });
@@ -91,8 +74,9 @@ function Todo () {
     deleteTask,
     submit,
     changed,
-    text,
-    saveTask
+    saveTask,
+    showCompleted,
+    setShowCompleted,
   });
 }
 

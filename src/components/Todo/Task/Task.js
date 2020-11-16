@@ -1,61 +1,54 @@
 import React, { useState } from 'react';
 import './_task.scss';
-import Subtask from './Subtask';
+import TaskModal from 'components/Modal/TaskModal';
 
 function Task ({ task, saveTask, onDelete }) {
 
-  const [inputVisible, setInputVisible] = useState(false);
-  const [taskName, setTaskName] = useState(task.name);
+  const [expandedTask, setExpandedTask] = useState(false);
 
   function toggleCompleted (task) {
     task.checked = !task.checked;
     saveTask(task);
   }
 
-  function changeInput (e) {
-    setTaskName(e.target.value);
-  }
 
-  function saveTaskName (e) {
-    e.preventDefault();
-    task.name = taskName;
-    setInputVisible(false);
-    saveTask(task);
-  }
-
-  function saveSubtasks (subtasks) {
-    task.subtasks = subtasks;
-    saveTask(task);
-  }
-
-
-  console.log('rerendered TASK.js')
   return (
-    <li className={ task.checked ? 'done' : '' }>
-      <div className="input-group" title={ task.timestamp }>
-        <label htmlFor={ task.key } className="input-group-prepend">
-          <div className="input-group-text">
-            <input
-              type="checkbox" checked={ task.checked }
-              id={ task.key }
-              onChange={ () => toggleCompleted(task) }
-            />
-          </div>
+    <li className={ (task.checked ? 'done' : '') + ' parent-hover' } title={ task.timestamp }>
+      <div className="">
+        <label>
+          <input
+            type="checkbox"
+            checked={ task.checked }
+            onChange={ () => toggleCompleted(task) }
+          />
+          <span> </span>
         </label>
-        {
-          inputVisible
-            ? <form onSubmit={ saveTaskName }><input value={ task.name } onChange={ changeInput }/></form>
-            : <span
-              className={ 'task-name alert mb-0 ' + (task.checked ? 'alert-success' : '_nothing_') }
-              onDoubleClick={ () => setInputVisible(true) }
-            >{ task.name }</span>
-        }
+        <span className={ 'task-name ' + (task.checked ? '' : '') }>{ task.name }</span>
 
-        <label className="input-group-append">
-          <button className="btn btn-sm float-right btn-danger" onClick={ () => onDelete(task) }>&times;</button>
-        </label>
+        <button
+          className="child-hover btn-subtle ml-5"
+          onClick={ () => onDelete(task) }
+        >&times;</button>
+        <button
+          className="child-hover toggle-expand btn-subtle ml-5"
+          onClick={ () => setExpandedTask(!expandedTask) }
+        >more
+        </button>
+        <TaskModal
+          trigger={ {
+            className: 'child-hover btn-subtle ml-5',
+            text: task.name
+          } } task={ { ...task } }
+        />
       </div>
-      <Subtask setSubtasks={ saveSubtasks } task={ task } />
+      {/*{*/ }
+      {/*  expandedTask*/ }
+      {/*    ?*/ }
+      {/*    <React.Fragment>*/ }
+      {/*      <Subtask setSubtasks={ saveSubtasks } task={ task }/>*/ }
+      {/*    </React.Fragment>*/ }
+      {/*    : ''*/ }
+      {/*}*/ }
     </li>
   );
 }

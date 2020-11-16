@@ -1,23 +1,25 @@
 import React from 'react';
-import Task from './Task/Task';
+import Task from 'components/Todo/Task/Task';
+import { text } from 'text';
+import TaskModal from '../Modal/TaskModal';
 
-export default function todoRenderer ({ submit, changed, text, saveTask, deleteTask, completed, open }) {
+
+export default function todoRenderer ({
+  submit, changed, saveTask, deleteTask, completed, open, showCompleted, setShowCompleted
+}) {
   return (
     <React.Fragment>
-      <h1>{ text.title }</h1>
       <form className="form-inline" onSubmit={ submit }>
         <div className="form-group">
           <div className="input-group mb-2">
-            <label htmlFor="todo-name" className="sr-only">{ text.ph }</label>
-            <input onChange={ changed } className="form-control" id="todo-name" placeholder={ text.ph } required/>
-            <div className="input-group-append">
-              <button type="submit" className=" input-group-text btn btn-primary mb-2">{ text.btn }</button>
-            </div>
+            <input
+              onChange={ changed } className="form-control" id="todo-name" placeholder={ text.addPh } required
+              autoComplete="off"
+            />
           </div>
         </div>
       </form>
 
-      <h2 className="left-align">{ text.uncompleted }</h2>
       { open.length ?
         <ul className="list-unstyled">
           { open.map((task, index) =>
@@ -31,19 +33,32 @@ export default function todoRenderer ({ submit, changed, text, saveTask, deleteT
         : text.uncompletedNo
       }
 
-      <h2 className="left-align">{ text.completed }</h2>
       { completed.length ?
-        <ul className="list-unstyled">
-          { completed.map((task, index) =>
-            <Task
-              key={ index }
-              task={ task }
-              saveTask={ saveTask }
-              onDelete={ deleteTask }
-            />) }
-        </ul>
+        (
+          showCompleted
+            ?
+            <React.Fragment>
+              <hr/>
+              <p onClick={ () => setShowCompleted(false) }>{ text.hideCompleted }</p>
+              <ul className="list-unstyled completed">
+                { completed.map((task, index) =>
+                  <Task
+                    key={ index }
+                    task={ task }
+                    saveTask={ saveTask }
+                    onDelete={ deleteTask }
+                  />) }
+              </ul>
+            </React.Fragment>
+            :
+            <React.Fragment>
+              <hr/>
+              <p onClick={ () => setShowCompleted(true) }>{ text.showCompleted }</p>
+            </React.Fragment>
+        )
         : text.completedNo
       }
+      <TaskModal trigger={ { className: 'btn-floating green', text: '+' } } saveTask={saveTask} task={null}/>
     </React.Fragment>
   );
 }
