@@ -33,10 +33,6 @@ function Todo () {
     }
   }, [/* empty dependency means this function will NEVER be called again === componentDidMount */]);
 
-  // useEffect(() => {
-  //   console.log('tasks rerendered???', tasks);
-  // }, [tasks])
-
   async function submit (e) {
     e.preventDefault();
 

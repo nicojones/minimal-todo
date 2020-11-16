@@ -58,7 +58,14 @@ export default function todoRenderer ({
         )
         : text.completedNo
       }
-      <TaskModal trigger={ { className: 'btn-floating green', text: '+' } } saveTask={saveTask} task={null}/>
+      <div className="fixed-action-btn">
+        <TaskModal
+          trigger={ {
+            className: 'btn-floating btn-large green',
+            text: '+'
+          } } saveTask={ saveTask } task={ {} }
+        />
+      </div>
     </React.Fragment>
   );
 }
