@@ -6,11 +6,9 @@ function App () {
   return (
     <React.Fragment>
       <div className="container" id="todo">
-        {/*<React.Suspense fallback={<Loader />}>*/}
-          <div>
-            <Todo />
-          </div>
-        {/*</React.Suspense>*/}
+        {/*<React.Suspense fallback={<Loader />}>*/ }
+        <Todo/>
+        {/*</React.Suspense>*/ }
       </div>
     </React.Fragment>
   );

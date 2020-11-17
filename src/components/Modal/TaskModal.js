@@ -15,7 +15,7 @@ function TaskModal ({ trigger, task }) {
 
   useEffect(() => {
     setTaskName(task.name || '');
-    // setSubtasks(task.subtasks || []);
+    setSubtasks(task.subtasks || []);
     setTaskDesc(task.description || '');
   }, [task]);
 
@@ -52,7 +52,7 @@ function TaskModal ({ trigger, task }) {
     e.preventDefault();
 
     setSubtasks([
-      ...(task?.subtasks || []),
+      ...subtasks,
       {
         key: Math.random(),
         timestamp: new Date(),
@@ -63,37 +63,46 @@ function TaskModal ({ trigger, task }) {
     e.target[0].value = '';
   }
 
+  async function onAccept (e) {
+    await submit(e);
+    setModalOpen(false);
+  }
+
   return (
-    <Modal
-      trigger={ trigger }
-      modalOpen={ modalOpen }
-      setModalOpen={ setModalOpen }
-    >
-      <form onSubmit={ submit }>
-        <div>
-          <label>Task Name</label>
-          <input
-            value={ taskName }
-            placeholder="Enter a name for the task"
-            onChange={ (e) => setTaskName(e.target.value) }
-          />
-        </div>
-        <div>
-          <label>Notes</label>
-          <textarea
-            value={ taskDesc }
-            className="materialize-textarea"
-            placeholder="An optional description always helps"
-            onChange={ (e) => setTaskDesc(e.target.value) }
-          />
-        </div>
-      </form>
-      <ul className="subtasks list-unstyled">
-        {
-          (task?.subtasks || []).map((sub) =>
-            <li key={ sub.key } title={ sub.timestamp }>
-              <div className="">
-                <label>
+    <React.Fragment>
+      <button className={ trigger.className } onClick={ () => setModalOpen(true) }>{ trigger.text }</button>
+      <Modal
+        modalOpen={ modalOpen }
+        onAccept={ onAccept }
+        onCancel={ () => setModalOpen(false) }
+        okButton={ text.saveTask + ' <i class="material-icons right">save</i>' }
+        cancelButton={ text.discardTask + ' <i class="material-icons right">cancel</i>' }
+      >
+        <form onSubmit={ submit }>
+          <div>
+            <label>Task Name</label>
+            <input
+              value={ taskName }
+              placeholder="Enter a name for the task"
+              onChange={ (e) => setTaskName(e.target.value) }
+            />
+          </div>
+          <div>
+            <label>Notes</label>
+            <textarea
+              value={ taskDesc }
+              className="materialize-textarea"
+              placeholder="An optional description always helps"
+              onChange={ (e) => setTaskDesc(e.target.value) }
+            />
+          </div>
+        </form>
+
+        <ul className="list-unstyled flex-column">
+          {
+            subtasks.map((sub) =>
+              <li key={ sub.key } title={ sub.timestamp } className="block">
+                <label className="left">
                   <input
                     type="checkbox" checked={ sub.checked }
                     id={ sub.key }
@@ -101,22 +110,23 @@ function TaskModal ({ trigger, task }) {
                   />
                   <span> </span>
                 </label>
-                { sub.name }
-              </div>
-            </li>
-          )
-        }
-        <li key="new-subtask">
-          <form onSubmit={ saveSubtask }>
-            <input
-              onChange={ (e) => setSubtaskName(e.target.value) }
-              placeholder={ text.addSubtaskPh }
-              className="invisible input-field"
-            />
-          </form>
-        </li>
-      </ul>
-    </Modal>
+                <span className="left">{ sub.name }</span>
+              </li>
+            )
+          }
+          <li key="new-subtask">
+            <form onSubmit={ saveSubtask }>
+              <label>{ text.subtasks }</label>
+              <input
+                onChange={ (e) => setSubtaskName(e.target.value) }
+                placeholder={ text.addSubtaskPh }
+                className="input-field"
+              />
+            </form>
+          </li>
+        </ul>
+      </Modal>
+    </React.Fragment>
   );
 }
 

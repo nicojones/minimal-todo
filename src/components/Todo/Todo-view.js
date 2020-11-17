@@ -30,7 +30,7 @@ export default function todoRenderer ({
               onDelete={ deleteTask }
             />) }
         </ul>
-        : text.uncompletedNo
+        : <p className="left">{ text.uncompletedNo }</p>
       }
 
       { completed.length ?
@@ -39,7 +39,7 @@ export default function todoRenderer ({
             ?
             <React.Fragment>
               <hr/>
-              <p onClick={ () => setShowCompleted(false) }>{ text.hideCompleted }</p>
+              <button className="btn-flat" onClick={ () => setShowCompleted(false) }>{ text.hideCompleted }</button>
               <ul className="list-unstyled completed">
                 { completed.map((task, index) =>
                   <Task
@@ -53,19 +53,18 @@ export default function todoRenderer ({
             :
             <React.Fragment>
               <hr/>
-              <p onClick={ () => setShowCompleted(true) }>{ text.showCompleted }</p>
+              <button className="btn-flat" onClick={ () => setShowCompleted(true) }>{ text.showCompleted }</button>
             </React.Fragment>
         )
-        : text.completedNo
+        : <p className="left">{ text.completedNo }</p>
       }
-      <div className="fixed-action-btn">
-        <TaskModal
-          trigger={ {
-            className: 'btn-floating btn-large green',
-            text: '+'
-          } } saveTask={ saveTask } task={ {} }
-        />
-      </div>
+
+      <TaskModal
+        trigger={ {
+          className: 'btn-floating btn-large green fixed-action-btn',
+          text: <i className="material-icons">add</i>
+        } } saveTask={ saveTask } task={ {} }
+      />
     </React.Fragment>
   );
 }

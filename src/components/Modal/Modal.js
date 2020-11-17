@@ -1,24 +1,33 @@
-import React  from 'react';
+import React from 'react';
 
-function Modal ({ trigger, children, modalOpen, setModalOpen }) {
+function Modal ({ children, modalOpen, okButton, cancelButton, onAccept, onCancel }) {
 
   return (
     <React.Fragment>
-      <a className={ trigger.className } href="#!"
-        onClick={ () => setModalOpen(true) }>{ trigger.text }</a>
-
-      <div id="modal1" className={ 'modal ' + (modalOpen ? 'open' : '') }>
+      <div className={ 'z-depth-5 modal ' + (modalOpen ? 'open' : '') }>
         <div className="modal-content">
           { children }
         </div>
         <div className="modal-footer">
-          <a
-            href="#!" onClick={ () => setModalOpen(false) }
-            className="modal-close waves-effect waves-green btn-flat"
-          >Agree</a>
+          {
+            okButton &&
+            <button
+              onClick={ onAccept }
+              className="modal-close waves-effect waves-green btn-flat btn"
+              dangerouslySetInnerHTML={ { __html: okButton } }
+            />
+          }
+          {
+            cancelButton &&
+            <button
+              onClick={ onCancel }
+              className="modal-close waves-effect waves-red btn-flat btn left"
+              dangerouslySetInnerHTML={ { __html: cancelButton } }
+            />
+          }
         </div>
       </div>
-      <div className="backdrop" onClick={ () => setModalOpen(false) }/>
+      <div className="backdrop" onClick={ onCancel }/>
     </React.Fragment>
   );
 }
