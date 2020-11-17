@@ -30,9 +30,9 @@ const taskService = {
     }
   },
 
-  getTasks: async (taskSetter) => {
+  getTasks: (taskSetter, showLoader) => {
     try {
-      db.ref('todos').on('value', (snapshot) => {
+      return db.ref('todos').on('value', (snapshot) => {
         const tasks = [];
         snapshot.forEach((snap) => {
           tasks.push({
@@ -41,6 +41,8 @@ const taskService = {
           });
         });
         taskSetter(tasks);
+        showLoader(false);
+
         console.log('Tasks loaded: ', tasks.length)
       });
     } catch (e) {
