@@ -1,0 +1,10 @@
+@mixin box_shadow($color: #888, $size: 4px) {
+  -webkit-box-shadow: 0 0 $size 0 $color;
+  -moz-box-shadow: 0 0 $size 0 $color;
+  box-shadow: 0 0 $size 0 $color;
+}
+
+@mixin transition($transition: 0.4s all ease-in-out /* <- default */
+) {
+  transition: $transition;
+}

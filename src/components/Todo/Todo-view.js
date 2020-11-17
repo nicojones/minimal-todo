@@ -1,19 +1,22 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import Task from 'components/Todo/Task/Task';
 import { text } from 'text';
 import TaskModal from '../Modal/TaskModal';
 
 
 export default function todoRenderer ({
-  submit, changed, saveTask, deleteTask, completed, open, showCompleted, setShowCompleted
+  inputElement, submit, changed, deleteTask, completed, open, showCompleted, setShowCompleted, modalOpen, setModalOpen, allCompleted
 }) {
+
   return (
-    <React.Fragment>
+    <>
       <form className="form-inline" onSubmit={ submit }>
         <div className="form-group">
           <div className="input-group mb-2">
             <input
-              onChange={ changed } className="form-control" id="todo-name" placeholder={ text.addPh } required
+              onChange={ changed } className="form-control" id="todo-name"
+              ref={ inputElement }
+              placeholder={ text.addPh } required
               autoComplete="off"
             />
           </div>
@@ -26,11 +29,10 @@ export default function todoRenderer ({
             <Task
               key={ index }
               task={ task }
-              saveTask={ saveTask }
               onDelete={ deleteTask }
             />) }
         </ul>
-        : <p className="left">{ text.uncompletedNo }</p>
+        : <h4 className="left subtle center-align">{ allCompleted }</h4>
       }
 
       { completed.length ?
@@ -45,7 +47,6 @@ export default function todoRenderer ({
                   <Task
                     key={ index }
                     task={ task }
-                    saveTask={ saveTask }
                     onDelete={ deleteTask }
                   />) }
               </ul>
@@ -56,15 +57,18 @@ export default function todoRenderer ({
               <button className="btn-flat" onClick={ () => setShowCompleted(true) }>{ text.showCompleted }</button>
             </React.Fragment>
         )
-        : <p className="left">{ text.completedNo }</p>
+        : <h5 className="left subtle center-align">{ text.completedNo }</h5>
       }
 
       <TaskModal
         trigger={ {
           className: 'btn-floating btn-large green fixed-action-btn',
           text: <i className="material-icons">add</i>
-        } } saveTask={ saveTask } task={ {} }
+        } }
+        task={ {} }
+        modalOpen={ modalOpen }
+        setModalOpen={ setModalOpen }
       />
-    </React.Fragment>
+    </>
   );
 }

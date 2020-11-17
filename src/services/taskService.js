@@ -3,22 +3,25 @@ import { db } from './firebase';
 const taskService = {
 
   updateTask: async (task) => {
+    console.log('Updating task ', task.name);
     try {
-      await db.ref(`todos/${ task.key }`).update(task);
+      return await db.ref(`todos/${ task.key }`).update(task);
     } catch (e) {
       console.error('Error on update: ', e);
     }
   },
 
   addTask: async (task) => {
+    console.log('Added task ', task.name);
     try {
-      await db.ref('todos').push(task);
+      return await db.ref('todos').push(task);
     } catch (e) {
       console.error('Error on save: ', e);
     }
   },
 
   deleteTask: async (task, tasks) => {
+    console.log('Deleting task ', task.name);
     const index = tasks.findIndex((_task) => _task.key === task.key);
     if (index >= 0) {
       await db.ref(`todos/${ task.key }`).remove(() => {
@@ -38,6 +41,7 @@ const taskService = {
           });
         });
         taskSetter(tasks);
+        console.log('Tasks loaded: ', tasks.length)
       });
     } catch (e) {
       console.error('Error on fetching tasks: ', e);

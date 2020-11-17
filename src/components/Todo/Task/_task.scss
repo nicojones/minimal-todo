@@ -1,11 +1,40 @@
-.done {
-  opacity: .8;
-
-  .task-name {
-    text-decoration: line-through;
-  }
-}
+@import 'src/sass/mixins';
+@import 'src/sass/colors';
 
 .subtasks {
   margin-left: 20px;
+}
+
+
+.task {
+  display: inline-block;
+  width: 100%;
+  padding: 10px 5px 5px 10px;
+
+  .task-name {
+    color: $primary-color;
+  }
+
+  &.done {
+
+    .task-name {
+      color: $secondary-color;
+      text-decoration: line-through;
+    }
+  }
+}
+
+
+.parent-hover {
+  .child-hover {
+    display: none;
+  }
+
+  &:hover {
+    @include box_shadow();
+
+    .child-hover {
+      display: inline-block;
+    }
+  }
 }

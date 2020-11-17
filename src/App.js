@@ -5,7 +5,7 @@ function App () {
 
   return (
     <React.Fragment>
-      <div className="container" id="todo">
+      <div className="container flex-column" id="todo">
         {/*<React.Suspense fallback={<Loader />}>*/ }
         <Todo/>
         {/*</React.Suspense>*/ }

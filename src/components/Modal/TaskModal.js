@@ -1,12 +1,10 @@
 import Modal from './Modal';
 import React, { useEffect, useState } from 'react';
 import createTaskObject from 'functions/createTaskObject';
-import { db } from '../../services/firebase';
 import { text } from '../../text';
+import taskService from '../../services/taskService';
 
-function TaskModal ({ trigger, task }) {
-
-  const [modalOpen, setModalOpen] = useState(false);
+function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
 
   const [subtaskName, setSubtaskName] = useState('');
   const [subtasks, setSubtasks] = useState(task.subtasks || []);
@@ -20,17 +18,14 @@ function TaskModal ({ trigger, task }) {
   }, [task]);
 
   async function saveTask (task, keepOpen) {
-    try {
-      if (task.key) {
-        await db.ref(`todos/${ task.key }`).update(task);
-      } else {
-        await db.ref('todos').push(createTaskObject(task)).then((reference) => {
-          task.key = reference.key;
-        });
-      }
-      setModalOpen(!!keepOpen);
-    } catch (error) {
+    if (task.key) {
+      await taskService.updateTask(task);
+    } else {
+      taskService.addTask(createTaskObject(task)).then((reference) => {
+        task.key = reference.key;
+      });
     }
+    setModalOpen(!!keepOpen);
   }
 
   async function submit (e) {
@@ -88,11 +83,11 @@ function TaskModal ({ trigger, task }) {
             />
           </div>
           <div>
-            <label>Notes</label>
+            <label>{ text.notes }</label>
             <textarea
               value={ taskDesc }
               className="materialize-textarea"
-              placeholder="An optional description always helps"
+              placeholder={ text.notesPh }
               onChange={ (e) => setTaskDesc(e.target.value) }
             />
           </div>

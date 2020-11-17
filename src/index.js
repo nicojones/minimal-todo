@@ -1,6 +1,6 @@
 import React  from 'react';
 import ReactDOM from 'react-dom';
-import 'index.scss';
+import 'sass/index.scss';
 // import 'materialize-css/dist/js/materialize.min.js';
 import App from 'App';
 

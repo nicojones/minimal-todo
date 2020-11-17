@@ -1,0 +1,16 @@
+@import 'mixins';
+
+input.invisible {
+  border-bottom: 0;
+  font-size: 1rem;
+
+  &:focus {
+    border-bottom: 0 !important;
+    box-shadow: none !important;
+  }
+}
+
+.btn-subtle {
+  border: 0;
+  cursor: pointer;
+}
