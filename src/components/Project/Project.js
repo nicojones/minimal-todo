@@ -15,7 +15,9 @@ function Project ({ project }) {
   const open = (project.tasks || []).filter((task) => !task.checked);
   const completed = (project.tasks || []).filter((task) => !!task.checked);
 
-  const allCompleted = useMemo(() => text.allTasksCompleted(), [ open.length ]);
+  const allCompleted = useMemo(() => {
+    return text.allTasksCompleted()
+  }, [ open.length ]);
 
   let taskName = '';
 

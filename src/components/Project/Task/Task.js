@@ -13,7 +13,6 @@ function Task ({ task, onDelete }) {
   const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
-    console.log(task.subtasks)
     setMainCheckDisabled(!!task.subtasks.find((s) => s.checked === false))
   }, [task.subtasks])
 

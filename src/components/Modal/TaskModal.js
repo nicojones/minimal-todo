@@ -101,6 +101,7 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
                   <input
                     type="checkbox" checked={ sub.checked }
                     id={ sub.key }
+                    className="material-cb"
                     onChange={ () => toggleSubtask(sub) }
                   />
                   <div/>
