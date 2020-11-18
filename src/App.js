@@ -29,7 +29,7 @@ function App () {
   return (
     <>
       { showLoader && <Loader/> }
-      <div className="row" >
+      <div className="row m0">
         <div className="col s3 projects-list-box">
           <Projects projectKey={ projectKey } setProjectKey={ setProjectKey } setShowLoader={ setShowLoader }/>
         </div>

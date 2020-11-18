@@ -21,7 +21,7 @@ export default function projectRender ({
               task={ task }
               onDelete={ deleteTask }
             />)
-          : <li><h5 className="subtle">{ allCompleted }</h5></li>
+          : <li><h5 className="subtle max-content">{ allCompleted }</h5></li>
         }
         { showCompleted && completed.map((task, index) =>
           <Task
@@ -46,7 +46,7 @@ export default function projectRender ({
 
       <TaskModal
         trigger={ {
-          className: 'btn-floating btn-large fixed-action-btn',
+          className: 'btn-floating btn-large fixed-action-btn subtle-bg',
           text: <i className="material-icons">add</i>
         } }
         task={ {} }

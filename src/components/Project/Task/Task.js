@@ -13,6 +13,7 @@ function Task ({ task, onDelete }) {
   const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
+    console.log(task.subtasks)
     setMainCheckDisabled(!!task.subtasks.find((s) => s.checked === false))
   }, [task.subtasks])
 
@@ -27,11 +28,12 @@ function Task ({ task, onDelete }) {
         <label className="left">
           <input
             type="checkbox"
+            className="material-cb"
             disabled={ mainCheckDisabled }
             checked={ task.checked }
             onChange={ () => toggleCompleted(task) }
           />
-          <span> </span>
+          <div/>
         </label>
         <button className={ 'btn-invisible task-name ' + (task.checked ? '' : '') } onClick={ () => setModalOpen(true) }
         >{ task.name }</button>

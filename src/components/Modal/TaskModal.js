@@ -103,7 +103,7 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
                     id={ sub.key }
                     onChange={ () => toggleSubtask(sub) }
                   />
-                  <span> </span>
+                  <div/>
                 </label>
                 <span className="left">{ sub.name }</span>
               </li>

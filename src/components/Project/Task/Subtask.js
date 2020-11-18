@@ -39,10 +39,10 @@ function Subtask ({ extraClass, task, setSubtasks }) {
             <label className="left">
               <input
                 type="checkbox" checked={ sub.checked }
-                id={ sub.key }
+                id={ sub.key } className="material-cb"
                 onChange={ () => toggleSubtask(sub) }
               />
-              <span> </span>
+              <div/>
             </label>
             <span className="left">{ sub.name }</span>
           </li>

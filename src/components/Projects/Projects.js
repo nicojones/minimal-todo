@@ -42,7 +42,7 @@ function Projects ({ projectKey, setProjectKey, setShowLoader }) {
     if (project.key === projectKey) {
       return; // can't change to itself... it also causes a re-render problem in the `useEffect`
     }
-    setShowLoader(true);
+    // setShowLoader(true);
     setProjectKey(project.key);
   }
 
@@ -54,7 +54,7 @@ function Projects ({ projectKey, setProjectKey, setShowLoader }) {
           projects.map((proj) =>
             <li key={ proj.key } className={ ( projectKey === proj.key ? 'selected' : '' ) + ' mb-5 parent-hover '}>
               <button className="btn-invisible left" onClick={ () => setProject(proj) }>
-                { proj.name } ({ proj.openTasks } <span className="subtle">/ { proj.completedTasks }</span>)
+                { proj.name } ( { proj.openTasks } <span className="subtle">/ { proj.completedTasks }</span> )
               </button>
               <button className="btn-invisible child-hover left" onClick={ () => deleteProject(proj) }>
                 <i className="tiny material-icons subtle">delete</i>
