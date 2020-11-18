@@ -20,10 +20,11 @@
   }
 
   &.done {
-    opacity: 0.4;
-
     .task-name {
       text-decoration: line-through;
+    }
+    .task-name, .material-cb + div {
+      opacity: 0.4;
     }
   }
 
