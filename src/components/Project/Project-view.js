@@ -21,7 +21,7 @@ export default function projectRender ({
               task={ task }
               onDelete={ deleteTask }
             />)
-          : <li><h5 className="subtle max-content">{ allCompleted }</h5></li>
+          : (completed.length ? <li><h5 className="subtle max-content">{ allCompleted }</h5></li> : '')
         }
         { showCompleted && completed.map((task, index) =>
           <Task
