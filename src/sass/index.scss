@@ -1,4 +1,5 @@
 @import 'src/sass/variables';
+@import 'src/sass/colors';
 @import 'src/sass/generic';
 
 @import 'src/sass/material';
@@ -38,3 +39,9 @@
 //.left-align {
 //  text-align: left;
 //}
+
+body {
+  background: $app-background-color;
+
+  overflow: hidden; // !!!!! TODO - we should be able to solve this without the hidden!
+}

@@ -62,7 +62,7 @@ function Subtask ({ extraClass, task, setSubtasks }) {
             </form>
             :
             <button className="btn-flat subtle" onClick={ () => setAddSubtaskInput(true) }>
-              <i className="material-icons left">add_circle_outline</i>
+              <i className="material-icons left">add</i>
               { text.addSubtaskBtn }
             </button>
         }

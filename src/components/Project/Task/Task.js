@@ -23,7 +23,7 @@ function Task ({ task, onDelete }) {
 
   return (
     <li className={ (task.checked ? 'done' : '') + ' parent-hover task' } title={ task.timestamp }>
-      <div>
+      <div className="task-content">
         <label className="left">
           <input
             type="checkbox"
@@ -33,9 +33,8 @@ function Task ({ task, onDelete }) {
           />
           <span> </span>
         </label>
-        <a
-          href="#!" className={ 'task-name ' + (task.checked ? '' : '') } onClick={ () => setModalOpen(true) }
-        >{ task.name }</a>
+        <button className={ 'btn-invisible task-name ' + (task.checked ? '' : '') } onClick={ () => setModalOpen(true) }
+        >{ task.name }</button>
 
         <span className="right">
           <button

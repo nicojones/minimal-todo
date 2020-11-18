@@ -1,19 +1,19 @@
 import { useMemo, useState } from 'react';
-import './_todo.scss';
-import todoRenderer from 'components/Todo/Todo-view';
+import './_project.scss';
+import projectRender from 'components/Project/Project-view';
 import taskService from 'services/taskService';
 import createTaskObject from 'functions/createTaskObject';
-import { text } from '../../text';
+import { text } from 'text';
 
-function Todo ({ list }) {
+function Project ({ project }) {
 
   const [showCompleted, setShowCompleted] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
-  const [listName, setListName] = useState(list.name);
+  const [listName, setListName] = useState(project.name);
   const [editListName, setEditListName] = useState(false);
 
-  const open = list.tasks.filter((task) => !task.checked);
-  const completed = list.tasks.filter((task) => !!task.checked);
+  const open = (project.tasks || []).filter((task) => !task.checked);
+  const completed = (project.tasks || []).filter((task) => !!task.checked);
 
   const allCompleted = useMemo(() => text.allTasksCompleted(), [ open.length ]);
 
@@ -36,10 +36,10 @@ function Todo ({ list }) {
     setEditListName(false);
   }
 
-  return todoRenderer({
+  return projectRender({
     open,
     completed,
-    deleteTask: (task) => taskService.deleteTask(task, list.tasks),
+    deleteTask: (task) => taskService.deleteTask(task, project.tasks),
     submit,
     changed,
     showCompleted,
@@ -47,7 +47,7 @@ function Todo ({ list }) {
     modalOpen,
     allCompleted,
     setModalOpen,
-    list: {
+    project: {
       listName,
       saveListName,
       editListName,
@@ -57,4 +57,4 @@ function Todo ({ list }) {
   });
 }
 
-export default Todo;
+export default Project;

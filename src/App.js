@@ -1,49 +1,43 @@
 import React, { useEffect, useState } from 'react';
-import Todo from 'components/Todo/Todo';
+import Project from 'components/Project/Project';
 import taskService from './services/taskService';
 import Loader from 'components/Loader/Loader';
-import TodoProjects from './components/TodoProjects/TodoProjects';
+import Projects from './components/Projects/Projects';
 
 function App () {
 
-  const [listKey, setListKey] = useState(window.location.hash.substring(1) || '0');
+  const [projectKey, setProjectKey] = useState(window.location.hash.substring(1));
 
-  const [list, setList] = useState({});
+  const [project, setProject] = useState({});
   const [showLoader, setShowLoader] = useState(true);
 
-  const ListContext = React.createContext(list.key);
+  const ProjectContext = React.createContext(project.key);
 
   useEffect(() => {
-    window.location.hash = listKey;
+    window.location.hash = projectKey;
 
-    taskService.getTasks(listKey, (list) => {
-      setList(list);
+    taskService.getProject(projectKey, (project) => {
+      setProject(project);
       setShowLoader(false);
     });
+
     return () => {
       taskService.db.ref(taskService.path).off('value');
     };
-  }, [listKey]);
+  }, [projectKey]);
 
   return (
     <>
-      <div className="container flex-column" id="todo">
-        {
-          showLoader
-            ? <Loader/>
-            : <>
-              <div className="row" style={ { width: '100%', margin: 0 } }>
-                <div className="col s3">
-                  <TodoProjects listKey={ listKey } setListKey={ setListKey }/>
-                </div>
-                <div className="col s9">
-                  <ListContext.Provider value={ list.key }>
-                    <Todo list={ list }/>
-                  </ListContext.Provider>
-                </div>
-              </div>
-            </>
-        }
+      { showLoader && <Loader/> }
+      <div className="row" >
+        <div className="col s3 projects-list-box">
+          <Projects projectKey={ projectKey } setProjectKey={ setProjectKey } setShowLoader={ setShowLoader }/>
+        </div>
+        <div className="col s9 tasks-list-box flex-column">
+          <ProjectContext.Provider value={ project.key }>
+            <Project project={ project }/>
+          </ProjectContext.Provider>
+        </div>
       </div>
     </>
   );

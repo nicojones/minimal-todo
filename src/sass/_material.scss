@@ -77,8 +77,19 @@
   }
 }
 
-input.as-title.h2 {
-  @extend h2;
-  text-align: center;
-  height: 1.1 * $h2-fontsize;
+input.as-title.h4 {
+  @extend h4;
+  height: 1.1 * $h4-fontsize;
+}
+
+input.invisible {
+  height: $button-height;
+  margin: 0;
+  border-bottom: 0;
+  font-size: 1rem;
+
+  &:focus {
+    border-bottom: 0 !important;
+    box-shadow: none !important;
+  }
 }

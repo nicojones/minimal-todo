@@ -1,0 +1,8 @@
+.projects-list {
+  li {
+    &.selected > button {
+      font-weight: bold;
+    }
+    padding: 6px;
+  }
+}

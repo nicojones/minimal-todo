@@ -36,79 +36,87 @@ const taskService = {
     }
   },
 
-  getTasks: (listKey, done) => {
-    taskService.path = `lists/${ user }/${ listKey }`;
+  getProject: (projectKey, done) => {
+    taskService.path = `lists/${ user }/${ projectKey }`;
 
     try {
       return db.ref(taskService.path).on('value', (snapshot) => {
 
-        const listName = snapshot.child('name').val();
+        const projectName = snapshot.child('name').val();
 
-        const list = {
+        const project = {
           key: snapshot.key,
-          name: listName,
+          name: projectName,
           tasks: []
         };
 
         snapshot.child('tasks').forEach((task) => {
-          list.tasks.push({
+          project.tasks.push({
             key: task.key,
             subtasks: [],
             ...task.val(),
           });
         })
 
-        done(list);
+        done(project);
 
-        console.log('List with tasks loaded: ', list.tasks.length);
       });
     } catch (e) {
       console.error('Error on fetching tasks: ', e);
     }
   },
 
-  getLists: (done) => {
+  getProjects: (done) => {
     try {
       return db.ref(`lists/${ user }`).on('value', (snapshot) => {
 
-        const lists = [];
-        snapshot.forEach((list) => {
-          const listData = list.val();
-          const tasks = Object.values(listData.tasks || '' /* empty object actually... */);
+        const projects = [];
+        snapshot.forEach((project) => {
+          const projectData = project.val();
+          const tasks = Object.values(projectData.tasks || '' /* empty object actually... */);
           const completedTasks = tasks.filter((t) => t.checked).length;
           const openTasks = tasks.length - completedTasks;
-          lists.push({
-            key: list.key,
-            name: listData.name,
+          projects.push({
+            key: project.key,
+            name: projectData.name,
             openTasks,
             completedTasks
           });
         })
 
-        done(lists);
+        done(projects);
 
-        console.log('Lists loaded: ', lists.length);
+        console.log('Lists loaded: ', projects.length);
       });
     } catch (e) {
       console.error('Error on fetching tasks: ', e);
     }
   },
 
-  saveListName: async (listName) => {
-    console.log('Updating list name ', listName);
+  saveListName: async (projectName) => {
+    console.log('Updating list name ', projectName);
 
     try {
-      return await db.ref(`${ taskService.path }`).update({ name: listName });
+      return await db.ref(`${ taskService.path }`).update({ name: projectName });
     } catch (e) {
       console.error('Error on save name: ', e);
     }
   },
 
-  newProject: async (listName) => {
+  newProject: async (projectName) => {
     try {
-      return await db.ref(`lists/${ user }`).push({ name: listName });
+      return await db.ref(`lists/${ user }`).push({ name: projectName });
     } catch (e) {
       console.error('Error on create project: ', e);
+    }
+  },
+
+  deleteProject: async (project) => {
+    try {
+      console.log('Deleting project ', project.name);
+      return await db.ref(`lists/${ user }/${ project.key }`).remove()
+    } catch (e) {
+      console.error('Error on delete project: ', e);
     }
   }
 };
