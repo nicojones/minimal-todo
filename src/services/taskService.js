@@ -1,5 +1,7 @@
 import { db } from './firebase';
 
+const user = 'nicoemailcom';
+
 const taskService = {
 
   db: db,
@@ -35,7 +37,7 @@ const taskService = {
   },
 
   getTasks: (listKey, done) => {
-    taskService.path = `lists/nicoemailcom/${ listKey }`;
+    taskService.path = `lists/${ user }/${ listKey }`;
 
     try {
       return db.ref(taskService.path).on('value', (snapshot) => {
@@ -58,7 +60,34 @@ const taskService = {
 
         done(list);
 
-        console.log('Lists loaded: ', list.tasks.length);
+        console.log('List with tasks loaded: ', list.tasks.length);
+      });
+    } catch (e) {
+      console.error('Error on fetching tasks: ', e);
+    }
+  },
+
+  getLists: (done) => {
+    try {
+      return db.ref(`lists/${ user }`).on('value', (snapshot) => {
+
+        const lists = [];
+        snapshot.forEach((list) => {
+          const listData = list.val();
+          const tasks = Object.values(listData.tasks || '' /* empty object actually... */);
+          const completedTasks = tasks.filter((t) => t.checked).length;
+          const openTasks = tasks.length - completedTasks;
+          lists.push({
+            key: list.key,
+            name: listData.name,
+            openTasks,
+            completedTasks
+          });
+        })
+
+        done(lists);
+
+        console.log('Lists loaded: ', lists.length);
       });
     } catch (e) {
       console.error('Error on fetching tasks: ', e);
