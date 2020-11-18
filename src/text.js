@@ -1,6 +1,9 @@
 export const text = {
+  loading: 'Loading app...',
+  noListName: '<no name>',
   addPh: 'Quick-add a task...',
   addSubtaskPh: 'Add a subtask to this task',
+  addSubtaskBtn: 'Add a subtask',
   subtasks: 'Subtasks',
   // btn: 'Add task',
   // title: 'MyTodo List',
@@ -10,6 +13,7 @@ export const text = {
       '😁 All tasks completed!',
       'Now that\'s what I call a clean list 🥳',
       'Wow, such empty 👏',
+      'Finitto? Go for a cappucino ☕️',
       'All tasks done, time for a break 🏖',
       'So productive. I\'m impressed 😎'
     ];

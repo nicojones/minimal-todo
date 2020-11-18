@@ -70,4 +70,15 @@
   padding-top: 15px;
   margin-bottom: 0;
   z-index: 997;
+
+  &.top-right {
+    bottom: unset;
+    top: 23px;
+  }
+}
+
+input.as-title.h2 {
+  @extend h2;
+  text-align: center;
+  height: 1.1 * $h2-fontsize;
 }

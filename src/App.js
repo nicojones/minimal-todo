@@ -5,23 +5,33 @@ import Loader from 'components/Loader/Loader';
 
 function App () {
 
-  const [tasks, setTasks] = useState([]);
+  const [list, setList] = useState([]);
   const [showLoader, setShowLoader] = useState(true);
 
+  const ListContext = React.createContext(list.key);
+
   useEffect(() => {
-    taskService.getTasks(setTasks, setShowLoader)
+    taskService.getTasks(window.location.hash.substring(1),(list) => {
+      setList(list);
+      setShowLoader(false);
+    });
+    return () => {
+      taskService.db.ref(taskService.path).off('value');
+    }
   }, [/* empty dependency means this function will NEVER be called again === componentDidMount */]);
 
   return (
-    <React.Fragment>
+    <>
       <div className="container flex-column" id="todo">
         {
           showLoader
           ? <Loader/>
-          : <Todo tasks={ tasks } />
+          : <ListContext.Provider value={list.key}>
+              <Todo list={ list } />
+            </ListContext.Provider>
         }
       </div>
-    </React.Fragment>
+    </>
   );
 }
 

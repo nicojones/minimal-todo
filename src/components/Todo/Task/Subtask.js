@@ -5,10 +5,12 @@ import taskService from '../../../services/taskService';
 function Subtask ({ extraClass, task, setSubtasks }) {
 
   const [subtaskName, setSubtaskName] = useState('');
+  const [addSubtaskInput, setAddSubtaskInput] = useState(false);
 
   function saveSubtask (e) {
     e.preventDefault();
     e.target[0].value = '';
+    setAddSubtaskInput(false);
 
     task.subtasks = [
       ...(task.subtasks || []),
@@ -20,6 +22,7 @@ function Subtask ({ extraClass, task, setSubtasks }) {
       }
     ];
     taskService.updateTask(task);
+
   }
 
   function toggleSubtask (subtask) {
@@ -29,7 +32,7 @@ function Subtask ({ extraClass, task, setSubtasks }) {
   }
 
   return (
-    <ul className={'list-unstyled flex-column ' + extraClass}>
+    <ul className={ 'list-unstyled flex-column ' + extraClass }>
       {
         (task.subtasks || []).map((sub) =>
           <li key={ sub.key } title={ sub.timestamp } className="block">
@@ -46,16 +49,26 @@ function Subtask ({ extraClass, task, setSubtasks }) {
         )
       }
       <li key="new-subtask">
-        <form onSubmit={ saveSubtask }>
-          <input
-            onChange={ (e) => setSubtaskName(e.target.value) }
-            placeholder={ text.addSubtaskPh }
-            className="input-field invisible"
-          />
-        </form>
+        {
+          addSubtaskInput
+            ?
+            <form onSubmit={ saveSubtask }>
+              <input
+                onChange={ (e) => setSubtaskName(e.target.value) }
+                placeholder={ text.addSubtaskPh }
+                autoFocus={ true }
+                className="input-field invisible"
+              />
+            </form>
+            :
+            <button className="btn-flat subtle" onClick={ () => setAddSubtaskInput(true) }>
+              <i className="material-icons left">add_circle_outline</i>
+              { text.addSubtaskBtn }
+            </button>
+        }
       </li>
     </ul>
-  )
+  );
 }
 
 export default Subtask;

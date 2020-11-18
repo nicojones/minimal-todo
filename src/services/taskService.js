@@ -2,10 +2,14 @@ import { db } from './firebase';
 
 const taskService = {
 
+  db: db,
+
+  path: '',
+
   updateTask: async (task) => {
     console.log('Updating task ', task.name);
     try {
-      return await db.ref(`todos/${ task.key }`).update(task);
+      return await db.ref(`${ taskService.path }/tasks/${ task.key }`).update(task);
     } catch (e) {
       console.error('Error on update: ', e);
     }
@@ -14,7 +18,7 @@ const taskService = {
   addTask: async (task) => {
     console.log('Added task ', task.name);
     try {
-      return await db.ref('todos').push(task);
+      return await db.ref(`${ taskService.path }/tasks`).push(task);
     } catch (e) {
       console.error('Error on save: ', e);
     }
@@ -24,29 +28,50 @@ const taskService = {
     console.log('Deleting task ', task.name);
     const index = tasks.findIndex((_task) => _task.key === task.key);
     if (index >= 0) {
-      await db.ref(`todos/${ task.key }`).remove(() => {
+      await db.ref(`${ taskService.path }/tasks/${ task.key }`).remove(() => {
         console.log(`"${ task.name }" was removed!`);
       });
     }
   },
 
-  getTasks: (taskSetter, showLoader) => {
-    try {
-      return db.ref('todos').on('value', (snapshot) => {
-        const tasks = [];
-        snapshot.forEach((snap) => {
-          tasks.push({
-            ...snap.val(),
-            key: snap.key
-          });
-        });
-        taskSetter(tasks);
-        showLoader(false);
+  getTasks: (listKey, done) => {
+    taskService.path = `lists/nicoemailcom/${ listKey }`;
 
-        console.log('Tasks loaded: ', tasks.length)
+    try {
+      return db.ref(taskService.path).on('value', (snapshot) => {
+
+        const listName = snapshot.child('name').val();
+
+        const list = {
+          key: snapshot.key,
+          name: listName,
+          tasks: []
+        };
+
+        snapshot.child('tasks').forEach((task) => {
+          list.tasks.push({
+            key: task.key,
+            subtasks: [],
+            ...task.val(),
+          });
+        })
+
+        done(list);
+
+        console.log('Lists loaded: ', list.tasks.length);
       });
     } catch (e) {
       console.error('Error on fetching tasks: ', e);
+    }
+  },
+
+  saveListName: async (listName) => {
+    console.log('Updating list name ', listName);
+
+    try {
+      return await db.ref(`${ taskService.path }`).update({ name: listName });
+    } catch (e) {
+      console.error('Error on update: ', e);
     }
   }
 };

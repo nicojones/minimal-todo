@@ -64,7 +64,7 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
   }
 
   return (
-    <React.Fragment>
+    <>
       <button className={ trigger.className } onClick={ () => setModalOpen(true) }>{ trigger.text }</button>
       <Modal
         modalOpen={ modalOpen }
@@ -121,7 +121,7 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
           </li>
         </ul>
       </Modal>
-    </React.Fragment>
+    </>
   );
 }
 

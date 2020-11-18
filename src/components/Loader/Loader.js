@@ -1,6 +1,12 @@
+import './_app-loader.scss';
+import { text } from 'text';
+import React from 'react';
+
 function Loader () {
   return (
-    <h1>Loading...</h1>
+    <span className="app-loader">
+      <span>{ text.loading }</span>
+    </span>
   )
 }
 
