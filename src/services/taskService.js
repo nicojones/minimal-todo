@@ -100,7 +100,15 @@ const taskService = {
     try {
       return await db.ref(`${ taskService.path }`).update({ name: listName });
     } catch (e) {
-      console.error('Error on update: ', e);
+      console.error('Error on save name: ', e);
+    }
+  },
+
+  newProject: async (listName) => {
+    try {
+      return await db.ref(`lists/${ user }`).push({ name: listName });
+    } catch (e) {
+      console.error('Error on create project: ', e);
     }
   }
 };

@@ -28,6 +28,10 @@ export const text = {
   discardTask: 'Cancel changes',
 
   notes: 'Notes',
-  notesPh: 'An optional description always helps'
+  notesPh: 'An optional description always helps',
+
+  projects: 'Projects',
+  addProject: '+ Add a new project',
+  addProjectPh: 'Enter a name for a new project'
 
 };

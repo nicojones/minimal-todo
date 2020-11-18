@@ -14,6 +14,8 @@ function App () {
   const ListContext = React.createContext(list.key);
 
   useEffect(() => {
+    window.location.hash = listKey;
+
     taskService.getTasks(listKey, (list) => {
       setList(list);
       setShowLoader(false);
