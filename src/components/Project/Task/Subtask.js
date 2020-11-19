@@ -2,10 +2,13 @@ import { text } from 'text';
 import React, { useState } from 'react';
 import taskService from '../../../services/taskService';
 
-function Subtask ({ extraClass, task, setSubtasks }) {
+function Subtask ({ extraClass, task, saveSubtasks }) {
 
   const [subtaskName, setSubtaskName] = useState('');
   const [addSubtaskInput, setAddSubtaskInput] = useState(false);
+
+  useState(() => { console.log('SUBTASK!', task.name)}, [])
+
 
   function saveSubtask (e) {
     e.preventDefault();
@@ -21,14 +24,12 @@ function Subtask ({ extraClass, task, setSubtasks }) {
         checked: false
       }
     ];
-    taskService.updateTask(task);
-
+    saveSubtasks(task);
   }
 
   function toggleSubtask (subtask) {
     subtask.checked = !subtask.checked;
-    taskService.updateTask(task);
-    setSubtasks(task.subtasks);
+    saveSubtasks(task);
   }
 
   return (

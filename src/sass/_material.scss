@@ -120,3 +120,7 @@ input.invisible {
     cursor: default;
   }
 }
+
+.material-icons.expanded {
+  transform: rotate(90deg);
+}

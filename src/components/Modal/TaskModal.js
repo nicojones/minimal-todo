@@ -1,15 +1,19 @@
 import Modal from './Modal';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import createTaskObject from 'functions/createTaskObject';
-import { text } from '../../text';
-import taskService from '../../services/taskService';
+import { text } from 'text';
+import taskService from 'services/taskService';
+import { ProjectContext } from 'App';
 
 function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
 
   const [subtaskName, setSubtaskName] = useState('');
   const [subtasks, setSubtasks] = useState(task.subtasks || []);
+  const [newSubtasks, setNewSubtasks] = useState([]);
   const [taskName, setTaskName] = useState(task.name || '');
   const [taskDesc, setTaskDesc] = useState(task.description || '');
+
+  const projectName = useContext(ProjectContext).name;
 
   useEffect(() => {
     setTaskName(task.name || '');
@@ -33,7 +37,7 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
 
     task.name = taskName;
     task.description = taskDesc;
-    task.subtasks = subtasks;
+    task.subtasks = [...subtasks, ...newSubtasks];
 
     await saveTask(task, false);
   }
@@ -46,8 +50,8 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
   function saveSubtask (e) {
     e.preventDefault();
 
-    setSubtasks([
-      ...subtasks,
+    setNewSubtasks([
+      ...newSubtasks,
       {
         key: Math.random(),
         timestamp: new Date(),
@@ -73,6 +77,7 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
         okButton={ text.saveTask + ' <i class="material-icons right">save</i>' }
         cancelButton={ text.discardTask + ' <i class="material-icons right">cancel</i>' }
       >
+        <h6 className="subtle mb-15 mt-5">{ projectName }</h6>
         <form onSubmit={ submit }>
           <div>
             <label>Task Name</label>
@@ -95,7 +100,7 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
 
         <ul className="list-unstyled flex-column">
           {
-            subtasks.map((sub) =>
+            (subtasks || []).map((sub) =>
               <li key={ sub.key } title={ sub.timestamp } className="block">
                 <label className="left">
                   <input
@@ -107,6 +112,16 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
                   <div/>
                 </label>
                 <span className="left">{ sub.name }</span>
+              </li>
+            )
+          }
+          {
+            newSubtasks.map((sub) =>
+              <li key={ sub.key } className="block">
+                <label className="left">
+                  <input type="checkbox" className="material-cb" disabled/><div/>
+                </label>
+                <span className="left subtle">{ sub.name }</span>
               </li>
             )
           }

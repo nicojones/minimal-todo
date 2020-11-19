@@ -6,7 +6,7 @@ import ProjectTitle from 'components/ProjectTitle/ProjectTitle';
 
 
 export default function projectRender ({
-  submit, changed, deleteTask, completed, open, showCompleted, setShowCompleted, modalOpen, setModalOpen, allCompleted, project
+  /*inputElement,*/ submit, changed, completed, open, showCompleted, setShowCompleted, modalOpen, setModalOpen, allCompleted, project
 }) {
 
   return (
@@ -15,19 +15,17 @@ export default function projectRender ({
 
       <ul className="list-unstyled">
         { open.length ?
-          open.map((task, index) =>
+          open.map((task) =>
             <Task
-              key={ index }
+              key={ task.key }
               task={ task }
-              onDelete={ deleteTask }
             />)
           : (completed.length ? <li><h5 className="subtle max-content">{ allCompleted }</h5></li> : '')
         }
-        { showCompleted && completed.map((task, index) =>
+        { showCompleted && completed.map((task) =>
           <Task
-            key={ index }
+            key={ task.key }
             task={ task }
-            onDelete={ deleteTask }
           />) }
       </ul>
 
@@ -37,8 +35,7 @@ export default function projectRender ({
             <input
               onChange={ changed } className="invisible"
               placeholder={ text.addPh } required
-              autoComplete="off"
-              autoFocus
+              autoComplete="off" /*ref={ inputElement }*/
             />
           </div>
         </div>

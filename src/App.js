@@ -4,6 +4,8 @@ import taskService from './services/taskService';
 import Loader from 'components/Loader/Loader';
 import Projects from './components/Projects/Projects';
 
+export const ProjectContext = React.createContext({});
+
 function App () {
 
   const [projectKey, setProjectKey] = useState(window.location.hash.substring(1));
@@ -11,7 +13,6 @@ function App () {
   const [project, setProject] = useState({});
   const [showLoader, setShowLoader] = useState(true);
 
-  const ProjectContext = React.createContext(project.key);
 
   useEffect(() => {
     window.location.hash = projectKey;
@@ -34,7 +35,7 @@ function App () {
           <Projects projectKey={ projectKey } setProjectKey={ setProjectKey } setShowLoader={ setShowLoader }/>
         </div>
         <div className="col s9 tasks-list-box flex-column">
-          <ProjectContext.Provider value={ project.key }>
+          <ProjectContext.Provider value={ { key: project.key, name: project.name } }>
             <Project project={ project }/>
           </ProjectContext.Provider>
         </div>

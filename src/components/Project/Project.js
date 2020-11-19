@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import './_project.scss';
 import projectRender from 'components/Project/Project-view';
 import taskService from 'services/taskService';
@@ -15,6 +15,8 @@ function Project ({ project }) {
   const open = (project.tasks || []).filter((task) => !task.checked);
   const completed = (project.tasks || []).filter((task) => !!task.checked);
 
+  // const inputElement = useRef(null);
+
   const allCompleted = useMemo(() => {
     return text.allTasksCompleted()
   }, [ open.length ]);
@@ -23,6 +25,9 @@ function Project ({ project }) {
 
   async function submit (e) {
     e.preventDefault();
+    console.log(e);
+    e.target[0].value = '';
+    // inputElement.current && (inputElement.current.target.value = '');
 
     await taskService.addTask(createTaskObject({ name: taskName }));
   }
@@ -39,9 +44,9 @@ function Project ({ project }) {
   }
 
   return projectRender({
+    // inputElement,
     open,
     completed,
-    deleteTask: (task) => taskService.deleteTask(task, project.tasks),
     submit,
     changed,
     showCompleted,

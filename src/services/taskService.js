@@ -10,6 +10,7 @@ const taskService = {
 
   updateTask: async (task) => {
     console.log('Updating task ', task.name);
+
     try {
       return await db.ref(`${ taskService.path }/tasks/${ task.key }`).update(task);
     } catch (e) {
@@ -18,21 +19,24 @@ const taskService = {
   },
 
   addTask: async (task) => {
-    console.log('Added task ', task.name);
+    console.log('Adding task ', task.name);
+
     try {
       return await db.ref(`${ taskService.path }/tasks`).push(task);
     } catch (e) {
-      console.error('Error on save: ', e);
+      console.error('Error on save task: ', e);
     }
   },
 
-  deleteTask: async (task, tasks) => {
+  deleteTask: async (task) => {
     console.log('Deleting task ', task.name);
-    const index = tasks.findIndex((_task) => _task.key === task.key);
-    if (index >= 0) {
+
+    try {
       await db.ref(`${ taskService.path }/tasks/${ task.key }`).remove(() => {
         console.log(`"${ task.name }" was removed!`);
       });
+    } catch (e) {
+      console.error('Error on delete task: ', e);
     }
   },
 
@@ -56,7 +60,7 @@ const taskService = {
             subtasks: [],
             ...task.val(),
           });
-        })
+        });
 
         done(project);
 
@@ -82,7 +86,7 @@ const taskService = {
             openTasks,
             completedTasks
           });
-        })
+        });
 
         done(projects);
 
@@ -114,7 +118,7 @@ const taskService = {
   deleteProject: async (project) => {
     try {
       console.log('Deleting project ', project.name);
-      return await db.ref(`lists/${ user }/${ project.key }`).remove()
+      return await db.ref(`lists/${ user }/${ project.key }`).remove();
     } catch (e) {
       console.error('Error on delete project: ', e);
     }
