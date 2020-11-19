@@ -2,6 +2,7 @@ import React from 'react';
 import { text } from 'text';
 
 function ProjectTitle ({ project, showCompleted, setShowCompleted }) {
+
   return (
     project.editListName
       ? <form onSubmit={ project.saveListName }>

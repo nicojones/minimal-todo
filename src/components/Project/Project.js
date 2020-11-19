@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import './_project.scss';
 import projectRender from 'components/Project/Project-view';
 import taskService from 'services/taskService';
@@ -22,6 +22,10 @@ function Project ({ project }) {
   }, [ open.length ]);
 
   let taskName = '';
+
+  useEffect(() => {
+    setProjectName(project.name);
+  }, [project.name])
 
   async function submit (e) {
     e.preventDefault();

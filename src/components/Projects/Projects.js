@@ -22,7 +22,8 @@ function Projects ({ projectKey, setProjectKey, setShowLoader }) {
       setProjectKey(validProjectKey(projectKey, _projects)); // set the first project as selected...
       setProjects(_projects);
     });
-  }, [/* empty dependency means this function will NEVER be called again === componentDidMount */]);
+  }, [projectKey]);
+  // }, [/* empty dependency means this function will NEVER be called again === componentDidMount */]);
 
   function addNewProject (e) {
     e.preventDefault();
@@ -30,6 +31,7 @@ function Projects ({ projectKey, setProjectKey, setShowLoader }) {
     taskService.newProject(newProjectName).then((snap) => {
       setShowAddProject(false);
       setNewProjectName('');
+      setProjectKey(snap.key);
     });
   }
 
