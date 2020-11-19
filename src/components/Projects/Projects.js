@@ -23,6 +23,7 @@ function Projects ({ projectKey, setProjectKey, setShowLoader }) {
       setProjects(_projects);
     });
   }, [projectKey]);
+
   // }, [/* empty dependency means this function will NEVER be called again === componentDidMount */]);
 
   function addNewProject (e) {
