@@ -25,7 +25,6 @@ function Project ({ project }) {
 
   async function submit (e) {
     e.preventDefault();
-    console.log(e);
     e.target[0].value = '';
     // inputElement.current && (inputElement.current.target.value = '');
 

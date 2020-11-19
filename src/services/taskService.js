@@ -9,7 +9,7 @@ const taskService = {
   path: '',
 
   updateTask: async (task) => {
-    console.log('Updating task ', task.name);
+    console.info('Updating task ', task.name);
 
     try {
       return await db.ref(`${ taskService.path }/tasks/${ task.key }`).update(task);
@@ -19,7 +19,7 @@ const taskService = {
   },
 
   addTask: async (task) => {
-    console.log('Adding task ', task.name);
+    console.info('Adding task ', task.name);
 
     try {
       return await db.ref(`${ taskService.path }/tasks`).push(task);
@@ -29,11 +29,11 @@ const taskService = {
   },
 
   deleteTask: async (task) => {
-    console.log('Deleting task ', task.name);
+    console.info('Deleting task ', task.name);
 
     try {
       await db.ref(`${ taskService.path }/tasks/${ task.key }`).remove(() => {
-        console.log(`"${ task.name }" was removed!`);
+        console.info(`"${ task.name }" was removed!`);
       });
     } catch (e) {
       console.error('Error on delete task: ', e);
@@ -90,7 +90,7 @@ const taskService = {
 
         done(projects);
 
-        console.log('Lists loaded: ', projects.length);
+        console.info('Lists loaded: ', projects.length);
       });
     } catch (e) {
       console.error('Error on fetching tasks: ', e);
@@ -98,7 +98,7 @@ const taskService = {
   },
 
   saveListName: async (projectName) => {
-    console.log('Updating list name ', projectName);
+    console.info('Updating list name ', projectName);
 
     try {
       return await db.ref(`${ taskService.path }`).update({ name: projectName });
@@ -117,7 +117,7 @@ const taskService = {
 
   deleteProject: async (project) => {
     try {
-      console.log('Deleting project ', project.name);
+      console.info('Deleting project ', project.name);
       return await db.ref(`lists/${ user }/${ project.key }`).remove();
     } catch (e) {
       console.error('Error on delete project: ', e);

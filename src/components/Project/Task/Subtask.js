@@ -7,9 +7,6 @@ function Subtask ({ extraClass, task, saveSubtasks }) {
   const [subtaskName, setSubtaskName] = useState('');
   const [addSubtaskInput, setAddSubtaskInput] = useState(false);
 
-  useState(() => { console.log('SUBTASK!', task.name)}, [])
-
-
   function saveSubtask (e) {
     e.preventDefault();
     e.target[0].value = '';

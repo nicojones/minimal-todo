@@ -11,7 +11,6 @@ function Projects ({ projectKey, setProjectKey, setShowLoader }) {
   const [newProjectName, setNewProjectName] = useState('');
 
   useEffect(() => {
-    console.log('loadeeeeed')
     taskService.getProjects((_projects) => {
 
       setProjects(_projects);
@@ -27,7 +26,6 @@ function Projects ({ projectKey, setProjectKey, setShowLoader }) {
     taskService.newProject(newProjectName).then((snap) => {
       setShowAddProject(false);
       setNewProjectName('');
-      console.log(setProjectKey(snap.key));
     });
   }
 

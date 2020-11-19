@@ -11,11 +11,7 @@ function Task ({ task }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [expandedTask, setExpandedTask] = useState(false);
 
-  console.log(task.name, task.subtasks.filter((s) => !!s.checked).length);
   const completedSubtasks = subtasks.filter((s) => !!s.checked).length;
-
-  useState(() => { console.log('TASK!', task.name)}, [])
-
 
   async function toggleCompleted (task) {
     task.checked = !task.checked;
