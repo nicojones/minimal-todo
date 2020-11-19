@@ -7,12 +7,12 @@ function ProjectTitle ({ project, showCompleted, setShowCompleted }) {
       ? <form onSubmit={ project.saveListName }>
         <input
           className="as-title m0 invisible h4" autoFocus /*onBlur={ project.saveListName }*/
-          value={ project.listName || text.noListName }
-          onChange={ (e) => project.setListName(e.target.value) }
+          value={ project.projectName }
+          onChange={ (e) => project.setProjectName(e.target.value) }
         />
       </form>
       : <div className="flex-row">
-        <h4 className="max-content m0" onClick={ () => project.setEditListName(true) }>{ project.listName || text.noListName }</h4>
+        <h4 className="max-content m0" onClick={ () => project.setEditListName(true) }>{ project.projectName }</h4>
         {
           showCompleted
             ? <button

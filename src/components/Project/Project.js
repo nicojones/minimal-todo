@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react';
+import { useMemo, useState } from 'react';
 import './_project.scss';
 import projectRender from 'components/Project/Project-view';
 import taskService from 'services/taskService';
@@ -9,7 +9,7 @@ function Project ({ project }) {
 
   const [showCompleted, setShowCompleted] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
-  const [listName, setListName] = useState(project.name);
+  const [projectName, setProjectName] = useState(project.name || text.noListName);
   const [editListName, setEditListName] = useState(false);
 
   const open = (project.tasks || []).filter((task) => !task.checked);
@@ -38,7 +38,7 @@ function Project ({ project }) {
   async function saveListName (e) {
     e.preventDefault();
 
-    await taskService.saveListName(listName);
+    await taskService.saveListName(projectName);
     setEditListName(false);
   }
 
@@ -54,11 +54,11 @@ function Project ({ project }) {
     allCompleted,
     setModalOpen,
     project: {
-      listName,
+      projectName,
       saveListName,
       editListName,
       setEditListName,
-      setListName
+      setProjectName
     }
   });
 }

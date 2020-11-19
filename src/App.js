@@ -32,10 +32,19 @@ function App () {
       { showLoader && <Loader/> }
       <div className="row m0">
         <div className="col s3 projects-list-box">
-          <Projects projectKey={ projectKey } setProjectKey={ setProjectKey } setShowLoader={ setShowLoader }/>
+          <Projects
+            projectKey={ projectKey }
+            setProjectKey={ setProjectKey }
+            setShowLoader={ setShowLoader }
+          />
         </div>
         <div className="col s9 tasks-list-box flex-column">
-          <ProjectContext.Provider value={ { key: project.key, name: project.name } }>
+          <ProjectContext.Provider
+            value={ {
+              key: project.key,
+              name: project.name
+            } }
+          >
             <Project project={ project }/>
           </ProjectContext.Provider>
         </div>

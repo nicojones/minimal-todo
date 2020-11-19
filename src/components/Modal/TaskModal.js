@@ -82,7 +82,7 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
           <div>
             <label>Task Name</label>
             <input
-              value={ taskName }
+              value={ taskName } required minLength={ 3 }
               placeholder="Enter a name for the task"
               onChange={ (e) => setTaskName(e.target.value) }
             />
@@ -119,7 +119,8 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
             newSubtasks.map((sub) =>
               <li key={ sub.key } className="block">
                 <label className="left">
-                  <input type="checkbox" className="material-cb" disabled/><div/>
+                  <input type="checkbox" className="material-cb" disabled/>
+                  <div/>
                 </label>
                 <span className="left subtle">{ sub.name }</span>
               </li>

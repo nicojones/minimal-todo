@@ -1,6 +1,5 @@
 import { text } from 'text';
 import React, { useState } from 'react';
-import taskService from '../../../services/taskService';
 
 function Subtask ({ extraClass, task, saveSubtasks }) {
 

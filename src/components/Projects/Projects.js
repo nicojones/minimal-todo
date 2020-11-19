@@ -3,6 +3,13 @@ import taskService from 'services/taskService';
 import { text } from 'text';
 import './_projects.scss';
 
+function validProjectKey (key, projects) {
+  if (!key || !projects.filter((p) => p.key === key).length) {
+    return projects[0].key;
+  }
+  return key;
+}
+
 function Projects ({ projectKey, setProjectKey, setShowLoader }) {
 
   const [projects, setProjects] = useState([]);
@@ -12,11 +19,8 @@ function Projects ({ projectKey, setProjectKey, setShowLoader }) {
 
   useEffect(() => {
     taskService.getProjects((_projects) => {
-
+      setProjectKey(validProjectKey(projectKey, _projects)); // set the first project as selected...
       setProjects(_projects);
-      if (!projectKey && _projects.length) {
-        setProjectKey(_projects[0].key); // set the first project as selected...
-      }
     });
   }, [/* empty dependency means this function will NEVER be called again === componentDidMount */]);
 
@@ -51,7 +55,7 @@ function Projects ({ projectKey, setProjectKey, setShowLoader }) {
       <ul className="projects-list flex-column">
         {
           projects.map((proj) =>
-            <li key={ proj.key } className={ ( projectKey === proj.key ? 'selected' : '' ) + ' mb-5 parent-hover '}>
+            <li key={ proj.key } className={ (projectKey === proj.key ? 'selected' : '') + ' mb-5 parent-hover ' }>
               <button className="btn-invisible left" onClick={ () => setProject(proj) }>
                 { proj.name } ( { proj.openTasks } <span className="subtle">/ { proj.completedTasks }</span> )
               </button>
@@ -68,7 +72,8 @@ function Projects ({ projectKey, setProjectKey, setShowLoader }) {
                 <input
                   className="invisible subtle" onChange={ (e) => setNewProjectName(e.target.value) }
                   required minLength="3"
-                  value={ newProjectName } autoFocus placeholder={ text.addProjectPh } onBlur={ () => setShowAddProject(false) }
+                  value={ newProjectName } autoFocus placeholder={ text.addProjectPh }
+                  onBlur={ () => setShowAddProject(false) }
                 />
               </form>
               : <button className="btn-invisible btn-flat subtle" onClick={ () => setShowAddProject(true) }>
