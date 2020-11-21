@@ -1,0 +1,17 @@
+@import 'src/sass/colors';
+@import 'src/sass/generic';
+
+@import 'src/sass/material';
+
+@import 'src/sass/todo';
+
+body {
+  background: $app-background-color;
+
+  //overflow: hidden; // !!!!! TODO - we should be able to solve this without the hidden!
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+}

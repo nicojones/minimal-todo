@@ -1,0 +1,128 @@
+@charset "UTF-8";
+
+// https://materializecss.com/icons.html
+
+// Color
+@import "../../node_modules/materialize-css/sass/components/color-variables";
+@import "../../node_modules/materialize-css/sass/components/color-classes";
+
+// Variables;
+@import "../../node_modules/materialize-css/sass/components/variables";
+
+// Reset
+@import "../../node_modules/materialize-css/sass/components/normalize";
+
+// node_modules/materialize-css/sass/components
+@import "../../node_modules/materialize-css/sass/components/global";
+@import "../../node_modules/materialize-css/sass/components/badges";
+@import "../../node_modules/materialize-css/sass/components/icons-material-design";
+@import "../../node_modules/materialize-css/sass/components/grid";
+@import "../../node_modules/materialize-css/sass/components/navbar";
+@import "../../node_modules/materialize-css/sass/components/typography";
+@import "../../node_modules/materialize-css/sass/components/transitions";
+//@import "node_modules/materialize-css/sass/components/cards";
+@import "../../node_modules/materialize-css/sass/components/toast";
+//@import "node_modules/materialize-css/sass/components/tabs";
+//@import "node_modules/materialize-css/sass/components/tooltip";
+@import "../../node_modules/materialize-css/sass/components/buttons";
+@import "../../node_modules/materialize-css/sass/components/dropdown";
+//@import "node_modules/materialize-css/sass/components/waves";
+@import "../../node_modules/materialize-css/sass/components/modal";
+@import "../../node_modules/materialize-css/sass/components/collapsible";
+//@import "node_modules/materialize-css/sass/components/chips";
+//@import "node_modules/materialize-css/sass/components/materialbox";
+@import "../../node_modules/materialize-css/sass/components/forms/forms";
+//@import "node_modules/materialize-css/sass/components/table_of_contents";
+@import "../../node_modules/materialize-css/sass/components/sidenav";
+@import "../../node_modules/materialize-css/sass/components/preloader";
+//@import "node_modules/materialize-css/sass/components/slider";
+//@import "node_modules/materialize-css/sass/components/carousel";
+//@import "node_modules/materialize-css/sass/components/tapTarget";
+@import "../../node_modules/materialize-css/sass/components/pulse";
+
+
+//@import "node_modules/materialize-css/sass/components/datepicker";
+//@import "node_modules/materialize-css/sass/components/timepicker";
+
+
+.modal {
+
+  &.open {
+    display: inline-block;
+    z-index: 1;
+    top: 10%;
+
+    + .backdrop {
+      content: "";
+      background: rgba(0,0,0, 0.2);
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      z-index: 0;
+    }
+  }
+}
+
+.fixed-action-btn {
+  position: fixed;
+  right: 23px;
+  bottom: 23px;
+  padding-top: 15px;
+  margin-bottom: 0;
+  z-index: 997;
+
+  &.top-right {
+    bottom: unset;
+    top: 23px;
+  }
+}
+
+input.as-title.h4 {
+  @extend h4;
+  height: 1.1 * $h4-fontsize;
+}
+
+input.invisible {
+  height: $button-height;
+  margin: 0;
+  border-bottom: 0;
+  font-size: 1rem;
+
+  &:focus {
+    border-bottom: 0 !important;
+    box-shadow: none !important;
+  }
+}
+
+
+.material-cb {
+
+  & + div {
+    cursor: pointer;
+    margin-right: 10px;
+    display: inline-block;
+  }
+
+  & + div:after {
+    content: "check_box_outline_blank";
+    font-family: "Material Icons", sans-serif;
+    font-size: 1.5rem;
+    top: -.25rem;
+    position: relative;
+  }
+
+  &:checked + div:after {
+    content: "check_box"
+  }
+
+  &[disabled] + div {
+    opacity: 0.4;
+    cursor: default;
+  }
+}
+
+.material-icons.expanded {
+  transform: rotate(90deg);
+}

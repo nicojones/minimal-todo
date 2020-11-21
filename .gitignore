@@ -22,3 +22,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# DO NOT UPLOAD the configuration file to github
+functions/util/config.js

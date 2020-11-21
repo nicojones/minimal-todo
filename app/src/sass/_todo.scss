@@ -1,0 +1,14 @@
+@import 'src/sass/colors';
+
+.projects-list-box {
+  background: $sidebar-color;
+  overflow: auto;
+  position: fixed;
+  height: 100%;
+}
+
+.tasks-list-box {
+  //@extend %nice-scrolls;
+  padding: 40px !important;
+  float: unset !important;
+}
