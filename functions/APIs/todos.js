@@ -23,11 +23,9 @@ exports.addTask = (request, response) => {
     .collection(`/projects/${ projectId }/tasks`)
     .add(newTodoItem)
     .then((doc) => {
-      const task = doc.data();
-      task.id = doc.id;
       return response.json({
         message: `New Task created`,
-        task: task
+        taskId: doc.id
       });
     })
     .catch((error) => {

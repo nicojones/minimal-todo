@@ -43,10 +43,14 @@ export const text = {
   addProjectPh: 'Enter a name for a new project',
   deleteProject: 'Delete this project and all the tasks? (cannot be undone)',
 
+  loggedInAs: (name) => `Logged in as ${ name }.`,
+
   login: {
     login: 'Log in',
     signup: 'Sign up',
-    logout: 'Log out'
+    logout: 'Log out',
+    noAccount: 'Don\'t have an account?',
+    yesAccount: 'Already a user?'
   }
 
 };

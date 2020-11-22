@@ -106,13 +106,28 @@ const projectService = {
     }
   },
 
-  addUserToProject: async (project, userIds) => {
+  getUserByEmail: async (userEmail) => {
+    try {
+      return await axios({
+        url: environment.url + `/user/search/`,
+        method: 'POST',
+        data: { email: userEmail },
+        headers: projectService.headers(),
+      }).then((result) => {
+        return result.data.user;
+      });
+    } catch (e) {
+      handleError('Error on searching email: ', e);
+    }
+  },
+
+  addUserToProject: async (project, username) => {
     try {
       return await axios({
         url: environment.url + `/project/${ project.id }/join`,
-        method: 'PATCH',
+        method: 'POST',
         headers: projectService.headers(),
-        data: { userIds: userIds }
+        data: { username: username }
       }).then((result) => {
         console.info('result from joining Project', result);
       });

@@ -81,6 +81,16 @@ const taskService = {
     }
   },
 
+  toggleTask: (projectId, task) => {
+    try {
+      return taskService.db
+        .doc(`/projects/${ projectId }/tasks/${ task.id }`)
+        .update({ checked: task.checked, subtasks: task.subtasks })
+    } catch (e) {
+      handleError('Error on updating "checked" task: ', e);
+    }
+  }
+
 };
 
 export default taskService;

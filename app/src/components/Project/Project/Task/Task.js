@@ -23,7 +23,10 @@ function Task ({ task }) {
       (task.subtasks || []).forEach((_task) => _task.checked = true);
       task.expanded = false;
     }
-    await taskService.updateTask(project.id, task);
+    await taskService.toggleTask(project.id, task).then((a) => {
+      console.log('anotehuntoaheutnh',a);
+    })
+    // await taskService.updateTask(project.id, task);
   }
 
   /**

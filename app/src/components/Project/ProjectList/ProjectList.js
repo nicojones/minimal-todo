@@ -3,6 +3,8 @@ import { text } from 'text';
 import './_project-list.scss';
 import projectService from 'services/projectService';
 import ProjectListDropdown from './ProjectListDropdown/ProjectListDropdown';
+import { LoggedInUserContext } from '../../../App';
+import { authService } from '../../../services/authService';
 
 function validProjectId (projectId, projects) {
   // If there's a project set in the URL and it's valid (it exists)
@@ -16,9 +18,10 @@ function ProjectList ({ projectKey, setProjectKey }) {
 
   const [isLoading, setIsLoading] = useState(false);
   const [projects, setProjects] = useState([]);
-  const [showAddProject, setShowAddProject] = useState(false);
 
   const [newProjectName, setNewProjectName] = useState('');
+
+  const user = React.useContext(LoggedInUserContext);
 
   useEffect(() => {
     const unsubscribeProjects = projectService.getListOfProjects((_projects) => {
@@ -27,11 +30,9 @@ function ProjectList ({ projectKey, setProjectKey }) {
     });
 
     return () => {
-      unsubscribeProjects();
+      unsubscribeProjects && unsubscribeProjects();
     };
   }, [projectKey]);
-
-  // }, [/* empty dependency means this function will NEVER be called again === componentDidMount */]);
 
   function addNewProject (e) {
     e.preventDefault();
@@ -41,7 +42,6 @@ function ProjectList ({ projectKey, setProjectKey }) {
     projectService
       .newProject({ name: newProjectName })
       .then((snap) => {
-        setShowAddProject(false);
         setNewProjectName('');
         setIsLoading(false);
         setProjectKey(snap.id);
@@ -70,8 +70,10 @@ function ProjectList ({ projectKey, setProjectKey }) {
         await deleteProject(project);
         break;
       case 'share':
-        const userId = prompt('User Id to join?');
-        await projectService.addUserToProject(project, [userId]);
+        const userEmail = prompt('User Email to join?');
+        await projectService.getUserByEmail(userEmail).then(async (user) => {
+          await projectService.addUserToProject(project, user.username);
+        });
         break;
       default:
         break;
@@ -121,6 +123,11 @@ function ProjectList ({ projectKey, setProjectKey }) {
 
         </li>
       </ul>
+      <small className="flex-row logout">
+        <span className="left subtle">{ text.loggedInAs(user.email) }</span>
+        <button className="btn-invisible right subtle"
+          onClick={ authService.logout }>{ text.login.logout }</button>
+      </small>
     </>
   );
 }

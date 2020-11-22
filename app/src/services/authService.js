@@ -3,10 +3,15 @@ import environment from './environment';
 import { auth } from './firebase';
 import { sha1 } from 'functions/sha1';
 
+let debounceAuth;
+
 export const authService = {
 
   authState: (done) => {
-    auth().onAuthStateChanged(done);
+    auth().onAuthStateChanged((user) => {
+      clearTimeout(debounceAuth);
+      debounceAuth = setTimeout(() => { done(user); }, 200);
+    });
   },
 
   signup: (signupData) => {
@@ -48,5 +53,13 @@ export const authService = {
         localStorage.setItem('AuthToken', authToken);
         return userCredential;
       });
+  },
+
+  logout: (e) => {
+    e.preventDefault();
+
+    auth().signOut().then(() => {
+      console.info('You\'ve been signed out of the app');
+    })
   }
 };

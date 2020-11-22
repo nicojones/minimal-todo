@@ -11,7 +11,7 @@ exports.addProject = (request, response) => {
   const newProject = {
     name: request.body.name,
     timestamp: new Date().toISOString(),
-    uids: [ request.user.uid ],
+    uids: [request.user.uid],
     shared: false
   };
 
@@ -49,7 +49,10 @@ exports.deleteProject = (request, response) => {
         // Still some users -> UPDATE
         return db
           .doc(`/projects/${ projectId }`)
-          .update({ uids: userIds, shared: userIds.length > 1 });
+          .update({
+            uids: userIds,
+            shared: userIds.length > 1
+          });
       } else {
         // No more users -> DELETE
         return db
@@ -84,14 +87,32 @@ exports.updateProject = (request, response) => {
 
 exports.addUserToProject = (request, response) => {
   const projectId = request.params.projectId;
+  const username = request.body.username;
+  let userId;
 
-  const userIds = [request.user.uid, ...request.body.userIds];
-
-  let document = db.doc(`/projects/${ projectId }`);
-  document.update({
-    uids: userIds,
-    shared: userIds.length > 1
-  })
+  // First check if the ID is valid:
+  db
+    .doc(`/users/${ username }`)
+    .get()
+    .then((doc) => {
+      if (!doc.exists) {
+        response.status(404).json({ error: `User ${ userId } does not exist` });
+      }
+      userId = doc.data().userId;
+      return db
+        .doc(`/projects/${ projectId }`)
+        .get()
+    })
+    .then((doc) => {
+      const userIds = doc.data().uids;
+      userIds.push(userId);
+      return db
+        .doc(`/projects/${ projectId }`)
+        .update({
+          uids: userIds,
+          shared: userIds.length > 1
+        });
+    })
     .then((doc) => {
       response.json({ message: `Users added successfully` });
     })
@@ -101,4 +122,4 @@ exports.addUserToProject = (request, response) => {
         error: error.code
       });
     });
-}
+};

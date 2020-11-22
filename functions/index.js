@@ -5,6 +5,7 @@ const cors = require('cors');
 app.use(cors());
 
 const auth = require('./util/auth');
+const { searchUserByEmail } = require('./APIs/users');
 
 const { addUserToProject } = require('./APIs/projects');
 
@@ -28,19 +29,22 @@ const {
   uploadProfilePhoto,
   getUserDetail,
   updateUserDetails
-} = require('./APIs/users');
+} = require('./APIs/usersAuth');
 
 // ProjectList
 app.post('/project', auth, addProject);
 app.delete('/project/:projectId', auth, canAccessProject, deleteProject);
 app.put('/project/:projectId', auth, canAccessProject, updateProject);
-app.patch('/project/:projectId/join', auth, canAccessProject, addUserToProject);
+app.post('/project/:projectId/join', auth, canAccessProject, addUserToProject);
 // Todos
 app.post('/project/:projectId/task', auth, canAccessProject, addTask);
 app.delete('/project/:projectId/task/:taskId', auth, canAccessProject, deleteTask);
 app.put('/project/:projectId/task/:taskId', auth, canAccessProject, updateTask);
 
-// Users
+// User functions
+app.post('/user/search', auth, searchUserByEmail);
+
+// Users Auth functions
 app.post('/login', loginUser);
 app.post('/signup', signUpUser);
 app.post('/user/image', auth, uploadProfilePhoto);

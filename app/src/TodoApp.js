@@ -5,18 +5,26 @@ import projectService from 'services/projectService';
 import Project from 'components/Project/Project/Project';
 import NoProject from 'components/Project/NoProject/NoProject';
 import ProjectList from 'components/Project/ProjectList/ProjectList';
+import { useHistory, useParams } from 'react-router-dom';
+import { LoggedInUserContext } from 'App';
+import { urls } from './urls';
 
 export const ProjectContext = React.createContext({});
 
+
 function TodoApp () {
+  const history = useHistory();
+  const { projectKeyParam } = useParams();
 
-  const [projectKey, setProjectKey] = useState(window.location.hash.substring(1));
-
+  const [projectKey, setProjectKey] = useState(projectKeyParam || '');
   const [project, setProject] = useState({});
   const [projectTasks, setProjectTasks] = useState([]);
 
   useEffect(() => {
-    window.location.hash = projectKey || '';
+
+    if (projectKey !== String(projectKeyParam)) {
+      history.push(urls.project(projectKey));
+    }
 
     if (projectKey) {
 
@@ -29,11 +37,16 @@ function TodoApp () {
       });
 
       return () => {
-        unsubscribeProject();
-        unsubscribeTasks();
+        unsubscribeProject && unsubscribeProject();
+        unsubscribeTasks && unsubscribeTasks();
       };
     }
   }, [projectKey]);
+
+  if (!React.useContext(LoggedInUserContext)) {
+    history.push(urls.login);
+    return null;
+  }
 
   return (
     <>

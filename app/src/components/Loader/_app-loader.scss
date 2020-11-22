@@ -11,4 +11,12 @@
   background: rgba($loader-bg-color, 0.6);
   backdrop-filter: blur(3px);
   z-index: 1000; // it needs to be above everything else...
+
+  > .loader-img {
+    background: url("../../assets/loader.svg");
+    background-position: center;
+    width: 120px;
+    height: 120px;
+    background-size: contain;
+  }
 }

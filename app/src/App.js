@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
+import { Route, Switch, HashRouter as Router } from 'react-router-dom';
 import Signup from './login/Signup';
 import Login from './login/Login';
 import TodoApp from './TodoApp';
 import { authService } from './services/authService';
 import Loader from './components/Loader/Loader';
 import HomePage from './components/HomePage/HomePage';
+import { urls } from './urls';
 
 export const LoggedInUserContext = React.createContext({});
 
@@ -15,9 +16,9 @@ function App () {
   const [user, setUser] = useState(false);
 
   authService.authState((user) => {
-    console.info('User state changed', user && user.refreshToken);
-    setLoaded(true);
+    console.info('User logged in: ', !!user);
     setUser(user);
+    setLoaded(true);
   });
 
   return (
@@ -27,21 +28,15 @@ function App () {
           {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */ }
           <Switch>
-            <Route path="/" exact={ true }>
+            <Route path={ urls.home } exact={ true }>
               <HomePage loaded={ loaded }/>
             </Route>
             { loaded
               ?
               <>
-                <Route path="/signup">
-                  <Signup/>
-                </Route>
-                <Route path="/login">
-                  <Login/>
-                </Route>
-                <Route path="/app">
-                  <TodoApp/>
-                </Route>
+                <Route path={ urls.signup } component={ Signup }/>
+                <Route path={ urls.login } component={ Login }/>
+                <Route path={ `${ urls.project(':projectKeyParam?') }` } component={ TodoApp }/>
               </>
               : <Loader/>
             }

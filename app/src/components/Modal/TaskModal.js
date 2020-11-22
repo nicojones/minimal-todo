@@ -103,7 +103,7 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
         <ul className="list-unstyled flex-column">
           {
             (subtasks || []).map((sub) =>
-              <li key={ sub.id } title={ sub.timestamp } className="block">
+              <li key={ sub.id } title={ sub.timestamp.toISOString() } className="block">
                 <label className="left">
                   <input
                     type="checkbox" checked={ sub.checked }
