@@ -1,4 +1,4 @@
-const { db } = require('../util/admin');
+const { db } = require('../util/firebase');
 
 function canAccessProject (request, response, next) {
   const projectId = request.params.projectId;

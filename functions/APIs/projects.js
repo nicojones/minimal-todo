@@ -1,4 +1,5 @@
-const { db } = require('../util/admin');
+const { db } = require('../util/firebase');
+const { deleteCollection } = require('../util/deleteCollection');
 
 exports.addProject = (request, response) => {
   if ((request.body.name || '').trim() === '') {
@@ -41,7 +42,7 @@ exports.deleteProject = (request, response) => {
   db
     .doc(`/projects/${ projectId }`)
     .get()
-    .then((projDoc) => {
+    .then(async (projDoc) => {
       const userIds = projDoc.data().uids.filter((uid) => uid !== request.user.uid);
       projectName = projDoc.data().name;
 
@@ -55,9 +56,14 @@ exports.deleteProject = (request, response) => {
           });
       } else {
         // No more users -> DELETE
-        return db
-          .doc(`/projects/${ projectId }`)
-          .delete();
+        // const firebase = require('firebase');
+        // const config = require('../util/config');
+        // firebase.initializeApp(config);
+        // return firebase.functions().httpsCallable('recursiveDelete')({ path: `/projects/${ projectId }` });
+
+        // return db.doc(`/projects/${ projectId }`).delete();
+        await deleteCollection(db, `/projects/${ projectId }/tasks`, 100);
+        return db.doc(`/projects/${ projectId }`).delete();
       }
     })
     .then(() => {
@@ -101,7 +107,7 @@ exports.addUserToProject = (request, response) => {
       userId = doc.data().userId;
       return db
         .doc(`/projects/${ projectId }`)
-        .get()
+        .get();
     })
     .then((doc) => {
       const userIds = doc.data().uids;

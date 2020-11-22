@@ -10,31 +10,26 @@ export const authService = {
   authState: (done) => {
     auth().onAuthStateChanged((user) => {
       clearTimeout(debounceAuth);
-      debounceAuth = setTimeout(() => { done(user); }, 200);
+      debounceAuth = setTimeout(() => {
+        done(user);
+      }, 200);
     });
   },
 
   signup: (signupData) => {
-    const originalLoginData = {
-      password: signupData.password,
-      email: signupData.email
-    };
     return sha1(signupData.password)
       .then((sha1Password) => {
-        signupData.password = sha1Password;
-        return sha1(signupData.confirm);
-      })
-      .then((sha1Confirm) => {
-        signupData.confirm = sha1Confirm;
-
         return axios({
           url: `${ environment.url }/signup`,
           method: 'POST',
-          data: signupData
+          data: { ...signupData, password: sha1Password }
         });
       })
       .then((response) => {
-        return authService.login(originalLoginData);
+        return authService.login({
+          email: signupData.email,
+          password: signupData.password
+        });
       });
   },
 
@@ -60,6 +55,25 @@ export const authService = {
 
     auth().signOut().then(() => {
       console.info('You\'ve been signed out of the app');
-    })
+    });
+  },
+
+  validateSignup: (signupData) => {
+    console.log('data?', signupData)
+    if (!signupData.username) {
+      return 'Must enter a valid username';
+    }
+    if (!signupData.name || signupData.name.length <= 5) {
+      return 'Must enter a valid name';
+    }
+    if (!signupData.email || signupData.email.length <= 5) {
+      return 'Invalid email';
+    }
+    if (!signupData.password || !signupData.confirm) {
+      return 'Password can\'t be empty';
+    }
+    if (signupData.password !== signupData.confirm) {
+      return 'Passwords don\'t match';
+    }
   }
 };

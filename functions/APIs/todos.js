@@ -1,4 +1,4 @@
-const { db } = require('../util/admin');
+const { db } = require('../util/firebase');
 
 exports.addTask = (request, response) => {
   const projectId = request.params.projectId;

@@ -33,6 +33,7 @@ const projectService = {
       return projectService.db
         .collection(`/projects`)
         .where('uids', 'array-contains', auth().currentUser.uid)
+        // .orderBy('timestamp', 'desc')
         .onSnapshot((projectsDoc) => {
 
           const projects = [];

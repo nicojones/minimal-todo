@@ -24,7 +24,6 @@ const {
 } = require('./APIs/projects');
 
 const {
-  loginUser,
   signUpUser,
   uploadProfilePhoto,
   getUserDetail,
@@ -45,7 +44,7 @@ app.put('/project/:projectId/task/:taskId', auth, canAccessProject, updateTask);
 app.post('/user/search', auth, searchUserByEmail);
 
 // Users Auth functions
-app.post('/login', loginUser);
+// app.post('/login', loginUser);
 app.post('/signup', signUpUser);
 app.post('/user/image', auth, uploadProfilePhoto);
 app.post('/user', auth, updateUserDetails);

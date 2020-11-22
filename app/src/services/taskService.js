@@ -66,6 +66,7 @@ const taskService = {
     try {
       return taskService.db
         .collection(`/projects/${ projectKey }/tasks`)
+        .orderBy('timestamp', 'desc')
         .onSnapshot((tasksDoc) => {
         const tasks = [];
         tasksDoc.forEach((task) => {

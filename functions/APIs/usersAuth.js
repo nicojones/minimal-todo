@@ -1,6 +1,7 @@
-const { admin, db } = require('../util/admin');
+const { db, admin } = require('../util/firebase');
+const config = require('../util/config');
 
-const { validateLoginData, validateSignUpData } = require('../util/validators');
+const { validateSignUpData } = require('../util/validators');
 
 function getUserFromData (user) {
   return {
@@ -10,47 +11,6 @@ function getUserFromData (user) {
     userId: user.uid
   };
 }
-
-// Login
-// eslint-disable-next-line consistent-return
-exports.loginUser = (request, response) => {
-
-  const user = {
-    email: request.body.email,
-    password: request.body.password
-  };
-
-  const { valid, errors } = validateLoginData(user);
-  if (!valid) {
-    return response.status(400).json(errors);
-  }
-
-
-  let token, appUser;
-
-  firebase
-    .auth()
-    .signInWithEmailAndPassword(user.email, user.password)
-    .then((data) => {
-      return data.user.getIdToken();
-    })
-    .then((tokenHash) => {
-      token = tokenHash;
-      return db.collection('users').where('email', '==', user.email).limit(1).get();
-    })
-    .then((snapshot) => {
-      snapshot.forEach((doc) => (appUser = getUserFromData(doc.data())));
-      return response.json({ token, user: appUser });
-    })
-    .catch((error) => {
-      console.error(error);
-      return response.status(403).json(
-        {
-          message: 'Wrong credentials'
-        }
-      );
-    });
-};
 
 // Sign up
 // eslint-disable-next-line consistent-return
@@ -71,38 +31,33 @@ exports.signUpUser = (request, response) => {
   let token, appUser;
 
   db
-    .doc(`/${ col.users }/${ newUser.username }`)
+    .doc(`/users/${ newUser.username }`)
     .get()
     .then((doc) => {
       if (doc.exists) {
         return response.status(400).json({ username: `Username ${ newUser.username } already taken` });
       } else {
-        return firebase
-          .auth()
-          .createUserWithEmailAndPassword(
-            newUser.email,
-            newUser.password
-          );
+        return admin.auth()
+          .createUser({
+            email: newUser.email,
+            displayName: newUser.name,
+            password: newUser.password
+          });
       }
     })
     .then((data) => {
-      newUser.uid = data.user.uid;
       appUser = getUserFromData(newUser);
 
-      return data.user.getIdToken();
-    })
-    .then((tokenHash) => {
-      token = tokenHash;
       const userCredentials = {
         name: newUser.name,
         username: newUser.username,
         email: newUser.email,
         createdAt: new Date().toISOString(),
-        userId: appUser.userId
+        userId: data.uid
       };
 
       // Create user and set data
-      return db.doc(`/${ col.users }/${ newUser.username }`).set(userCredentials);
+      return db.doc(`/users/${ newUser.username }`).set(userCredentials);
     })
     .then(() => {
       // Return a message to the app.

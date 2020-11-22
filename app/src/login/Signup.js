@@ -4,26 +4,37 @@ import { Redirect, Link, useHistory } from 'react-router-dom';
 import { text } from 'text';
 import { urls } from 'urls';
 import { LoggedInUserContext } from '../App';
+import Loader from 'components/Loader/Loader';
 
 function Signup () {
 
   const history = useHistory();
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('user'));
   const [signup, setSignup] = useState({});
+  const [loading, setLoading] = useState(false);
 
 
   async function onSubmit (e) {
     e.preventDefault();
 
-    authService.signup(signup).then((responseData) => {
-      if (responseData.user) {
-        setSignup({});
-        setIsLoggedIn(true);
-      } else {
-        alert('error! please see console');
-        console.log(responseData);
-      }
-    });
+    const signupError = authService.validateSignup(signup);
+    if (!signupError) {
+      setLoading(true);
+      authService.signup(signup).then((responseData) => {
+        setLoading(false);
+        if (responseData.user) {
+          setSignup({});
+          setIsLoggedIn(true);
+        } else {
+          alert('error! please see console');
+          console.log(responseData);
+        }
+      }).catch(() => {
+        setLoading(false);
+      });
+    } else {
+      alert(signupError);
+    }
   }
 
   if (React.useContext(LoggedInUserContext)) {
@@ -38,6 +49,7 @@ function Signup () {
           ? <Redirect to="/app"/>
           :
           <>
+            { loading && <Loader/> }
             <div className="row">
               <form onSubmit={ onSubmit } className="flex-center-self center-block">
                 <input

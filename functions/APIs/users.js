@@ -1,4 +1,4 @@
-const { db } = require('../util/admin');
+const { db } = require('../util/firebase');
 
 exports.searchUserByEmail = (request, response) => {
   try {
