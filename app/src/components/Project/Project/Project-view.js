@@ -6,12 +6,15 @@ import Task from './Task/Task';
 
 
 export default function projectRender ({
-  /*inputElement,*/ submit, changed, completed, open, showCompleted, setShowCompleted, modalOpen, setModalOpen, allCompleted, project
+  submit, taskNameChange, completed, open, showCompleted, setShowCompleted, modalOpen, setModalOpen, allCompleted, project, isLoading
 }) {
 
   return (
     <>
-      <ProjectTitle project={ project } showCompleted={ showCompleted } setShowCompleted={ setShowCompleted }/>
+      <ProjectTitle
+        project={ project } showCompleted={ showCompleted } setShowCompleted={ setShowCompleted }
+        isLoading={ isLoading }
+      />
 
       <ul className="list-unstyled">
         { open.length ?
@@ -27,19 +30,24 @@ export default function projectRender ({
             key={ task.id }
             task={ task }
           />) }
-      </ul>
 
-      <form className="form-inline" onSubmit={ submit }>
-        <div className="form-group">
-          <div className="input-group mb-2">
-            <input
-              onChange={ changed } className="invisible"
-              placeholder={ text.addPh } required
-              autoComplete="off" /*ref={ inputElement }*/
-            />
-          </div>
-        </div>
-      </form>
+        <li className="task">
+          <form onSubmit={ submit }
+            className={ 'flex-row task-content form-inline' + (isLoading === 'task' ? ' loader-input' : '') }>
+            <i /* Just to give the right padding */ className="material-icons left v-hidden mr-11">add</i>
+            <i className="material-icons left subtle">add</i>
+            <div className="form-group">
+              <div className="input-group mb-2">
+                <input
+                  onChange={ taskNameChange } className="invisible f-100"
+                  placeholder={ text.addPh } required
+                  autoComplete="off" /*ref={ inputElement }*/
+                />
+              </div>
+            </div>
+          </form>
+        </li>
+      </ul>
 
       <TaskModal
         trigger={ {

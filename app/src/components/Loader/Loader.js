@@ -5,7 +5,7 @@ import React from 'react';
 function Loader () {
   return (
     <span className="app-loader">
-      <span>{ text.loading }</span>
+      <span className="loader-img loader-lg"/>
     </span>
   )
 }

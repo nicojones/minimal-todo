@@ -1,6 +1,7 @@
 import React  from 'react';
 import ReactDOM from 'react-dom';
 import 'sass/index.scss';
+import 'assets/loader.svg';
 // import 'materialize-css/dist/js/materialize.min.js';
 import App from 'App';
 

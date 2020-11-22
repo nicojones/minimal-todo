@@ -40,11 +40,17 @@
 
   .child-hover {
     display: none;
+
+    &.ch-hidden {
+      display: inline-block;
+      visibility: hidden;
+    }
   }
 
   &:hover {
     .child-hover {
       display: inline-block;
+      visibility: visible;
     }
   }
 }

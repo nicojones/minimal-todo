@@ -104,6 +104,21 @@ const projectService = {
     } catch (e) {
       handleError('Error on delete project: ', e);
     }
+  },
+
+  addUserToProject: async (project, userIds) => {
+    try {
+      return await axios({
+        url: environment.url + `/project/${ project.id }/join`,
+        method: 'PATCH',
+        headers: projectService.headers(),
+        data: { userIds: userIds }
+      }).then((result) => {
+        console.info('result from joining Project', result);
+      });
+    } catch (e) {
+      handleError('Error on joining project: ', e);
+    }
   }
 };
 

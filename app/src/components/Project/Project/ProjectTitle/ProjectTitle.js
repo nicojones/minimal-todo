@@ -1,11 +1,11 @@
 import React from 'react';
 import { text } from 'text';
 
-function ProjectTitle ({ project, showCompleted, setShowCompleted }) {
+function ProjectTitle ({ project, showCompleted, setShowCompleted, isLoading }) {
 
   return (
     project.editListName
-      ? <form onSubmit={ project.saveListName }>
+      ? <form onSubmit={ project.saveListName } className={ ( isLoading === 'name' ? ' loader-input' : '' ) }>
         <input
           className="as-title m0 invisible h4" autoFocus /*onBlur={ project.saveListName }*/
           value={ project.projectName }
@@ -13,7 +13,7 @@ function ProjectTitle ({ project, showCompleted, setShowCompleted }) {
         />
       </form>
       : <div className="flex-row">
-        <h4 className="max-content m0" onClick={ () => project.setEditListName(true) }>{ project.projectName }</h4>
+        <h5 className="max-content m0" onClick={ () => project.setEditListName(true) }>{ project.projectName }</h5>
         {
           showCompleted
             ? <button

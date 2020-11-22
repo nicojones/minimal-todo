@@ -1,6 +1,7 @@
 const dateToday = new Date().toISOString().slice(0, 10);
 
 export const text = {
+  gotoApp: 'Open app',
   loading: 'Loading app...',
   noListName: 'New Project ' + dateToday,
   addPh: 'Quick-add a task...',
@@ -40,6 +41,12 @@ export const text = {
   projects: 'Projects',
   addProject: 'Add a new project',
   addProjectPh: 'Enter a name for a new project',
-  deleteProject: 'Delete this project and all the tasks? (cannot be undone)'
+  deleteProject: 'Delete this project and all the tasks? (cannot be undone)',
+
+  login: {
+    login: 'Log in',
+    signup: 'Sign up',
+    logout: 'Log out'
+  }
 
 };

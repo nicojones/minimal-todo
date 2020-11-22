@@ -2,16 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { text } from 'text';
 import './_project-list.scss';
 import projectService from 'services/projectService';
+import ProjectListDropdown from './ProjectListDropdown/ProjectListDropdown';
 
-function validProjectId (id, projects) {
-  if (!id || !projects.filter((p) => p.id === id).length) {
-    return projects.length ? projects[0].id : '';
+function validProjectId (projectId, projects) {
+  // If there's a project set in the URL and it's valid (it exists)
+  if (projectId && projects.filter((p) => p.id === projectId).length) {
+    return projectId;
   }
-  return id;
+  return ''; // otherwise don't set any project.
 }
 
 function ProjectList ({ projectKey, setProjectKey }) {
 
+  const [isLoading, setIsLoading] = useState(false);
   const [projects, setProjects] = useState([]);
   const [showAddProject, setShowAddProject] = useState(false);
 
@@ -33,19 +36,24 @@ function ProjectList ({ projectKey, setProjectKey }) {
   function addNewProject (e) {
     e.preventDefault();
 
+    setIsLoading(true);
+
     projectService
       .newProject({ name: newProjectName })
       .then((snap) => {
         setShowAddProject(false);
         setNewProjectName('');
+        setIsLoading(false);
         setProjectKey(snap.id);
       });
   }
 
   async function deleteProject (project) {
     if (window.confirm(text.deleteProject)) {
-      setProjectKey('');
+      // setIsLoading(true);
       await projectService.deleteProject(project);
+      setProjectKey('');
+      // setIsLoading(false);
     }
   }
 
@@ -56,46 +64,61 @@ function ProjectList ({ projectKey, setProjectKey }) {
     setProjectKey(project.id);
   }
 
+  async function onAction (actionName, project) {
+    switch (actionName) {
+      case 'delete':
+        await deleteProject(project);
+        break;
+      case 'share':
+        const userId = prompt('User Id to join?');
+        await projectService.addUserToProject(project, [userId]);
+        break;
+      default:
+        break;
+    }
+  }
+
   return (
     <>
-      <h4>{ text.projects }</h4>
+      <h5 className="center-align">{ text.projects }</h5>
       <ul className="projects-list flex-column">
         {
           projects.map((proj) =>
-            <li key={ proj.id } className={ (projectKey === proj.id ? 'selected' : '') + ' mb-5 parent-hover ' }>
-              <button className="btn-invisible left" onClick={ () => setProject(proj) }>
-                { proj.name }
+            <li
+              key={ proj.id } className={ (projectKey === proj.id ? 'selected' : '') + ' mb-5 parent-hover flex-row' }
+            >
+              <ProjectListDropdown project={ proj } onAction={ onAction }/>
+              <button className="btn-invisible left left-align" onClick={ () => setProject(proj) }>
                 {
                   proj.shared &&
                   <i
-                    className="tiny material-icons subtle left m0"
+                    className="tiny material-icons subtle left mr-5"
                     title={ text.sharedProject }
                   >people_outline</i>
                 }
+                { proj.name }
                 {/*( { proj.openTasks } <span className="subtle">/ { proj.completedTasks }</span> )*/ }
               </button>
-              <button className="btn-invisible child-hover left" onClick={ () => deleteProject(proj) }>
-                <i className="tiny material-icons subtle">delete</i>
-              </button>
-
             </li>
           )
         }
-        <li key="new-project">
-          {
-            showAddProject
-              ? <form onSubmit={ addNewProject }>
-                <input
-                  className="invisible subtle" onChange={ (e) => setNewProjectName(e.target.value) }
-                  required minLength="3"
-                  value={ newProjectName } autoFocus placeholder={ text.addProjectPh }
-                  onBlur={ () => setShowAddProject(false) }
-                />
-              </form>
-              : <button className="btn-invisible btn-flat subtle" onClick={ () => setShowAddProject(true) }>
-                <i className="material-icons left tiny">add</i>{ text.addProject }
-              </button>
-          }
+        <li key="new-project" className="mb-5 parent-hover flex-row">
+          <button className="btn-invisible child-hover ch-hidden left">
+            <label htmlFor="new-project-input" className="pointer">
+              <i className="tiny material-icons subtle">add</i>
+            </label>
+          </button>
+          <form onSubmit={ addNewProject } className={ 'add-project flex-row' + (isLoading ? ' loader-input' : '') }>
+            <input
+              className="invisible subtle left-align"
+              onChange={ (e) => setNewProjectName(e.target.value) }
+              required minLength="3"
+              value={ newProjectName }
+              id="new-project-input"
+              placeholder={ text.addProjectPh }
+            />
+          </form>
+
         </li>
       </ul>
     </>

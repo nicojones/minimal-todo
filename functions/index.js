@@ -6,6 +6,8 @@ app.use(cors());
 
 const auth = require('./util/auth');
 
+const { addUserToProject } = require('./APIs/projects');
+
 const { canAccessProject } = require('./APIs/canAccess');
 
 const {
@@ -32,6 +34,7 @@ const {
 app.post('/project', auth, addProject);
 app.delete('/project/:projectId', auth, canAccessProject, deleteProject);
 app.put('/project/:projectId', auth, canAccessProject, updateProject);
+app.patch('/project/:projectId/join', auth, canAccessProject, addUserToProject);
 // Todos
 app.post('/project/:projectId/task', auth, canAccessProject, addTask);
 app.delete('/project/:projectId/task/:taskId', auth, canAccessProject, deleteTask);

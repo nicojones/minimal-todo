@@ -4,9 +4,11 @@ import taskService from 'services/taskService';
 import createTaskObject from 'functions/createTaskObject';
 import { text } from 'text';
 import projectRender from './Project-view';
+import projectService from '../../../services/projectService';
 
 function Project ({ project, projectTasks }) {
 
+  const [isLoading, setIsLoading] = useState('');
   const [showCompleted, setShowCompleted] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
   const [projectName, setProjectName] = useState(project.name || text.noListName);
@@ -29,34 +31,38 @@ function Project ({ project, projectTasks }) {
 
   async function submit (e) {
     e.preventDefault();
-    e.target[0].value = '';
+    setIsLoading('task');
     // inputElement.current && (inputElement.current.target.value = '');
 
     await taskService.addTask(project.id, createTaskObject({ name: taskName }));
+    e.target[0].value = '';
+    setIsLoading('');
   }
 
-  function changed (e) {
+  function taskNameChange (e) {
     taskName = e.target.value;
   }
 
   async function saveListName (e) {
     e.preventDefault();
 
-    await taskService.saveListName({ ...project, name: projectName });
+    setIsLoading('name');
+    await projectService.saveListName({ ...project, name: projectName });
     setEditListName(false);
+    setIsLoading('');
   }
 
   return projectRender({
-    // inputElement,
     open,
     completed,
     submit,
-    changed,
+    taskNameChange,
     showCompleted,
     setShowCompleted,
     modalOpen,
     allCompleted,
     setModalOpen,
+    isLoading,
     project: {
       projectName,
       saveListName,
