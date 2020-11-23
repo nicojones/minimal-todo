@@ -52,7 +52,6 @@ exports.signUpUser = (request, response) => {
         name: newUser.name,
         username: newUser.username,
         email: newUser.email,
-        createdAt: new Date().toISOString(),
         userId: data.uid
       };
 

@@ -7,7 +7,7 @@ function ProjectTitle ({ project, showCompleted, setShowCompleted, isLoading }) 
     project.editListName
       ? <form onSubmit={ project.saveListName } className={ ( isLoading === 'name' ? ' loader-input' : '' ) }>
         <input
-          className="as-title m0 invisible h4" autoFocus /*onBlur={ project.saveListName }*/
+          className="as-title m0 invisible h5" autoFocus /*onBlur={ project.saveListName }*/
           value={ project.projectName }
           onChange={ (e) => project.setProjectName(e.target.value) }
         />

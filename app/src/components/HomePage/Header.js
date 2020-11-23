@@ -10,7 +10,7 @@ function Header ({ loaded }) {
 
   return (
     <>
-      <nav>
+      <nav className="grey">
         <div className="nav-wrapper container">
           <Link to={ urls.app } className="brand-logo">Todo List</Link>
           <ul id="nav-mobile" className="right hide-on-med-and-down">

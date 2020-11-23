@@ -19,6 +19,7 @@ function TodoApp () {
   const [projectKey, setProjectKey] = useState(projectKeyParam || '');
   const [project, setProject] = useState({});
   const [projectTasks, setProjectTasks] = useState([]);
+  const [showSidebar, setShowSidebar] = useState(!window.isSmallScreen);
 
   useEffect(() => {
 
@@ -50,14 +51,29 @@ function TodoApp () {
 
   return (
     <>
-      <div className="row m0 w-100">
-        <div className="col s3 projects-list-box">
-          <ProjectList
-            projectKey={ projectKey }
-            setProjectKey={ setProjectKey }
-          />
+      <nav className="grey">
+        <div className="nav-wrapper">
+          <a className="sidenav-triggert btn-subtle" onClick={ () => setShowSidebar(!showSidebar) }>
+            <i className="material-icons">menu</i>
+          </a>
+          <ul className="right hide-on-med-and-down">
+            <li><a href="sass.html">Sass</a></li>
+            <li><a href="badges.html">Components</a></li>
+            <li><a href="collapsible.html">Javascript</a></li>
+            <li><a href="mobile.html">Mobile</a></li>
+          </ul>
         </div>
-        <div className="col s9 tasks-list-box flex-column">
+      </nav>
+      <div id="todo-app" className={ (showSidebar ? '' : ' hidden-bar') }>
+        <div className={ 'projects-list-box' }>
+          <div className={ 'projects-list-box-inner' }>
+            <ProjectList
+              projectKey={ projectKey }
+              setProjectKey={ setProjectKey }
+            />
+          </div>
+        </div>
+        <div className="tasks-list-box flex-column">
           <ProjectContext.Provider
             value={ {
               id: project.id,
@@ -67,10 +83,11 @@ function TodoApp () {
             {
               projectKey
                 ? <Project project={ project } projectTasks={ projectTasks }/>
-                : <NoProject/>
+                : <NoProject setShowSidebar={ setShowSidebar }/>
             }
           </ProjectContext.Provider>
         </div>
+        <i/> { /* Thanks to this, we have three elements. Space-between works like a charm */}
       </div>
     </>
   );

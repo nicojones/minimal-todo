@@ -32,7 +32,7 @@ function Subtask ({ extraClass, task, saveSubtasks }) {
     <ul className={ 'list-unstyled flex-column ' + extraClass }>
       {
         (task.subtasks || []).map((sub) =>
-          <li key={ sub.id } title={ sub.timestamp.toISOString() } className="block">
+          <li key={ sub.id } title={ sub.timestamp } className="block">
             <label className="left">
               <input
                 type="checkbox" checked={ sub.checked }

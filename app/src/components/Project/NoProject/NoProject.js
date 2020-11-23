@@ -1,7 +1,9 @@
-function NoProject () {
+import { text } from 'config/text';
+
+function NoProject ({ setShowSidebar }) {
   return (
     <>
-      <h6>Select a project or create a new one.</h6>
+      <button className="btn-invisible left-align" onClick={ () => setShowSidebar(true) }>{ text.noProjSelected }</button>
     </>
   )
 }

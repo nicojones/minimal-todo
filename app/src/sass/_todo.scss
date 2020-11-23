@@ -1,16 +1,56 @@
 @import 'src/sass/colors';
+@import 'mixins';
+
+#todo-app {
+  @extend .flex-row;
+  justify-content: space-between;
+
+  &.hidden-bar {
+    //justify-content: center;
+    //@media (max-width: $hide-navbar-width) {
+    //  display: none;
+    //}
+    //@media (min-width: $hide-navbar-width) {
+    //  visibility: hidden;
+    //}
+    .projects-list-box-inner {
+      left: -$navbar-width;
+    }
+    .projects-list-box {
+      max-width: 0;
+    }
+  }
+}
+
+%left-sidebar {
+  display: inline-block;
+  min-height: 100px;
+  left: 0;
+  max-width: $navbar-width;
+}
 
 .projects-list-box {
-  background: $sidebar-color;
-  overflow: auto;
-  position: fixed;
-  height: 100%;
+  flex: 0 0 $navbar-width;
+  @extend %left-sidebar;
+  @include transition();
+  &-inner {
+    @include transition();
+    width: $navbar-width;
+    @extend %left-sidebar;
+    background: $sidebar-color;
+    overflow: auto;
+    position: absolute;
+    top: $navbar-height;
+    bottom: 0;
+  }
 }
 
 .tasks-list-box {
   //@extend %nice-scrolls;
   padding: 40px !important;
   float: unset !important;
+  justify-self: center;
+  width: $tasks-box-width;
 }
 
 .loader-input {
@@ -27,4 +67,14 @@
     background-size: contain;
   }
 
+}
+
+nav {
+  height: $navbar-height;
+  z-index: 1;
+}
+.nav-wrapper {
+  //max-width: 1000px;
+  padding: 0 50px;
+  margin: 0 auto;
 }

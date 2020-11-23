@@ -19,26 +19,26 @@
 @import "../../node_modules/materialize-css/sass/components/grid";
 @import "../../node_modules/materialize-css/sass/components/navbar";
 @import "../../node_modules/materialize-css/sass/components/typography";
-@import "../../node_modules/materialize-css/sass/components/transitions";
+//@import "../../node_modules/materialize-css/sass/components/transitions";
 //@import "node_modules/materialize-css/sass/components/cards";
-@import "../../node_modules/materialize-css/sass/components/toast";
+//@import "../../node_modules/materialize-css/sass/components/toast";
 //@import "node_modules/materialize-css/sass/components/tabs";
 //@import "node_modules/materialize-css/sass/components/tooltip";
 @import "../../node_modules/materialize-css/sass/components/buttons";
-@import "../../node_modules/materialize-css/sass/components/dropdown";
+//@import "../../node_modules/materialize-css/sass/components/dropdown";
 //@import "node_modules/materialize-css/sass/components/waves";
 @import "../../node_modules/materialize-css/sass/components/modal";
-@import "../../node_modules/materialize-css/sass/components/collapsible";
+//@import "../../node_modules/materialize-css/sass/components/collapsible";
 //@import "node_modules/materialize-css/sass/components/chips";
 //@import "node_modules/materialize-css/sass/components/materialbox";
 @import "../../node_modules/materialize-css/sass/components/forms/forms";
 //@import "node_modules/materialize-css/sass/components/table_of_contents";
-@import "../../node_modules/materialize-css/sass/components/sidenav";
-@import "../../node_modules/materialize-css/sass/components/preloader";
+//@import "../../node_modules/materialize-css/sass/components/sidenav";
+//@import "../../node_modules/materialize-css/sass/components/preloader";
 //@import "node_modules/materialize-css/sass/components/slider";
 //@import "node_modules/materialize-css/sass/components/carousel";
 //@import "node_modules/materialize-css/sass/components/tapTarget";
-@import "../../node_modules/materialize-css/sass/components/pulse";
+//@import "../../node_modules/materialize-css/sass/components/pulse";
 
 
 //@import "node_modules/materialize-css/sass/components/datepicker";
@@ -79,9 +79,9 @@
   }
 }
 
-input.as-title.h4 {
-  @extend h4;
-  height: 1.1 * $h4-fontsize;
+input.as-title.h5 {
+  @extend h5;
+  height: 1.1 * $h5-fontsize;
 }
 
 input.invisible {
@@ -126,3 +126,4 @@ input.invisible {
 .material-icons.expanded {
   transform: rotate(90deg);
 }
+

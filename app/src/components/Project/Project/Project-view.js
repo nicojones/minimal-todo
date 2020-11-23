@@ -5,41 +5,39 @@ import ProjectTitle from './ProjectTitle/ProjectTitle';
 import Task from './Task/Task';
 
 
-export default function projectRender ({
-  submit, taskNameChange, completed, open, showCompleted, setShowCompleted, modalOpen, setModalOpen, allCompleted, project, isLoading
-}) {
+export default function projectRender (p) {
 
   return (
     <>
       <ProjectTitle
-        project={ project } showCompleted={ showCompleted } setShowCompleted={ setShowCompleted }
-        isLoading={ isLoading }
+        project={ p.project } showCompleted={ p.showCompleted } setShowCompleted={ p.setShowCompleted }
+        isLoading={ p.isLoading }
       />
 
       <ul className="list-unstyled">
-        { open.length ?
-          open.map((task) =>
+        { p.open.length ?
+          p.open.map((task) =>
             <Task
               key={ task.id }
               task={ task }
             />)
-          : (completed.length ? <li><h5 className="subtle max-content">{ allCompleted }</h5></li> : '')
+          : (p.completed.length ? <li><h5 className="subtle max-content">{ p.allCompleted }</h5></li> : '')
         }
-        { showCompleted && completed.map((task) =>
+        { p.showCompleted && p.completed.map((task) =>
           <Task
             key={ task.id }
             task={ task }
           />) }
 
         <li className="task">
-          <form onSubmit={ submit }
-            className={ 'flex-row task-content form-inline' + (isLoading === 'task' ? ' loader-input' : '') }>
+          <form onSubmit={ p.submit }
+            className={ 'flex-row task-content form-inline' + (p.isLoading === 'task' ? ' loader-input' : '') }>
             <i /* Just to give the right padding */ className="material-icons left v-hidden mr-11">add</i>
             <i className="material-icons left subtle">add</i>
             <div className="form-group">
               <div className="input-group mb-2">
                 <input
-                  onChange={ taskNameChange } className="invisible f-100"
+                  onChange={ p.taskNameChange } className="invisible f-100"
                   placeholder={ text.addPh } required
                   autoComplete="off" /*ref={ inputElement }*/
                 />
@@ -55,8 +53,8 @@ export default function projectRender ({
           text: <i className="material-icons">add</i>
         } }
         task={ {} }
-        modalOpen={ modalOpen }
-        setModalOpen={ setModalOpen }
+        modalOpen={ p.modalOpen }
+        setModalOpen={ p.setModalOpen }
       />
     </>
   );

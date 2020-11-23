@@ -1,7 +1,7 @@
 function Footer () {
   return (
     <>
-      <footer className="page-footer">
+      <footer className="page-footer grey">
         <div className="container">
           <div className="row">
             <div className="col l6 s12">

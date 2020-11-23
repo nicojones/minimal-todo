@@ -5,6 +5,7 @@ import { text } from 'config/text';
 import taskService from 'services/taskService';
 import { ProjectContext } from 'TodoApp';
 
+
 function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
 
   const [subtaskName, setSubtaskName] = useState('');
@@ -103,7 +104,7 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
         <ul className="list-unstyled flex-column">
           {
             (subtasks || []).map((sub) =>
-              <li key={ sub.id } title={ sub.timestamp.toISOString() } className="block">
+              <li key={ sub.id } title={ sub.timestamp } className="block">
                 <label className="left">
                   <input
                     type="checkbox" checked={ sub.checked }

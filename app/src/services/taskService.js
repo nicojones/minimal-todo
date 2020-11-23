@@ -4,6 +4,7 @@ import environment from './environment';
 import { handleError } from './handleError';
 import cogoToast from 'cogo-toast';
 import { defaultToast } from '../config/defaultToast';
+import { time } from 'functions/time';
 
 const taskService = {
 
@@ -71,15 +72,21 @@ const taskService = {
         .collection(`/projects/${ projectKey }/tasks`)
         .orderBy('timestamp', 'desc')
         .onSnapshot((tasksDoc) => {
-        const tasks = [];
-        tasksDoc.forEach((task) => {
-          tasks.push({
-            id: task.id,
-            ...task.data()
+          const tasks = [];
+          tasksDoc.forEach((task) => {
+            const taskData = task.data();
+
+            if (taskData.subtasks.length) {
+              taskData.subtasks.forEach((t) => t.timestamp = time(t.timestamp));
+            }
+            tasks.push({
+              id: task.id,
+              ...taskData,
+              timestamp: time(taskData.timestamp)
+            });
           });
+          done(tasks);
         });
-        done(tasks);
-      });
     } catch (e) {
       handleError('Error on fetching tasks: ', e);
     }
@@ -89,7 +96,10 @@ const taskService = {
     try {
       return taskService.db
         .doc(`/projects/${ projectId }/tasks/${ task.id }`)
-        .update({ checked: task.checked, subtasks: task.subtasks })
+        .update({
+          checked: task.checked,
+          subtasks: task.subtasks
+        });
     } catch (e) {
       handleError('Error on updating "checked" task: ', e);
     }
