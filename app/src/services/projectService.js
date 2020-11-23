@@ -2,6 +2,8 @@ import { db, auth } from './firebase';
 import axios from 'axios';
 import environment from './environment';
 import { handleError } from './handleError';
+import cogoToast from 'cogo-toast';
+import { defaultToast } from '../config/defaultToast';
 
 const projectService = {
 
@@ -70,6 +72,7 @@ const projectService = {
         data: project,
         headers: projectService.headers()
       }).then((result) => {
+        cogoToast.success(result.data.message, defaultToast);
         console.info('result from Edit Project PUT', result);
       });
     } catch (e) {
@@ -85,7 +88,8 @@ const projectService = {
         data: project,
         headers: projectService.headers()
       }).then((result) => {
-        console.info(result.data.message);
+        cogoToast.success(result.data.message, defaultToast);
+        console.info(result);
         return result.data.project;
       });
     } catch (e) {
@@ -100,6 +104,7 @@ const projectService = {
         method: 'DELETE',
         headers: projectService.headers()
       }).then((result) => {
+        cogoToast.success(result.data.message, defaultToast);
         console.info('result from project DELETE', result);
       });
     } catch (e) {
@@ -130,6 +135,7 @@ const projectService = {
         headers: projectService.headers(),
         data: { username: username }
       }).then((result) => {
+        cogoToast.success(result.data.message, defaultToast);
         console.info('result from joining Project', result);
       });
     } catch (e) {

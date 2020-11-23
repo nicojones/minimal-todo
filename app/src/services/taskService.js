@@ -2,6 +2,8 @@ import { db } from './firebase';
 import axios from 'axios';
 import environment from './environment';
 import { handleError } from './handleError';
+import cogoToast from 'cogo-toast';
+import { defaultToast } from '../config/defaultToast';
 
 const taskService = {
 
@@ -20,8 +22,9 @@ const taskService = {
         method: 'PUT',
         data: task,
         headers: taskService.headers()
-      }).then((result) => {
-        console.info('result from PUT', result);
+      }).then((response) => {
+        console.info('result from PUT', response);
+        cogoToast.success(response.data.message, defaultToast);
       });
     } catch (e) {
       handleError('Error on save task: ', e);
@@ -37,8 +40,9 @@ const taskService = {
         method: 'POST',
         data: task,
         headers: taskService.headers()
-      }).then((result) => {
-        console.info('result from POST', result);
+      }).then((response) => {
+        console.info('result from POST', response);
+        cogoToast.success(response.data.message, defaultToast);
       });
       // return await db.ref(`${ taskService.path }/tasks`).push(task);
     } catch (e) {
@@ -47,15 +51,14 @@ const taskService = {
   },
 
   deleteTask: async (projectKey, task) => {
-    console.info('Deleting task ', task.name, task.id);
-
     try {
       return await axios({
         url: environment.url + `/project/${ projectKey }/task/${ task.id }`,
         method: 'DELETE',
         headers: taskService.headers()
-      }).then((result) => {
-        console.info('result from DELETE', result);
+      }).then((response) => {
+        console.info('result from DELETE', response);
+        cogoToast.success(response.data.message, defaultToast);
       });
     } catch (e) {
       handleError('Error on delete task: ', e);
