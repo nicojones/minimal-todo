@@ -50,7 +50,10 @@ export const text = {
     signup: 'Sign up',
     logout: 'Log out',
     noAccount: 'Don\'t have an account?',
-    yesAccount: 'Already a user?'
-  }
+    yesAccount: 'Already a user?',
+    error: 'Invalid credentials',
+    success: 'Welcome Back!',
+    signupSuccess: 'Account created! Logging you in...'
+  },
 
 };

@@ -1,7 +1,7 @@
 import Modal from './Modal';
 import React, { useContext, useEffect, useState } from 'react';
 import createTaskObject from 'functions/createTaskObject';
-import { text } from 'text';
+import { text } from 'config/text';
 import taskService from 'services/taskService';
 import { ProjectContext } from 'TodoApp';
 

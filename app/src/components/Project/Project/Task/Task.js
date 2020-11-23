@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import './_task.scss';
 import TaskModal from 'components/Modal/TaskModal';
 import Subtask from './Subtask';
-import { text } from 'text';
+import { text } from 'config/text';
 import taskService from 'services/taskService';
 import { ProjectContext } from 'TodoApp';
 

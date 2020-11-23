@@ -6,7 +6,7 @@ import TodoApp from './TodoApp';
 import { authService } from './services/authService';
 import Loader from './components/Loader/Loader';
 import HomePage from './components/HomePage/HomePage';
-import { urls } from './urls';
+import { urls } from 'config/urls';
 
 export const LoggedInUserContext = React.createContext({});
 

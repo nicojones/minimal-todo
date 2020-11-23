@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { LoggedInUserContext } from 'App';
-import { text } from 'text';
-import { urls } from 'urls';
+import { text } from 'config/text';
+import { urls } from 'config/urls';
 import { Link } from 'react-router-dom';
 import { authService } from 'services/authService';
 

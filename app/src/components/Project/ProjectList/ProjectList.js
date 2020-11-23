@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { text } from 'text';
+import { text } from 'config/text';
 import './_project-list.scss';
 import projectService from 'services/projectService';
 import ProjectListDropdown from './ProjectListDropdown/ProjectListDropdown';

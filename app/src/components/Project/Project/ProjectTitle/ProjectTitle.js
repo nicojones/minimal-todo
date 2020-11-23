@@ -1,5 +1,5 @@
 import React from 'react';
-import { text } from 'text';
+import { text } from 'config/text';
 
 function ProjectTitle ({ project, showCompleted, setShowCompleted, isLoading }) {
 

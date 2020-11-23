@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { authService } from 'services/authService';
 import { Redirect, Link, useHistory } from 'react-router-dom';
-import { urls } from 'urls';
-import { text } from 'text';
+import { urls } from 'config/urls';
+import { text } from 'config/text';
 import { LoggedInUserContext } from 'App';
+import cogoToast from 'cogo-toast';
 
 function Login () {
 
@@ -18,9 +19,12 @@ function Login () {
       if (responseData.user) {
         setLogin({});
         setIsLoggedIn(true);
+        cogoToast.success(text.login.success, { position: 'bottom-center' });
       } else {
-        alert('error! please see console');
-        console.log(responseData);
+        if (responseData.error.code === 400) {
+          cogoToast.error(text.login.error, { position: 'bottom-center' })
+        }
+        console.info(responseData);
       }
     });
   }

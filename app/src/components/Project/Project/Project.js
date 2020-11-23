@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import './_project.scss';
 import taskService from 'services/taskService';
 import createTaskObject from 'functions/createTaskObject';
-import { text } from 'text';
+import { text } from 'config/text';
 import projectRender from './Project-view';
 import projectService from '../../../services/projectService';
 

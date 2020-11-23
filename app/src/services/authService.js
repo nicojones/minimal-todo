@@ -1,5 +1,6 @@
 import axios from 'axios';
 import environment from './environment';
+import cogoToast from 'cogo-toast';
 import { auth } from './firebase';
 import { sha1 } from 'functions/sha1';
 
@@ -22,7 +23,10 @@ export const authService = {
         return axios({
           url: `${ environment.url }/signup`,
           method: 'POST',
-          data: { ...signupData, password: sha1Password }
+          data: {
+            ...signupData,
+            password: sha1Password
+          }
         });
       })
       .then((response) => {
@@ -54,26 +58,26 @@ export const authService = {
     e.preventDefault();
 
     auth().signOut().then(() => {
-      console.info('You\'ve been signed out of the app');
+      cogoToast.success('You\'ve been signed out of the app', { position: 'bottom-center' });
     });
   },
 
   validateSignup: (signupData) => {
-    console.log('data?', signupData)
     if (!signupData.username) {
-      return 'Must enter a valid username';
+      return { username: 'Must enter a valid username' };
     }
     if (!signupData.name || signupData.name.length <= 5) {
-      return 'Must enter a valid name';
+      return { name: 'Must enter a valid name' };
     }
     if (!signupData.email || signupData.email.length <= 5) {
-      return 'Invalid email';
+      return { email: 'Invalid email' };
     }
     if (!signupData.password || !signupData.confirm) {
-      return 'Password can\'t be empty';
+      return { password: 'Password can\'t be empty' };
     }
     if (signupData.password !== signupData.confirm) {
-      return 'Passwords don\'t match';
+      return { password: 'Passwords don\'t match' };
     }
+    return {};
   }
 };

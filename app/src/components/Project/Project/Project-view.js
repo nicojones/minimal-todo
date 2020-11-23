@@ -1,5 +1,5 @@
 import React from 'react';
-import { text } from 'text';
+import { text } from 'config/text';
 import TaskModal from 'components/Modal/TaskModal';
 import ProjectTitle from './ProjectTitle/ProjectTitle';
 import Task from './Task/Task';

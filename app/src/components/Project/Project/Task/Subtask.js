@@ -1,4 +1,4 @@
-import { text } from 'text';
+import { text } from 'config/text';
 import React, { useState } from 'react';
 
 function Subtask ({ extraClass, task, saveSubtasks }) {

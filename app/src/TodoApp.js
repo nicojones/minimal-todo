@@ -7,7 +7,7 @@ import NoProject from 'components/Project/NoProject/NoProject';
 import ProjectList from 'components/Project/ProjectList/ProjectList';
 import { useHistory, useParams } from 'react-router-dom';
 import { LoggedInUserContext } from 'App';
-import { urls } from './urls';
+import { urls } from 'config/urls';
 
 export const ProjectContext = React.createContext({});
 

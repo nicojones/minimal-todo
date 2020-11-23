@@ -1,4 +1,4 @@
-import { urls } from '../urls';
+import { urls } from 'config/urls';
 
 export const handleError = (errorText, error) => {
   console.error(errorText, error);
