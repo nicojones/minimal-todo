@@ -49,7 +49,7 @@ export default function projectRender (p) {
 
       <TaskModal
         trigger={ {
-          className: 'btn-floating btn-large fixed-action-btn subtle-bg',
+          className: 'btn-floating btn-large new-task fixed-action-btn subtle-bg',
           text: <i className="material-icons">add</i>
         } }
         task={ {} }

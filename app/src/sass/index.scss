@@ -9,6 +9,7 @@ body {
   background: $app-background-color;
 
   //overflow: hidden; // !!!!! TODO - we should be able to solve this without the hidden!
+  overflow-x: hidden;
 }
 
 #root {

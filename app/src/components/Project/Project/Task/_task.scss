@@ -11,8 +11,10 @@
   width: 100%;
   padding: 10px;
 
-  &:hover {
-    @include box_shadow();
+  @media (pointer: fine) {
+    &:hover {
+      @include box_shadow();
+    }
   }
 
   .task-name {
@@ -23,6 +25,7 @@
     .task-name {
       text-decoration: line-through;
     }
+
     .task-name, .material-cb + div {
       opacity: 0.4;
     }
@@ -38,12 +41,19 @@
 .parent-hover {
   border-radius: 8px;
 
-  .child-hover {
-    display: none;
+  @media (pointer: fine) {
+    .child-hover {
+      display: none;
 
-    &.ch-hidden {
-      display: inline-block;
-      visibility: hidden;
+      &.ch-hidden {
+        display: inline-block;
+        visibility: hidden;
+      }
+    }
+  }
+  @media (pointer: coarse) {
+    .child-hover {
+      color: $subtle-color;
     }
   }
 

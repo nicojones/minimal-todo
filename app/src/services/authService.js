@@ -9,7 +9,7 @@ let debounceAuth;
 export const authService = {
 
   authState: (done) => {
-    auth().onAuthStateChanged((user) => {
+    auth().onIdTokenChanged((user) => {
       clearTimeout(debounceAuth);
       debounceAuth = setTimeout(() => {
         done(user);

@@ -39,7 +39,7 @@
     @extend %left-sidebar;
     background: $sidebar-color;
     overflow: auto;
-    position: absolute;
+    position: fixed;
     top: $navbar-height;
     bottom: 0;
   }
@@ -47,10 +47,11 @@
 
 .tasks-list-box {
   //@extend %nice-scrolls;
-  padding: 40px !important;
+  padding: 20px !important;
   float: unset !important;
   justify-self: center;
   width: $tasks-box-width;
+  min-width: $tasks-box-min-width;
 }
 
 .loader-input {

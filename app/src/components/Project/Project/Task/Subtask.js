@@ -29,7 +29,7 @@ function Subtask ({ extraClass, task, saveSubtasks }) {
   }
 
   return (
-    <ul className={ 'list-unstyled flex-column ' + extraClass }>
+    <ul className={ 'list-unstyled flex-column pt-5 ' + extraClass }>
       {
         (task.subtasks || []).map((sub) =>
           <li key={ sub.id } title={ sub.timestamp } className="block">
@@ -58,7 +58,7 @@ function Subtask ({ extraClass, task, saveSubtasks }) {
               />
             </form>
             :
-            <button className="btn-flat subtle" onClick={ () => setAddSubtaskInput(true) }>
+            <button className="btn-flat subtle p0" onClick={ () => setAddSubtaskInput(true) }>
               <i className="material-icons left">add</i>
               { text.addSubtaskBtn }
             </button>

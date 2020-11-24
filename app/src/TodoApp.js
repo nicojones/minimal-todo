@@ -51,19 +51,21 @@ function TodoApp () {
 
   return (
     <>
-      <nav className="grey">
-        <div className="nav-wrapper">
-          <a className="sidenav-triggert btn-subtle" onClick={ () => setShowSidebar(!showSidebar) }>
-            <i className="material-icons">menu</i>
-          </a>
-          <ul className="right hide-on-med-and-down">
-            <li><a href="sass.html">Sass</a></li>
-            <li><a href="badges.html">Components</a></li>
-            <li><a href="collapsible.html">Javascript</a></li>
-            <li><a href="mobile.html">Mobile</a></li>
-          </ul>
-        </div>
-      </nav>
+      <div className="navbar-fixed">
+        <nav className="grey">
+          <div className="nav-wrapper">
+            <a className="sidenav-triggert btn-subtle" onClick={ () => setShowSidebar(!showSidebar) }>
+              <i className="material-icons">menu</i>
+            </a>
+            <ul className="right hide-on-med-and-down">
+              <li><a href="sass.html">Sass</a></li>
+              <li><a href="badges.html">Components</a></li>
+              <li><a href="collapsible.html">Javascript</a></li>
+              <li><a href="mobile.html">Mobile</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
       <div id="todo-app" className={ (showSidebar ? '' : ' hidden-bar') }>
         <div className={ 'projects-list-box' }>
           <div className={ 'projects-list-box-inner' }>
@@ -87,7 +89,7 @@ function TodoApp () {
             }
           </ProjectContext.Provider>
         </div>
-        <i/> { /* Thanks to this, we have three elements. Space-between works like a charm */}
+        <i/> { /* Thanks to this, we have three elements. Space-between works like a charm */ }
       </div>
     </>
   );
