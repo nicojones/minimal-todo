@@ -5,7 +5,7 @@ import 'firebase/firestore';
 import environment from './environment';
 
 
-firebase.initializeApp(environment);
+firebase.initializeApp(environment.firebase);
 
 export const analytics = firebase.analytics;
 export const auth = firebase.auth;
