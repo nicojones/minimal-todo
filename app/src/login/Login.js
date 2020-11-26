@@ -61,13 +61,13 @@ function Login () {
                   value={ login.email || '' } onChange={ (e) => setLogin({
                   ...login,
                   email: e.target.value
-                }) } placeholder="email" type="email" autoFocus
+                }) } placeholder="email" type="email" autoFocus required
                 />
                 <input
                   value={ login.password || '' } onChange={ (e) => setLogin({
                   ...login,
                   password: e.target.value
-                }) } placeholder="password" type="password"
+                }) } placeholder="password" type="password" autoComplete="off" required
                 />
                 <div className="flex-row">
                   <button type="submit" className="btn btn-block">{ text.login.login }</button>

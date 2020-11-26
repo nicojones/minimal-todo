@@ -69,35 +69,35 @@ function Signup () {
                   value={ signup.email || '' } onChange={ (e) => setSignup({
                   ...signup,
                   email: e.target.value
-                }) } placeholder="email" type="email" required autoFocus
+                }) } placeholder="email" type="email" required autoFocus autoComplete="off"
                 />
                 { signupError.email && <small>{ signupError.email }</small> }
                 <input
                   value={ signup.name || '' } onChange={ (e) => setSignup({
                   ...signup,
                   name: e.target.value
-                }) } placeholder="name" required
+                }) } placeholder="name" required autoComplete="off"
                 />
                 { signupError.name && <small>{ signupError.name }</small> }
                 <input
                   value={ signup.username || '' } onChange={ (e) => setSignup({
                   ...signup,
                   username: e.target.value
-                }) } placeholder="username" required
+                }) } placeholder="username" required autoComplete="off"
                 />
                 { signupError.username && <small>{ signupError.username }</small> }
                 <input
                   value={ signup.password || '' } onChange={ (e) => setSignup({
                   ...signup,
                   password: e.target.value
-                }) } placeholder="password" type="password" required
+                }) } placeholder="password" type="password" required autoComplete="off"
                 />
                 { signupError.password && <small>{ signupError.password }</small> }
                 <input
                   value={ signup.confirm || '' } onChange={ (e) => setSignup({
                   ...signup,
                   confirm: e.target.value
-                }) } placeholder="confirm" type="password" required
+                }) } placeholder="confirm" type="password" required autoComplete="off"
                 />
                 { signupError.password && <small>{ signupError.password }</small> }
                 <div className="flex-row">
