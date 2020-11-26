@@ -34,7 +34,7 @@ function Project ({ project, projectTasks }) {
     setIsLoading('task');
     // inputElement.current && (inputElement.current.target.value = '');
 
-    await taskService.addTask(project.id, createTaskObject({ name: taskName }));
+    const taskId = await taskService.addTask(project.id, createTaskObject({ name: taskName }));
     e.target[0].value = '';
     setIsLoading('');
   }

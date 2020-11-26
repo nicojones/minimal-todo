@@ -8,12 +8,20 @@ let debounceAuth;
 
 export const authService = {
 
+  setToken: (token) => {
+    localStorage.setItem('AuthToken', token);
+  },
+
   authState: (done) => {
     auth().onIdTokenChanged((user) => {
       clearTimeout(debounceAuth);
       debounceAuth = setTimeout(() => {
+        user && user.getIdToken(true).then((token) => {
+          authService.setToken(token)
+        });
+
         done(user);
-      }, 200);
+      }, 300);
     });
   },
 
@@ -49,7 +57,7 @@ export const authService = {
         return auth().currentUser.getIdToken();
       })
       .then((authToken) => {
-        localStorage.setItem('AuthToken', authToken);
+        authService.setToken(authToken);
         return userCredential;
       });
   },

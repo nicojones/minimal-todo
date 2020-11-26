@@ -44,6 +44,8 @@ export const text = {
   deleteProject: 'Delete this project and all the tasks? (cannot be undone)',
   noProjSelected: 'Select a project or create a new one.',
 
+  genericError: 'An error occurred. Please see console for details',
+
   loggedInAs: (name) => `Logged in as ${ name }.`,
 
   login: {

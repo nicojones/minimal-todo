@@ -1,7 +1,7 @@
 import { text } from 'config/text';
 import React, { useState } from 'react';
 
-function Subtask ({ extraClass, task, saveSubtasks }) {
+function Subtask ({ extraClass, task, saveSubtasks, saveToggleSubtask }) {
 
   const [subtaskName, setSubtaskName] = useState('');
   const [addSubtaskInput, setAddSubtaskInput] = useState(false);
@@ -25,7 +25,7 @@ function Subtask ({ extraClass, task, saveSubtasks }) {
 
   function toggleSubtask (subtask) {
     subtask.checked = !subtask.checked;
-    saveSubtasks(task);
+    saveToggleSubtask(task);
   }
 
   return (

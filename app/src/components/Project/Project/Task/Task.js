@@ -23,9 +23,7 @@ function Task ({ task }) {
       (task.subtasks || []).forEach((_task) => _task.checked = true);
       task.expanded = false;
     }
-    await taskService.toggleTask(project.id, task).then((a) => {
-      console.log('anotehuntoaheutnh',a);
-    })
+    await taskService.toggleTask(project.id, task);
     // await taskService.updateTask(project.id, task);
   }
 
@@ -48,6 +46,10 @@ function Task ({ task }) {
 
       await taskService.deleteTask(project.id, task)
     }
+  }
+
+  async function saveToggleSubtask (task) {
+    await taskService.toggleTask(project.id, task);
   }
 
   return (
@@ -100,7 +102,10 @@ function Task ({ task }) {
               <p><span className="subtle">{ text.notes }:</span> { task.description }</p>
             </div>
           }
-          <Subtask extraClass={ 'ml-50' } saveSubtasks={ saveSubtasks } subtasks={ subtasks } task={ task }/>
+          <Subtask extraClass={ 'ml-50' } saveSubtasks={ saveSubtasks }
+            subtasks={ subtasks } task={ task }
+            saveToggleSubtask={ saveToggleSubtask }
+          />
         </>
       }
     </li>

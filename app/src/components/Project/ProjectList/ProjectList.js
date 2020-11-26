@@ -5,6 +5,7 @@ import projectService from 'services/projectService';
 import ProjectListDropdown from './ProjectListDropdown/ProjectListDropdown';
 import { LoggedInUserContext } from '../../../App';
 import { authService } from '../../../services/authService';
+import cogoToast from 'cogo-toast';
 
 function validProjectId (projectId, projects) {
   // If there's a project set in the URL and it's valid (it exists)
@@ -16,7 +17,7 @@ function validProjectId (projectId, projects) {
 
 function ProjectList ({ projectKey, setProjectKey }) {
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState('');
   const [projects, setProjects] = useState([]);
 
   const [newProjectName, setNewProjectName] = useState('');
@@ -50,10 +51,10 @@ function ProjectList ({ projectKey, setProjectKey }) {
 
   async function deleteProject (project) {
     if (window.confirm(text.deleteProject)) {
-      // setIsLoading(true);
+      setIsLoading(project.id);
       await projectService.deleteProject(project);
       setProjectKey('');
-      // setIsLoading(false);
+      setIsLoading('');
     }
   }
 
@@ -71,9 +72,13 @@ function ProjectList ({ projectKey, setProjectKey }) {
         break;
       case 'share':
         const userEmail = prompt('User Email to join?');
-        await projectService.getUserByEmail(userEmail).then(async (user) => {
-          await projectService.addUserToProject(project, user.username);
-        });
+        const user = await projectService.getUserByEmail(userEmail);
+        if (!user) {
+          cogoToast.error(text.genericError);
+          console.error('error: ', user);
+          return;
+        }
+        await projectService.addUserToProject(project, user.username);
         break;
       default:
         break;
@@ -87,7 +92,7 @@ function ProjectList ({ projectKey, setProjectKey }) {
         {
           projects.map((proj) =>
             <li
-              key={ proj.id } className={ (projectKey === proj.id ? 'selected' : '') + ' mb-5 parent-hover flex-row' }
+              key={ proj.id } className={ 'mb-5 parent-hover flex-row' + (projectKey === proj.id ? ' selected' : '') + (isLoading === proj.id ? ' loader-input' : '') }
             >
               <ProjectListDropdown project={ proj } onAction={ onAction }/>
               <button className="btn-invisible left left-align" onClick={ () => setProject(proj) }>
@@ -110,11 +115,12 @@ function ProjectList ({ projectKey, setProjectKey }) {
               <i className="tiny material-icons subtle">add</i>
             </label>
           </button>
-          <form onSubmit={ addNewProject } className={ 'add-project flex-row' + (isLoading ? ' loader-input' : '') }>
+          <form onSubmit={ addNewProject } className={ 'add-project flex-row' + (isLoading === 'new' ? ' loader-input' : '') }>
             <input
               className="invisible subtle left-align"
               onChange={ (e) => setNewProjectName(e.target.value) }
               required minLength="3"
+              disabled={ isLoading === 'new' }
               value={ newProjectName }
               id="new-project-input"
               placeholder={ text.addProjectPh }
@@ -125,8 +131,10 @@ function ProjectList ({ projectKey, setProjectKey }) {
       </ul>
       <small className="flex-row logout">
         <span className="left subtle">{ text.loggedInAs(user.email) }</span>
-        <button className="btn-invisible right subtle"
-          onClick={ authService.logout }>{ text.login.logout }</button>
+        <button
+          className="btn-invisible right subtle"
+          onClick={ authService.logout }
+        >{ text.login.logout }</button>
       </small>
     </>
   );

@@ -8,6 +8,7 @@ import { ProjectContext } from 'TodoApp';
 
 function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
 
+  const [loading, setLoading] = useState(false);
   const [subtaskName, setSubtaskName] = useState('');
   const [subtasks, setSubtasks] = useState(task.subtasks || []);
   const [newSubtasks, setNewSubtasks] = useState([]);
@@ -22,15 +23,15 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
     setTaskDesc(task.description || '');
   }, [task]);
 
-  async function saveTask (task, keepOpen) {
+  async function saveTask (task) {
+    setLoading(true);
     if (task.id) {
       await taskService.updateTask(project.id, task);
     } else {
-      taskService.addTask(project.id, createTaskObject(task)).then((reference) => {
-        task.id = reference.id;
-      });
+      task.id = await taskService.addTask(project.id, createTaskObject(task));
     }
-    setModalOpen(!!keepOpen);
+    setLoading(false);
+    setModalOpen(false);
   }
 
   async function submit (e) {
@@ -40,7 +41,7 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
     task.description = taskDesc;
     task.subtasks = [...subtasks, ...newSubtasks];
 
-    await saveTask(task, false);
+    await saveTask(task);
   }
 
   function toggleSubtask (subtask) {
@@ -75,6 +76,7 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
       <button className={ trigger.className } onClick={ () => setModalOpen(true) }>{ trigger.text }</button>
       <Modal
         modalOpen={ modalOpen }
+        loading={ loading }
         onAccept={ onAccept }
         onCancel={ () => setModalOpen(false) }
         okButton={ text.saveTask + ' <i class="material-icons right">save</i>' }
@@ -136,7 +138,7 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
                 onChange={ (e) => setSubtaskName(e.target.value) }
                 placeholder={ text.addSubtaskPh }
                 className="input-field"
-                required minLength={3}
+                required minLength={ 3 }
               />
             </form>
           </li>

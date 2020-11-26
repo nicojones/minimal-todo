@@ -32,6 +32,7 @@ export default function projectRender (p) {
         <li className="task">
           <form onSubmit={ p.submit }
             className={ 'flex-row task-content form-inline' + (p.isLoading === 'task' ? ' loader-input' : '') }>
+            {/*className={ 'flex-row task-content form-inline' + (p.isLoading === 'task' ? ' loader-input' : '') }>*/}
             <i /* Just to give the right padding */ className="material-icons left v-hidden mr-11">add</i>
             <i className="material-icons left subtle">add</i>
             <div className="form-group">
@@ -39,6 +40,7 @@ export default function projectRender (p) {
                 <input
                   onChange={ p.taskNameChange } className="invisible f-100"
                   placeholder={ text.addPh } required
+                  disabled={ p.isLoading === 'task' }
                   autoComplete="off" /*ref={ inputElement }*/
                 />
               </div>

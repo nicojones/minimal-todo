@@ -44,8 +44,8 @@ const taskService = {
       }).then((response) => {
         console.info('result from POST', response);
         cogoToast.success(response.data.message, defaultToast);
+        return response.data.taskId;
       });
-      // return await db.ref(`${ taskService.path }/tasks`).push(task);
     } catch (e) {
       handleError('Error on save task: ', e);
     }

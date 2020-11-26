@@ -9,6 +9,7 @@ function ProjectTitle ({ project, showCompleted, setShowCompleted, isLoading }) 
         <input
           className="as-title m0 invisible h5" autoFocus /*onBlur={ project.saveListName }*/
           value={ project.projectName }
+          disabled={ isLoading === 'name' }
           onChange={ (e) => project.setProjectName(e.target.value) }
         />
       </form>

@@ -55,17 +55,26 @@
 }
 
 .loader-input {
-  display: flex;
+  position: relative;
 
   &:after {
     content: "";
     align-self: center;
     justify-content: flex-end;
-    background: url("../assets/loader.svg");
-    background-position: center;
-    width: 40px;
-    height: 40px;
+    background: url("../assets/loader.svg") left no-repeat;
     background-size: contain;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+
+    position: absolute;
+    backdrop-filter: blur(1px);
+  }
+
+  &.cover:after {
+    background-position: center;
+    background-size: 50px
   }
 
 }
