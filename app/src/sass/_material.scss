@@ -47,22 +47,11 @@
 
 .modal {
 
-  &.open {
-    display: inline-block;
-    z-index: 1;
-    top: 10%;
+  display: inline-block;
+  z-index: 1;
+  top: 10%;
 
-    + .backdrop {
-      content: "";
-      background: rgba(0, 0, 0, 0.2);
-      position: fixed;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      right: 0;
-      z-index: 0;
-    }
-  }
+
 }
 
 .fixed-action-btn {

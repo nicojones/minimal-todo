@@ -3,7 +3,9 @@ import { text } from 'config/text';
 function NoProject ({ setShowSidebar }) {
   return (
     <>
-      <button className="btn-invisible left-align" onClick={ () => setShowSidebar(true) }>{ text.noProjSelected }</button>
+      <div className="h-100 place-center">
+        <button className="btn-invisible left-align flex-center-self" onClick={ () => setShowSidebar(true) }>{ text.project.noSelected }</button>
+      </div>
     </>
   )
 }

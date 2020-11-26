@@ -2,11 +2,10 @@
 @import 'src/sass/colors';
 
 .projects-list {
-  $min-item-height: 32px;
 
   li {
     padding: 6px;
-    min-height: $min-item-height;
+    min-height: $list-item-height;
     position: relative;
 
     &.selected > button {
@@ -16,33 +15,6 @@
     .add-project {
       padding: 0 6px;
       flex: 1 0 90%;
-    }
-
-    .pl-dropdown {
-      position: absolute;
-      background: $app-background-color;
-      @include box_shadow();
-      width: 200px;
-      z-index: 2;
-
-      top: $min-item-height;
-
-      > .pl-dropdown-item {
-        &:hover {
-          background: $very-subtle-color;
-        }
-      }
-
-    }
-    .pl-backdrop {
-      content: "";
-      //background: rgba(0,0,0,0.3);
-      position: fixed;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      right: 0;
-      z-index: 1;
     }
   }
 

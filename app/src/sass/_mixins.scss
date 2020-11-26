@@ -1,7 +1,7 @@
-@mixin box_shadow($color: #888, $size: 7px, $inside: -2px) {
-  -webkit-box-shadow: 0 0 $size $inside $color;
-  -moz-box-shadow: 0 0 $size $inside $color;
-  box-shadow: 0 0 $size $inside $color;
+@mixin box_shadow($size: 7px, $inside: -2px) {
+  -webkit-box-shadow: 0 0 $size $inside #666;
+  -moz-box-shadow: 0 0 $size $inside #666;
+  box-shadow: 0 0 $size $inside #666;
 }
 
 @mixin transition($transition: 0.4s all ease-in-out /* <- default */

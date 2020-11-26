@@ -85,6 +85,7 @@ const taskService = {
               timestamp: time(taskData.timestamp)
             });
           });
+          // done([...tasks, ...tasks, ...tasks, ...tasks, ...tasks, ...tasks, ...tasks, ...tasks, ...tasks, ...tasks, ...tasks, ...tasks, ...tasks, ...tasks, ...tasks, ...tasks, ...tasks, ...tasks, ...tasks, ...tasks, ]);
           done(tasks);
         });
     } catch (e) {

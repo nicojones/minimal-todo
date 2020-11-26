@@ -53,6 +53,7 @@ const projectService = {
             });
           });
 
+          // done([...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects]);
           done(projects);
 
           console.info('Lists loaded: ', projects.length);

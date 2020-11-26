@@ -38,11 +38,20 @@ export const text = {
   notes: 'Notes',
   notesPh: 'An optional description always helps',
 
-  projects: 'Projects',
-  addProject: 'Add a new project',
-  addProjectPh: 'Enter a name for a new project',
-  deleteProject: 'Delete this project and all the tasks? (cannot be undone)',
-  noProjSelected: 'Select a project or create a new one.',
+
+  project: {
+    s: 'Projects',
+    noSelected: 'Select a project or create a new one.',
+    share: 'Share Project',
+    delete: {
+      _: 'Delete Project',
+      long: 'Delete this project and all the tasks? (cannot be undone)'
+    },
+    add: {
+      // _: 'Add a new project',
+      ph: 'Enter a name for a new project'
+    }
+  },
 
   genericError: 'An error occurred. Please see console for details',
 
@@ -56,7 +65,9 @@ export const text = {
     yesAccount: 'Already a user?',
     error: 'Invalid credentials',
     success: 'Welcome Back!',
-    signupSuccess: 'Account created! Logging you in...'
+    signupSuccess: 'Account created! Logging you in...',
+    invalidPass: 'Invalid login credentials',
+    invalidUser: 'No user exists for this email'
   },
 
 };

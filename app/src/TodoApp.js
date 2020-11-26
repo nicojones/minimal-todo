@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
+
+import { urls } from 'config/urls';
+import { LoggedInUserContext } from 'App';
 
 import taskService from 'services/taskService';
+
+import Navbar from 'components/Navbar/Navbar';
 import projectService from 'services/projectService';
 import Project from 'components/Project/Project/Project';
 import NoProject from 'components/Project/NoProject/NoProject';
 import ProjectList from 'components/Project/ProjectList/ProjectList';
-import { useHistory, useParams } from 'react-router-dom';
-import { LoggedInUserContext } from 'App';
-import { urls } from 'config/urls';
 
 export const ProjectContext = React.createContext({});
 
@@ -51,21 +54,7 @@ function TodoApp () {
 
   return (
     <>
-      <div className="navbar-fixed">
-        <nav className="grey">
-          <div className="nav-wrapper">
-            <a className="sidenav-triggert btn-subtle" onClick={ () => setShowSidebar(!showSidebar) }>
-              <i className="material-icons">menu</i>
-            </a>
-            <ul className="right hide-on-med-and-down">
-              <li><a href="sass.html">Sass</a></li>
-              <li><a href="badges.html">Components</a></li>
-              <li><a href="collapsible.html">Javascript</a></li>
-              <li><a href="mobile.html">Mobile</a></li>
-            </ul>
-          </div>
-        </nav>
-      </div>
+      <Navbar setShowSidebar={ setShowSidebar } showSidebar={ showSidebar }/>
       <div id="todo-app" className={ (showSidebar ? '' : ' hidden-bar') }>
         <div className={ 'projects-list-box' }>
           <div className={ 'projects-list-box-inner' }>

@@ -22,8 +22,6 @@ function ProjectList ({ projectKey, setProjectKey }) {
 
   const [newProjectName, setNewProjectName] = useState('');
 
-  const user = React.useContext(LoggedInUserContext);
-
   useEffect(() => {
     const unsubscribeProjects = projectService.getListOfProjects((_projects) => {
       setProjectKey(validProjectId(projectKey, _projects)); // set the first project as selected...
@@ -38,19 +36,19 @@ function ProjectList ({ projectKey, setProjectKey }) {
   function addNewProject (e) {
     e.preventDefault();
 
-    setIsLoading(true);
+    setIsLoading('new');
 
     projectService
       .newProject({ name: newProjectName })
       .then((snap) => {
         setNewProjectName('');
-        setIsLoading(false);
+        setIsLoading('');
         setProjectKey(snap.id);
       });
   }
 
   async function deleteProject (project) {
-    if (window.confirm(text.deleteProject)) {
+    if (window.confirm(text.project.delete.long)) {
       setIsLoading(project.id);
       await projectService.deleteProject(project);
       setProjectKey('');
@@ -87,7 +85,7 @@ function ProjectList ({ projectKey, setProjectKey }) {
 
   return (
     <>
-      <h5 className="center-align">{ text.projects }</h5>
+      <h5 className="center-align">{ text.project.s }</h5>
       <ul className="projects-list flex-column">
         {
           projects.map((proj) =>
@@ -95,7 +93,7 @@ function ProjectList ({ projectKey, setProjectKey }) {
               key={ proj.id } className={ 'mb-5 parent-hover flex-row' + (projectKey === proj.id ? ' selected' : '') + (isLoading === proj.id ? ' loader-input' : '') }
             >
               <ProjectListDropdown project={ proj } onAction={ onAction }/>
-              <button className="btn-invisible left left-align" onClick={ () => setProject(proj) }>
+              <button className="btn-invisible left left-align ps-6" onClick={ () => setProject(proj) }>
                 {
                   proj.shared &&
                   <i
@@ -121,21 +119,15 @@ function ProjectList ({ projectKey, setProjectKey }) {
               onChange={ (e) => setNewProjectName(e.target.value) }
               required minLength="3"
               disabled={ isLoading === 'new' }
+              autoComplete="off"
               value={ newProjectName }
               id="new-project-input"
-              placeholder={ text.addProjectPh }
+              placeholder={ text.project.add.ph }
             />
           </form>
 
         </li>
       </ul>
-      <small className="flex-row logout">
-        <span className="left subtle">{ text.loggedInAs(user.email) }</span>
-        <button
-          className="btn-invisible right subtle"
-          onClick={ authService.logout }
-        >{ text.login.logout }</button>
-      </small>
     </>
   );
 }

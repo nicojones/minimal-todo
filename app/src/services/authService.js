@@ -3,6 +3,8 @@ import environment from './environment';
 import cogoToast from 'cogo-toast';
 import { auth } from './firebase';
 import { sha1 } from 'functions/sha1';
+import { text } from '../config/text';
+import { defaultToast } from '../config/defaultToast';
 
 let debounceAuth;
 
@@ -17,7 +19,7 @@ export const authService = {
       clearTimeout(debounceAuth);
       debounceAuth = setTimeout(() => {
         user && user.getIdToken(true).then((token) => {
-          authService.setToken(token)
+          authService.setToken(token);
         });
 
         done(user);
@@ -47,6 +49,7 @@ export const authService = {
 
   login: (loginData) => {
     let userCredential;
+
     return sha1(loginData.password)
       .then((sha1Password) => {
         return auth().signInWithEmailAndPassword(loginData.email, sha1Password);
@@ -62,6 +65,17 @@ export const authService = {
       });
   },
 
+  loginCatch: (reason) => {
+    console.log(reason, reason.code, reason.code === 'auth/user-not-found');
+    if (reason.code === 'auth/wrong-password') {
+      cogoToast.error(text.login.invalidPass, defaultToast);
+    } else if (reason.code === 'auth/user-not-found') {
+      cogoToast.error(text.login.invalidUser, defaultToast);
+    } else {
+      cogoToast.error(reason.message, defaultToast);
+    }
+  },
+
   logout: (e) => {
     e.preventDefault();
 
@@ -74,8 +88,8 @@ export const authService = {
     if (!signupData.username) {
       return { username: 'Must enter a valid username' };
     }
-    if (!signupData.name || signupData.name.length <= 5) {
-      return { name: 'Must enter a valid name' };
+    if (!signupData.name || signupData.name.length <= 2) {
+      return { name: 'Must enter a longer name' };
     }
     if (!signupData.email || signupData.email.length <= 5) {
       return { email: 'Invalid email' };

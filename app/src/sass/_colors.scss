@@ -21,7 +21,11 @@ $loader-bg-color: #efefef;
 
 $hide-navbar-width: 1000px; // coincides with the values of smallScreen.js
 $navbar-height: 50px;
+$list-item-height: 32px;
 
 $navbar-width: 300px;
 $tasks-box-width: 1000px - $navbar-width;
 $tasks-box-min-width: 400px;
+
+$login-form-panel-padding: 30px; //
+$login-form-max-width: 450px;

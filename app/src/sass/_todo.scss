@@ -88,3 +88,44 @@ nav {
   padding: 0 50px;
   margin: 0 auto;
 }
+
+.sidenav-btn {
+  display: inline-block;
+}
+
+
+.dropdown {
+  $big-dropdown: 1.5 * $list-item-height;
+  position: absolute;
+  background: $app-background-color;
+  @include box_shadow();
+  z-index: 2;
+  width: max-content;
+  max-width: 70vw;
+  color: $primary-color-text;
+
+  top: $list-item-height;
+
+  &.dd-big {
+    top: $big-dropdown;
+    > .dropdown-item {
+      height: $big-dropdown;
+    }
+  }
+  &.dd-right {
+    left: 10px;
+  }
+  &.dd-left {
+    right: 10px;
+  }
+
+  > .dropdown-item {
+    display: flex;
+    padding: 0 4px;
+    width: 100%;
+    &:hover {
+      background: $very-subtle-color;
+    }
+  }
+
+}

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { text } from 'config/text';
 
 function ProjectListDropdown ({ project, onAction }) {
 
@@ -12,19 +13,19 @@ function ProjectListDropdown ({ project, onAction }) {
       {
         dropdownShown &&
         <>
-          <ul className="pl-dropdown" onClick={ () => setDropdownShown(false) }>
-            <li className="pl-dropdown-item">
+          <ul className="dropdown dd-right" onClick={ () => setDropdownShown(false) }>
+            <li className="dropdown-item">
               <button className="btn-invisible left left-align w-100" onClick={ () => onAction('delete', project) }>
-                <i className="tiny material-icons subtle">delete</i> Delete Project
+                <i className="tiny material-icons subtle">delete</i> {text.project.delete._}
               </button>
             </li>
-            <li className="pl-dropdown-item">
+            <li className="dropdown-item">
               <button className="btn-invisible left left-align w-100" onClick={ () => onAction('share', project) }>
-                <i className="tiny material-icons subtle">people_outline</i> Share Project
+                <i className="tiny material-icons subtle">people_outline</i> {text.project.share}
               </button>
             </li>
           </ul>
-          <div className="pl-backdrop" onClick={ () => setDropdownShown(false) }/>
+          <div className="backdrop" onClick={ () => setDropdownShown(false) }/>
         </>
       }
     </>

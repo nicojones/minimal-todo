@@ -1,0 +1,8 @@
+@import 'src/sass/colors';
+@import 'src/sass/mixins';
+
+.login-box {
+  padding: $login-form-panel-padding;
+  max-width: unquote('min(#{$login-form-max-width}, 95vw)');
+  @include box_shadow(30px, -15px);
+}

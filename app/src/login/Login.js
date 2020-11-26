@@ -5,28 +5,42 @@ import { urls } from 'config/urls';
 import { text } from 'config/text';
 import { LoggedInUserContext } from 'App';
 import cogoToast from 'cogo-toast';
+import LoginBox from './LoginBox';
+import { defaultToast } from '../config/defaultToast';
 
 function Login () {
 
   const history = useHistory();
+  const [loading, setLoading] = useState(false);
   const [login, setLogin] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('user'));
 
   function onSubmit (e) {
     e.preventDefault();
 
-    authService.login(login).then((responseData) => {
-      if (responseData.user) {
-        setLogin({});
-        setIsLoggedIn(true);
-        cogoToast.success(text.login.success, { position: 'bottom-center' });
-      } else {
-        if (responseData.error.code === 400) {
-          cogoToast.error(text.login.error, { position: 'bottom-center' })
+    setLoading(true);
+
+    authService
+      .login(login)
+      .then((responseData /* Returns {user, error}! */) => {
+
+        setLoading(false);
+
+        if (responseData.user) {
+          // setLogin({});
+          setIsLoggedIn(true);
+          cogoToast.success(text.login.success, defaultToast);
+        } else {
+          if (responseData.error.code === 400) {
+            cogoToast.error(text.login.error, defaultToast);
+          }
+          console.info(responseData);
         }
-        console.info(responseData);
-      }
-    });
+      })
+      .catch((reason) => {
+        setLoading(false);
+        authService.loginCatch(reason);
+      });
   }
 
   if (React.useContext(LoggedInUserContext)) {
@@ -41,8 +55,8 @@ function Login () {
           ? <Redirect to={ urls.app }/>
           :
           <>
-            <div className="row">
-              <form onSubmit={ onSubmit } className="flex-center-self center-block">
+            <LoginBox title={ text.login.login } loading={ loading }>
+              <form onSubmit={ onSubmit } className="flex-center-self">
                 <input
                   value={ login.email || '' } onChange={ (e) => setLogin({
                   ...login,
@@ -57,10 +71,12 @@ function Login () {
                 />
                 <div className="flex-row">
                   <button type="submit" className="btn btn-block">{ text.login.login }</button>
-                  <Link to={ urls.signup } className="btn-flat right">{ text.login.noAccount } { text.login.signup }</Link>
+                  <Link
+                    to={ urls.signup } className="btn-flat right"
+                  >{ text.login.noAccount } { text.login.signup }</Link>
                 </div>
               </form>
-            </div>
+            </LoginBox>
           </>
       }
     </>
