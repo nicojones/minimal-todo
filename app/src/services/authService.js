@@ -66,7 +66,7 @@ export const authService = {
   },
 
   loginCatch: (reason) => {
-    console.log(reason, reason.code, reason.code === 'auth/user-not-found');
+    console.error(reason, reason.code, reason.code === 'auth/user-not-found');
     if (reason.code === 'auth/wrong-password') {
       cogoToast.error(text.login.invalidPass, constants.toast);
     } else if (reason.code === 'auth/user-not-found') {

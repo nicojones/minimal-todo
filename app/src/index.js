@@ -3,15 +3,24 @@ import ReactDOM from 'react-dom';
 import 'sass/index.scss';
 import 'assets/loader.svg';
 import 'functions/screenSize'; // must be imported here.
+import { guessClientOS, osName } from './functions/clientOS';
 
 // import 'materialize-css/dist/js/materialize.min.js';
 import App from 'App';
+
+const root = document.getElementById('root');
+
+// if (!localStorage.getItem(osName.storage)) {
+//   localStorage.setItem(osName.storage, JSON.stringify(guessClientOS()));
+// }
+const os = guessClientOS();
+root.classList.add(os.isMobile ? 'mobile' : 'desktop');
 
 // ======================================== //
 
 ReactDOM.render(
   <App />,
-  document.getElementById('root')
+  root
 );
 
 

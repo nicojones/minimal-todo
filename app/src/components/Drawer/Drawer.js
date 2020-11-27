@@ -30,19 +30,18 @@ function Drawer ({ projectKey }) {
 
   return (
     <>
-      <div className="flex-row">
-        <h5 className="max-content m0">{ text.drawer.inbox._ }</h5>
+      <div className={ loading ? 'loader-input cover' : '' }>
+        <div className="flex-row">
+          <h5 className="max-content m0">{ text.drawer.inbox._ }</h5>
+        </div>
+        <ul>
+          {
+            drawerTasks.length
+              ? drawerTasks.map((t) => <Task key={ t.id } task={ t } level={ 0 }/>)
+              : <li><h5 className="subtle max-content ml-50">{ allCompleted }</h5></li>
+          }
+        </ul>
       </div>
-      <ul>
-        {
-          drawerTasks.length
-          ? drawerTasks.map((t) => {
-            console.log('task is T', t);
-            return <Task key={ t.id } task={ t } level={ 0 }/>;
-          })
-          : <li><h5 className="subtle max-content ml-50">{ allCompleted }</h5></li>
-        }
-      </ul>
 
     </>
   );

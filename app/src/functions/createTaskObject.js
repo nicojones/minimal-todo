@@ -3,8 +3,8 @@ import { constants } from '../config/constants';
 
 function createTaskObject (task) {
   if (!task.projectId) {
-    cogoToast.error('no project id!', constants.toast);
-    console.log(task);
+    cogoToast.error('No project id!', constants.toast);
+    console.error(task);
   }
   return {
     name: task.name || '',

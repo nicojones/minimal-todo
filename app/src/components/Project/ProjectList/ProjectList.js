@@ -16,7 +16,7 @@ function validProjectId (projectId, projects) {
   return ''; // otherwise don't set any project.
 }
 
-function ProjectList ({ projectKey, setProjectKey }) {
+function ProjectList ({ projectId, changeToProject }) {
 
   const [isLoading, setIsLoading] = useState('');
   const [projects, setProjects] = useState([]);
@@ -25,8 +25,8 @@ function ProjectList ({ projectKey, setProjectKey }) {
 
   useEffect(() => {
     const unsubscribeProjects = projectService.getListOfProjects((_projects) => {
-      const _projectKey = validProjectId(projectKey, _projects);
-      _projectKey && setProjectKey(_projectKey);
+      const _projectId = validProjectId(projectId, _projects);
+      _projectId && changeToProject(_projectId); // setProjectId(_projectId);
       setProjects(_projects);
     });
 
@@ -45,7 +45,7 @@ function ProjectList ({ projectKey, setProjectKey }) {
       .then((snap) => {
         setNewProjectName('');
         setIsLoading('');
-        setProjectKey(snap.id);
+        changeToProject(snap.id);
       });
   }
 
@@ -53,16 +53,16 @@ function ProjectList ({ projectKey, setProjectKey }) {
     if (window.confirm(text.project.delete.long)) {
       setIsLoading(project.id);
       await projectService.deleteProject(project);
-      setProjectKey('');
+      changeToProject('');
       setIsLoading('');
     }
   }
 
-  function setProject (projectId) {
-    if (projectId === projectKey) {
+  function setProject (_projectId) {
+    if (_projectId === projectId) {
       return; // can't change to itself... it also causes a re-render problem in the `useEffect`
     }
-    setProjectKey(projectId);
+    changeToProject(_projectId);
   }
 
   async function changeColor (project, hexColor) {
@@ -70,7 +70,6 @@ function ProjectList ({ projectKey, setProjectKey }) {
       ...project,
       color: hexColor
     });
-    console.log('RESULT', result);
   }
 
   async function onAction (actionName, project) {
@@ -97,7 +96,7 @@ function ProjectList ({ projectKey, setProjectKey }) {
     <>
       <h5 className="center-align">{ text.project.s }</h5>
       <ul className="projects-list flex-column">
-        <li key={ urls.inboxUrl } className={ 'mb-5 parent-hover flex-row' + (projectKey === urls.inboxUrl ? ' selected' : '') }>
+        <li key={ urls.inboxUrl } className={ 'mb-5 parent-hover flex-row' + (projectId === urls.inboxUrl ? ' selected' : '') }>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <button className="btn-invisible left left-align ps-6" onClick={ () => setProject(urls.inboxUrl) }>{ text.drawer.inbox._ }</button>
         </li>
@@ -105,7 +104,7 @@ function ProjectList ({ projectKey, setProjectKey }) {
           projects.map((proj) =>
             <li
               key={ proj.id }
-              className={ 'mb-5 parent-hover flex-row' + (projectKey === proj.id ? ' selected' : '') + (isLoading === proj.id ? ' loader-input' : '') }
+              className={ 'mb-5 parent-hover flex-row' + (projectId === proj.id ? ' selected' : '') + (isLoading === proj.id ? ' loader-input' : '') }
             >
               <ProjectListDropdown project={ proj } onAction={ onAction }/>
               <ColorPicker color={ proj.color } onChangeComplete={ (e) => changeColor(proj, e) } />

@@ -1,0 +1,22 @@
+@import 'src/sass/mixins';
+@import 'src/sass/colors';
+
+#root.desktop {
+  .todo-navbar {
+    > .navbar-hide {
+      @include transition();
+    }
+
+    &.closed {
+      > .navbar-hide {
+        margin-top: -$navbar-height;
+      }
+    }
+
+    &.open, &.closed:hover {
+      > .navbar-hide {
+        margin-top: 0;
+      }
+    }
+  }
+}

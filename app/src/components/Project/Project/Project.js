@@ -8,6 +8,7 @@ import projectService from 'services/projectService';
 
 function Project ({ project, projectKey, setProject }) {
 
+  const [projectLoading, setProjectLoading] = useState(true);
   const [projectTasks, setProjectTasks] = useState([]);
   const [isLoading, setIsLoading] = useState('');
   const [showCompleted, setShowCompleted] = useState(project.showCompleted);
@@ -37,7 +38,10 @@ function Project ({ project, projectKey, setProject }) {
 
   useEffect(() => {
     const unsubscribeProject = projectService.getProject(projectKey, setProject);
-    const unsubscribeTasks = taskService.getTasksForProject(projectKey, setProjectTasks);
+    const unsubscribeTasks = taskService.getTasksForProject(projectKey, (tasks) => {
+      setProjectTasks(tasks);
+      setProjectLoading(false);
+    });
 
     return () => {
       unsubscribeProject && unsubscribeProject();
@@ -100,6 +104,10 @@ function Project ({ project, projectKey, setProject }) {
     setModalOpen,
     isLoading,
     addTaskPh,
+    load: {
+      projectLoading,
+      setProjectLoading
+    },
     project: {
       projectName,
       saveListName,
