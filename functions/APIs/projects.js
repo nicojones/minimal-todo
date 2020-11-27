@@ -10,9 +10,13 @@ exports.addProject = (request, response) => {
   }
 
   const newProject = {
+    // User fields
     name: request.body.name,
-    timestamp: new Date().toISOString(),
-    uids: [request.user.uid],
+    color: request.body.color,
+
+    // System fields
+    timestamp: new Date(),
+    _uids: [request.user.uid],
     shared: false
   };
 
@@ -43,7 +47,7 @@ exports.deleteProject = (request, response) => {
     .doc(`/projects/${ projectId }`)
     .get()
     .then(async (projDoc) => {
-      const userIds = projDoc.data().uids.filter((uid) => uid !== request.user.uid);
+      const userIds = projDoc.data()._uids.filter((uid) => uid !== request.user.uid);
       projectName = projDoc.data().name;
 
       if (userIds.length) {
@@ -51,7 +55,7 @@ exports.deleteProject = (request, response) => {
         return db
           .doc(`/projects/${ projectId }`)
           .update({
-            uids: userIds,
+            _uids: userIds,
             shared: userIds.length > 1
           });
       } else {
@@ -78,8 +82,14 @@ exports.deleteProject = (request, response) => {
 exports.updateProject = (request, response) => {
   const projectId = request.params.projectId;
 
+  // !!! Not all fields are editable!
+  const project = {
+    name: request.body.name,
+    color: request.body.color
+  }
+
   let document = db.doc(`/projects/${ projectId }`);
-  document.update(request.body)
+  document.update(project)
     .then((doc) => {
       response.json({ message: `Project ${ request.body.name } updated successfully` });
     })
@@ -110,12 +120,12 @@ exports.addUserToProject = (request, response) => {
         .get();
     })
     .then((doc) => {
-      const userIds = doc.data().uids;
+      const userIds = doc.data()._uids;
       userIds.push(userId);
       return db
         .doc(`/projects/${ projectId }`)
         .update({
-          uids: userIds,
+          _uids: userIds,
           shared: userIds.length > 1
         });
     })

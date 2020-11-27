@@ -16,7 +16,7 @@ exports.addTask = (request, response) => {
     expanded: request.body.expanded || false,
     subtasks: request.body.subtasks || [],
     checked: request.body.checked || false,
-    timestamp: new Date().toISOString()
+    timestamp: new Date()
   };
 
   db

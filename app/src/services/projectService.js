@@ -34,7 +34,7 @@ const projectService = {
     try {
       return projectService.db
         .collection(`/projects`)
-        .where('uids', 'array-contains', auth().currentUser.uid)
+        .where('_uids', 'array-contains', auth().currentUser.uid)
         // .orderBy('timestamp', 'desc')
         .onSnapshot((projectsDoc) => {
 
@@ -48,6 +48,7 @@ const projectService = {
               id: doc.id,
               name: projectData.name,
               shared: projectData.shared,
+              color: projectData.color,
               openTasks,
               completedTasks
             });
@@ -63,7 +64,7 @@ const projectService = {
     }
   },
 
-  saveListName: async (project) => {
+  updateProject: async (project) => {
     console.info('Updating project ', project);
 
     try {
@@ -90,7 +91,6 @@ const projectService = {
         headers: projectService.headers()
       }).then((result) => {
         cogoToast.success(result.data.message, defaultToast);
-        console.info(result);
         return result.data.project;
       });
     } catch (e) {

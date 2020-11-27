@@ -7,7 +7,7 @@ function canAccessProject (request, response, next) {
     // fields which can't be edited.
     delete request.body.id;
     delete request.body.createdAt;
-    delete request.body.uids;
+    delete request.body._uids;
     delete request.body.shared;
   }
 
@@ -24,7 +24,7 @@ function canAccessProject (request, response, next) {
           });
         }
 
-        if (proj.data().uids.indexOf(request.user.uid) === -1) { // User has no rights to access project
+        if (proj.data()._uids.indexOf(request.user.uid) === -1) { // User has no rights to access project
           return response.status(403).json({
             status: 403,
             error: 'NOT Authorized'

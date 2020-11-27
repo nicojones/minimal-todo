@@ -25,3 +25,19 @@
   bottom: 0;
   padding: 8px;
 }
+
+
+.btn-colorpicker {
+  border-radius: 100%;
+  width: 10px;
+  height: 10px;
+  border: none;
+  display: inline-block;
+  //width: 10px !important;
+}
+.colorpicker {
+  position: absolute;
+  top: 35px;
+  z-index: 2;
+  left: -10px; // half of the width of .btn-colorpicker, which has 6px side padding + 10px content = 22px.
+}

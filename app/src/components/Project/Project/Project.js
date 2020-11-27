@@ -43,11 +43,15 @@ function Project ({ project, projectTasks }) {
     taskName = e.target.value;
   }
 
+  async function changeColor (hexColor) {
+    await projectService.updateProject({ ...project, color: hexColor });
+  }
+
   async function saveListName (e) {
     e.preventDefault();
 
     setIsLoading('name');
-    await projectService.saveListName({ ...project, name: projectName });
+    await projectService.updateProject({ ...project, name: projectName });
     setEditListName(false);
     setIsLoading('');
   }
@@ -68,7 +72,9 @@ function Project ({ project, projectTasks }) {
       saveListName,
       editListName,
       setEditListName,
-      setProjectName
+      setProjectName,
+      changeColor,
+      data: project
     }
   });
 }

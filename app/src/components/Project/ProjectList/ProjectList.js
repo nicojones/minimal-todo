@@ -3,9 +3,10 @@ import { text } from 'config/text';
 import './_project-list.scss';
 import projectService from 'services/projectService';
 import ProjectListDropdown from './ProjectListDropdown/ProjectListDropdown';
-import { LoggedInUserContext } from '../../../App';
-import { authService } from '../../../services/authService';
 import cogoToast from 'cogo-toast';
+import { TwitterPicker } from 'react-color';
+import ColorPicker from '../../ColorPicker/ColorPicker';
+import { constants } from '../../../config/constants';
 
 function validProjectId (projectId, projects) {
   // If there's a project set in the URL and it's valid (it exists)
@@ -39,7 +40,7 @@ function ProjectList ({ projectKey, setProjectKey }) {
     setIsLoading('new');
 
     projectService
-      .newProject({ name: newProjectName })
+      .newProject({ name: newProjectName, color: constants.defaultProjectColor })
       .then((snap) => {
         setNewProjectName('');
         setIsLoading('');
@@ -61,6 +62,15 @@ function ProjectList ({ projectKey, setProjectKey }) {
       return; // can't change to itself... it also causes a re-render problem in the `useEffect`
     }
     setProjectKey(project.id);
+  }
+
+  async function changeColor (project, hexColor) {
+    console.log('eee', hexColor);
+    const result = await projectService.updateProject({
+      ...project,
+      color: hexColor
+    });
+    console.log('RESULT', result);
   }
 
   async function onAction (actionName, project) {
@@ -90,10 +100,13 @@ function ProjectList ({ projectKey, setProjectKey }) {
         {
           projects.map((proj) =>
             <li
-              key={ proj.id } className={ 'mb-5 parent-hover flex-row' + (projectKey === proj.id ? ' selected' : '') + (isLoading === proj.id ? ' loader-input' : '') }
+              key={ proj.id }
+              className={ 'mb-5 parent-hover flex-row' + (projectKey === proj.id ? ' selected' : '') + (isLoading === proj.id ? ' loader-input' : '') }
             >
               <ProjectListDropdown project={ proj } onAction={ onAction }/>
+              <ColorPicker color={ proj.color } onChangeComplete={ (e) => changeColor(proj, e) } />
               <button className="btn-invisible left left-align ps-6" onClick={ () => setProject(proj) }>
+                { proj.name }
                 {
                   proj.shared &&
                   <i
@@ -101,7 +114,6 @@ function ProjectList ({ projectKey, setProjectKey }) {
                     title={ text.sharedProject }
                   >people_outline</i>
                 }
-                { proj.name }
                 {/*( { proj.openTasks } <span className="subtle">/ { proj.completedTasks }</span> )*/ }
               </button>
             </li>
@@ -113,9 +125,12 @@ function ProjectList ({ projectKey, setProjectKey }) {
               <i className="tiny material-icons subtle">add</i>
             </label>
           </button>
-          <form onSubmit={ addNewProject } className={ 'add-project flex-row' + (isLoading === 'new' ? ' loader-input' : '') }>
+          <form
+            onSubmit={ addNewProject }
+            className={ 'add-project flex-row' + (isLoading === 'new' ? ' loader-input' : '') }
+          >
             <input
-              className="invisible subtle left-align"
+              className="invisible left-align"
               onChange={ (e) => setNewProjectName(e.target.value) }
               required minLength="3"
               disabled={ isLoading === 'new' }
