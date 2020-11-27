@@ -23,6 +23,10 @@ function Project ({ project, projectTasks }) {
     return text.allTasksCompleted()
   }, [ open.length ]);
 
+  const addTaskPh = useMemo(() => {
+    return text.task.addTaskPh()
+  }, [ project.id ]);
+
   let taskName = '';
 
   useEffect(() => {
@@ -76,6 +80,7 @@ function Project ({ project, projectTasks }) {
     allCompleted,
     setModalOpen,
     isLoading,
+    addTaskPh,
     project: {
       projectName,
       saveListName,

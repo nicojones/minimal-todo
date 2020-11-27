@@ -40,7 +40,7 @@ export default function projectRender (p) {
               <div className="input-group mb-2">
                 <input
                   onChange={ p.taskNameChange } className="invisible f-100"
-                  placeholder={ text.task.addPh } required
+                  placeholder={ p.addTaskPh } required
                   disabled={ p.isLoading === 'task' }
                   autoComplete="off" /*ref={ inputElement }*/
                 />
@@ -50,15 +50,17 @@ export default function projectRender (p) {
         </li>
       </ul>
 
-      <TaskModal
-        trigger={ {
-          className: 'btn-floating btn-large new-task fixed-action-btn subtle-bg',
-          text: <i className="material-icons">add</i>
-        } }
-        task={ {} }
-        modalOpen={ p.modalOpen }
-        setModalOpen={ p.setModalOpen }
-      />
+      {
+        // <TaskModal
+        //   trigger={ {
+        //     className: 'btn-floating btn-large new-task fixed-action-btn subtle-bg',
+        //     text: <i className="material-icons">add</i>
+        //   } }
+        //   task={ {} }
+        //   modalOpen={ p.modalOpen }
+        //   setModalOpen={ p.setModalOpen }
+        // />
+      }
     </>
   );
 }

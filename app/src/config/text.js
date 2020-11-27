@@ -8,7 +8,18 @@ export const text = {
   task: {
     name: 'Name of the task',
     delete: 'Delete task and its subtasks? Can\'t be undone',
-    addPh: 'Quick-add a task...',
+    addTaskPh: () => {
+      const phs = [
+        'e.g. Buy carrots',
+        'e.g. Clean apartment in the morning',
+        'e.g. Do some exercise',
+        'Add a new task ...',
+        'Create a task ...',
+        'e.g. Call family',
+        'e.g. Schedule interview'
+      ];
+      return phs[Math.floor(Math.random() * phs.length)];
+    },
     addSubtaskPh: 'Add subtasks to this task',
     save: 'Save',
     discard: 'Cancel changes',
