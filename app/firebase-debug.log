@@ -12904,3 +12904,559 @@ INFO: Detected non-HTTP/2 connection.
 [debug] [2020-11-27T14:05:49.836Z] Nov 27, 2020 3:05:49 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
 INFO: Detected non-HTTP/2 connection.
  {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:05:49 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:06:38.427Z] Nov 27, 2020 3:06:38 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:06:38 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:06:38.428Z] Nov 27, 2020 3:06:38 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:06:38 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:06:38.432Z] Nov 27, 2020 3:06:38 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:06:38 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:06:43.436Z] Nov 27, 2020 3:06:43 PM com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreWriteHandler onClose
+INFO: channel closed
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:06:43 PM com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreWriteHandler onClose\nINFO: channel closed\n"}}
+[debug] [2020-11-27T14:06:49.854Z] Nov 27, 2020 3:06:49 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:06:49 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:07:43.453Z] Nov 27, 2020 3:07:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:07:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:07:49.865Z] Nov 27, 2020 3:07:49 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:07:49 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:08:48.472Z] Nov 27, 2020 3:08:48 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:08:48 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:08:53.491Z] Nov 27, 2020 3:08:53 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:08:53 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:09:38.498Z] Nov 27, 2020 3:09:38 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:09:38 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:09:53.507Z] Nov 27, 2020 3:09:53 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:09:53 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:10:24.624Z] Nov 27, 2020 3:10:24 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:10:24 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:10:29.633Z] Nov 27, 2020 3:10:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:10:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:10:29.641Z] Nov 27, 2020 3:10:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:10:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:10:29.651Z] Nov 27, 2020 3:10:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:10:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:10:53.525Z] Nov 27, 2020 3:10:53 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:10:53 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:11:29.703Z] Nov 27, 2020 3:11:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:11:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:11:30.474Z] Nov 27, 2020 3:11:30 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:11:30 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:11:34.711Z] Nov 27, 2020 3:11:34 PM com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreWriteHandler onClose
+INFO: channel closed
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:11:34 PM com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreWriteHandler onClose\nINFO: channel closed\n"}}
+[debug] [2020-11-27T14:11:34.727Z] Nov 27, 2020 3:11:34 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:11:34 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:11:34.737Z] Nov 27, 2020 3:11:34 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:11:34 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:11:34.751Z] Nov 27, 2020 3:11:34 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:11:34 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:11:53.547Z] Nov 27, 2020 3:11:53 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:11:53 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:12:19.800Z] Nov 27, 2020 3:12:19 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:12:19 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:12:34.766Z] Nov 27, 2020 3:12:34 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:12:34 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:12:34.802Z] Nov 27, 2020 3:12:34 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:12:34 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:12:34.804Z] Nov 27, 2020 3:12:34 PM com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreWriteHandler onClose
+INFO: channel closed
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:12:34 PM com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreWriteHandler onClose\nINFO: channel closed\n"}}
+[debug] [2020-11-27T14:12:53.565Z] Nov 27, 2020 3:12:53 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:12:53 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:13:19.787Z] Nov 27, 2020 3:13:19 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:13:19 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:13:53.580Z] Nov 27, 2020 3:13:53 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:13:53 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:14:24.830Z] Nov 27, 2020 3:14:24 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:14:24 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:14:53.594Z] Nov 27, 2020 3:14:53 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:14:53 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:15:29.858Z] Nov 27, 2020 3:15:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:15:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:15:53.616Z] Nov 27, 2020 3:15:53 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:15:53 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:16:34.887Z] Nov 27, 2020 3:16:34 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:16:34 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:16:53.639Z] Nov 27, 2020 3:16:53 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:16:53 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:17:39.913Z] Nov 27, 2020 3:17:39 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:17:39 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:17:53.664Z] Nov 27, 2020 3:17:53 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:17:53 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:18:53.681Z] Nov 27, 2020 3:18:53 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:18:53 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:18:59.934Z] Nov 27, 2020 3:18:59 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:18:59 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:19:58.702Z] Nov 27, 2020 3:19:58 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:19:58 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:20:03.721Z] Nov 27, 2020 3:20:03 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:20:03 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:21:03.730Z] Nov 27, 2020 3:21:03 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:21:03 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:21:03.737Z] Nov 27, 2020 3:21:03 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:21:03 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:22:08.754Z] Nov 27, 2020 3:22:08 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:22:08 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:22:13.759Z] Nov 27, 2020 3:22:13 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:22:13 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:23:13.775Z] Nov 27, 2020 3:23:13 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+Nov 27, 2020 3:23:13 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:23:13 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\nNov 27, 2020 3:23:13 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:24:18.797Z] Nov 27, 2020 3:24:18 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:24:18 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:24:18.797Z] Nov 27, 2020 3:24:18 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:24:18 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:25:23.834Z] Nov 27, 2020 3:25:23 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:25:23 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:25:23.835Z] Nov 27, 2020 3:25:23 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:25:23 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:26:28.868Z] Nov 27, 2020 3:26:28 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:26:28 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:26:28.870Z] Nov 27, 2020 3:26:28 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:26:28 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:27:33.889Z] Nov 27, 2020 3:27:33 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:27:33 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:27:33.889Z] Nov 27, 2020 3:27:33 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:27:33 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:28:23.912Z] Nov 27, 2020 3:28:23 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:28:23 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:28:24.813Z] Nov 27, 2020 3:28:24 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:28:24 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:29:13.935Z] Nov 27, 2020 3:29:13 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:29:13 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:29:15.305Z] Nov 27, 2020 3:29:15 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:29:15 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:30:03.957Z] Nov 27, 2020 3:30:03 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:30:03 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:30:18.950Z] Nov 27, 2020 3:30:18 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:30:18 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:31:08.982Z] Nov 27, 2020 3:31:08 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:31:08 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:31:18.965Z] Nov 27, 2020 3:31:18 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:31:18 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:32:14.007Z] Nov 27, 2020 3:32:14 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:32:14 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:32:19.017Z] Nov 27, 2020 3:32:19 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:32:19 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:32:47.777Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2020-11-27T14:32:47.778Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2020-11-27T14:32:47.778Z] Accepted request OPTIONS /todo-list-react-33431/us-central1/api/project/AiCHInFliPiCbaTHRJuz --> api
+[debug] [2020-11-27T14:32:47.778Z] [worker-pool] Cleaned up workers for ~diagnostic~: 2 --> 1 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Cleaned up workers for ~diagnostic~: 2 --> 1"}}
+[debug] [2020-11-27T14:32:47.778Z] [worker-pool] Cleaned up workers for api: 1 --> 0 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Cleaned up workers for api: 1 --> 0"}}
+[debug] [2020-11-27T14:32:47.784Z] [worker-pool] addWorker(api) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] addWorker(api)"}}
+[debug] [2020-11-27T14:32:47.784Z] [worker-pool] Adding worker with key api, total=1 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Adding worker with key api, total=1"}}
+[debug] [2020-11-27T14:32:47.784Z] [worker-pool] submitWork(triggerId=api) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitWork(triggerId=api)"}}
+[debug] [2020-11-27T14:32:47.784Z] [worker-api-0b0a1522-59e9-40f0-9d92-94377812e1df]: Assigning socketPath: /var/folders/qx/jbclgg9j2zj3fqtr2xx2193r0000gn/T/fire_emu_78447.sock {"metadata":{"emulator":{"name":"functions"},"message":"[worker-api-0b0a1522-59e9-40f0-9d92-94377812e1df]: Assigning socketPath: /var/folders/qx/jbclgg9j2zj3fqtr2xx2193r0000gn/T/fire_emu_78447.sock"}}
+[debug] [2020-11-27T14:32:47.784Z] [worker-api-0b0a1522-59e9-40f0-9d92-94377812e1df]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-api-0b0a1522-59e9-40f0-9d92-94377812e1df]: BUSY"}}
+[debug] [2020-11-27T14:32:48.422Z] [runtime-status] [78447] Functions runtime initialized. {"cwd":"/Users/nico/Documents/Projects/todolist-react/functions","node_version":"14.15.0"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] Functions runtime initialized. {\"cwd\":\"/Users/nico/Documents/Projects/todolist-react/functions\",\"node_version\":\"14.15.0\"}"}}
+[debug] [2020-11-27T14:32:48.424Z] [runtime-status] [78447] Disabled runtime features: undefined {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] Disabled runtime features: undefined"}}
+[debug] [2020-11-27T14:32:48.428Z] [runtime-status] [78447] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/nico/Documents/Projects/todolist-react/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"9.4.1\",\"resolution\":\"/Users/nico/Documents/Projects/todolist-react/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2020-11-27T14:32:48.429Z] [runtime-status] [78447] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/nico/Documents/Projects/todolist-react/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.11.0\",\"resolution\":\"/Users/nico/Documents/Projects/todolist-react/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2020-11-27T14:32:48.431Z] [runtime-status] [78447] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/nico/Documents/Projects/todolist-react/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.11.0\",\"resolution\":\"/Users/nico/Documents/Projects/todolist-react/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2020-11-27T14:32:48.433Z] [runtime-status] [78447] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}] {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] Outgoing network have been stubbed. [{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"net\",\"status\":\"mocked\"}]"}}
+[debug] [2020-11-27T14:32:48.433Z] [runtime-status] [78447] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/nico/Documents/Projects/todolist-react/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.11.0\",\"resolution\":\"/Users/nico/Documents/Projects/todolist-react/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2020-11-27T14:32:48.484Z] [runtime-status] [78447] Checked functions.config() {"config":{}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] Checked functions.config() {\"config\":{}}"}}
+[debug] [2020-11-27T14:32:48.485Z] [runtime-status] [78447] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/nico/Documents/Projects/todolist-react/functions/node_modules/firebase-functions/lib/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] firebase-functions has been stubbed. {\"functionsResolution\":{\"declared\":true,\"installed\":true,\"version\":\"3.11.0\",\"resolution\":\"/Users/nico/Documents/Projects/todolist-react/functions/node_modules/firebase-functions/lib/index.js\"}}"}}
+[debug] [2020-11-27T14:32:48.485Z] [runtime-status] [78447] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/nico/Documents/Projects/todolist-react/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.11.0\",\"resolution\":\"/Users/nico/Documents/Projects/todolist-react/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2020-11-27T14:32:48.485Z] [runtime-status] [78447] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/nico/Documents/Projects/todolist-react/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"9.4.1\",\"resolution\":\"/Users/nico/Documents/Projects/todolist-react/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2020-11-27T14:32:48.486Z] [runtime-status] [78447] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/nico/Documents/Projects/todolist-react/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.11.0\",\"resolution\":\"/Users/nico/Documents/Projects/todolist-react/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2020-11-27T14:32:48.486Z] [runtime-status] [78447] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/nico/Documents/Projects/todolist-react/functions/node_modules/firebase-admin/lib/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] firebase-admin has been stubbed. {\"adminResolution\":{\"declared\":true,\"installed\":true,\"version\":\"9.4.1\",\"resolution\":\"/Users/nico/Documents/Projects/todolist-react/functions/node_modules/firebase-admin/lib/index.js\"}}"}}
+[debug] [2020-11-27T14:32:48.620Z] [runtime-status] [78447] initializeApp(DEFAULT) {"apiKey":"AIzaSyDxmJzv3ccl0_ouKB9oVSzWIsn6uysYMLQ","authDomain":"todo-list-react-33431.firebaseapp.com","databaseURL":"https://todo-list-react-33431.firebaseio.com","projectId":"todo-list-react-33431","storageBucket":"todo-list-react-33431.appspot.com","messagingSenderId":"153291173882","appId":"1:153291173882:web:4eb5673b9a70ce5828fe43","measurementId":"G-BCMCPMQHDB"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] initializeApp(DEFAULT) {\"apiKey\":\"AIzaSyDxmJzv3ccl0_ouKB9oVSzWIsn6uysYMLQ\",\"authDomain\":\"todo-list-react-33431.firebaseapp.com\",\"databaseURL\":\"https://todo-list-react-33431.firebaseio.com\",\"projectId\":\"todo-list-react-33431\",\"storageBucket\":\"todo-list-react-33431.appspot.com\",\"messagingSenderId\":\"153291173882\",\"appId\":\"1:153291173882:web:4eb5673b9a70ce5828fe43\",\"measurementId\":\"G-BCMCPMQHDB\"}"}}
+[debug] [2020-11-27T14:32:48.671Z] [runtime-status] [78447] auth.setJwtVerificationEnabled(false) {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] auth.setJwtVerificationEnabled(false)"}}
+[debug] [2020-11-27T14:32:48.980Z] [runtime-status] [78447] Trigger "api" has been found, beginning invocation! {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] Trigger \"api\" has been found, beginning invocation!"}}
+[info] i  functions: Beginning execution of "api" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"Beginning execution of \"api\""}}
+[debug] [2020-11-27T14:32:48.981Z] [runtime-status] [78447] triggerDefinition {"httpsTrigger":{},"name":"api","entryPoint":"api"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] triggerDefinition {\"httpsTrigger\":{},\"name\":\"api\",\"entryPoint\":\"api\"}"}}
+[debug] [2020-11-27T14:32:48.981Z] [runtime-status] [78447] Running api in mode HTTPS {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] Running api in mode HTTPS"}}
+[debug] [2020-11-27T14:32:48.984Z] [runtime-status] [78447] Attempting to listen to socketPath: /var/folders/qx/jbclgg9j2zj3fqtr2xx2193r0000gn/T/fire_emu_78447.sock {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] Attempting to listen to socketPath: /var/folders/qx/jbclgg9j2zj3fqtr2xx2193r0000gn/T/fire_emu_78447.sock"}}
+[debug] [2020-11-27T14:32:48.987Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2020-11-27T14:32:48.990Z] [runtime-status] [78447] Ephemeral server handling OPTIONS request {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] Ephemeral server handling OPTIONS request"}}
+[debug] [2020-11-27T14:32:48.996Z] [runtime-status] [78447] Ephemeral server survived. {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] Ephemeral server survived."}}
+[debug] [2020-11-27T14:32:48.998Z] [work-queue] {"queueLength":1,"workRunningCount":1}
+[debug] [2020-11-27T14:32:48.999Z] [work-queue] {"queueLength":0,"workRunningCount":2}
+[debug] [2020-11-27T14:32:48.999Z] Accepted request PUT /todo-list-react-33431/us-central1/api/project/AiCHInFliPiCbaTHRJuz --> api
+[debug] [2020-11-27T14:32:49.003Z] [worker-pool] addWorker(api) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] addWorker(api)"}}
+[debug] [2020-11-27T14:32:49.003Z] [worker-pool] Adding worker with key api, total=2 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Adding worker with key api, total=2"}}
+[debug] [2020-11-27T14:32:49.003Z] [worker-pool] submitWork(triggerId=api) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitWork(triggerId=api)"}}
+[debug] [2020-11-27T14:32:49.003Z] [worker-api-4df8a418-c99a-48ac-a1e7-8599f687f2cb]: Assigning socketPath: /var/folders/qx/jbclgg9j2zj3fqtr2xx2193r0000gn/T/fire_emu_78448.sock {"metadata":{"emulator":{"name":"functions"},"message":"[worker-api-4df8a418-c99a-48ac-a1e7-8599f687f2cb]: Assigning socketPath: /var/folders/qx/jbclgg9j2zj3fqtr2xx2193r0000gn/T/fire_emu_78448.sock"}}
+[debug] [2020-11-27T14:32:49.003Z] [worker-api-4df8a418-c99a-48ac-a1e7-8599f687f2cb]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-api-4df8a418-c99a-48ac-a1e7-8599f687f2cb]: BUSY"}}
+[info] i  functions: Finished "api" in ~1s {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"Finished \"api\" in ~1s"}}
+[debug] [2020-11-27T14:32:49.004Z] [worker-api-0b0a1522-59e9-40f0-9d92-94377812e1df]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-api-0b0a1522-59e9-40f0-9d92-94377812e1df]: IDLE"}}
+[debug] [2020-11-27T14:32:49.004Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2020-11-27T14:32:49.240Z] [runtime-status] [78448] Functions runtime initialized. {"cwd":"/Users/nico/Documents/Projects/todolist-react/functions","node_version":"14.15.0"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78448] Functions runtime initialized. {\"cwd\":\"/Users/nico/Documents/Projects/todolist-react/functions\",\"node_version\":\"14.15.0\"}"}}
+[debug] [2020-11-27T14:32:49.242Z] [runtime-status] [78448] Disabled runtime features: undefined {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78448] Disabled runtime features: undefined"}}
+[debug] [2020-11-27T14:32:49.243Z] [runtime-status] [78448] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/nico/Documents/Projects/todolist-react/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78448] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"9.4.1\",\"resolution\":\"/Users/nico/Documents/Projects/todolist-react/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2020-11-27T14:32:49.244Z] [runtime-status] [78448] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/nico/Documents/Projects/todolist-react/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78448] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.11.0\",\"resolution\":\"/Users/nico/Documents/Projects/todolist-react/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2020-11-27T14:32:49.246Z] [runtime-status] [78448] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/nico/Documents/Projects/todolist-react/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78448] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.11.0\",\"resolution\":\"/Users/nico/Documents/Projects/todolist-react/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2020-11-27T14:32:49.247Z] [runtime-status] [78448] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}] {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78448] Outgoing network have been stubbed. [{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"net\",\"status\":\"mocked\"}]"}}
+[debug] [2020-11-27T14:32:49.248Z] [runtime-status] [78448] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/nico/Documents/Projects/todolist-react/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78448] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.11.0\",\"resolution\":\"/Users/nico/Documents/Projects/todolist-react/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2020-11-27T14:32:49.275Z] [runtime-status] [78448] Checked functions.config() {"config":{}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78448] Checked functions.config() {\"config\":{}}"}}
+[debug] [2020-11-27T14:32:49.275Z] [runtime-status] [78448] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/nico/Documents/Projects/todolist-react/functions/node_modules/firebase-functions/lib/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78448] firebase-functions has been stubbed. {\"functionsResolution\":{\"declared\":true,\"installed\":true,\"version\":\"3.11.0\",\"resolution\":\"/Users/nico/Documents/Projects/todolist-react/functions/node_modules/firebase-functions/lib/index.js\"}}"}}
+[debug] [2020-11-27T14:32:49.276Z] [runtime-status] [78448] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/nico/Documents/Projects/todolist-react/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78448] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.11.0\",\"resolution\":\"/Users/nico/Documents/Projects/todolist-react/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2020-11-27T14:32:49.276Z] [runtime-status] [78448] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/nico/Documents/Projects/todolist-react/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78448] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"9.4.1\",\"resolution\":\"/Users/nico/Documents/Projects/todolist-react/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2020-11-27T14:32:49.277Z] [runtime-status] [78448] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/nico/Documents/Projects/todolist-react/functions/node_modules/firebase-functions/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78448] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"3.11.0\",\"resolution\":\"/Users/nico/Documents/Projects/todolist-react/functions/node_modules/firebase-functions/lib/index.js\"}"}}
+[debug] [2020-11-27T14:32:49.277Z] [runtime-status] [78448] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"9.4.1","resolution":"/Users/nico/Documents/Projects/todolist-react/functions/node_modules/firebase-admin/lib/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78448] firebase-admin has been stubbed. {\"adminResolution\":{\"declared\":true,\"installed\":true,\"version\":\"9.4.1\",\"resolution\":\"/Users/nico/Documents/Projects/todolist-react/functions/node_modules/firebase-admin/lib/index.js\"}}"}}
+[debug] [2020-11-27T14:32:49.326Z] [runtime-status] [78448] initializeApp(DEFAULT) {"apiKey":"AIzaSyDxmJzv3ccl0_ouKB9oVSzWIsn6uysYMLQ","authDomain":"todo-list-react-33431.firebaseapp.com","databaseURL":"https://todo-list-react-33431.firebaseio.com","projectId":"todo-list-react-33431","storageBucket":"todo-list-react-33431.appspot.com","messagingSenderId":"153291173882","appId":"1:153291173882:web:4eb5673b9a70ce5828fe43","measurementId":"G-BCMCPMQHDB"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78448] initializeApp(DEFAULT) {\"apiKey\":\"AIzaSyDxmJzv3ccl0_ouKB9oVSzWIsn6uysYMLQ\",\"authDomain\":\"todo-list-react-33431.firebaseapp.com\",\"databaseURL\":\"https://todo-list-react-33431.firebaseio.com\",\"projectId\":\"todo-list-react-33431\",\"storageBucket\":\"todo-list-react-33431.appspot.com\",\"messagingSenderId\":\"153291173882\",\"appId\":\"1:153291173882:web:4eb5673b9a70ce5828fe43\",\"measurementId\":\"G-BCMCPMQHDB\"}"}}
+[debug] [2020-11-27T14:32:49.346Z] [runtime-status] [78448] auth.setJwtVerificationEnabled(false) {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78448] auth.setJwtVerificationEnabled(false)"}}
+[debug] [2020-11-27T14:32:49.465Z] [runtime-status] [78448] Trigger "api" has been found, beginning invocation! {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78448] Trigger \"api\" has been found, beginning invocation!"}}
+[info] i  functions: Beginning execution of "api" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"Beginning execution of \"api\""}}
+[debug] [2020-11-27T14:32:49.466Z] [runtime-status] [78448] triggerDefinition {"httpsTrigger":{},"name":"api","entryPoint":"api"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78448] triggerDefinition {\"httpsTrigger\":{},\"name\":\"api\",\"entryPoint\":\"api\"}"}}
+[debug] [2020-11-27T14:32:49.466Z] [runtime-status] [78448] Running api in mode HTTPS {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78448] Running api in mode HTTPS"}}
+[debug] [2020-11-27T14:32:49.468Z] [runtime-status] [78448] Attempting to listen to socketPath: /var/folders/qx/jbclgg9j2zj3fqtr2xx2193r0000gn/T/fire_emu_78448.sock {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78448] Attempting to listen to socketPath: /var/folders/qx/jbclgg9j2zj3fqtr2xx2193r0000gn/T/fire_emu_78448.sock"}}
+[debug] [2020-11-27T14:32:49.470Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2020-11-27T14:32:49.490Z] [runtime-status] [78448] Ephemeral server handling PUT request {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78448] Ephemeral server handling PUT request"}}
+[debug] [2020-11-27T14:32:49.494Z] [runtime-status] [78448] Ephemeral server survived. {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78448] Ephemeral server survived."}}
+[debug] [2020-11-27T14:32:49.600Z] Nov 27, 2020 3:32:49 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:32:49 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected HTTP/2 connection.\n"}}
+[info] i  functions: Finished "api" in ~1s {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"Finished \"api\" in ~1s"}}
+[debug] [2020-11-27T14:32:49.645Z] [worker-api-4df8a418-c99a-48ac-a1e7-8599f687f2cb]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-api-4df8a418-c99a-48ac-a1e7-8599f687f2cb]: IDLE"}}
+[debug] [2020-11-27T14:32:49.645Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[debug] [2020-11-27T14:32:53.571Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2020-11-27T14:32:53.571Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2020-11-27T14:32:53.571Z] Accepted request OPTIONS /todo-list-react-33431/us-central1/api/project/03XhPZRkHupGvOALNyYg --> api
+[debug] [2020-11-27T14:32:53.571Z] [worker-pool] submitWork(triggerId=api) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitWork(triggerId=api)"}}
+[debug] [2020-11-27T14:32:53.572Z] [worker-api-0b0a1522-59e9-40f0-9d92-94377812e1df]: Assigning socketPath: /var/folders/qx/jbclgg9j2zj3fqtr2xx2193r0000gn/T/fire_emu_78447.sock {"metadata":{"emulator":{"name":"functions"},"message":"[worker-api-0b0a1522-59e9-40f0-9d92-94377812e1df]: Assigning socketPath: /var/folders/qx/jbclgg9j2zj3fqtr2xx2193r0000gn/T/fire_emu_78447.sock"}}
+[debug] [2020-11-27T14:32:53.572Z] [worker-api-0b0a1522-59e9-40f0-9d92-94377812e1df]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-api-0b0a1522-59e9-40f0-9d92-94377812e1df]: BUSY"}}
+[debug] [2020-11-27T14:32:53.572Z] [runtime-status] [78447] Trigger "api" has been found, beginning invocation! {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] Trigger \"api\" has been found, beginning invocation!"}}
+[info] i  functions: Beginning execution of "api" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"Beginning execution of \"api\""}}
+[debug] [2020-11-27T14:32:53.573Z] [runtime-status] [78447] triggerDefinition {"httpsTrigger":{},"name":"api","entryPoint":"api"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] triggerDefinition {\"httpsTrigger\":{},\"name\":\"api\",\"entryPoint\":\"api\"}"}}
+[debug] [2020-11-27T14:32:53.573Z] [runtime-status] [78447] Running api in mode HTTPS {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] Running api in mode HTTPS"}}
+[debug] [2020-11-27T14:32:53.574Z] [runtime-status] [78447] Attempting to listen to socketPath: /var/folders/qx/jbclgg9j2zj3fqtr2xx2193r0000gn/T/fire_emu_78447.sock {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] Attempting to listen to socketPath: /var/folders/qx/jbclgg9j2zj3fqtr2xx2193r0000gn/T/fire_emu_78447.sock"}}
+[debug] [2020-11-27T14:32:53.574Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2020-11-27T14:32:53.576Z] [runtime-status] [78447] Ephemeral server handling OPTIONS request {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] Ephemeral server handling OPTIONS request"}}
+[debug] [2020-11-27T14:32:53.577Z] [runtime-status] [78447] Ephemeral server survived. {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] Ephemeral server survived."}}
+[info] i  functions: Finished "api" in ~1s {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"Finished \"api\" in ~1s"}}
+[debug] [2020-11-27T14:32:53.578Z] [worker-api-0b0a1522-59e9-40f0-9d92-94377812e1df]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-api-0b0a1522-59e9-40f0-9d92-94377812e1df]: IDLE"}}
+[debug] [2020-11-27T14:32:53.578Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[debug] [2020-11-27T14:32:53.581Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2020-11-27T14:32:53.581Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2020-11-27T14:32:53.581Z] Accepted request PUT /todo-list-react-33431/us-central1/api/project/03XhPZRkHupGvOALNyYg --> api
+[debug] [2020-11-27T14:32:53.581Z] [worker-pool] submitWork(triggerId=api) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitWork(triggerId=api)"}}
+[debug] [2020-11-27T14:32:53.581Z] [worker-api-0b0a1522-59e9-40f0-9d92-94377812e1df]: Assigning socketPath: /var/folders/qx/jbclgg9j2zj3fqtr2xx2193r0000gn/T/fire_emu_78447.sock {"metadata":{"emulator":{"name":"functions"},"message":"[worker-api-0b0a1522-59e9-40f0-9d92-94377812e1df]: Assigning socketPath: /var/folders/qx/jbclgg9j2zj3fqtr2xx2193r0000gn/T/fire_emu_78447.sock"}}
+[debug] [2020-11-27T14:32:53.581Z] [worker-api-0b0a1522-59e9-40f0-9d92-94377812e1df]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-api-0b0a1522-59e9-40f0-9d92-94377812e1df]: BUSY"}}
+[debug] [2020-11-27T14:32:53.589Z] [runtime-status] [78447] Trigger "api" has been found, beginning invocation! {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] Trigger \"api\" has been found, beginning invocation!"}}
+[info] i  functions: Beginning execution of "api" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"Beginning execution of \"api\""}}
+[debug] [2020-11-27T14:32:53.589Z] [runtime-status] [78447] triggerDefinition {"httpsTrigger":{},"name":"api","entryPoint":"api"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] triggerDefinition {\"httpsTrigger\":{},\"name\":\"api\",\"entryPoint\":\"api\"}"}}
+[debug] [2020-11-27T14:32:53.589Z] [runtime-status] [78447] Running api in mode HTTPS {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] Running api in mode HTTPS"}}
+[debug] [2020-11-27T14:32:53.590Z] [runtime-status] [78447] Attempting to listen to socketPath: /var/folders/qx/jbclgg9j2zj3fqtr2xx2193r0000gn/T/fire_emu_78447.sock {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] Attempting to listen to socketPath: /var/folders/qx/jbclgg9j2zj3fqtr2xx2193r0000gn/T/fire_emu_78447.sock"}}
+[debug] [2020-11-27T14:32:53.590Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2020-11-27T14:32:53.602Z] [runtime-status] [78447] Ephemeral server handling PUT request {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] Ephemeral server handling PUT request"}}
+[debug] [2020-11-27T14:32:53.605Z] [runtime-status] [78447] Ephemeral server survived. {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] Ephemeral server survived."}}
+[debug] [2020-11-27T14:32:53.706Z] Nov 27, 2020 3:32:53 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:32:53 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected HTTP/2 connection.\n"}}
+[info] i  functions: Finished "api" in ~1s {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"Finished \"api\" in ~1s"}}
+[debug] [2020-11-27T14:32:53.748Z] [worker-api-0b0a1522-59e9-40f0-9d92-94377812e1df]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-api-0b0a1522-59e9-40f0-9d92-94377812e1df]: IDLE"}}
+[debug] [2020-11-27T14:32:53.748Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[debug] [2020-11-27T14:32:59.861Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2020-11-27T14:32:59.861Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2020-11-27T14:32:59.861Z] Accepted request OPTIONS /todo-list-react-33431/us-central1/api/project/AiCHInFliPiCbaTHRJuz --> api
+[debug] [2020-11-27T14:32:59.861Z] [worker-pool] submitWork(triggerId=api) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitWork(triggerId=api)"}}
+[debug] [2020-11-27T14:32:59.861Z] [worker-api-0b0a1522-59e9-40f0-9d92-94377812e1df]: Assigning socketPath: /var/folders/qx/jbclgg9j2zj3fqtr2xx2193r0000gn/T/fire_emu_78447.sock {"metadata":{"emulator":{"name":"functions"},"message":"[worker-api-0b0a1522-59e9-40f0-9d92-94377812e1df]: Assigning socketPath: /var/folders/qx/jbclgg9j2zj3fqtr2xx2193r0000gn/T/fire_emu_78447.sock"}}
+[debug] [2020-11-27T14:32:59.862Z] [worker-api-0b0a1522-59e9-40f0-9d92-94377812e1df]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-api-0b0a1522-59e9-40f0-9d92-94377812e1df]: BUSY"}}
+[debug] [2020-11-27T14:32:59.862Z] [runtime-status] [78447] Trigger "api" has been found, beginning invocation! {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] Trigger \"api\" has been found, beginning invocation!"}}
+[info] i  functions: Beginning execution of "api" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"Beginning execution of \"api\""}}
+[debug] [2020-11-27T14:32:59.863Z] [runtime-status] [78447] triggerDefinition {"httpsTrigger":{},"name":"api","entryPoint":"api"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] triggerDefinition {\"httpsTrigger\":{},\"name\":\"api\",\"entryPoint\":\"api\"}"}}
+[debug] [2020-11-27T14:32:59.863Z] [runtime-status] [78447] Running api in mode HTTPS {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] Running api in mode HTTPS"}}
+[debug] [2020-11-27T14:32:59.863Z] [runtime-status] [78447] Attempting to listen to socketPath: /var/folders/qx/jbclgg9j2zj3fqtr2xx2193r0000gn/T/fire_emu_78447.sock {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] Attempting to listen to socketPath: /var/folders/qx/jbclgg9j2zj3fqtr2xx2193r0000gn/T/fire_emu_78447.sock"}}
+[debug] [2020-11-27T14:32:59.864Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2020-11-27T14:32:59.867Z] [runtime-status] [78447] Ephemeral server handling OPTIONS request {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] Ephemeral server handling OPTIONS request"}}
+[debug] [2020-11-27T14:32:59.868Z] [runtime-status] [78447] Ephemeral server survived. {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] Ephemeral server survived."}}
+[info] i  functions: Finished "api" in ~1s {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"Finished \"api\" in ~1s"}}
+[debug] [2020-11-27T14:32:59.869Z] [worker-api-0b0a1522-59e9-40f0-9d92-94377812e1df]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-api-0b0a1522-59e9-40f0-9d92-94377812e1df]: IDLE"}}
+[debug] [2020-11-27T14:32:59.869Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[debug] [2020-11-27T14:32:59.872Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2020-11-27T14:32:59.872Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2020-11-27T14:32:59.872Z] Accepted request PUT /todo-list-react-33431/us-central1/api/project/AiCHInFliPiCbaTHRJuz --> api
+[debug] [2020-11-27T14:32:59.872Z] [worker-pool] submitWork(triggerId=api) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitWork(triggerId=api)"}}
+[debug] [2020-11-27T14:32:59.872Z] [worker-api-0b0a1522-59e9-40f0-9d92-94377812e1df]: Assigning socketPath: /var/folders/qx/jbclgg9j2zj3fqtr2xx2193r0000gn/T/fire_emu_78447.sock {"metadata":{"emulator":{"name":"functions"},"message":"[worker-api-0b0a1522-59e9-40f0-9d92-94377812e1df]: Assigning socketPath: /var/folders/qx/jbclgg9j2zj3fqtr2xx2193r0000gn/T/fire_emu_78447.sock"}}
+[debug] [2020-11-27T14:32:59.873Z] [worker-api-0b0a1522-59e9-40f0-9d92-94377812e1df]: BUSY {"metadata":{"emulator":{"name":"functions"},"message":"[worker-api-0b0a1522-59e9-40f0-9d92-94377812e1df]: BUSY"}}
+[debug] [2020-11-27T14:32:59.879Z] [runtime-status] [78447] Trigger "api" has been found, beginning invocation! {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] Trigger \"api\" has been found, beginning invocation!"}}
+[info] i  functions: Beginning execution of "api" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"Beginning execution of \"api\""}}
+[debug] [2020-11-27T14:32:59.880Z] [runtime-status] [78447] triggerDefinition {"httpsTrigger":{},"name":"api","entryPoint":"api"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] triggerDefinition {\"httpsTrigger\":{},\"name\":\"api\",\"entryPoint\":\"api\"}"}}
+[debug] [2020-11-27T14:32:59.880Z] [runtime-status] [78447] Running api in mode HTTPS {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] Running api in mode HTTPS"}}
+[debug] [2020-11-27T14:32:59.880Z] [runtime-status] [78447] Attempting to listen to socketPath: /var/folders/qx/jbclgg9j2zj3fqtr2xx2193r0000gn/T/fire_emu_78447.sock {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] Attempting to listen to socketPath: /var/folders/qx/jbclgg9j2zj3fqtr2xx2193r0000gn/T/fire_emu_78447.sock"}}
+[debug] [2020-11-27T14:32:59.881Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2020-11-27T14:32:59.883Z] [runtime-status] [78447] Ephemeral server handling PUT request {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] Ephemeral server handling PUT request"}}
+[debug] [2020-11-27T14:32:59.884Z] [runtime-status] [78447] Ephemeral server survived. {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"[runtime-status] [78447] Ephemeral server survived."}}
+[info] i  functions: Finished "api" in ~1s {"metadata":{"emulator":{"name":"functions"},"function":{"name":"api"},"message":"Finished \"api\" in ~1s"}}
+[debug] [2020-11-27T14:32:59.922Z] [worker-api-0b0a1522-59e9-40f0-9d92-94377812e1df]: IDLE {"metadata":{"emulator":{"name":"functions"},"message":"[worker-api-0b0a1522-59e9-40f0-9d92-94377812e1df]: IDLE"}}
+[debug] [2020-11-27T14:32:59.922Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[debug] [2020-11-27T14:33:29.939Z] Nov 27, 2020 3:33:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:33:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:33:29.940Z] Nov 27, 2020 3:33:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:33:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:34:34.968Z] Nov 27, 2020 3:34:34 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:34:34 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:34:34.968Z] Nov 27, 2020 3:34:34 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:34:34 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:35:39.996Z] Nov 27, 2020 3:35:39 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+Nov 27, 2020 3:35:39 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:35:39 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\nNov 27, 2020 3:35:39 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:36:31.070Z] Nov 27, 2020 3:36:31 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:36:31 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:36:45.020Z] Nov 27, 2020 3:36:45 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:36:45 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:37:36.116Z] Nov 27, 2020 3:37:36 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:37:36 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:37:36.573Z] Nov 27, 2020 3:37:36 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:37:36 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:37:41.132Z] Nov 27, 2020 3:37:41 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:37:41 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:37:43.571Z] Nov 27, 2020 3:37:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:37:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:37:43.581Z] Nov 27, 2020 3:37:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:37:43 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:38:41.137Z] Nov 27, 2020 3:38:41 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:38:41 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:38:46.156Z] Nov 27, 2020 3:38:46 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:38:46 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:39:46.176Z] Nov 27, 2020 3:39:46 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:39:46 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:40:01.966Z] Nov 27, 2020 3:40:01 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:40:01 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:40:51.199Z] Nov 27, 2020 3:40:51 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:40:51 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:41:17.673Z] Nov 27, 2020 3:41:17 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:41:17 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:41:56.228Z] Nov 27, 2020 3:41:56 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:41:56 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:42:04.162Z] Nov 27, 2020 3:42:04 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:42:04 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:43:16.245Z] Nov 27, 2020 3:43:16 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:43:16 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:43:19.374Z] Nov 27, 2020 3:43:19 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:43:19 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:44:06.673Z] Nov 27, 2020 3:44:06 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:44:06 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:44:21.267Z] Nov 27, 2020 3:44:21 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:44:21 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:45:11.695Z] Nov 27, 2020 3:45:11 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:45:11 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:45:21.288Z] Nov 27, 2020 3:45:21 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:45:21 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:46:16.718Z] Nov 27, 2020 3:46:16 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:46:16 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:46:21.738Z] Nov 27, 2020 3:46:21 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:46:21 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:47:21.746Z] Nov 27, 2020 3:47:21 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:47:21 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:47:36.752Z] Nov 27, 2020 3:47:36 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:47:36 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:48:26.768Z] Nov 27, 2020 3:48:26 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:48:26 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:48:36.773Z] Nov 27, 2020 3:48:36 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:48:36 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:49:36.785Z] Nov 27, 2020 3:49:36 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:49:36 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:49:47.008Z] Nov 27, 2020 3:49:47 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:49:47 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:50:41.813Z] Nov 27, 2020 3:50:41 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:50:41 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:50:47.033Z] Nov 27, 2020 3:50:47 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:50:47 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:51:42.706Z] Nov 27, 2020 3:51:42 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:51:42 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:51:47.731Z] Nov 27, 2020 3:51:47 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:51:47 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:52:03.843Z] Nov 27, 2020 3:52:03 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:52:03 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:52:47.750Z] Nov 27, 2020 3:52:47 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:52:47 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:52:49.972Z] Nov 27, 2020 3:52:49 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:52:49 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:53:40.334Z] Nov 27, 2020 3:53:40 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:53:40 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:53:52.774Z] Nov 27, 2020 3:53:52 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:53:52 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:54:27.665Z] Nov 27, 2020 3:54:27 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:54:27 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:54:32.690Z] Nov 27, 2020 3:54:32 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:54:32 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:54:37.448Z] Nov 27, 2020 3:54:37 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:54:37 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:54:37.490Z] Nov 27, 2020 3:54:37 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:54:37 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:54:45.352Z] Nov 27, 2020 3:54:45 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:54:45 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:55:14.738Z] Nov 27, 2020 3:55:14 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:55:14 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:55:19.767Z] Nov 27, 2020 3:55:19 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:55:19 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:55:22.149Z] Nov 27, 2020 3:55:22 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:55:22 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:55:22.157Z] Nov 27, 2020 3:55:22 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:55:22 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:55:23.167Z] Nov 27, 2020 3:55:23 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:55:23 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:55:23.175Z] Nov 27, 2020 3:55:23 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:55:23 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:55:24.551Z] Nov 27, 2020 3:55:24 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:55:24 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:55:24.569Z] Nov 27, 2020 3:55:24 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:55:24 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:55:29.697Z] Nov 27, 2020 3:55:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:55:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:55:29.712Z] Nov 27, 2020 3:55:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:55:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:55:31.486Z] Nov 27, 2020 3:55:31 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:55:31 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:55:34.415Z] Nov 27, 2020 3:55:34 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:55:34 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:55:34.427Z] Nov 27, 2020 3:55:34 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:55:34 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:55:35.859Z] Nov 27, 2020 3:55:35 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:55:35 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:55:35.872Z] Nov 27, 2020 3:55:35 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:55:35 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:55:38.073Z] Nov 27, 2020 3:55:38 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:55:38 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:55:38.089Z] Nov 27, 2020 3:55:38 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:55:38 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:55:40.168Z] Nov 27, 2020 3:55:40 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:55:40 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:55:40.178Z] Nov 27, 2020 3:55:40 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:55:40 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:55:44.468Z] Nov 27, 2020 3:55:44 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:55:44 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:55:44.479Z] Nov 27, 2020 3:55:44 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:55:44 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:55:47.443Z] Nov 27, 2020 3:55:47 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:55:47 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2020-11-27T14:55:47.459Z] Nov 27, 2020 3:55:47 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Nov 27, 2020 3:55:47 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}

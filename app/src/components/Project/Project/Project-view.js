@@ -22,7 +22,7 @@ export default function projectRender (p) {
               task={ task }
               level={ 0 }
             />)
-          : (p.completed.length ? <li><h5 className="subtle max-content">{ p.allCompleted }</h5></li> : '')
+          : (p.completed.length ? <li><h5 className="subtle max-content ml-50">{ p.allCompleted }</h5></li> : '')
         }
         { p.showCompleted && p.completed.map((task) =>
           <Task

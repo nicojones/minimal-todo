@@ -3,5 +3,7 @@ export const urls = {
   app: '/app',
   project: (id) => `${ urls.app }/${ id }`,
   login: '/login',
-  signup: '/signup'
+  signup: '/signup',
+
+  inboxUrl: 'inbox',
 }

@@ -15,6 +15,13 @@ export const text = {
     notes: 'Notes',
     notesPh: 'An optional description always helps'
   },
+
+  drawer: {
+    inbox: {
+      _: 'Inbox'
+    },
+    invalidDrawer: 'Invalid URL (not an actual project)'
+  },
   // addSubtaskBtn: 'Add a subtask',
   // subtasks: 'Subtasks',
   sharedProject: 'This project is shared',

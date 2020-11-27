@@ -4,6 +4,8 @@ import environment from './environment';
 import { handleError } from './handleError';
 import cogoToast from 'cogo-toast';
 import { constants } from '../config/constants';
+import { urls } from '../config/urls';
+import { text } from '../config/text';
 
 const projectService = {
 

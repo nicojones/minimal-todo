@@ -11,6 +11,8 @@ import projectService from 'services/projectService';
 import Project from 'components/Project/Project/Project';
 import NoProject from 'components/Project/NoProject/NoProject';
 import ProjectList from 'components/Project/ProjectList/ProjectList';
+import reservedKey from './functions/reservedKey';
+import drawerService from './services/drawerService';
 
 export const ProjectContext = React.createContext({});
 
@@ -33,18 +35,23 @@ function TodoApp () {
 
     if (projectKey) {
 
-      const unsubscribeProject = projectService.getProject(projectKey, (project) => {
-        setProject(project);
-      });
+      // console.log(reservedKey(projectKey), projectKey)
+      // if (reservedKey(projectKey)) {
+      //   // Special project, like an inbox...
+      //   const unsubscribeProject = drawerService.getDrawer(projectKey, setProject);
+      //   return () => {
+      //     unsubscribeProject && unsubscribeProject();
+      //   };
+      //
+      // } else { // NORMAL project
+        const unsubscribeProject = projectService.getProject(projectKey, setProject);
+        const unsubscribeTasks = taskService.getTasksForProject(projectKey, setProjectTasks);
 
-      const unsubscribeTasks = taskService.getTasksForProject(projectKey, (project) => {
-        setProjectTasks(project);
-      });
-
-      return () => {
-        unsubscribeProject && unsubscribeProject();
-        unsubscribeTasks && unsubscribeTasks();
-      };
+        return () => {
+          unsubscribeProject && unsubscribeProject();
+          unsubscribeTasks && unsubscribeTasks();
+        };
+      // }
     }
   }, [projectKey]);
 
@@ -76,7 +83,11 @@ function TodoApp () {
           >
             {
               projectKey
-                ? <Project project={ project } projectTasks={ projectTasks }/>
+                ? (
+                  // reservedKey(projectKey)
+                  //   ? <Drawer project={ project } projectTasks={ projectTasks }/>
+                  <Project project={ project } projectTasks={ projectTasks }/>
+                )
                 : <NoProject setShowSidebar={ setShowSidebar }/>
             }
           </ProjectContext.Provider>
