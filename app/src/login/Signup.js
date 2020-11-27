@@ -5,8 +5,8 @@ import { text } from 'config/text';
 import { urls } from 'config/urls';
 import { LoggedInUserContext } from '../App';
 import cogoToast from 'cogo-toast';
-import { defaultToast } from 'config/defaultToast';
 import LoginBox from './LoginBox';
+import { constants } from 'config/constants';
 
 function Signup () {
 
@@ -29,7 +29,7 @@ function Signup () {
         .then((responseData) => {
           setLoading(false);
           if (responseData.user) {
-            cogoToast.success(text.login.signupSuccess, defaultToast);
+            cogoToast.success(text.login.signupSuccess, constants.toast);
             setSignup({});
             setIsLoggedIn(true);
           }
@@ -40,13 +40,13 @@ function Signup () {
           } else {
             setSignupError(response.data);
             const errors = Object.values(response.data);
-            errors.length && cogoToast.error(errors[0], defaultToast);
+            errors.length && cogoToast.error(errors[0], constants.toast);
           }
           setLoading(false);
         });
     } else {
       setSignupError(_signupError);
-      errors.length && cogoToast.error(errors[0], defaultToast);
+      errors.length && cogoToast.error(errors[0], constants.toast);
     }
   }
 

@@ -26,6 +26,7 @@ function TodoApp () {
 
   useEffect(() => {
 
+    console.log(projectKey, String(projectKeyParam));
     if (projectKey !== String(projectKeyParam)) {
       history.push(urls.project(projectKey));
     }
@@ -68,6 +69,8 @@ function TodoApp () {
           <ProjectContext.Provider
             value={ {
               id: project.id,
+              color: project.color,
+              showCompleted: project.showCompleted,
               name: project.name
             } }
           >

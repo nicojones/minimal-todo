@@ -3,8 +3,8 @@ import environment from './environment';
 import cogoToast from 'cogo-toast';
 import { auth } from './firebase';
 import { sha1 } from 'functions/sha1';
-import { text } from '../config/text';
-import { defaultToast } from '../config/defaultToast';
+import { text } from 'config/text';
+import { constants } from 'config/constants';
 
 let debounceAuth;
 
@@ -68,11 +68,11 @@ export const authService = {
   loginCatch: (reason) => {
     console.log(reason, reason.code, reason.code === 'auth/user-not-found');
     if (reason.code === 'auth/wrong-password') {
-      cogoToast.error(text.login.invalidPass, defaultToast);
+      cogoToast.error(text.login.invalidPass, constants.toast);
     } else if (reason.code === 'auth/user-not-found') {
-      cogoToast.error(text.login.invalidUser, defaultToast);
+      cogoToast.error(text.login.invalidUser, constants.toast);
     } else {
-      cogoToast.error(reason.message, defaultToast);
+      cogoToast.error(reason.message, constants.toast);
     }
   },
 

@@ -1,5 +1,8 @@
+const { validateProjectData } = require('../util/validators');
 const { db } = require('../util/firebase');
 const { deleteCollection } = require('../util/deleteCollection');
+
+
 
 exports.addProject = (request, response) => {
   if ((request.body.name || '').trim() === '') {
@@ -85,7 +88,14 @@ exports.updateProject = (request, response) => {
   // !!! Not all fields are editable!
   const project = {
     name: request.body.name,
-    color: request.body.color
+    color: request.body.color,
+    showCompleted: request.body.showCompleted
+  };
+
+  const errors = validateProjectData(project);
+
+  if (!errors.valid) {
+    return response.status(400).json({ error: errors.errors });
   }
 
   let document = db.doc(`/projects/${ projectId }`);

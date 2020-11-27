@@ -3,10 +3,10 @@ import { authService } from 'services/authService';
 import { Redirect, Link, useHistory } from 'react-router-dom';
 import { urls } from 'config/urls';
 import { text } from 'config/text';
+import { constants } from 'config/constants';
 import { LoggedInUserContext } from 'App';
 import cogoToast from 'cogo-toast';
 import LoginBox from './LoginBox';
-import { defaultToast } from '../config/defaultToast';
 
 function Login () {
 
@@ -29,10 +29,10 @@ function Login () {
         if (responseData.user) {
           // setLogin({});
           setIsLoggedIn(true);
-          cogoToast.success(text.login.success, defaultToast);
+          cogoToast.success(text.login.success, constants.toast);
         } else {
           if (responseData.error.code === 400) {
-            cogoToast.error(text.login.error, defaultToast);
+            cogoToast.error(text.login.error, constants.toast);
           }
           console.info(responseData);
         }

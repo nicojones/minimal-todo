@@ -1,3 +1,5 @@
 export const constants = {
-  defaultProjectColor: '#aaa'
+  defaultProjectColor: '#aaa',
+  toast: { position: 'bottom-center' },
+  maxDepth: 3
 };

@@ -4,13 +4,21 @@ export const text = {
   gotoApp: 'Open app',
   loading: 'Loading app...',
   noListName: 'New Project ' + dateToday,
-  addPh: 'Quick-add a task...',
-  addSubtaskPh: 'Add subtasks to this task',
-  addSubtaskBtn: 'Add a subtask',
-  subtasks: 'Subtasks',
+
+  task: {
+    name: 'Name of the task',
+    delete: 'Delete task and its subtasks? Can\'t be undone',
+    addPh: 'Quick-add a task...',
+    addSubtaskPh: 'Add subtasks to this task',
+    save: 'Save',
+    discard: 'Cancel changes',
+    notes: 'Notes',
+    notesPh: 'An optional description always helps'
+  },
+  // addSubtaskBtn: 'Add a subtask',
+  // subtasks: 'Subtasks',
   sharedProject: 'This project is shared',
-  subtaskStatus: '( Completed / Pending )',
-  deleteTask: 'Delete task and its subtasks? Can\'t be undone',
+  subtaskStatus: '( Pending / Completed )',
   // btn: 'Add task',
   // title: 'MyTodo List',
   // uncompleted: 'My tasks',
@@ -31,13 +39,6 @@ export const text = {
   completedNo: 'No completed tasks',
   showCompleted: 'Show completed tasks',
   hideCompleted: 'Hide completed tasks',
-
-  saveTask: 'Save',
-  discardTask: 'Cancel changes',
-
-  notes: 'Notes',
-  notesPh: 'An optional description always helps',
-
 
   project: {
     s: 'Projects',

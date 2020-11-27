@@ -10,7 +10,7 @@ export default function projectRender (p) {
   return (
     <>
       <ProjectTitle
-        project={ p.project } showCompleted={ p.showCompleted } setShowCompleted={ p.setShowCompleted }
+        projectFunctions={ p.project } showCompleted={ p.showCompleted } toggleShowCompleted={ p.toggleShowCompleted }
         isLoading={ p.isLoading }
       />
 
@@ -20,6 +20,7 @@ export default function projectRender (p) {
             <Task
               key={ task.id }
               task={ task }
+              level={ 0 }
             />)
           : (p.completed.length ? <li><h5 className="subtle max-content">{ p.allCompleted }</h5></li> : '')
         }
@@ -39,7 +40,7 @@ export default function projectRender (p) {
               <div className="input-group mb-2">
                 <input
                   onChange={ p.taskNameChange } className="invisible f-100"
-                  placeholder={ text.addPh } required
+                  placeholder={ text.task.addPh } required
                   disabled={ p.isLoading === 'task' }
                   autoComplete="off" /*ref={ inputElement }*/
                 />

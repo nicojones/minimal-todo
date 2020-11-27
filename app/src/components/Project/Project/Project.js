@@ -4,12 +4,12 @@ import taskService from 'services/taskService';
 import createTaskObject from 'functions/createTaskObject';
 import { text } from 'config/text';
 import projectRender from './Project-view';
-import projectService from '../../../services/projectService';
+import projectService from 'services/projectService';
 
 function Project ({ project, projectTasks }) {
 
   const [isLoading, setIsLoading] = useState('');
-  const [showCompleted, setShowCompleted] = useState(true);
+  const [showCompleted, setShowCompleted] = useState(project.showCompleted);
   const [modalOpen, setModalOpen] = useState(false);
   const [projectName, setProjectName] = useState(project.name || text.noListName);
   const [editListName, setEditListName] = useState(false);
@@ -43,17 +43,26 @@ function Project ({ project, projectTasks }) {
     taskName = e.target.value;
   }
 
+  async function toggleShowCompleted (showCompleted) {
+    setShowCompleted(showCompleted);
+    await update({ showCompleted });
+  }
+
   async function changeColor (hexColor) {
-    await projectService.updateProject({ ...project, color: hexColor });
+    await update({ color: hexColor });
   }
 
   async function saveListName (e) {
     e.preventDefault();
 
     setIsLoading('name');
-    await projectService.updateProject({ ...project, name: projectName });
+    await update({ name: projectName });
     setEditListName(false);
     setIsLoading('');
+  }
+
+  async function update (projectPartial) {
+    return await projectService.updateProject({ ...project, ...projectPartial });
   }
 
   return projectRender({
@@ -62,7 +71,7 @@ function Project ({ project, projectTasks }) {
     submit,
     taskNameChange,
     showCompleted,
-    setShowCompleted,
+    toggleShowCompleted,
     modalOpen,
     allCompleted,
     setModalOpen,
@@ -74,7 +83,6 @@ function Project ({ project, projectTasks }) {
       setEditListName,
       setProjectName,
       changeColor,
-      data: project
     }
   });
 }

@@ -9,13 +9,12 @@
 .task {
   display: inline-block;
   width: 100%;
-  padding: 10px;
 
-  @media (pointer: fine) {
-    &:hover {
-      @include box_shadow();
-    }
-  }
+  //@media (pointer: fine) {
+  //  &:hover {
+  //    @include box_shadow();
+  //  }
+  //}
 
   .task-name {
     color: $primary-color-text;
@@ -32,8 +31,7 @@
   }
 
   > .task-content {
-    margin-bottom: 10px;
-    margin-top: 7px;
+    padding: 10px 10px 11px;
   }
 }
 

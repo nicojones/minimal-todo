@@ -3,7 +3,7 @@ import axios from 'axios';
 import environment from './environment';
 import { handleError } from './handleError';
 import cogoToast from 'cogo-toast';
-import { defaultToast } from '../config/defaultToast';
+import { constants } from '../config/constants';
 
 const projectService = {
 
@@ -41,16 +41,12 @@ const projectService = {
           const projects = [];
           projectsDoc.forEach((doc) => {
             const projectData = doc.data();
-            const tasks = Object.values(projectData.tasks || '' /* empty object actually... */);
-            const completedTasks = tasks.filter((t) => t.checked).length;
-            const openTasks = tasks.length - completedTasks;
             projects.push({
               id: doc.id,
               name: projectData.name,
               shared: projectData.shared,
-              color: projectData.color,
-              openTasks,
-              completedTasks
+              showCompleted: projectData.showCompleted,
+              color: projectData.color
             });
           });
 
@@ -74,7 +70,7 @@ const projectService = {
         data: project,
         headers: projectService.headers()
       }).then((result) => {
-        cogoToast.success(result.data.message, defaultToast);
+        cogoToast.success(result.data.message, constants.toast);
         console.info('result from Edit Project PUT', result);
       });
     } catch (e) {
@@ -90,7 +86,7 @@ const projectService = {
         data: project,
         headers: projectService.headers()
       }).then((result) => {
-        cogoToast.success(result.data.message, defaultToast);
+        cogoToast.success(result.data.message, constants.toast);
         return result.data.project;
       });
     } catch (e) {
@@ -105,7 +101,7 @@ const projectService = {
         method: 'DELETE',
         headers: projectService.headers()
       }).then((result) => {
-        cogoToast.success(result.data.message, defaultToast);
+        cogoToast.success(result.data.message, constants.toast);
         console.info('result from project DELETE', result);
       });
     } catch (e) {
@@ -136,7 +132,7 @@ const projectService = {
         headers: projectService.headers(),
         data: { username: username }
       }).then((result) => {
-        cogoToast.success(result.data.message, defaultToast);
+        cogoToast.success(result.data.message, constants.toast);
         console.info('result from joining Project', result);
       });
     } catch (e) {

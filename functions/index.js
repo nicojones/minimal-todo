@@ -15,7 +15,7 @@ const {
   addTask,
   deleteTask,
   updateTask
-} = require('./APIs/todos');
+} = require('./APIs/tasks');
 
 const {
   addProject,

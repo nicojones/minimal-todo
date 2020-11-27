@@ -1,9 +1,10 @@
 import { urls } from 'config/urls';
 import cogoToast from 'cogo-toast';
-import { defaultToast } from '../config/defaultToast';
+import { constants } from 'config/constants';
 
 export const handleError = (errorText, error) => {
-  cogoToast.error(errorText, defaultToast);
+  window.lastError = error;
+  cogoToast.error(errorText, constants.toast);
 
   console.error(errorText, error);
   if (['401', '403'].indexOf(error.toString().split(' ').pop()) >= 0) {

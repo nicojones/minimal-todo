@@ -9,7 +9,7 @@ const isEmail = (email) => {
 };
 
 exports.validateSignUpData = (data) => {
-	let errors = {};
+	const errors = {};
 
 	if (isEmpty(data.email)) {
 		errors.email = 'Must not be empty';
@@ -32,3 +32,17 @@ exports.validateSignUpData = (data) => {
 		valid: Object.keys(errors).length === 0
 	};
 };
+
+
+exports.validateProjectData = (project) => {
+	const errors = {};
+
+	if (isEmpty(project.name)) {
+		errors.name = 'Must not be empty'
+	}
+
+	return {
+		errors,
+		valid: Object.keys(errors).length === 0
+	};
+}

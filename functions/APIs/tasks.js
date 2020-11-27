@@ -14,8 +14,9 @@ exports.addTask = (request, response) => {
     name: request.body.name,
     description: request.body.description,
     expanded: request.body.expanded || false,
-    subtasks: request.body.subtasks || [],
     checked: request.body.checked || false,
+    level: request.body.level || 0,
+    parentId: request.body.parentId || null,
     timestamp: new Date()
   };
 

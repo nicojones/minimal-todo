@@ -4,9 +4,8 @@ import './_project-list.scss';
 import projectService from 'services/projectService';
 import ProjectListDropdown from './ProjectListDropdown/ProjectListDropdown';
 import cogoToast from 'cogo-toast';
-import { TwitterPicker } from 'react-color';
-import ColorPicker from '../../ColorPicker/ColorPicker';
-import { constants } from '../../../config/constants';
+import ColorPicker from 'components/ColorPicker/ColorPicker';
+import { constants } from 'config/constants';
 
 function validProjectId (projectId, projects) {
   // If there's a project set in the URL and it's valid (it exists)
@@ -25,14 +24,15 @@ function ProjectList ({ projectKey, setProjectKey }) {
 
   useEffect(() => {
     const unsubscribeProjects = projectService.getListOfProjects((_projects) => {
-      setProjectKey(validProjectId(projectKey, _projects)); // set the first project as selected...
+      const _projectKey = validProjectId(projectKey, _projects);
+      _projectKey && setProjectKey(_projectKey);
       setProjects(_projects);
     });
 
     return () => {
       unsubscribeProjects && unsubscribeProjects();
     };
-  }, [projectKey]);
+  }, [ ]);
 
   function addNewProject (e) {
     e.preventDefault();
@@ -65,7 +65,6 @@ function ProjectList ({ projectKey, setProjectKey }) {
   }
 
   async function changeColor (project, hexColor) {
-    console.log('eee', hexColor);
     const result = await projectService.updateProject({
       ...project,
       color: hexColor

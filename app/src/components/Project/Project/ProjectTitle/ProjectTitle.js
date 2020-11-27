@@ -1,33 +1,38 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { text } from 'config/text';
 import ColorPicker from 'components/ColorPicker/ColorPicker';
+import { ProjectContext } from 'TodoApp';
 
-function ProjectTitle ({ project, showCompleted, setShowCompleted, isLoading }) {
+function ProjectTitle ({ projectFunctions, showCompleted, toggleShowCompleted, isLoading }) {
+
+  const project = useContext(ProjectContext);
+
+  console.log('projjj', project);
 
   return (
-    project.editListName
-      ? <form onSubmit={ project.saveListName } className={ ( isLoading === 'name' ? ' loader-input' : '' ) }>
+    projectFunctions.editListName
+      ? <form onSubmit={ projectFunctions.saveListName } className={ ( isLoading === 'name' ? ' loader-input' : '' ) }>
         <input
           className="as-title m0 invisible h5" autoFocus /*onBlur={ project.saveListName }*/
-          value={ project.projectName }
+          value={ projectFunctions.projectName }
           disabled={ isLoading === 'name' }
-          onBlur={ () => project.setEditListName(false) }
-          onChange={ (e) => project.setProjectName(e.target.value) }
+          onBlur={ () => projectFunctions.setEditListName(false) }
+          onChange={ (e) => projectFunctions.setProjectName(e.target.value) }
         />
       </form>
       : <div className="flex-row">
-        <ColorPicker color={ project.data.color } onChangeComplete={ project.changeColor }/>
-        <h5 className="max-content m0" onClick={ () => project.setEditListName(true) }>{ project.projectName }</h5>
+        <ColorPicker color={ project.color } onChangeComplete={ projectFunctions.changeColor }/>
+        <h5 className="max-content m0" onClick={ () => projectFunctions.setEditListName(true) }>{ projectFunctions.projectName }</h5>
         {
-          showCompleted
+          project.showCompleted
             ? <button
               className="material-icons ml-5 toggle-completed btn-invisible subtle o-3"
-              onClick={ () => setShowCompleted(false) }
+              onClick={ () => toggleShowCompleted(false) }
               title={ text.hideCompleted }
             >check_box</button>
             : <button
               className="material-icons ml-5 toggle-completed btn-invisible subtle o-3"
-              onClick={ () => setShowCompleted(true) }
+              onClick={ () => toggleShowCompleted(true) }
               title={ text.showCompleted }
             >check_box_outline_blank</button>
         }

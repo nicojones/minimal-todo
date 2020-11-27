@@ -11,7 +11,6 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
   const [loading, setLoading] = useState(false);
   const [subtaskName, setSubtaskName] = useState('');
   const [subtasks, setSubtasks] = useState(task.subtasks || []);
-  const [newSubtasks, setNewSubtasks] = useState([]);
   const [taskName, setTaskName] = useState(task.name || '');
   const [taskDesc, setTaskDesc] = useState(task.description || '');
 
@@ -23,52 +22,29 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
     setTaskDesc(task.description || '');
   }, [task]);
 
-  async function saveTask (task) {
+  async function saveTask (e) {
+    e.preventDefault();
+
     setLoading(true);
-    if (task.id) {
-      await taskService.updateTask(project.id, task);
-    } else {
-      task.id = await taskService.addTask(project.id, createTaskObject(task));
-    }
+
+    await taskService.updateTask(project.id, { ...task, name: taskName, description: taskDesc });
+
     setLoading(false);
+
     setModalOpen(false);
   }
 
-  async function submit (e) {
-    e.preventDefault();
-
-    task.name = taskName;
-    task.description = taskDesc;
-    task.subtasks = [...subtasks, ...newSubtasks];
-
-    await saveTask(task);
-  }
-
-  function toggleSubtask (subtask) {
+  async function toggleSubtask (subtask) {
     subtask.checked = !subtask.checked;
-    setSubtasks([...task?.subtasks]);
+    await taskService.toggleTask(project.id, subtask);
   }
 
-  function saveSubtask (e) {
+  async function saveSubtask (e) {
     e.preventDefault();
 
-    setNewSubtasks([
-      ...newSubtasks,
-      {
-        id: Math.random(),
-        timestamp: new Date(),
-        name: subtaskName,
-        checked: false
-      }
-    ]);
-    setSubtaskName('');
+    await taskService.addTask(project.id, createTaskObject({ name: subtaskName, parentId: task.id, level: task.level + 1 }));
 
     e.target[0].value = '';
-  }
-
-  async function onAccept (e) {
-    await submit(e);
-    setModalOpen(false);
   }
 
   return (
@@ -77,27 +53,27 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
       <Modal
         modalOpen={ modalOpen }
         loading={ loading }
-        onAccept={ onAccept }
+        onAccept={ saveTask }
         onCancel={ () => setModalOpen(false) }
-        okButton={ text.saveTask + ' <i class="material-icons right">save</i>' }
-        cancelButton={ text.discardTask + ' <i class="material-icons right">cancel</i>' }
+        okButton={ text.task.save + ' <i class="material-icons right">save</i>' }
+        cancelButton={ text.task.discard + ' <i class="material-icons right">cancel</i>' }
       >
         <h6 className="subtle mb-15 mt-5">{ project.name }</h6>
-        <form onSubmit={ submit }>
+        <form onSubmit={ saveTask }>
           <div>
-            <label>Task Name</label>
+            <label>{ text.task.name }</label>
             <input
               value={ taskName } required minLength={ 3 }
-              placeholder="Enter a name for the task"
+              placeholder={ text.task.addPh }
               onChange={ (e) => setTaskName(e.target.value) }
             />
           </div>
           <div>
-            <label>{ text.notes }</label>
+            <label>{ text.task.notes }</label>
             <textarea
               value={ taskDesc }
               className="materialize-textarea"
-              placeholder={ text.notesPh }
+              placeholder={ text.task.notesPh }
               onChange={ (e) => setTaskDesc(e.target.value) }
             />
           </div>
@@ -120,23 +96,12 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
               </li>
             )
           }
-          {
-            newSubtasks.map((sub) =>
-              <li key={ sub.id } className="block">
-                <label className="left">
-                  <input type="checkbox" className="material-cb" disabled/>
-                  <div/>
-                </label>
-                <span className="left subtle">{ sub.name }</span>
-              </li>
-            )
-          }
           <li key="new-subtask">
             <form onSubmit={ saveSubtask }>
               <label>{ text.subtasks }</label>
               <input
                 onChange={ (e) => setSubtaskName(e.target.value) }
-                placeholder={ text.addSubtaskPh }
+                placeholder={ text.task.addSubtaskPh }
                 className="input-field"
                 required minLength={ 3 }
               />
