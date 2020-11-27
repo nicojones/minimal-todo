@@ -1,4 +1,11 @@
+import cogoToast from 'cogo-toast';
+import { constants } from '../config/constants';
+
 function createTaskObject (task) {
+  if (!task.projectId) {
+    cogoToast.error('no project id!', constants.toast);
+    console.log(task);
+  }
   return {
     name: task.name || '',
     checked: task.checked || false,
@@ -6,7 +13,8 @@ function createTaskObject (task) {
     timestamp: task.timestamp || new Date(),
     level: task.level || 0,
     parentId: task.parentId || null,
-    description: task.description || ''
+    description: task.description || '',
+    projectId: task.projectId
   }
 }
 

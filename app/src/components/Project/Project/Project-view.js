@@ -1,6 +1,4 @@
 import React from 'react';
-import { text } from 'config/text';
-import TaskModal from 'components/Modal/TaskModal';
 import ProjectTitle from './ProjectTitle/ProjectTitle';
 import Task from './Task/Task';
 
@@ -10,11 +8,11 @@ export default function projectRender (p) {
   return (
     <>
       <ProjectTitle
-        projectFunctions={ p.project } showCompleted={ p.showCompleted } toggleShowCompleted={ p.toggleShowCompleted }
+        projectFunctions={ p.project } toggleShowCompleted={ p.toggleShowCompleted }
         isLoading={ p.isLoading }
       />
 
-      <ul className="list-unstyled">
+      <ul>
         { p.open.length ?
           p.open.map((task) =>
             <Task
@@ -31,7 +29,7 @@ export default function projectRender (p) {
           />) }
 
         <li className="task">
-          <form onSubmit={ p.submit }
+          <form onSubmit={ p.addTask }
             className={ 'flex-row task-content form-inline' + (p.isLoading === 'task' ? ' loader-input' : '') }>
             {/*className={ 'flex-row task-content form-inline' + (p.isLoading === 'task' ? ' loader-input' : '') }>*/}
             <i /* Just to give the right padding */ className="material-icons left v-hidden mr-11">add</i>

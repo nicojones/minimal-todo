@@ -12,39 +12,40 @@ const drawerService = {
     return { authorization: localStorage.getItem('AuthToken') };
   },
 
-  getDrawer: async (drawerKey, done) => {
+  getDrawer: (drawerKey, done) => {
     try {
+      const taskCollection = drawerService.db.collectionGroup('tasks');
+      let query;
       switch (drawerKey) {
         case urls.inboxUrl:
-          done([]);
-          return () => {};
-          // return drawerService.db
-          //   .collection(`/projects`)
-          //   .where('_uids', 'array-contains', auth().currentUser.uid)
-          //   // .orderBy('timestamp', 'desc')
-          //   .onSnapshot((projectsDoc) => {
-          //
-          //     const projects = [];
-          //     projectsDoc.forEach((doc) => {
-          //       const projectData = doc.data();
-          //       projects.push({
-          //         id: doc.id,
-          //         name: projectData.name,
-          //         shared: projectData.shared,
-          //         showCompleted: projectData.showCompleted,
-          //         color: projectData.color
-          //       });
-          //     });
-          //
-          //     // done([...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects]);
-          //     done(projects);
-          //
-          //     console.info('Lists loaded: ', projects.length);
-          //   });
+          query = taskCollection
+            .where('checked', '==', false)
+            .orderBy('timestamp', 'desc');
+          break;
         default:
           cogoToast.error(text.invalidDrawer);
-          return () => {
-          };
+          done([]);
+          return () => {};
+      }
+      //
+      if (query) {
+
+        return query.onSnapshot((tasksDoc) => {
+
+          const tasks = [];
+          tasksDoc.forEach((doc) => {
+            const taskData = doc.data();
+
+            tasks.push({
+              id: doc.id,
+              ...taskData
+            });
+          });
+
+          done(tasks);
+
+          console.info('Tasks in inbox: ', tasks.length);
+        });
       }
     } catch (e) {
       handleError('Error on fetching drawer: ', e);

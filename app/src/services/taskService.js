@@ -14,12 +14,12 @@ const taskService = {
     return { authorization: localStorage.getItem('AuthToken') };
   },
 
-  updateTask: async (projectKey, task) => {
+  updateTask: async (task) => {
     console.info('Updating task ', task.name);
 
     try {
       return await axios({
-        url: environment.url + `/project/${ projectKey }/task/${ task.id }`,
+        url: environment.url + `/project/${ task.projectId }/task/${ task.id }`,
         method: 'PUT',
         data: task,
         headers: taskService.headers()
@@ -32,12 +32,12 @@ const taskService = {
     }
   },
 
-  addTask: async (projectId, task) => {
+  addTask: async (task) => {
     console.info('Adding task ', task.name);
 
     try {
       return await axios({
-        url: environment.url + `/project/${ projectId }/task`,
+        url: environment.url + `/project/${ task.projectId }/task`,
         method: 'POST',
         data: task,
         headers: taskService.headers()
@@ -51,10 +51,10 @@ const taskService = {
     }
   },
 
-  deleteTask: async (projectKey, task) => {
+  deleteTask: async (task) => {
     try {
       return await axios({
-        url: environment.url + `/project/${ projectKey }/task/${ task.id }`,
+        url: environment.url + `/project/${ task.projectId }/task/${ task.id }`,
         method: 'DELETE',
         headers: taskService.headers()
       }).then((response) => {
@@ -83,15 +83,12 @@ const taskService = {
             tasks[parentId].push({
               id,
               ...task,
+              projectId: projectKey,
               timestamp: time(task.timestamp.seconds * 1000),
               subtasks: tasks[id] || []
             });
-            // delete tasks[id];
+            delete tasks[id];
           });
-          console.log('tasks', tasks);
-          // done([...tasks, ...tasks, ...tasks, ...tasks, ...tasks, ...tasks, ...tasks, ...tasks, ...tasks, ...tasks, ...tasks, ...tasks, ...tasks, ...tasks, ...tasks, ...tasks, ...tasks, ...tasks, ...tasks, ...tasks, ]);
-          // done([]);
-          // setTimeout(() => done(tasks['root_task']), 2000);
           done(tasks['root_task'] || []);
         });
     } catch (e) {
@@ -99,10 +96,10 @@ const taskService = {
     }
   },
 
-  toggleTask: (projectId, task) => {
+  toggleTask: (task) => {
     try {
       return taskService.db
-        .doc(`/projects/${ projectId }/tasks/${ task.id }`)
+        .doc(`/projects/${ task.projectId }/tasks/${ task.id }`)
         .update({
           checked: task.checked,
           expanded: task.expanded

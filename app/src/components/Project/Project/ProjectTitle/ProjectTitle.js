@@ -1,13 +1,10 @@
 import React, { useContext } from 'react';
 import { text } from 'config/text';
-import ColorPicker from 'components/ColorPicker/ColorPicker';
 import { ProjectContext } from 'TodoApp';
 
-function ProjectTitle ({ projectFunctions, showCompleted, toggleShowCompleted, isLoading }) {
+function ProjectTitle ({ projectFunctions, toggleShowCompleted, isLoading }) {
 
   const project = useContext(ProjectContext);
-
-  console.log('projjj', project);
 
   return (
     projectFunctions.editListName
@@ -21,7 +18,6 @@ function ProjectTitle ({ projectFunctions, showCompleted, toggleShowCompleted, i
         />
       </form>
       : <div className="flex-row">
-        <ColorPicker color={ project.color } onChangeComplete={ projectFunctions.changeColor }/>
         <h5 className="max-content m0" onClick={ () => projectFunctions.setEditListName(true) }>{ projectFunctions.projectName }</h5>
         {
           project.showCompleted

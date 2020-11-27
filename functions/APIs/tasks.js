@@ -9,6 +9,10 @@ exports.addTask = (request, response) => {
   if ((request.body.name || '').length > 200) {
     return response.status(400).json({ message: 'Name cannot be more than 200 chars' });
   }
+  if (!request.body.projectId) {
+    return response.status(400).json({ message: 'Tasks must have a project ID.'});
+    // return response.status(400).json({ message: 'Tasks must have a project ID. Try deleting the task and making it again'})
+  }
 
   const newTodoItem = {
     name: request.body.name,
@@ -17,6 +21,7 @@ exports.addTask = (request, response) => {
     checked: request.body.checked || false,
     level: request.body.level || 0,
     parentId: request.body.parentId || null,
+    projectId: request.body.projectId || null,
     timestamp: new Date()
   };
 

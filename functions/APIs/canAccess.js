@@ -7,6 +7,8 @@ function canAccessProject (request, response, next) {
     // fields which can't be edited.
     delete request.body.id;
     delete request.body.createdAt;
+    delete request.body.updatedAt;
+    delete request.body.timestamp;
     delete request.body._uids;
     delete request.body.shared;
     delete request.body.subtasks;

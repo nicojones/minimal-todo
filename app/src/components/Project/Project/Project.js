@@ -6,8 +6,9 @@ import { text } from 'config/text';
 import projectRender from './Project-view';
 import projectService from 'services/projectService';
 
-function Project ({ project, projectTasks }) {
+function Project ({ project, projectKey, setProject }) {
 
+  const [projectTasks, setProjectTasks] = useState([]);
   const [isLoading, setIsLoading] = useState('');
   const [showCompleted, setShowCompleted] = useState(project.showCompleted);
   const [modalOpen, setModalOpen] = useState(false);
@@ -20,25 +21,43 @@ function Project ({ project, projectTasks }) {
   // const inputElement = useRef(null);
 
   const allCompleted = useMemo(() => {
-    return text.allTasksCompleted()
-  }, [ open.length ]);
+    return text.allTasksCompleted();
+  }, [open.length]);
 
   const addTaskPh = useMemo(() => {
-    return text.task.addTaskPh()
-  }, [ project.id ]);
+    setShowCompleted(project.showCompleted);
+    return text.task.addTaskPh();
+  }, [project.id]);
 
   let taskName = '';
 
   useEffect(() => {
     setProjectName(project.name);
-  }, [project.name])
+  }, [project.name]);
 
-  async function submit (e) {
+  useEffect(() => {
+    const unsubscribeProject = projectService.getProject(projectKey, setProject);
+    const unsubscribeTasks = taskService.getTasksForProject(projectKey, setProjectTasks);
+
+    return () => {
+      unsubscribeProject && unsubscribeProject();
+      unsubscribeTasks && unsubscribeTasks();
+    };
+  }, [projectKey]);
+
+  async function addTask (e) {
     e.preventDefault();
     setIsLoading('task');
+    console.log(createTaskObject({
+      name: taskName,
+      projectId: project.id
+    }))
     // inputElement.current && (inputElement.current.target.value = '');
 
-    const taskId = await taskService.addTask(project.id, createTaskObject({ name: taskName }));
+    const taskId = await taskService.addTask(createTaskObject({
+      name: taskName,
+      projectId: project.id
+    }));
     e.target[0].value = '';
     setIsLoading('');
   }
@@ -72,7 +91,7 @@ function Project ({ project, projectTasks }) {
   return projectRender({
     open,
     completed,
-    submit,
+    addTask,
     taskNameChange,
     showCompleted,
     toggleShowCompleted,

@@ -7,6 +7,7 @@ import { ProjectContext } from 'TodoApp';
 import { constants } from 'config/constants';
 
 function Task ({ task, level }) {
+
   const [subtasks, setSubtasks] = useState(task.subtasks || []);
   const [modalOpen, setModalOpen] = useState(false);
   const [expandedTask, setExpandedTask] = useState(task.expanded || false);
@@ -18,10 +19,9 @@ function Task ({ task, level }) {
   const doneClass = (task.checked ? (project.showCompleted ? 'done' : 'hidden') : '');
 
   const showExpanderClass = ((project.showCompleted ? subtasks.length : openLength) ? '' : ' v-hidden')
-  console.log('class: ', showExpanderClass, '----', task.name, project.showCompleted, subtasks.length, openLength);
 
   useEffect(() => {
-    setSubtasks(task.subtasks);
+    setSubtasks(task.subtasks || []);
   }, [task.subtasks]);
 
   async function toggleCompleted (task) {
@@ -32,7 +32,7 @@ function Task ({ task, level }) {
       // (task.subtasks || []).forEach((_task) => _task.checked = true);
       task.expanded = false;
     }
-    await taskService.toggleTask(project.id, task);
+    await taskService.toggleTask(task);
     // await taskService.updateTask(project.id, task);
   }
 
@@ -48,7 +48,7 @@ function Task ({ task, level }) {
   async function onDelete () {
     if (window.confirm(text.task.delete)) {
 
-      await taskService.deleteTask(project.id, task);
+      await taskService.deleteTask(task);
     }
   }
 
@@ -71,25 +71,25 @@ function Task ({ task, level }) {
           <div/>
         </label>
         <button
-          className={ 'btn-invisible task-name ' + (task.checked ? '' : '') }
+          className={ 'btn-invisible ' + (task.checked ? '' : '') }
           onClick={ () => setModalOpen(true) }
         >
-          { task.name }
-          <small
+          <span className="task-name">{ task.name }</span>
+          { subtasks.length > 0 && <small
             className="subtle child-hover ml-5" title={ text.subtaskStatus }
-          >({ openLength } / { subtasks.length - openLength })</small>
+          >({ openLength } / { subtasks.length - openLength })</small> }
           { task.description && <small className="subtle ml-5">{ task.description }</small> }
         </button>
 
         <span className="right">
           <button
-            className="child-hover btn-subtle ml-5 material-icons right"
+            className="child-hover btn-invisible ml-5 material-icons right subtle"
             onClick={ () => onDelete(task) }
           >delete
           </button>
           <TaskModal
             trigger={ {
-              className: 'child-hover btn-subtle ml-5 material-icons right',
+              className: 'child-hover btn-invisible ml-5 material-icons right subtle',
               text: 'edit'
             } } task={ { ...task } }
             modalOpen={ modalOpen }

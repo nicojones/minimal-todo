@@ -97,10 +97,10 @@ function ProjectList ({ projectKey, setProjectKey }) {
     <>
       <h5 className="center-align">{ text.project.s }</h5>
       <ul className="projects-list flex-column">
-        {/*<li key={ urls.inboxUrl } className={ 'mb-5 parent-hover flex-row' + (projectKey === urls.inboxUrl ? ' selected' : '') }>*/}
-        {/*  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/}
-        {/*  <button className="btn-invisible left left-align ps-6" onClick={ () => setProject(urls.inboxUrl) }>{ text.drawer.inbox._ }</button>*/}
-        {/*</li>*/}
+        <li key={ urls.inboxUrl } className={ 'mb-5 parent-hover flex-row' + (projectKey === urls.inboxUrl ? ' selected' : '') }>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <button className="btn-invisible left left-align ps-6" onClick={ () => setProject(urls.inboxUrl) }>{ text.drawer.inbox._ }</button>
+        </li>
         {
           projects.map((proj) =>
             <li

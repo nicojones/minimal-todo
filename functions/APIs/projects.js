@@ -87,9 +87,9 @@ exports.updateProject = (request, response) => {
 
   // !!! Not all fields are editable!
   const project = {
-    name: request.body.name,
-    color: request.body.color,
-    showCompleted: request.body.showCompleted
+    name: request.body.name || '',
+    color: request.body.color || '#333',
+    showCompleted: request.body.showCompleted || false
   };
 
   const errors = validateProjectData(project);

@@ -27,7 +27,7 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
 
     setLoading(true);
 
-    await taskService.updateTask(project.id, { ...task, name: taskName, description: taskDesc });
+    await taskService.updateTask({ ...task, name: taskName, description: taskDesc });
 
     setLoading(false);
 
@@ -36,13 +36,15 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
 
   async function toggleSubtask (subtask) {
     subtask.checked = !subtask.checked;
-    await taskService.toggleTask(project.id, subtask);
+    await taskService.toggleTask(subtask);
   }
 
   async function saveSubtask (e) {
     e.preventDefault();
 
-    await taskService.addTask(project.id, createTaskObject({ name: subtaskName, parentId: task.id, level: task.level + 1 }));
+    await taskService.addTask(createTaskObject({
+      name: subtaskName, parentId: task.id, level: task.level + 1, projectId: project.id
+    }));
 
     e.target[0].value = '';
   }
@@ -70,7 +72,7 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
           </div>
           <div>
             <label>{ text.task.notes }</label>
-            <textarea
+            <input
               value={ taskDesc }
               className="materialize-textarea"
               placeholder={ text.task.notesPh }
