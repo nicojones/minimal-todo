@@ -4,13 +4,15 @@ import drawerService from 'services/drawerService';
 import Task from 'components/Project/Task/Task';
 import { text } from 'config/text';
 import ProjectOptions from 'components/Project/ProjectOptions';
-import { constants } from 'config/constants';
+import { drawerConfig } from '../../config/drawerConfig';
 
 function Drawer ({ drawerUrl }) {
 
+  const drawer = drawerConfig[drawerUrl];
+
   const [loading, setLoading] = useState(true);
   const [drawerTasks, setDrawerTasks] = useState([]);
-  const [sort, setSort] = useState(constants.defaultSort)
+  const [sort, setSort] = useState(drawer.sort)
 
   const allCompleted = useMemo(() => {
     return text.allTasksCompleted();
@@ -35,7 +37,7 @@ function Drawer ({ drawerUrl }) {
     <>
       <div className={ loading ? 'loader-input cover' : '' }>
         <div className="project-title-bar">
-          <h5 className="project-title">{ text.drawer.inbox._ }</h5>
+          <h5 className="project-title" title={ drawer.text.tooltip }>{ drawer.text._ }</h5>
           <ProjectOptions sort={ sort } setSort={ setSort }/>
         </div>
         <ul>

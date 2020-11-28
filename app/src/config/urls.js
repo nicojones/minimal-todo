@@ -6,4 +6,5 @@ export const urls = {
   signup: '/signup',
 
   inboxUrl: 'inbox',
+  priorityUrl: 'priority',
 }

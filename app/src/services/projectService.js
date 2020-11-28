@@ -13,25 +13,6 @@ const projectService = {
     return { authorization: localStorage.getItem('AuthToken') };
   },
 
-  getProject: (projectKey, done) => {
-    try {
-      return projectService.db
-        .doc(`/projects/${ projectKey }`)
-        .onSnapshot((doc) => {
-          if (doc.exists) {
-            const project = { ...doc.data(), id: doc.id };
-
-            done(project);
-            console.info(`Changed to project "${ project.name }"`);
-          } else {
-            done({ /* no project */ });
-          }
-        });
-    } catch (e) {
-      handleError('Error on fetching Project: ', e);
-    }
-  },
-
   getListOfProjects: (done) => {
     try {
       return projectService.db
@@ -63,9 +44,8 @@ const projectService = {
     }
   },
 
-  updateProject: async (project, showSuccess) => {
-    showSuccess = showSuccess || true;
-    console.info('Updating project ', project);
+  updateProject: async (project) => {
+    // console.info('Updating project ', project);
 
     try {
       return await axios({
@@ -74,8 +54,8 @@ const projectService = {
         data: project,
         headers: projectService.headers()
       }).then((result) => {
-        showSuccess && cogoToast.success(result.data.message, constants.toast);
-        console.info('result from Edit Project PUT', result);
+        // cogoToast.success(result.data.message, constants.toast);
+        // console.info('result from Edit Project PUT', result);
       });
     } catch (e) {
       handleError('Error on save project name: ', e);

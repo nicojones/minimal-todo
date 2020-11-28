@@ -7,7 +7,7 @@ function Navbar ({ setShowSidebar, showSidebar }) {
   return (
     <>
       <div className={ 'navbar-fixed todo-navbar ' + ( showSidebar ? 'open' : 'closed' ) }>
-        <nav className="grey navbar-hide">
+        <nav className="navbar-hide">
           <div className="nav-wrapper">
             <a className="sidenav-btn btn-subtle" onClick={ () => setShowSidebar(!showSidebar) }>
               <i className="material-icons">menu</i>

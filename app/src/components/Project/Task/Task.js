@@ -53,7 +53,7 @@ function Task ({ task, level }) {
   }
 
   return (
-    <li className={ doneClass + ' task' } title={ task.timestamp }>
+    <li className={ doneClass + ' bt-subtle task' } title={ task.timestamp }>
       <div className="task-content parent-hover">
         <button
           className={ 'toggle-expand subtle btn-invisible material-icons tiny left btn-pr' + (expandedTask ? ' expanded' : '') + showExpanderClass }
@@ -61,7 +61,7 @@ function Task ({ task, level }) {
         >chevron_right
         </button>
 
-        <label className="left">
+        <label className={ 'left prio-' + task.priority }>
           <input
             type="checkbox"
             className="material-cb"

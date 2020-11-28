@@ -8,7 +8,7 @@ import cogoToast from 'cogo-toast';
 function ProjectHeader ({ projectFunctions, isLoading }) {
 
   const project = useContext(ProjectContext);
-  const psc = project.showCompleted;
+  const psc = projectFunctions.showCompleted;
 
   async function deleteProject () {
     if (window.confirm(text.project.delete._)) {
@@ -34,6 +34,7 @@ function ProjectHeader ({ projectFunctions, isLoading }) {
   }
 
   async function toggleShowCompleted (showCompleted) {
+    projectFunctions.setShowCompleted(showCompleted);
     await projectService.updateProject({ ...project, showCompleted });
   }
 

@@ -4,6 +4,7 @@
 #root.desktop {
   .todo-navbar {
     > .navbar-hide {
+      background-color: $navbar-color;
       @include transition();
     }
 

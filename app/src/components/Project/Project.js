@@ -15,7 +15,7 @@ function Project () {
   const [sort, setSort] = useState(project.sort);
   const [projectLoading, setProjectLoading] = useState(true);
   const [projectTasks, setProjectTasks] = useState([]);
-  const [isLoading, setIsLoading] = useState('');
+  const [isLoading, setIsLoading] = useState('yes');
   const [showCompleted, setShowCompleted] = useState(project.showCompleted);
   const [projectName, setProjectName] = useState(project.name || text.noListName);
   const [editListName, setEditListName] = useState(false);
@@ -30,15 +30,10 @@ function Project () {
   }, [open.length]);
 
   const addTaskPh = useMemo(() => {
-    setShowCompleted(project.showCompleted);
     return text.task.addTaskPh();
   }, [project.id]);
 
   let taskName = '';
-
-  useEffect(() => {
-    setProjectName(project.name);
-  }, [project.name]);
 
   useEffect(() => {
     // const unsubscribeProject = projectService.getProject(project.id, setProject);
@@ -48,7 +43,7 @@ function Project () {
     });
 
     if (project.id && sort !== project.sort) {
-      projectService.updateProject({ ...project, sort }, false);
+      projectService.updateProject({ ...project, sort });
     }
 
     return () => {
@@ -78,10 +73,6 @@ function Project () {
     taskName = e.target.value;
   }
 
-  async function changeColor (hexColor) {
-    await update({ color: hexColor });
-  }
-
   async function saveListName (e) {
     e.preventDefault();
 
@@ -99,14 +90,11 @@ function Project () {
     <>
       <div className={ projectLoading ? 'loader-input cover' : '' }>
         <ProjectHeader projectFunctions={ {
-          projectName,
+          projectName, setProjectName,
           saveListName,
-          editListName,
-          setEditListName,
-          setProjectName,
-          changeColor,
-          sort,
-          setSort
+          editListName, setEditListName,
+          showCompleted, setShowCompleted,
+          sort, setSort
         } } isLoading={ isLoading }
         />
 

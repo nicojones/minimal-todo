@@ -3,7 +3,7 @@ import { text } from 'config/text';
 import projectService from 'services/projectService';
 import cogoToast from 'cogo-toast';
 
-function ProjectListDropdown ({ project }) {
+function ProjectListDropdown ({ project, onDelete }) {
 
   /**
    * @deprecated PLEASE REMOVE
@@ -14,7 +14,7 @@ function ProjectListDropdown ({ project }) {
   async function onAction (actionName, project) {
     switch (actionName) {
       case 'delete':
-        await projectService.deleteProject(project);
+        await onDelete(project);
         break;
       case 'share':
         const userEmail = prompt('User Email to join?');

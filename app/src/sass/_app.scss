@@ -148,3 +148,23 @@ nav {
   margin: 0 0 0 50px;
 }
 
+
+.priority {
+  opacity: 0.4;
+  cursor: pointer;
+  &.active, &:hover {
+    opacity: 1;
+  }
+}
+.prio-0 {
+  color: $subtle-color;
+}
+.prio-1 {
+  color: $priority-low;
+}
+.prio-2 {
+  color: $priority-med;
+}
+.prio-3 {
+  color: $priority-high;
+}

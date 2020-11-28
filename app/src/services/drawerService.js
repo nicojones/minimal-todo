@@ -23,6 +23,11 @@ const drawerService = {
             .where('checked', '==', false)
             .orderBy(sortField, sortDirection);
           break;
+        case urls.priorityUrl:
+          query = taskCollection
+            .where('priority', '>', 0)
+            .orderBy('priority', 'desc');
+          break;
         default:
           cogoToast.error(text.invalidDrawer);
           done([]);

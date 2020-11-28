@@ -1,3 +1,5 @@
+import { urls } from './urls';
+
 export const constants = {
   defaultProjectColor: '#aaa',
   toast: { position: 'bottom-center' },
@@ -9,5 +11,9 @@ export const constants = {
     { icon: 'arrow_downward', name: 'Oldest First', sort: 'timestamp,asc' },
     { icon: 'arrow_upward', name: 'Newest First', sort: 'timestamp,desc' },
     { icon: 'flag', name: 'Priority', sort: 'priority,desc'}
-  ]
+  ],
+  drawerSort: {
+    [urls.inboxUrl]: 'timestamp,desc',
+    [urls.priorityUrl]: 'priority,desc'
+  }
 };

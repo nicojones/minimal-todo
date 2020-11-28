@@ -17,6 +17,8 @@ const taskService = {
   updateTask: async (task) => {
     console.info('Updating task ', task.name);
 
+    delete task.subtasks; // we don't send this to the server!!
+
     try {
       return await axios({
         url: environment.url + `/project/${ task.projectId }/task/${ task.id }`,

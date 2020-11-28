@@ -16,3 +16,10 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+// Invisible!
+.material-icons.inv {
+  @extend .tiny;
+  @extend .btn-p;
+  @extend .v-hidden;
+}

@@ -20,16 +20,26 @@ export const text = {
       ];
       return phs[Math.floor(Math.random() * phs.length)];
     },
-    addSubtaskPh: 'Add subtasks to this task',
+    subtasks: 'Subtasks',
     save: 'Save',
     discard: 'Cancel changes',
     notes: 'Notes',
-    notesPh: 'An optional description always helps'
+    prio: {
+      _: 'Priority',
+      low: 'Low priority',
+      high: 'High priority',
+      urgent: 'Urgent'
+    }
   },
 
   drawer: {
     inbox: {
-      _: 'Inbox'
+      _: 'Inbox',
+      tooltip: 'Your open tasks'
+    },
+    priority: {
+      _: 'Priority',
+      tooltip: 'High priority stuff'
     },
     invalidDrawer: 'Invalid URL (not an actual project)'
   },

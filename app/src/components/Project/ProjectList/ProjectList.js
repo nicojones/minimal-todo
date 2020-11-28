@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
 import './_project-list.scss';
-import { urls } from 'config/urls';
 import { text } from 'config/text';
 import projectService from 'services/projectService';
 import ProjectListDropdown from './ProjectListDropdown';
 import ColorPicker from 'components/ColorPicker/ColorPicker';
 import createProjectObject from 'functions/createProjectObject';
+import { drawerArray } from '../../../config/drawerConfig';
 
 function validProject (projectId, projects) {
   const proj = projects.find((p) => p.id === projectId);
@@ -24,6 +24,7 @@ function ProjectList ({ projectId, project, changeToProject }) {
   useEffect(() => {
     const unsubscribeProjects = projectService.getListOfProjects((_projects) => {
       const _project = validProject(project.id || projectId, _projects);
+      console.log('i will change project for no reason', _project && _project.id);
       _project && changeToProject(_project);
       setProjects(_projects);
     });
@@ -31,7 +32,7 @@ function ProjectList ({ projectId, project, changeToProject }) {
     return () => {
       unsubscribeProjects && unsubscribeProjects();
     };
-  }, [ ]);
+  }, []);
 
   function addNewProject (e) {
     e.preventDefault();
@@ -71,28 +72,42 @@ function ProjectList ({ projectId, project, changeToProject }) {
     });
   }
 
+
   return (
     <>
-      <h5 className="center-align">{ text.project.s }</h5>
       <ul className="projects-list flex-column">
-        <li key={ urls.inboxUrl } className={ 'proj-li mb-5 parent-hover flex-row' + (project.id === urls.inboxUrl ? ' selected' : '') }>
-          <button className="btn-invisible left left-align" onClick={ () => setProject({ id: urls.inboxUrl }) }>
-            <i className="material-icons tiny left btn-pr">inbox</i>
-            <span className="btn-pl">{ text.drawer.inbox._ }</span>
-          </button>
-        </li>
+        {
+          drawerArray.map((p) => <li
+            key={ p.url }
+            title={ p.text.tooltip }
+            className={ 'proj-li mb-5 parent-hover flex-row' + (projectId === p.url ? ' selected' : '') }
+          >
+            <button className="btn-invisible left left-align" onClick={ () => setProject({ id: p.url }) }>
+              <i className="material-icons tiny left btn-pr">{ p.icon }</i>
+              <span className="btn-pl">{ p.text._ }</span>
+            </button>
+          </li>)
+        }
+        { projects.length ?
+        <li key="title" className="proj-li mb-5 bt-subtle">
+          <i className="material-icons inv">inbox</i>
+          <span className="btn-pl subtle">{ text.project.s }</span>
+        </li> : ''}
         {
           projects.map((proj) =>
             <li
               key={ proj.id }
               className={ 'proj-li mb-5 parent-hover flex-row' + (project.id === proj.id ? ' selected' : '') + (isLoading === proj.id ? ' loader-input' : '') }
             >
-              <ColorPicker color={ proj.color } onChangeComplete={ (e) => changeColor(proj, e) } icon={ proj.shared ? 'person' : 'lens' } />
+              <ColorPicker
+                color={ proj.color } onChangeComplete={ (e) => changeColor(proj, e) }
+                icon={ proj.shared ? 'person' : 'lens' }
+              />
               <button className="btn-invisible left left-align btn-p" onClick={ () => setProject(proj) }>
                 { proj.name }
                 {/*( { proj.openTasks } <span className="subtle">/ { proj.completedTasks }</span> )*/ }
               </button>
-              <ProjectListDropdown project={ proj }/>
+              <ProjectListDropdown project={ proj } onDelete={ deleteProject }/>
             </li>
           )
         }

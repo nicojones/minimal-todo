@@ -13,6 +13,7 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
   const [subtasks, setSubtasks] = useState(task.subtasks || []);
   const [taskName, setTaskName] = useState(task.name || '');
   const [taskDesc, setTaskDesc] = useState(task.description || '');
+  const [priority, setPriority] = useState(task.priority || 0);
 
   const project = useContext(ProjectContext);
 
@@ -20,6 +21,7 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
     setTaskName(task.name || '');
     setSubtasks(task.subtasks || []);
     setTaskDesc(task.description || '');
+    setPriority(task.priority || 0);
   }, [task]);
 
   async function saveTask (e) {
@@ -27,7 +29,12 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
 
     setLoading(true);
 
-    await taskService.updateTask({ ...task, name: taskName, description: taskDesc });
+    await taskService.updateTask({
+      ...task,
+      name: taskName,
+      priority: priority,
+      description: taskDesc
+    });
 
     setLoading(false);
 
@@ -43,7 +50,10 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
     e.preventDefault();
 
     await taskService.addTask(createTaskObject({
-      name: subtaskName, parentId: task.id, level: task.level + 1, projectId: project.id
+      name: subtaskName,
+      parentId: task.id,
+      level: task.level + 1,
+      projectId: project.id
     }));
 
     e.target[0].value = '';
@@ -60,27 +70,50 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
         okButton={ text.task.save + ' <i class="material-icons right">save</i>' }
         cancelButton={ text.task.discard + ' <i class="material-icons right">cancel</i>' }
       >
-        <h6 className="subtle mb-15 mt-5">{ project.name }</h6>
+        {/*<h6 className="subtle mb-15 mt-5">{ project.name }</h6>*/}
         <form onSubmit={ saveTask }>
           <div>
-            <label>{ text.task.name }</label>
+            {/*<label>{ text.task.name }</label>*/ }
             <input
               value={ taskName } required minLength={ 3 }
-              placeholder={ text.task.addPh }
+              placeholder={ text.task.name }
               onChange={ (e) => setTaskName(e.target.value) }
             />
           </div>
           <div>
-            <label>{ text.task.notes }</label>
+            {/*<label>{ text.task.notes }</label>*/ }
             <input
               value={ taskDesc }
               className="materialize-textarea"
-              placeholder={ text.task.notesPh }
+              placeholder={ text.task.notes }
               onChange={ (e) => setTaskDesc(e.target.value) }
             />
           </div>
+          <div>
+            <label>{ text.task.prio._ }</label>
+            <div className="flex-row">
+              <a className={ 'priority prio-no ' + (priority === 0 && 'active') } onClick={ () => setPriority(0) }>
+                <i className="material-icons">flag</i></a>
+              <a className={ 'priority prio-low ' + (priority === 1 && 'active') } onClick={ () => setPriority(1) }>
+                <i className="material-icons">flag</i></a>
+              <a className={ 'priority prio-med ' + (priority === 2 && 'active') } onClick={ () => setPriority(2) }>
+                <i className="material-icons">flag</i></a>
+              <a className={ 'priority prio-high ' + (priority === 3 && 'active') } onClick={ () => setPriority(3) }>
+                <i className="material-icons">flag</i></a>
+            </div>
+          </div>
         </form>
 
+        <li key="new-subtask">
+          <form onSubmit={ saveSubtask }>
+            <input
+              onChange={ (e) => setSubtaskName(e.target.value) }
+              placeholder={ text.task.subtasks }
+              className="input-field"
+              required minLength={ 3 }
+            />
+          </form>
+        </li>
         <ul className="list-unstyled flex-column">
           {
             (subtasks || []).map((sub) =>
@@ -98,17 +131,6 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
               </li>
             )
           }
-          <li key="new-subtask">
-            <form onSubmit={ saveSubtask }>
-              <label>{ text.subtasks }</label>
-              <input
-                onChange={ (e) => setSubtaskName(e.target.value) }
-                placeholder={ text.task.addSubtaskPh }
-                className="input-field"
-                required minLength={ 3 }
-              />
-            </form>
-          </li>
         </ul>
       </Modal>
     </>

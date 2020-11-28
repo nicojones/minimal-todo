@@ -21,6 +21,7 @@ function TodoApp () {
   const [showSidebar, setShowSidebar] = useState(!window.isSmallScreen);
 
   function changeToProject (_project) {
+    console.log('somehow it changes project here i guess...', project.id, ' will change to: ', _project.id)
     if (_project.id !== project.id) {
       setProject(_project);
       history.push(urls.project(_project.id || ''));
