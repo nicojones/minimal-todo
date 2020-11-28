@@ -35,6 +35,8 @@ function canAccessProject (request, response, next) {
           });
         }
 
+        request.app.set('project', { ...proj.data(), id: projectId });
+
         return next();
       }).catch(() => {
 

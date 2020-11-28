@@ -92,29 +92,29 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
           <div>
             <label>{ text.task.prio._ }</label>
             <div className="flex-row">
-              <a className={ 'priority prio-no ' + (priority === 0 && 'active') } onClick={ () => setPriority(0) }>
+              <a className={ 'priority prio-0 ' + (priority === 0 && 'active') } onClick={ () => setPriority(0) }>
                 <i className="material-icons">flag</i></a>
-              <a className={ 'priority prio-low ' + (priority === 1 && 'active') } onClick={ () => setPriority(1) }>
+              <a className={ 'priority prio-1 ' + (priority === 1 && 'active') } onClick={ () => setPriority(1) }>
                 <i className="material-icons">flag</i></a>
-              <a className={ 'priority prio-med ' + (priority === 2 && 'active') } onClick={ () => setPriority(2) }>
+              <a className={ 'priority prio-2 ' + (priority === 2 && 'active') } onClick={ () => setPriority(2) }>
                 <i className="material-icons">flag</i></a>
-              <a className={ 'priority prio-high ' + (priority === 3 && 'active') } onClick={ () => setPriority(3) }>
+              <a className={ 'priority prio-3 ' + (priority === 3 && 'active') } onClick={ () => setPriority(3) }>
                 <i className="material-icons">flag</i></a>
             </div>
           </div>
         </form>
 
-        <li key="new-subtask">
-          <form onSubmit={ saveSubtask }>
-            <input
-              onChange={ (e) => setSubtaskName(e.target.value) }
-              placeholder={ text.task.subtasks }
-              className="input-field"
-              required minLength={ 3 }
-            />
-          </form>
-        </li>
         <ul className="list-unstyled flex-column">
+          <li key="new-subtask">
+            <form onSubmit={ saveSubtask }>
+              <input
+                onChange={ (e) => setSubtaskName(e.target.value) }
+                placeholder={ text.task.subtasks }
+                className="input-field"
+                required minLength={ 3 }
+              />
+            </form>
+          </li>
           {
             (subtasks || []).map((sub) =>
               <li key={ sub.id } title={ sub.timestamp } className="block">

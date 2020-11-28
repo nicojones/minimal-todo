@@ -2,6 +2,30 @@ const { validateProjectData } = require('../util/validators');
 const { db } = require('../util/firebase');
 const { deleteCollection } = require('../util/deleteCollection');
 
+/**
+ * Given a projectId and a list of userIds who have access, updates the document in batch.
+ * @param projectId
+ * @param userIds
+ * @returns {Promise<unknown>}
+ */
+function updateUids (projectId, userIds) {
+  const batch = db.batch();
+
+  return new Promise((resolve, reject) => {
+    // Project updated, now batch update the tasks:
+    return db
+      .collection(`/projects/${ projectId }/tasks`)
+      .listDocuments()
+      .then((val) => {
+        val.map((val) => {
+          // Update each task with the correct user ids!
+          batch.update(val, { _uids: userIds });
+        });
+
+        resolve(batch.commit());
+      }).catch(reject);
+  });
+}
 
 exports.addProject = (request, response) => {
   if ((request.body.name || '').trim() === '') {
@@ -45,12 +69,13 @@ exports.deleteProject = (request, response) => {
 
   const projectId = request.params.projectId;
   let projectName;
+  let userIds;
 
   db
     .doc(`/projects/${ projectId }`)
     .get()
     .then(async (projDoc) => {
-      const userIds = projDoc.data()._uids.filter((uid) => uid !== request.user.uid);
+      userIds = projDoc.data()._uids.filter((uid) => uid !== request.user.uid);
       projectName = projDoc.data().name;
 
       if (userIds.length) {
@@ -60,15 +85,10 @@ exports.deleteProject = (request, response) => {
           .update({
             _uids: userIds,
             shared: userIds.length > 1
+          }).then(() => {
+            return updateUids(projectId, userIds);
           });
       } else {
-        // No more users -> DELETE
-        // const firebase = require('firebase');
-        // const config = require('../util/config');
-        // firebase.initializeApp(config);
-        // return firebase.functions().httpsCallable('recursiveDelete')({ path: `/projects/${ projectId }` });
-
-        // return db.doc(`/projects/${ projectId }`).delete();
         await deleteCollection(db, `/projects/${ projectId }/tasks`, 100);
         return db.doc(`/projects/${ projectId }`).delete();
       }
@@ -95,6 +115,7 @@ exports.deleteProjectTasks = (request, response) => {
       .then(val => {
         val.map((val) => {
           batch.delete(val);
+          // batch.update(val, { newValue: 3 });
         });
 
         return batch.commit();
@@ -114,38 +135,48 @@ exports.deleteProjectTasks = (request, response) => {
 exports.updateProject = (request, response) => {
   const projectId = request.params.projectId;
 
-  // !!! Not all fields are editable!
-  const project = {
-    name: request.body.name || '',
-    color: request.body.color || '#333',
-    sort: request.body.sort || '',
-    showCompleted: request.body.showCompleted || false
-  };
+  try {
 
-  const errors = validateProjectData(project);
+    // !!! Not all fields are editable!
+    const project = {
+      name: request.body.name || '',
+      color: request.body.color || '#333',
+      sort: request.body.sort || '',
+      showCompleted: request.body.showCompleted || false
+    };
 
-  if (!errors.valid) {
-    return response.status(400).json({ error: errors.errors });
-  }
+    const errors = validateProjectData(project);
 
-  let document = db.doc(`/projects/${ projectId }`);
-  document
-    .update(project)
-    .then(() => {
-      response.json({ message: `Project ${ request.body.name } updated successfully` });
-    })
-    .catch((error) => {
-      console.error(error);
-      return response.status(500).json({
-        error: error.code
+    if (!errors.valid) {
+      return response.status(400).json({ error: errors.errors });
+    }
+
+    let document = db.doc(`/projects/${ projectId }`);
+    document
+      .update(project)
+      .then(() => {
+        response.json({ message: `Project ${ request.body.name } updated successfully` });
+      })
+      .catch((error) => {
+        console.error(error);
+        return response.status(500).json({
+          error: error.code
+        });
       });
+  } catch (e) {
+    return response.status(500).json({
+      message: e.message
     });
+  }
 };
 
 exports.addUserToProject = (request, response) => {
   const projectId = request.params.projectId;
   const username = request.body.username;
-  let userId;
+  const batch = db.batch();
+
+  let userId; // current user
+  let userIds = []; //
 
   // First check if the ID is valid:
   db
@@ -156,12 +187,9 @@ exports.addUserToProject = (request, response) => {
         response.status(404).json({ error: `User ${ userId } does not exist` });
       }
       userId = doc.data().userId;
-      return db
-        .doc(`/projects/${ projectId }`)
-        .get();
-    })
-    .then((doc) => {
-      const userIds = doc.data()._uids;
+
+      const project = request.app.get('project');
+      userIds = project._uids;
       userIds.push(userId);
       return db
         .doc(`/projects/${ projectId }`)
@@ -169,6 +197,10 @@ exports.addUserToProject = (request, response) => {
           _uids: userIds,
           shared: userIds.length > 1
         });
+    })
+    .then(() => {
+      // Project updated, now batch update the tasks:
+      return updateUids(projectId, userIds);
     })
     .then(() => {
       response.json({ message: `Users added successfully` });

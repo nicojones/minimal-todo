@@ -1,8 +1,14 @@
 @import 'src/sass/mixins';
 @import 'src/sass/colors';
 
-#root.desktop {
+#root {
   .todo-navbar {
+    > .navbar-hide {
+      background-color: $navbar-color;
+    }
+  }
+
+  &.desktop .todo-navbar {
     > .navbar-hide {
       background-color: $navbar-color;
       @include transition();

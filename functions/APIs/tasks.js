@@ -21,6 +21,8 @@ exports.addTask = (request, response) => {
     return null; // end of execution!
   }
 
+  const project = request.app.get('project');
+
   const newTodoItem = {
     name: request.body.name,
     _name_lower: request.body.name.toLowerCase(),
@@ -33,7 +35,8 @@ exports.addTask = (request, response) => {
     priority: request.body.priority || 0,
     dueDate: request.body.dueDate || null,
     dueAlert: request.body.dueAlert || request.body.dueDate || null,
-    timestamp: new Date()
+    timestamp: new Date(),
+    _uids: project._uids
   };
 
   db

@@ -1,8 +1,6 @@
-const functions = require('firebase-functions');
-const app = require('express')();
-const cors = require('cors');
 
-app.use(cors());
+const functions = require('firebase-functions');
+const app = require('./APIs/app');
 
 const auth = require('./util/auth');
 const { _fixtures } = require('./APIs/admin');
@@ -31,6 +29,7 @@ const {
   getUserDetail,
   updateUserDetails
 } = require('./APIs/usersAuth');
+
 
 // ProjectList
 app.post('/project', auth, addProject);
