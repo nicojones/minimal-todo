@@ -89,15 +89,21 @@ exports.deleteProjectTasks = (request, response) => {
 
   try {
 
-    db.collection(`/projects/${ projectId }/tasks`).listDocuments().then(val => {
-      val.map((val) => {
-        batch.delete(val);
-      });
+    db
+      .collection(`/projects/${ projectId }/tasks`)
+      .listDocuments()
+      .then(val => {
+        val.map((val) => {
+          batch.delete(val);
+        });
 
-      return batch.commit();
-    }).then(() => {
+        return batch.commit();
+      }).then(() => {
       response.status(200).json({ message: 'Tasks deleted' });
-    });
+    })
+      .catch((e) => {
+        response.status(500).json({ message: 'Error on catch' });
+      });
   } catch (e) {
     console.error(e);
     response.status(500).json({ message: 'Server error' });
