@@ -1,19 +1,22 @@
-import { useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import './_project.scss';
 import taskService from 'services/taskService';
 import createTaskObject from 'functions/createTaskObject';
 import { text } from 'config/text';
-import projectRender from './Project-view';
 import projectService from 'services/projectService';
+import { ProjectContext } from '../../TodoApp';
+import ProjectHeader from './ProjectHeader';
+import Task from './Task/Task';
 
-function Project ({ project, setProject }) {
+function Project () {
+
+  const project = useContext(ProjectContext);
 
   const [sort, setSort] = useState(project.sort);
   const [projectLoading, setProjectLoading] = useState(true);
   const [projectTasks, setProjectTasks] = useState([]);
   const [isLoading, setIsLoading] = useState('');
   const [showCompleted, setShowCompleted] = useState(project.showCompleted);
-  const [modalOpen, setModalOpen] = useState(false);
   const [projectName, setProjectName] = useState(project.name || text.noListName);
   const [editListName, setEditListName] = useState(false);
 
@@ -38,7 +41,7 @@ function Project ({ project, setProject }) {
   }, [project.name]);
 
   useEffect(() => {
-    const unsubscribeProject = projectService.getProject(project.id, setProject);
+    // const unsubscribeProject = projectService.getProject(project.id, setProject);
     const unsubscribeTasks = taskService.getTasksForProject(project.id, sort, (tasks) => {
       setProjectTasks(tasks);
       setProjectLoading(false);
@@ -49,7 +52,7 @@ function Project ({ project, setProject }) {
     }
 
     return () => {
-      unsubscribeProject && unsubscribeProject();
+      // unsubscribeProject && unsubscribeProject();
       unsubscribeTasks && unsubscribeTasks();
     };
   }, [project.id, sort]);
@@ -63,7 +66,7 @@ function Project ({ project, setProject }) {
     }));
     // inputElement.current && (inputElement.current.target.value = '');
 
-    const taskId = await taskService.addTask(createTaskObject({
+    await taskService.addTask(createTaskObject({
       name: taskName,
       projectId: project.id
     }));
@@ -73,11 +76,6 @@ function Project ({ project, setProject }) {
 
   function taskNameChange (e) {
     taskName = e.target.value;
-  }
-
-  async function toggleShowCompleted (showCompleted) {
-    setShowCompleted(showCompleted);
-    await update({ showCompleted });
   }
 
   async function changeColor (hexColor) {
@@ -97,33 +95,61 @@ function Project ({ project, setProject }) {
     return await projectService.updateProject({ ...project, ...projectPartial });
   }
 
-  return projectRender({
-    open,
-    completed,
-    addTask,
-    taskNameChange,
-    showCompleted,
-    toggleShowCompleted,
-    modalOpen,
-    allCompleted,
-    setModalOpen,
-    isLoading,
-    addTaskPh,
-    load: {
-      projectLoading,
-      setProjectLoading
-    },
-    project: {
-      projectName,
-      saveListName,
-      editListName,
-      setEditListName,
-      setProjectName,
-      changeColor,
-      sort,
-      setSort
-    }
-  });
+  return (
+    <>
+      <div className={ projectLoading ? 'loader-input cover' : '' }>
+        <ProjectHeader projectFunctions={ {
+          projectName,
+          saveListName,
+          editListName,
+          setEditListName,
+          setProjectName,
+          changeColor,
+          sort,
+          setSort
+        } } isLoading={ isLoading }
+        />
+
+        <ul>
+          { open.length ?
+            open.map((task) =>
+              <Task
+                key={ task.id }
+                task={ task }
+                level={ 0 }
+              />)
+            : (completed.length ? <li><h5 className="subtle max-content ml-50">{ allCompleted }</h5></li> : '')
+          }
+          { showCompleted && completed.map((task) =>
+            <Task
+              key={ task.id }
+              task={ task }
+            />) }
+
+          <li className="task">
+            <form
+              onSubmit={ addTask }
+              className={ 'w-100 flex-row task-content form-inline' + (isLoading === 'task' ? ' loader-input' : '') }
+            >
+              {/*className={ 'flex-row task-content form-inline' + (isLoading === 'task' ? ' loader-input' : '') }>*/ }
+              <i /* Just to give the right padding */ className="material-icons left v-hidden btn-p">add</i>
+              <i className="material-icons left subtle btn-pr">add</i>
+              <div className="form-group">
+                <div className="input-group mb-2">
+                  <input
+                    onChange={ taskNameChange } className="invisible f-100"
+                    placeholder={ addTaskPh } required
+                    disabled={ isLoading === 'task' }
+                    autoComplete="off" /*ref={ inputElement }*/
+                  />
+                </div>
+              </div>
+            </form>
+          </li>
+        </ul>
+      </div>
+    </>
+  );
 }
 
 export default Project;

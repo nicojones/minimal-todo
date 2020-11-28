@@ -115,8 +115,8 @@ nav {
   &.dd-left {
     right: 10px;
   }
-  &.dd-0 {
-    top: 0;
+  &.dd-20 {
+    top: 20px;
   }
   &.dd-high {
     > .dropdown-item {
@@ -143,3 +143,8 @@ nav {
   flex-direction: row;
   justify-content: space-between;
 }
+.project-title {
+  min-width: max-content;
+  margin: 0 0 0 50px;
+}
+

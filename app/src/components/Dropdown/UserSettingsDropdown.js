@@ -19,7 +19,7 @@ function UserSettingsDropdown () {
         <>
           <ul className="dropdown dd-left dd-big dd-high" onClick={ () => setDropdownShown(false) }>
             <li className="dropdown-item">
-              <span className="left subtle ps-6">{ text.loggedInAs(user.email) }</span>
+              <span className="left subtle btn-p">{ text.loggedInAs(user.email) }</span>
             </li>
             <li className="dropdown-item">
               <button className="btn-invisible left left-align w-100" onClick={ authService.logout }>

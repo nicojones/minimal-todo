@@ -20,7 +20,7 @@ function ProjectOptions ({ sort, setSort, children }) {
           {
             sortDropdown &&
             <>
-              <ul className="dropdown dd-left dd-0 dd-high">
+              <ul className="dropdown dd-left dd-20 dd-high">
                 {
                   constants.sort.map((d) =>
                     <li key={ d.sort } className={ 'dropdown-item' + (d.sort === sort ? ' selected' : '') }>
@@ -43,7 +43,7 @@ function ProjectOptions ({ sort, setSort, children }) {
           {
             moreDropdown &&
             <>
-              <ul className="dropdown dd-left dd-0 dd-high">
+              <ul className="dropdown dd-left dd-20 dd-high">
                 { children }
               </ul>
               <div className="backdrop" onClick={ () => showMoreDropdown(false) }/>

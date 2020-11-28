@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { text } from 'config/text';
+
 import './_project-list.scss';
+import { urls } from 'config/urls';
+import { text } from 'config/text';
 import projectService from 'services/projectService';
 import ProjectListDropdown from './ProjectListDropdown';
-import cogoToast from 'cogo-toast';
 import ColorPicker from 'components/ColorPicker/ColorPicker';
-import { urls } from 'config/urls';
 import createProjectObject from 'functions/createProjectObject';
 
 function validProject (projectId, projects) {
@@ -57,10 +57,10 @@ function ProjectList ({ projectId, project, changeToProject }) {
   }
 
   function setProject (_project) {
-    console.log(project, _project);
     if (_project.id === project.id) {
       return; // can't change to itself... it also causes a re-render problem in the `useEffect`
     }
+    console.info('Changing project from', project.id, 'to', _project.id);
     changeToProject(_project);
   }
 
@@ -75,32 +75,28 @@ function ProjectList ({ projectId, project, changeToProject }) {
     <>
       <h5 className="center-align">{ text.project.s }</h5>
       <ul className="projects-list flex-column">
-        <li key={ urls.inboxUrl } className={ 'ml-50 mb-5 parent-hover flex-row' + (project.id === urls.inboxUrl ? ' selected' : '') }>
-          <button className="btn-invisible left left-align ps-6" onClick={ () => setProject({ id: urls.inboxUrl }) }>{ text.drawer.inbox._ }</button>
+        <li key={ urls.inboxUrl } className={ 'proj-li mb-5 parent-hover flex-row' + (project.id === urls.inboxUrl ? ' selected' : '') }>
+          <button className="btn-invisible left left-align" onClick={ () => setProject({ id: urls.inboxUrl }) }>
+            <i className="material-icons tiny left btn-pr">inbox</i>
+            <span className="btn-pl">{ text.drawer.inbox._ }</span>
+          </button>
         </li>
         {
           projects.map((proj) =>
             <li
               key={ proj.id }
-              className={ 'mb-5 parent-hover flex-row' + (project.id === proj.id ? ' selected' : '') + (isLoading === proj.id ? ' loader-input' : '') }
+              className={ 'proj-li mb-5 parent-hover flex-row' + (project.id === proj.id ? ' selected' : '') + (isLoading === proj.id ? ' loader-input' : '') }
             >
-              <ProjectListDropdown project={ proj }/>
-              <ColorPicker color={ proj.color } onChangeComplete={ (e) => changeColor(proj, e) } />
-              <button className="btn-invisible left left-align ps-6" onClick={ () => setProject(proj) }>
+              <ColorPicker color={ proj.color } onChangeComplete={ (e) => changeColor(proj, e) } icon={ proj.shared ? 'person' : 'lens' } />
+              <button className="btn-invisible left left-align btn-p" onClick={ () => setProject(proj) }>
                 { proj.name }
-                {
-                  proj.shared &&
-                  <i
-                    className="tiny material-icons subtle left mr-5"
-                    title={ text.sharedProject }
-                  >people_outline</i>
-                }
                 {/*( { proj.openTasks } <span className="subtle">/ { proj.completedTasks }</span> )*/ }
               </button>
+              <ProjectListDropdown project={ proj }/>
             </li>
           )
         }
-        <li key="new-project" className="mb-5 parent-hover flex-row">
+        <li key="new-project" className="proj-li mb-5 parent-hover flex-row">
           <button className="btn-invisible child-hover ch-hidden left">
             <label htmlFor="new-project-input" className="pointer">
               <i className="tiny material-icons subtle">add</i>
@@ -108,7 +104,7 @@ function ProjectList ({ projectId, project, changeToProject }) {
           </button>
           <form
             onSubmit={ addNewProject }
-            className={ 'add-project flex-row' + (isLoading === 'new' ? ' loader-input' : '') }
+            className={ 'add-project flex-row w-100' + (isLoading === 'new' ? ' loader-input' : '') }
           >
             <input
               className="invisible left-align"

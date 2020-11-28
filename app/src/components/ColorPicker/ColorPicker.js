@@ -1,7 +1,7 @@
 import { TwitterPicker } from 'react-color';
 import React, { useState } from 'react';
 
-function ColorPicker ({ onChangeComplete, color }) {
+function ColorPicker ({ onChangeComplete, color, icon }) {
 
   const [showColorPicker, setShowColorPicker] = useState(false);
 
@@ -14,7 +14,7 @@ function ColorPicker ({ onChangeComplete, color }) {
     <>
       <span className="relative">
         <button className="btn-invisible h-100" onClick={ () => setShowColorPicker(true) }>
-          <span className="btn-colorpicker" style={ { backgroundColor: color } }/>
+          <i className="material-icons tiny left m0" style={ { color: color } }>{ icon }</i>
         </button>
         { showColorPicker ?
           <div className="colorpicker">

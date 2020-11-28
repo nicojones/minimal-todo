@@ -101,7 +101,7 @@ exports.deleteProjectTasks = (request, response) => {
       }).then(() => {
       response.status(200).json({ message: 'Tasks deleted' });
     })
-      .catch((e) => {
+      .catch(() => {
         response.status(500).json({ message: 'Error on catch' });
       });
   } catch (e) {
@@ -129,10 +129,11 @@ exports.updateProject = (request, response) => {
   }
 
   let document = db.doc(`/projects/${ projectId }`);
-  document.update(project)
-    // .then((doc) => {
-    //   response.json({ message: `Project ${ request.body.name } updated successfully` });
-    // })
+  document
+    .update(project)
+    .then(() => {
+      response.json({ message: `Project ${ request.body.name } updated successfully` });
+    })
     .catch((error) => {
       console.error(error);
       return response.status(500).json({
@@ -169,7 +170,7 @@ exports.addUserToProject = (request, response) => {
           shared: userIds.length > 1
         });
     })
-    .then((doc) => {
+    .then(() => {
       response.json({ message: `Users added successfully` });
     })
     .catch((error) => {

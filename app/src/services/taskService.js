@@ -68,7 +68,6 @@ const taskService = {
 
   getTasksForProject: (projectKey, sort, done) => {
     const [sortField, sortDirection] = sort.split(',');
-    console.log(projectKey, sort)
     try {
       return taskService.db
         .collection(`/projects/${ projectKey }/tasks`)

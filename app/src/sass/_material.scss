@@ -116,7 +116,11 @@ input.invisible {
   }
 }
 
-.material-icons.expanded {
-  transform: rotate(90deg);
+.material-icons {
+  &.expanded {
+    transform: rotate(90deg);
+  }
+  margin: 0 !important; // just like a button
 }
+
 

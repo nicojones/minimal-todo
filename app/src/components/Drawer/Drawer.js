@@ -35,7 +35,7 @@ function Drawer ({ drawerUrl }) {
     <>
       <div className={ loading ? 'loader-input cover' : '' }>
         <div className="project-title-bar">
-          <h5 className="max-content m0">{ text.drawer.inbox._ }</h5>
+          <h5 className="project-title">{ text.drawer.inbox._ }</h5>
           <ProjectOptions sort={ sort } setSort={ setSort }/>
         </div>
         <ul>

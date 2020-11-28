@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
 import { urls } from 'config/urls';
@@ -52,7 +52,7 @@ function TodoApp () {
                 ? (
                   reservedKey(project.id)
                     ? <Drawer drawerUrl={ project.id } />
-                    : <Project project={ project } setProject={ changeToProject }/>
+                    : <Project/>
                 )
                 : <NoProject setShowSidebar={ setShowSidebar }/>
             }

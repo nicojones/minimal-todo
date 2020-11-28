@@ -5,7 +5,7 @@ import ProjectOptions from 'components/Project/ProjectOptions/ProjectOptions';
 import projectService from 'services/projectService';
 import cogoToast from 'cogo-toast';
 
-function ProjectTitle ({ projectFunctions, toggleShowCompleted, isLoading }) {
+function ProjectHeader ({ projectFunctions, isLoading }) {
 
   const project = useContext(ProjectContext);
   const psc = project.showCompleted;
@@ -33,6 +33,10 @@ function ProjectTitle ({ projectFunctions, toggleShowCompleted, isLoading }) {
     await projectService.addUserToProject(project, user.username);
   }
 
+  async function toggleShowCompleted (showCompleted) {
+    await projectService.updateProject({ ...project, showCompleted });
+  }
+
   return (
     projectFunctions.editListName
       ? <form onSubmit={ projectFunctions.saveListName } className={ (isLoading === 'name' ? ' loader-input' : '') }>
@@ -47,31 +51,31 @@ function ProjectTitle ({ projectFunctions, toggleShowCompleted, isLoading }) {
       : <div className="project-title-bar">
         <div className="flex-row">
           <h5
-            className="max-content m0" onClick={ () => projectFunctions.setEditListName(true) }
+            className="project-title" onClick={ () => projectFunctions.setEditListName(true) }
           >{ projectFunctions.projectName }</h5>
         </div>
         <ProjectOptions sort={ projectFunctions.sort } setSort={ projectFunctions.setSort }>
           <li className="dropdown-item" key="completed">
             <button className="btn-invisible w-100 left-align" onClick={ () => toggleShowCompleted(!psc) }>
-              <i className="material-icons tiny left">{ psc ? 'check_box_outline_blank' : 'check_box' }</i>
+              <i className="material-icons tiny left btn-pr">{ psc ? 'check_box_outline_blank' : 'check_box' }</i>
               { psc ? text.hideCompleted : text.showCompleted }
             </button>
           </li>
           <li className="dropdown-item" key="share">
             <button className="btn-invisible w-100 left-align" onClick={ () => share() }>
-              <i className="material-icons tiny left">people_outline</i>
+              <i className="material-icons tiny left btn-pr">person_add</i>
               { text.project.share }
             </button>
           </li>
           <li className="dropdown-item" key="tasks">
             <button className="btn-invisible w-100 left-align" onClick={ () => deleteTasks() }>
-              <i className="material-icons tiny left">delete_sweep</i>
+              <i className="material-icons tiny left btn-pr">delete_forever</i>
               { text.project.delete.tasks }
             </button>
           </li>
           <li className="dropdown-item" key="delete">
             <button className="btn-invisible w-100 left-align" onClick={ () => deleteProject() }>
-              <i className="material-icons tiny left">delete</i>
+              <i className="material-icons tiny left btn-pr">delete</i>
               { text.project.delete._ }
             </button>
           </li>
@@ -80,4 +84,4 @@ function ProjectTitle ({ projectFunctions, toggleShowCompleted, isLoading }) {
   );
 }
 
-export default ProjectTitle;
+export default ProjectHeader;

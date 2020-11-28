@@ -56,7 +56,7 @@ function Task ({ task, level }) {
     <li className={ doneClass + ' task' } title={ task.timestamp }>
       <div className="task-content parent-hover">
         <button
-          className={ 'toggle-expand subtle btn-invisible material-icons tiny left ' + (expandedTask ? ' expanded' : '') + showExpanderClass }
+          className={ 'toggle-expand subtle btn-invisible material-icons tiny left btn-pr' + (expandedTask ? ' expanded' : '') + showExpanderClass }
           onClick={ () => toggleExpanded(!expandedTask) }
         >chevron_right
         </button>

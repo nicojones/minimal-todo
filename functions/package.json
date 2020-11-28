@@ -6,6 +6,7 @@
     "serve": "firebase emulators:start",
     "shell": "firebase functions:shell",
     "start": "npm run shell",
+    "kill": "lsof -t -i:5000 -i:8080 -i:4000 | xargs kill -9",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log"
   },

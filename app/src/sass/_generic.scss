@@ -10,8 +10,14 @@
   margin-top: 5px;
 }
 
+.ml-27 {
+  margin-left: 27px;
+}
 .ml-50 {
   margin-left: 50px;
+}
+.ml-auto {
+  margin-left: auto;
 }
 
 .mb-5 {
@@ -37,10 +43,6 @@
   padding-top: 15px;
 }
 
-.ps-6 {
-  padding: 0 6px;
-}
-
 .w-100 {
   width: 100%;
 }
@@ -54,6 +56,17 @@
 
 .pointer {
   cursor: pointer;
+}
+
+.btn-pr {
+  padding-right: $todo-button-padding;
+}
+.btn-pl {
+  padding-left: $todo-button-padding;
+}
+.btn-p {
+  @extend .btn-pr;
+  @extend .btn-pl;
 }
 
 .max-content {
@@ -117,6 +130,7 @@
   @extend .btn-subtle;
   background: transparent;
   color: inherit;
+  padding: 0 $todo-button-padding;
 
   &:focus {
     background: transparent;

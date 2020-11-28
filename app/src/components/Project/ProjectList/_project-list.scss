@@ -3,7 +3,8 @@
 
 .projects-list {
 
-  li {
+  li.proj-li {
+    margin-left: 20px;
     padding: 6px;
     min-height: $list-item-height;
     position: relative;
@@ -27,14 +28,14 @@
 }
 
 
-.btn-colorpicker {
-  border-radius: 100%;
-  width: 10px;
-  height: 10px;
-  border: none;
-  display: inline-block;
-  //width: 10px !important;
-}
+//.btn-colorpicker {
+//  border-radius: 100%;
+//  width: 10px;
+//  height: 10px;
+//  border: none;
+//  display: inline-block;
+//  //width: 10px !important;
+//}
 .colorpicker {
   position: absolute;
   top: 35px;
