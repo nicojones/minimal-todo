@@ -108,15 +108,20 @@ nav {
 
   &.dd-big {
     top: $big-dropdown;
-    > .dropdown-item {
-      height: $big-dropdown;
-    }
   }
   &.dd-right {
     left: 10px;
   }
   &.dd-left {
     right: 10px;
+  }
+  &.dd-0 {
+    top: 0;
+  }
+  &.dd-high {
+    > .dropdown-item {
+      height: $big-dropdown;
+    }
   }
 
   > .dropdown-item {
@@ -126,6 +131,15 @@ nav {
     &:hover {
       background: $very-subtle-color;
     }
+    &.selected {
+      background: $subtle-color;
+    }
   }
 
+}
+
+.project-title-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }

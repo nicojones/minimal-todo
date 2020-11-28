@@ -1,5 +1,5 @@
 import React from 'react';
-import ProjectTitle from './ProjectTitle/ProjectTitle';
+import ProjectTitle from './ProjectTitle';
 import Task from './Task/Task';
 
 

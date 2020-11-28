@@ -2,21 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { text } from 'config/text';
 import './_project-list.scss';
 import projectService from 'services/projectService';
-import ProjectListDropdown from './ProjectListDropdown/ProjectListDropdown';
+import ProjectListDropdown from './ProjectListDropdown';
 import cogoToast from 'cogo-toast';
 import ColorPicker from 'components/ColorPicker/ColorPicker';
-import { constants } from 'config/constants';
-import { urls } from '../../../config/urls';
+import { urls } from 'config/urls';
+import createProjectObject from 'functions/createProjectObject';
 
-function validProjectId (projectId, projects) {
+function validProject (projectId, projects) {
+  const proj = projects.find((p) => p.id === projectId);
   // If there's a project set in the URL and it's valid (it exists)
-  if (projectId && projects.filter((p) => p.id === projectId).length) {
-    return projectId;
-  }
-  return ''; // otherwise don't set any project.
+  return proj || null; // otherwise don't set any project.
 }
 
-function ProjectList ({ projectId, changeToProject }) {
+function ProjectList ({ projectId, project, changeToProject }) {
 
   const [isLoading, setIsLoading] = useState('');
   const [projects, setProjects] = useState([]);
@@ -25,8 +23,8 @@ function ProjectList ({ projectId, changeToProject }) {
 
   useEffect(() => {
     const unsubscribeProjects = projectService.getListOfProjects((_projects) => {
-      const _projectId = validProjectId(projectId, _projects);
-      _projectId && changeToProject(_projectId); // setProjectId(_projectId);
+      const _project = validProject(project.id || projectId, _projects);
+      _project && changeToProject(_project);
       setProjects(_projects);
     });
 
@@ -41,7 +39,7 @@ function ProjectList ({ projectId, changeToProject }) {
     setIsLoading('new');
 
     projectService
-      .newProject({ name: newProjectName, color: constants.defaultProjectColor })
+      .newProject(createProjectObject(newProjectName))
       .then((snap) => {
         setNewProjectName('');
         setIsLoading('');
@@ -58,57 +56,37 @@ function ProjectList ({ projectId, changeToProject }) {
     }
   }
 
-  function setProject (_projectId) {
-    if (_projectId === projectId) {
+  function setProject (_project) {
+    console.log(project, _project);
+    if (_project.id === project.id) {
       return; // can't change to itself... it also causes a re-render problem in the `useEffect`
     }
-    changeToProject(_projectId);
+    changeToProject(_project);
   }
 
   async function changeColor (project, hexColor) {
-    const result = await projectService.updateProject({
+    return await projectService.updateProject({
       ...project,
       color: hexColor
     });
-  }
-
-  async function onAction (actionName, project) {
-    switch (actionName) {
-      case 'delete':
-        await deleteProject(project);
-        break;
-      case 'share':
-        const userEmail = prompt('User Email to join?');
-        const user = await projectService.getUserByEmail(userEmail);
-        if (!user) {
-          cogoToast.error(text.genericError);
-          console.error('error: ', user);
-          return;
-        }
-        await projectService.addUserToProject(project, user.username);
-        break;
-      default:
-        break;
-    }
   }
 
   return (
     <>
       <h5 className="center-align">{ text.project.s }</h5>
       <ul className="projects-list flex-column">
-        <li key={ urls.inboxUrl } className={ 'mb-5 parent-hover flex-row' + (projectId === urls.inboxUrl ? ' selected' : '') }>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <button className="btn-invisible left left-align ps-6" onClick={ () => setProject(urls.inboxUrl) }>{ text.drawer.inbox._ }</button>
+        <li key={ urls.inboxUrl } className={ 'ml-50 mb-5 parent-hover flex-row' + (project.id === urls.inboxUrl ? ' selected' : '') }>
+          <button className="btn-invisible left left-align ps-6" onClick={ () => setProject({ id: urls.inboxUrl }) }>{ text.drawer.inbox._ }</button>
         </li>
         {
           projects.map((proj) =>
             <li
               key={ proj.id }
-              className={ 'mb-5 parent-hover flex-row' + (projectId === proj.id ? ' selected' : '') + (isLoading === proj.id ? ' loader-input' : '') }
+              className={ 'mb-5 parent-hover flex-row' + (project.id === proj.id ? ' selected' : '') + (isLoading === proj.id ? ' loader-input' : '') }
             >
-              <ProjectListDropdown project={ proj } onAction={ onAction }/>
+              <ProjectListDropdown project={ proj }/>
               <ColorPicker color={ proj.color } onChangeComplete={ (e) => changeColor(proj, e) } />
-              <button className="btn-invisible left left-align ps-6" onClick={ () => setProject(proj.id) }>
+              <button className="btn-invisible left left-align ps-6" onClick={ () => setProject(proj) }>
                 { proj.name }
                 {
                   proj.shared &&

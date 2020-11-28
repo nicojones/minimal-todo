@@ -14,7 +14,8 @@ function createTaskObject (task) {
     level: task.level || 0,
     parentId: task.parentId || null,
     description: task.description || '',
-    projectId: task.projectId
+    projectId: task.projectId,
+    priority: task.priority || 0
   }
 }
 

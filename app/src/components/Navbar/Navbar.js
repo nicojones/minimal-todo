@@ -1,5 +1,5 @@
 import React from 'react';
-import UserSettingsDropdown from './UserSettingsDropdown';
+import UserSettingsDropdown from 'components/Dropdown/UserSettingsDropdown';
 import './_navbar.scss';
 
 function Navbar ({ setShowSidebar, showSidebar }) {

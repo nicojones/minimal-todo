@@ -15,6 +15,12 @@ const environment = {
   url: 'https://us-central1-todo-list-react-33431.cloudfunctions.net/api',
 };
 
-environment.production = false; environment.url = 'http://localhost:5000/todo-list-react-33431/us-central1/api';
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+  // dev code
+  environment.production = false; environment.url = 'http://localhost:5000/todo-list-react-33431/us-central1/api';
+  console.info('RUNNING ON DEVELOPMENT MODE', environment.url)
+} else {
+  // production code
+}
 
 export default environment;

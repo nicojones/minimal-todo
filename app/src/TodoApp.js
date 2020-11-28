@@ -5,27 +5,25 @@ import { urls } from 'config/urls';
 import { LoggedInUserContext } from 'App';
 
 import Navbar from 'components/Navbar/Navbar';
-import Project from 'components/Project/Project/Project';
-import NoProject from 'components/Project/NoProject/NoProject';
-import ProjectList from 'components/Project/ProjectList/ProjectList';
+import Project from 'components/Project/Project';
+import NoProject from 'components/NoProject/NoProject';
+import ProjectList from 'components/Project/ProjectList';
 import Drawer from './components/Drawer/Drawer';
 import reservedKey from './functions/reservedKey';
 
 export const ProjectContext = React.createContext({});
 
-
 function TodoApp () {
   const history = useHistory();
-  const { projectKeyParam: projectIdParam } = useParams();
+  const { projectKeyParam: projectId } = useParams();
 
-  const [projectId, setProjectId] = useState(projectIdParam || '');
   const [project, setProject] = useState({});
   const [showSidebar, setShowSidebar] = useState(!window.isSmallScreen);
 
-  function changeToProject (_projectId) {
-    if (_projectId !== projectId) {
-      setProjectId(_projectId);
-      history.push(urls.project(_projectId));
+  function changeToProject (_project) {
+    if (_project.id !== project.id) {
+      setProject(_project);
+      history.push(urls.project(_project.id || ''));
     }
   }
 
@@ -42,6 +40,7 @@ function TodoApp () {
           <div className={ 'projects-list-box-inner' }>
             <ProjectList
               projectId={ projectId }
+              project={ project }
               changeToProject={ changeToProject }
             />
           </div>
@@ -49,11 +48,11 @@ function TodoApp () {
         <div className="tasks-list-box flex-column">
           <ProjectContext.Provider value={ project }>
             {
-              projectId
+              project.id
                 ? (
-                  reservedKey(projectId)
-                    ? <Drawer projectKey={ projectId }/>
-                    : <Project projectKey={ projectId } project={ project } setProject={ setProject }/>
+                  reservedKey(project.id)
+                    ? <Drawer drawerUrl={ project.id } />
+                    : <Project project={ project } setProject={ changeToProject }/>
                 )
                 : <NoProject setShowSidebar={ setShowSidebar }/>
             }

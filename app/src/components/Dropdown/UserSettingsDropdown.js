@@ -17,7 +17,7 @@ function UserSettingsDropdown () {
       {
         dropdownShown &&
         <>
-          <ul className="dropdown dd-left dd-big" onClick={ () => setDropdownShown(false) }>
+          <ul className="dropdown dd-left dd-big dd-high" onClick={ () => setDropdownShown(false) }>
             <li className="dropdown-item">
               <span className="left subtle ps-6">{ text.loggedInAs(user.email) }</span>
             </li>

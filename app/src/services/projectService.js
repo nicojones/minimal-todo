@@ -1,11 +1,9 @@
-import { db, auth } from './firebase';
+import { auth, db } from './firebase';
 import axios from 'axios';
 import environment from './environment';
 import { handleError } from './handleError';
 import cogoToast from 'cogo-toast';
 import { constants } from '../config/constants';
-import { urls } from '../config/urls';
-import { text } from '../config/text';
 
 const projectService = {
 
@@ -20,12 +18,14 @@ const projectService = {
       return projectService.db
         .doc(`/projects/${ projectKey }`)
         .onSnapshot((doc) => {
-          const project = doc.data();
-          project.id = doc.id;
+          if (doc.exists) {
+            const project = { ...doc.data(), id: doc.id };
 
-          console.info(`Changed to project "${ project.name }"`);
-
-          done(project);
+            done(project);
+            console.info(`Changed to project "${ project.name }"`);
+          } else {
+            done({ /* no project */ });
+          }
         });
     } catch (e) {
       handleError('Error on fetching Project: ', e);
@@ -47,6 +47,7 @@ const projectService = {
               id: doc.id,
               name: projectData.name,
               shared: projectData.shared,
+              sort: projectData.sort,
               showCompleted: projectData.showCompleted,
               color: projectData.color
             });
@@ -62,7 +63,8 @@ const projectService = {
     }
   },
 
-  updateProject: async (project) => {
+  updateProject: async (project, showSuccess) => {
+    showSuccess = showSuccess || true;
     console.info('Updating project ', project);
 
     try {
@@ -72,7 +74,7 @@ const projectService = {
         data: project,
         headers: projectService.headers()
       }).then((result) => {
-        cogoToast.success(result.data.message, constants.toast);
+        showSuccess && cogoToast.success(result.data.message, constants.toast);
         console.info('result from Edit Project PUT', result);
       });
     } catch (e) {
@@ -108,6 +110,21 @@ const projectService = {
       });
     } catch (e) {
       handleError('Error on delete project: ', e);
+    }
+  },
+
+  deleteProjectTasks: async (project) => {
+    try {
+      return await axios({
+        url: environment.url + `/project/${ project.id }/only-tasks`,
+        method: 'DELETE',
+        headers: projectService.headers()
+      }).then((result) => {
+        cogoToast.success(result.data.message, constants.toast);
+        console.info('result from project task DELETE', result);
+      });
+    } catch (e) {
+      handleError('Error on delete project tasks: ', e);
     }
   },
 

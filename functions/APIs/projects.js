@@ -3,7 +3,6 @@ const { db } = require('../util/firebase');
 const { deleteCollection } = require('../util/deleteCollection');
 
 
-
 exports.addProject = (request, response) => {
   if ((request.body.name || '').trim() === '') {
     return response.status(400).json({ message: 'Project Name not be empty' });
@@ -16,6 +15,7 @@ exports.addProject = (request, response) => {
     // User fields
     name: request.body.name,
     color: request.body.color,
+    sort: request.body.sort || '',
 
     // System fields
     timestamp: new Date(),
@@ -82,6 +82,23 @@ exports.deleteProject = (request, response) => {
     });
 };
 
+exports.deleteProjectTasks = (request, response) => {
+  const projectId = request.params.projectId;
+  // Get a new write batch
+  const batch = db.batch();
+
+  db.collection(`/projects/${ projectId }/tasks`).listDocuments().then(val => {
+    val.map((val) => {
+      batch.delete(val);
+    });
+
+    batch.commit().then(() => {
+      response.status(200).json({ message: 'Tasks deleted' });
+    });
+  });
+
+};
+
 exports.updateProject = (request, response) => {
   const projectId = request.params.projectId;
 
@@ -89,6 +106,7 @@ exports.updateProject = (request, response) => {
   const project = {
     name: request.body.name || '',
     color: request.body.color || '#333',
+    sort: request.body.sort || '',
     showCompleted: request.body.showCompleted || false
   };
 
@@ -100,9 +118,9 @@ exports.updateProject = (request, response) => {
 
   let document = db.doc(`/projects/${ projectId }`);
   document.update(project)
-    .then((doc) => {
-      response.json({ message: `Project ${ request.body.name } updated successfully` });
-    })
+    // .then((doc) => {
+    //   response.json({ message: `Project ${ request.body.name } updated successfully` });
+    // })
     .catch((error) => {
       console.error(error);
       return response.status(500).json({

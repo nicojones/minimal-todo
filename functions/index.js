@@ -5,6 +5,7 @@ const cors = require('cors');
 app.use(cors());
 
 const auth = require('./util/auth');
+const { _fixtures } = require('./APIs/admin');
 const { searchUserByEmail } = require('./APIs/users');
 
 const { addUserToProject } = require('./APIs/projects');
@@ -20,6 +21,7 @@ const {
 const {
   addProject,
   deleteProject,
+  deleteProjectTasks,
   updateProject
 } = require('./APIs/projects');
 
@@ -33,6 +35,7 @@ const {
 // ProjectList
 app.post('/project', auth, addProject);
 app.delete('/project/:projectId', auth, canAccessProject, deleteProject);
+app.delete('/project/:projectId/only-tasks', auth, canAccessProject, deleteProjectTasks);
 app.put('/project/:projectId', auth, canAccessProject, updateProject);
 app.post('/project/:projectId/join', auth, canAccessProject, addUserToProject);
 // Todos
@@ -49,5 +52,7 @@ app.post('/signup', signUpUser);
 app.post('/user/image', auth, uploadProfilePhoto);
 app.post('/user', auth, updateUserDetails);
 app.get('/user', auth, getUserDetail);
+
+app.get('/admin', _fixtures)
 
 exports.api = functions.https.onRequest(app);

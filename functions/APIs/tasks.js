@@ -16,12 +16,16 @@ exports.addTask = (request, response) => {
 
   const newTodoItem = {
     name: request.body.name,
+    _name_lower: request.body.name.toLowerCase(),
     description: request.body.description,
     expanded: request.body.expanded || false,
     checked: request.body.checked || false,
     level: request.body.level || 0,
     parentId: request.body.parentId || null,
     projectId: request.body.projectId || null,
+    priority: request.body.priority || 0,
+    dueDate: request.body.dueDate || null,
+    dueAlert: request.body.dueAlert || request.body.dueDate || null,
     timestamp: new Date()
   };
 
@@ -61,17 +65,15 @@ exports.updateTask = (request, response) => {
   const projectId = request.params.projectId;
   const taskId = request.params.taskId;
 
-  // fields which can't be edited.
-  delete request.body.id;
-  delete request.body.createdAt
+  request.body._name_lower = request.body.name.toLowerCase();
 
   let document = db.doc(`/projects/${ projectId }/tasks/${ taskId }`);
   document.update(request.body)
-    .then((doc) => {
-      response.json({
-        message: `Task ${ request.body.name } updated successfully`,
-      });
-    })
+    // .then((doc) => {
+    //   response.json({
+    //     message: `Task ${ request.body.name } updated successfully`,
+    //   });
+    // })
     .catch((error) => {
       if (error.code === 5) {
         response.status(404).json({ error: 'Not Found' });

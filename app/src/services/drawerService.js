@@ -1,4 +1,4 @@
-import { auth, db } from './firebase';
+import { db } from './firebase';
 import { handleError } from './handleError';
 import cogoToast from 'cogo-toast';
 import { urls } from '../config/urls';
@@ -12,7 +12,8 @@ const drawerService = {
     return { authorization: localStorage.getItem('AuthToken') };
   },
 
-  getDrawer: (drawerKey, done) => {
+  getDrawer: (drawerKey, sort, done) => {
+    const [sortField, sortDirection] = sort.split(',');
     try {
       const taskCollection = drawerService.db.collectionGroup('tasks');
       let query;
@@ -20,7 +21,7 @@ const drawerService = {
         case urls.inboxUrl:
           query = taskCollection
             .where('checked', '==', false)
-            .orderBy('timestamp', 'desc');
+            .orderBy(sortField, sortDirection);
           break;
         default:
           cogoToast.error(text.invalidDrawer);

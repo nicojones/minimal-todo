@@ -1,9 +1,9 @@
-import React  from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import 'sass/index.scss';
 import 'assets/loader.svg';
 import 'functions/screenSize'; // must be imported here.
-import { guessClientOS, osName } from './functions/clientOS';
+import { guessClientOS } from './functions/clientOS';
 
 // import 'materialize-css/dist/js/materialize.min.js';
 import App from 'App';
@@ -18,10 +18,7 @@ root.classList.add(os.isMobile ? 'mobile' : 'desktop');
 
 // ======================================== //
 
-ReactDOM.render(
-  <App />,
-  root
-);
+ReactDOM.render(<App />, root);
 
 
 // If you want to start measuring performance in your app, pass a function

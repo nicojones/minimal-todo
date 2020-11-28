@@ -10,8 +10,9 @@ function canAccessProject (request, response, next) {
     delete request.body.updatedAt;
     delete request.body.timestamp;
     delete request.body._uids;
+    delete request.body._name_lower;
     delete request.body.shared;
-    delete request.body.subtasks;
+    delete request.body.level;
   }
 
   try {

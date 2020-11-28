@@ -64,6 +64,7 @@ export const text = {
     share: 'Share Project',
     delete: {
       _: 'Delete Project',
+      tasks: 'Delete all tasks',
       long: 'Delete this project and all the tasks? (cannot be undone)'
     },
     add: {

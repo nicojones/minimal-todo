@@ -1,7 +1,35 @@
 import React, { useState } from 'react';
 import { text } from 'config/text';
+import projectService from 'services/projectService';
+import cogoToast from 'cogo-toast';
 
-function ProjectListDropdown ({ project, onAction }) {
+function ProjectListDropdown ({ project }) {
+
+  /**
+   * @deprecated PLEASE REMOVE
+   * @param actionName
+   * @param project
+   * @returns {Promise<void>}
+   */
+  async function onAction (actionName, project) {
+    switch (actionName) {
+      case 'delete':
+        await projectService.deleteProject(project);
+        break;
+      case 'share':
+        const userEmail = prompt('User Email to join?');
+        const user = await projectService.getUserByEmail(userEmail);
+        if (!user) {
+          cogoToast.error(text.genericError);
+          console.error('error: ', user);
+          return;
+        }
+        await projectService.addUserToProject(project, user.username);
+        break;
+      default:
+        break;
+    }
+  }
 
   const [dropdownShown, setDropdownShown] = useState(false);
 

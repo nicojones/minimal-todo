@@ -6,8 +6,9 @@ import { text } from 'config/text';
 import projectRender from './Project-view';
 import projectService from 'services/projectService';
 
-function Project ({ project, projectKey, setProject }) {
+function Project ({ project, setProject }) {
 
+  const [sort, setSort] = useState(project.sort);
   const [projectLoading, setProjectLoading] = useState(true);
   const [projectTasks, setProjectTasks] = useState([]);
   const [isLoading, setIsLoading] = useState('');
@@ -37,17 +38,21 @@ function Project ({ project, projectKey, setProject }) {
   }, [project.name]);
 
   useEffect(() => {
-    const unsubscribeProject = projectService.getProject(projectKey, setProject);
-    const unsubscribeTasks = taskService.getTasksForProject(projectKey, (tasks) => {
+    const unsubscribeProject = projectService.getProject(project.id, setProject);
+    const unsubscribeTasks = taskService.getTasksForProject(project.id, sort, (tasks) => {
       setProjectTasks(tasks);
       setProjectLoading(false);
     });
+
+    if (project.id && sort !== project.sort) {
+      projectService.updateProject({ ...project, sort }, false);
+    }
 
     return () => {
       unsubscribeProject && unsubscribeProject();
       unsubscribeTasks && unsubscribeTasks();
     };
-  }, [projectKey]);
+  }, [project.id, sort]);
 
   async function addTask (e) {
     e.preventDefault();
@@ -55,7 +60,7 @@ function Project ({ project, projectKey, setProject }) {
     console.log(createTaskObject({
       name: taskName,
       projectId: project.id
-    }))
+    }));
     // inputElement.current && (inputElement.current.target.value = '');
 
     const taskId = await taskService.addTask(createTaskObject({
@@ -115,6 +120,8 @@ function Project ({ project, projectKey, setProject }) {
       setEditListName,
       setProjectName,
       changeColor,
+      sort,
+      setSort
     }
   });
 }

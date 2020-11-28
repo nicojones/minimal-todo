@@ -1,22 +1,25 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import reservedKey from 'functions/reservedKey';
 import drawerService from 'services/drawerService';
-import Task from 'components/Project/Project/Task/Task';
+import Task from 'components/Project/Task/Task';
 import { text } from 'config/text';
+import ProjectOptions from 'components/Project/ProjectOptions';
+import { constants } from 'config/constants';
 
-function Drawer ({ projectKey }) {
+function Drawer ({ drawerUrl }) {
 
   const [loading, setLoading] = useState(true);
   const [drawerTasks, setDrawerTasks] = useState([]);
+  const [sort, setSort] = useState(constants.defaultSort)
 
   const allCompleted = useMemo(() => {
     return text.allTasksCompleted();
   }, []);
 
   useEffect(() => {
-    if (reservedKey(projectKey)) {
+    if (reservedKey(drawerUrl)) {
       // Special project, like an inbox...
-      const unsubscribeProject = drawerService.getDrawer(projectKey, (tasks) => {
+      const unsubscribeProject = drawerService.getDrawer(drawerUrl, sort, (tasks) => {
         setDrawerTasks(tasks);
         setLoading(false);
       });
@@ -26,13 +29,14 @@ function Drawer ({ projectKey }) {
       };
 
     }
-  }, [projectKey]);
+  }, [drawerUrl, sort]);
 
   return (
     <>
       <div className={ loading ? 'loader-input cover' : '' }>
-        <div className="flex-row">
+        <div className="project-title-bar">
           <h5 className="max-content m0">{ text.drawer.inbox._ }</h5>
+          <ProjectOptions sort={ sort } setSort={ setSort }/>
         </div>
         <ul>
           {
