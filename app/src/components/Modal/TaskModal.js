@@ -135,7 +135,7 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
           </li>
           {
             (subtasks || []).map((sub) =>
-              <li key={ sub.id } title={ sub.timestamp } className="block">
+              <li key={ sub.id } data-tip={ sub.timestamp } className="block">
                 <label className="left">
                   <input
                     type="checkbox" checked={ sub.checked }

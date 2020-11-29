@@ -37,7 +37,7 @@ function Drawer ({ drawerUrl }) {
     <>
       <div className={ loading ? 'loader-input cover' : '' }>
         <div className="project-title-bar">
-          <h5 className="project-title" title={ drawer.text.tooltip }>{ drawer.text._ }</h5>
+          <h5 className="project-title" data-tip={ drawer.text.tooltip }>{ drawer.text._ }</h5>
           <ProjectOptions sort={ sort } setSort={ setSort }/>
         </div>
         <ul>

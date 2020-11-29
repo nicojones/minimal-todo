@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import './_project-options.scss';
 import { constants } from '../../../config/constants';
+import { text } from '../../../config/text';
+import Tooltip from '../../Tooltip/Tooltip';
 
 
 function ProjectOptions ({ sort, setSort, children }) {
@@ -12,8 +14,9 @@ function ProjectOptions ({ sort, setSort, children }) {
     <>
       <div className="buttons">
         <>
+          <Tooltip/>
           { sort && // Only if the `sort` is passed from the parent.
-          <button className="btn-invisible" onClick={ () => showSortDropdown(true) }>
+          <button className="btn-invisible" onClick={ () => showSortDropdown(true) } data-tip={ text.sort._ }>
             <i className="material-icons">swap_vert</i>
           </button>
           }
@@ -38,7 +41,7 @@ function ProjectOptions ({ sort, setSort, children }) {
           {
             children && // Only if the `more` is passed from the parent.
             <button className="btn-invisible" onClick={ () => showMoreDropdown(true) }>
-              <i className="material-icons">more_horiz</i></button>
+              <i className="material-icons" data-tip={ text.project.more }>more_horiz</i></button>
           }
           {
             moreDropdown &&

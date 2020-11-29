@@ -1,6 +1,8 @@
 import React from 'react';
 import UserSettingsDropdown from 'components/Dropdown/UserSettingsDropdown';
 import './_navbar.scss';
+import { text } from 'config/text';
+import Tooltip from '../Tooltip/Tooltip';
 
 function Navbar ({ setShowSidebar, showSidebar }) {
 
@@ -9,7 +11,8 @@ function Navbar ({ setShowSidebar, showSidebar }) {
       <div className={ 'navbar-fixed todo-navbar ' + ( showSidebar ? 'open' : 'closed' ) }>
         <nav className="navbar-hide">
           <div className="nav-wrapper">
-            <button className="btn-invisible sidenav-btn btn-subtle left" onClick={ () => setShowSidebar(!showSidebar) }>
+            <button className="btn-invisible sidenav-btn btn-subtle left" data-tip={ text.menu.menu }
+              onClick={ () => setShowSidebar(!showSidebar) }>
               <i className="material-icons">menu</i>
             </button>
             {/*<button className="btn-invisible sidenav-btn btn-subtle left" onClick={ () => setShowSidebar(!showSidebar) }>*/}
@@ -32,6 +35,7 @@ function Navbar ({ setShowSidebar, showSidebar }) {
           </div>
         </nav>
       </div>
+      <Tooltip/>
     </>
   );
 }

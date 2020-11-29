@@ -62,7 +62,7 @@ function Signup () {
           ? <Redirect to="/app"/>
           :
           <>
-            <LoginBox title={ text.login.signup } loading={ loading }>
+            <LoginBox data-tip={ text.login.signup } loading={ loading }>
               <form onSubmit={ onSubmit } className="flex-center-self">
                 <input
                   value={ signup.email || '' } onChange={ (e) => setSignup({

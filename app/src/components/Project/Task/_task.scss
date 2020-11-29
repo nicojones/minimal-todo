@@ -23,6 +23,7 @@
   &.done {
     .task-name {
       text-decoration: line-through;
+      color: $subtle-color;
     }
 
     //.task-name, .material-cb + div {
@@ -32,7 +33,7 @@
 
   > .task__content {
     padding: $task-padding $task-padding $task-padding;
-
+    display: flex;
   }
   .task__action-button {
     float: right;

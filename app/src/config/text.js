@@ -1,15 +1,14 @@
 import { randArray } from '../functions/randArray';
 
-const dateToday = new Date().toISOString().slice(0, 10);
-
 export const text = {
   gotoApp: 'Open app',
-  loading: 'Loading app...',
-  noListName: 'New Project ' + dateToday,
 
   task: {
     name: 'Name of the task',
-    delete: 'Delete task and its subtasks? Can\'t be undone',
+    delete: {
+      _: 'Delete Task',
+      all: 'Delete task and its subtasks? Can\'t be undone'
+    },
     addTaskPh: () => {
       const phs = [
         'e.g. Buy carrots',
@@ -23,7 +22,8 @@ export const text = {
       return randArray(phs);
     },
     subtasks: 'Subtasks',
-    save: 'Save',
+    save: 'Save Task',
+    edit: 'Edit Task',
     discard: 'Cancel changes',
     notes: 'Notes',
     prio: {
@@ -84,7 +84,11 @@ export const text = {
     add: {
       // _: 'Add a new project',
       ph: 'Enter a name for a new project'
-    }
+    },
+    title: {
+      _: 'Click to edit title'
+    },
+    more: 'More options'
   },
 
   genericError: 'An error occurred. Please see console for details',
@@ -104,4 +108,19 @@ export const text = {
     invalidUser: 'No user exists for this email'
   },
 
+  sort: {
+    _: 'Sort tasks',
+    az: 'A - Z',
+    za: 'Z - A',
+    nf: 'Newest first',
+    of: 'Oldest First',
+    pr: 'Priority'
+  },
+
+  menu: {
+    menu: 'Enter <i>Focus Mode</i>',
+    settings: {
+      _: 'Settings'
+    }
+  }
 };

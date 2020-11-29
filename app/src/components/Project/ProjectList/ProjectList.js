@@ -86,7 +86,7 @@ function ProjectList ({ projectId, changeToProject }) {
         {
           drawerArray.map((p) => <li
             key={ p.url }
-            title={ p.text.tooltip }
+            data-tip={ p.text.tooltip }
             className={ 'proj-li mb-5 parent-hover flex-row' + (projectId === p.url ? ' selected' : '') }
           >
             <button className="btn-invisible left left-align w-100" onClick={ () => setProject({ id: p.url }) }>

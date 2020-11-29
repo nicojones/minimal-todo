@@ -5,6 +5,7 @@ import { text } from 'config/text';
 import taskService from 'services/taskService';
 import { ProjectContext } from 'TodoApp';
 import { constants } from 'config/constants';
+import Tooltip from 'components/Tooltip/Tooltip';
 
 function Task ({ task, level }) {
 
@@ -46,14 +47,14 @@ function Task ({ task, level }) {
   }
 
   async function onDelete () {
-    if (window.confirm(text.task.delete)) {
-
+    if (window.confirm(text.task.delete.all)) {
       await taskService.deleteTask(task);
     }
   }
 
   return (
-    <li className={ doneClass + ' bt-subtle task' } title={ task.timestamp }>
+    <li className={ doneClass + ' task' } data-tip={ task.timestamp }>
+      <Tooltip/>
       <div className="task__content parent-hover">
         <button
           className={ 'toggle-expand subtle btn-invisible material-icons tiny left btn-pr' + (expandedTask ? ' expanded' : '') + showExpanderClass }
@@ -71,22 +72,26 @@ function Task ({ task, level }) {
           <div/>
         </label>
         <button
-          className={ 'btn-invisible ' + (task.checked ? '' : '') }
+          className={ 'left-align btn-invisible ' + (task.checked ? '' : '') }
           onClick={ () => setModalOpen(true) }
         >
           <span className="task-name">{ task.name }</span>
-          { subtasks.length > 0 && <small
-            className="subtle child-hover ml-5" title={ text.subtaskStatus }
-          >({ openLength } / { subtasks.length - openLength })</small> }
+          { subtasks.length > 0
+            ? <small className="subtle child-hover ml-5 ib"
+              data-tip={ text.subtaskStatus } >({ openLength } / { subtasks.length - openLength })</small>
+            : ''
+          }
           { task.description && <small className="subtle ml-5">{ task.description }</small> }
         </button>
 
-        <span className="right">
+        <span className="ml-auto flex-row">
           <button
             className="child-hover material-icons btn-invisible task__action-button"
+            data-tip={ text.task.delete._ }
             onClick={ () => onDelete(task) }>delete</button>
           <button
             className="child-hover material-icons btn-invisible task__action-button"
+            data-tip={ text.task.edit }
             onClick={ () => setModalOpen(true) }>edit</button>
 
           <TaskModal

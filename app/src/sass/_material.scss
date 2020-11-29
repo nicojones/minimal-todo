@@ -103,18 +103,28 @@ input.invisible {
     content: "check_box_outline_blank";
     font-family: "Material Icons", sans-serif;
     font-size: 1.3rem;
-    top: -.25rem;
+    //top: -.25rem;
     position: relative;
+
+    //content: "";
+    //background-image: url('../assets/check/empty.svg');
+    //width: 20px;
+    //height: 20px;
+    //display: inline-block;
+    //top: 2px;
   }
 
   &:checked + div:after {
-    content: "check_box"
+    content: "check_box";
+    //content: "";
+    // background-image: url('../assets/check/full.svg');
   }
 
-  //&[disabled] + div {
-  //  opacity: 0.4;
-  //  cursor: default;
+  //&:hover + div:after {
+  //  content: "";
+  //  background-image: url('../assets/check/half.svg');
   //}
+
 }
 
 .material-icons {

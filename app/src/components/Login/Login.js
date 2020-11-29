@@ -54,7 +54,7 @@ function Login () {
           ? <Redirect to={ urls.app }/>
           :
           <>
-            <LoginBox title={ text.login.login } loading={ loading }>
+            <LoginBox data-tip={ text.login.login } loading={ loading }>
               <form onSubmit={ onSubmit } className="flex-center-self">
                 <input
                   value={ login.email || '' } onChange={ (e) => setLogin({
