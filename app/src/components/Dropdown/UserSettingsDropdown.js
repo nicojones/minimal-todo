@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { text } from '../../config/text';
-import { LoggedInUserContext } from '../../App';
-import { authService } from '../../services/authService';
+import { text } from 'config/text';
+import { LoggedInUserContext } from 'App';
+import { authService } from 'services/authService';
 
 function UserSettingsDropdown () {
 

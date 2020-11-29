@@ -97,7 +97,7 @@ function ProjectList ({ projectId, changeToProject }) {
           </li>)
         }
         { projects.length ?
-          <li key="title" className="proj-li mb-5 bt-subtle">
+          <li key="title" className="proj-li bt-subtle">
             <i className="material-icons inv">inbox</i>
             <span className="btn-pl subtle">{ text.project.s }</span>
           </li> : '' }

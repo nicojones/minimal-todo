@@ -111,10 +111,10 @@ input.invisible {
     content: "check_box"
   }
 
-  &[disabled] + div {
-    opacity: 0.4;
-    cursor: default;
-  }
+  //&[disabled] + div {
+  //  opacity: 0.4;
+  //  cursor: default;
+  //}
 }
 
 .material-icons {

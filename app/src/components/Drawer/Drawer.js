@@ -4,7 +4,7 @@ import drawerService from 'services/drawerService';
 import Task from 'components/Project/Task/Task';
 import { text } from 'config/text';
 import ProjectOptions from 'components/Project/ProjectOptions';
-import { drawerConfig } from '../../config/drawerConfig';
+import { drawerConfig } from 'config/drawerConfig';
 
 function Drawer ({ drawerUrl }) {
 
@@ -44,7 +44,7 @@ function Drawer ({ drawerUrl }) {
           {
             drawerTasks.length
               ? drawerTasks.map((t) => <Task key={ t.id } task={ t } level={ 0 }/>)
-              : <li><h5 className="subtle max-content ml-50">{ allCompleted }</h5></li>
+              : <li><h5 className="subtle ml-50">{ allCompleted }</h5></li>
           }
         </ul>
       </div>

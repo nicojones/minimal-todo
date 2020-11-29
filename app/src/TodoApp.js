@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
 import { urls } from 'config/urls';
@@ -17,8 +17,25 @@ function TodoApp () {
   const history = useHistory();
   const { projectKeyParam: projectId } = useParams();
 
-  const [project, setProject] = useState({empty: true});
+  const [project, setProject] = useState({ empty: true });
   const [showSidebar, setShowSidebar] = useState(!window.isSmallScreen);
+  const [component, setComponent] = useState(<></>);
+
+  useEffect(() => {
+    if (reservedKey(projectId)) { // It's a reserved URL, so we show the Drawer
+      setComponent(<Drawer drawerUrl={ projectId }/>);
+      return;
+    }
+    if (project.id) { // We have a project and it has an ID, so it's a user project
+      setComponent(<Project/>);
+      return;
+    }
+    if (!projectId) { // There's some URL?
+      setComponent(<NoProject setShowSidebar={ setShowSidebar }/>); // no URL -> show this component
+      return;
+    }
+    setComponent(<></>); // either the project hasn't loaded, or isn't valid. we must wait
+  }, [project.id])
 
   function changeToProject (_project) {
     if (_project.id !== project.id) {
@@ -47,15 +64,7 @@ function TodoApp () {
             </div>
           </div>
           <div className="tasks-list-box flex-column">
-            {
-              project.id
-                ? (
-                  reservedKey(project.id)
-                    ? <Drawer drawerUrl={ project.id }/>
-                    : <Project/>
-                )
-                : <NoProject setShowSidebar={ setShowSidebar }/>
-            }
+            { component }
           </div>
         </ProjectContext.Provider>
       </div>

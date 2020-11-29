@@ -1,3 +1,5 @@
+import { randArray } from '../functions/randArray';
+
 const dateToday = new Date().toISOString().slice(0, 10);
 
 export const text = {
@@ -18,7 +20,7 @@ export const text = {
         'e.g. Call family',
         'e.g. Schedule interview'
       ];
-      return phs[Math.floor(Math.random() * phs.length)];
+      return randArray(phs);
     },
     subtasks: 'Subtasks',
     save: 'Save',
@@ -61,7 +63,7 @@ export const text = {
       'Make a Todolist: Done ✅',
       'I am Finnish 🇫🇮 with all tasks.'
     ];
-    return incomplete[Math.floor(Math.random() * incomplete.length)];
+    return randArray(incomplete);
   },
   completed: 'Completed',
   completedNo: 'No completed tasks',
@@ -71,6 +73,7 @@ export const text = {
   project: {
     s: 'Projects',
     noSelected: 'Select a project or create a new one.',
+    inspire: 'What will you accomplish?',
     share: 'Share Project',
     delete: {
       _: 'Delete Project',

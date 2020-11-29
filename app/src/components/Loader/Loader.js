@@ -1,4 +1,3 @@
-import 'assets/loader.svg';
 import './_app-loader.scss';
 
 import React from 'react';

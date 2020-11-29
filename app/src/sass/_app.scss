@@ -48,7 +48,7 @@
 
 .tasks-list-box {
   //@extend %nice-scrolls;
-  padding: $task-padding !important;
+  padding: 2 * $task-padding $task-padding !important;
   float: unset !important;
   justify-self: center;
   width: $tasks-box-width;
