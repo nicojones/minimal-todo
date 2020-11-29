@@ -102,7 +102,7 @@ input.invisible {
   & + div:after {
     content: "check_box_outline_blank";
     font-family: "Material Icons", sans-serif;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     top: -.25rem;
     position: relative;
   }
@@ -122,4 +122,8 @@ input.invisible {
     transform: rotate(90deg);
   }
   margin: 0 !important; // just like a button
+
+  &.btn-invisible {
+    font-size: 1.5rem !important;
+  }
 }

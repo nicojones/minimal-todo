@@ -4,7 +4,6 @@ export const constants = {
   defaultProjectColor: '#aaa',
   toast: {
     position: 'bottom-center',
-    hideAfter: 200000,
     renderIcon: () => '',
     onClick: () => window.hideCogoToast()
   },
