@@ -13,7 +13,6 @@ function Project () {
   const project = useContext(ProjectContext);
 
   const [sort, setSort] = useState(project.sort);
-  const [projectLoading, setProjectLoading] = useState(true);
   const [projectTasks, setProjectTasks] = useState([]);
   const [isLoading, setIsLoading] = useState('yes');
   const [showCompleted, setShowCompleted] = useState(project.showCompleted);
@@ -36,10 +35,14 @@ function Project () {
   let taskName = '';
 
   useEffect(() => {
+    setProjectName(project.name);
+    setShowCompleted(project.showCompleted);
+    setIsLoading('p');
+
     // const unsubscribeProject = projectService.getProject(project.id, setProject);
     const unsubscribeTasks = taskService.getTasksForProject(project.id, sort, (tasks) => {
       setProjectTasks(tasks);
-      setProjectLoading(false);
+      setIsLoading('');
     });
 
     if (project.id && sort !== project.sort) {
@@ -54,7 +57,7 @@ function Project () {
 
   async function addTask (e) {
     e.preventDefault();
-    setIsLoading('task');
+    setIsLoading('t');
     console.log(createTaskObject({
       name: taskName,
       projectId: project.id
@@ -76,7 +79,7 @@ function Project () {
   async function saveListName (e) {
     e.preventDefault();
 
-    setIsLoading('name');
+    setIsLoading('n');
     await update({ name: projectName });
     setEditListName(false);
     setIsLoading('');
@@ -88,7 +91,7 @@ function Project () {
 
   return (
     <>
-      <div className={ projectLoading ? 'loader-input cover' : '' }>
+      <div className={ isLoading === 'p' ? 'loader-input cover' : '' }>
         <ProjectHeader projectFunctions={ {
           projectName, setProjectName,
           saveListName,
@@ -117,9 +120,9 @@ function Project () {
           <li className="task">
             <form
               onSubmit={ addTask }
-              className={ 'w-100 flex-row task-content form-inline' + (isLoading === 'task' ? ' loader-input' : '') }
+              className={ 'w-100 flex-row task-content form-inline' + (isLoading === 't' ? ' loader-input' : '') }
             >
-              {/*className={ 'flex-row task-content form-inline' + (isLoading === 'task' ? ' loader-input' : '') }>*/ }
+              {/*className={ 'flex-row task-content form-inline' + (isLoading === 't' ? ' loader-input' : '') }>*/ }
               <i /* Just to give the right padding */ className="material-icons left v-hidden btn-p">add</i>
               <i className="material-icons left subtle btn-pr">add</i>
               <div className="form-group">
@@ -127,7 +130,7 @@ function Project () {
                   <input
                     onChange={ taskNameChange } className="invisible f-100"
                     placeholder={ addTaskPh } required
-                    disabled={ isLoading === 'task' }
+                    disabled={ isLoading === 't' }
                     autoComplete="off" /*ref={ inputElement }*/
                   />
                 </div>

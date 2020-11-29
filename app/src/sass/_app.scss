@@ -52,6 +52,7 @@
   justify-self: center;
   width: $tasks-box-width;
   min-width: $tasks-box-min-width;
+  margin: 0 auto;
 }
 
 .loader-input {
@@ -144,8 +145,8 @@ nav {
   justify-content: space-between;
 }
 .project-title {
-  min-width: max-content;
-  margin: 0 0 0 50px;
+  //min-width: max-content;
+  margin: 0 0 0 50px !important;
 }
 
 

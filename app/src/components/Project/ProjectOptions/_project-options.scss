@@ -1,3 +1,7 @@
+@import 'src/sass/colors';
+
 .buttons {
   position: relative;
+  display: flex;
+  padding-right: $task-padding;
 }

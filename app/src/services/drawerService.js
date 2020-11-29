@@ -1,4 +1,4 @@
-import { db } from './firebase';
+import { auth, db } from './firebase';
 import { handleError } from './handleError';
 import cogoToast from 'cogo-toast';
 import { urls } from '../config/urls';
@@ -15,7 +15,9 @@ const drawerService = {
   getDrawer: (drawerKey, sort, done) => {
     const [sortField, sortDirection] = sort.split(',');
     try {
-      const taskCollection = drawerService.db.collectionGroup('tasks');
+      const taskCollection = drawerService.db
+        .collectionGroup('tasks')
+        .where('_uids', 'array-contains', auth().currentUser.uid);
       let query;
       switch (drawerKey) {
         case urls.inboxUrl:

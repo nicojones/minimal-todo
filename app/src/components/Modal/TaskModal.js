@@ -67,8 +67,8 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
         loading={ loading }
         onAccept={ saveTask }
         onCancel={ () => setModalOpen(false) }
-        okButton={ text.task.save + ' <i class="material-icons right">save</i>' }
-        cancelButton={ text.task.discard + ' <i class="material-icons right">cancel</i>' }
+        okButton={ '<i class="material-icons right">save</i>' }
+        cancelButton={ '<i class="material-icons right">close</i>' }
       >
         {/*<h6 className="subtle mb-15 mt-5">{ project.name }</h6>*/}
         <form onSubmit={ saveTask }>

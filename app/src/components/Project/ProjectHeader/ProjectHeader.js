@@ -35,26 +35,28 @@ function ProjectHeader ({ projectFunctions, isLoading }) {
 
   async function toggleShowCompleted (showCompleted) {
     projectFunctions.setShowCompleted(showCompleted);
-    await projectService.updateProject({ ...project, showCompleted });
+    await projectService.updateProject({
+      ...project,
+      showCompleted
+    });
   }
 
   return (
     projectFunctions.editListName
-      ? <form onSubmit={ projectFunctions.saveListName } className={ (isLoading === 'name' ? ' loader-input' : '') }>
+      ? <form onSubmit={ projectFunctions.saveListName } className={ 'flex-row ' + (isLoading === 'n' ? ' loader-input' : '') }>
         <input
-          className="as-title m0 invisible h5" autoFocus /*onBlur={ project.saveListName }*/
+          className="as-title h5 project-title" autoFocus /*onBlur={ project.saveListName }*/
           value={ projectFunctions.projectName }
-          disabled={ isLoading === 'name' }
-          onBlur={ () => projectFunctions.setEditListName(false) }
+          disabled={ isLoading === 'n' }
           onChange={ (e) => projectFunctions.setProjectName(e.target.value) }
         />
+        <button className="btn-invisible material-icons" type='submit'>save</button>
+        <button className="btn-invisible material-icons" onClick={ () => projectFunctions.setEditListName(false) }>close</button>
       </form>
       : <div className="project-title-bar">
-        <div className="flex-row">
-          <h5
-            className="project-title" onClick={ () => projectFunctions.setEditListName(true) }
-          >{ projectFunctions.projectName }</h5>
-        </div>
+        <h5
+          className="project-title" onClick={ () => projectFunctions.setEditListName(true) }
+        >{ projectFunctions.projectName }</h5>
         <ProjectOptions sort={ projectFunctions.sort } setSort={ projectFunctions.setSort }>
           <li className="dropdown-item" key="completed">
             <button className="btn-invisible w-100 left-align" onClick={ () => toggleShowCompleted(!psc) }>

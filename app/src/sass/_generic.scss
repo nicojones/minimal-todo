@@ -164,6 +164,9 @@
   z-index: 0; // because of color picker. where does it need to be > 0 ?
 }
 
+#root.desktop .only-mobile {
+  display: none;
+}
 //.r-180 {
 //  transform: rotate(180deg);
 //}

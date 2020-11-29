@@ -21,7 +21,7 @@ function TodoApp () {
   const [showSidebar, setShowSidebar] = useState(!window.isSmallScreen);
 
   function changeToProject (_project) {
-    console.log('somehow it changes project here i guess...', project.id, ' will change to: ', _project.id)
+    console.log('somehow it changes project here i guess...', project.id, ' will change to: ', _project.id);
     if (_project.id !== project.id) {
       setProject(_project);
       history.push(urls.project(_project.id || ''));
@@ -38,6 +38,7 @@ function TodoApp () {
       <Navbar setShowSidebar={ setShowSidebar } showSidebar={ showSidebar }/>
       <div id="todo-app" className={ (showSidebar ? '' : ' hidden-bar') }>
         <div className={ 'projects-list-box' }>
+          { showSidebar ? <div className="backdrop only-mobile" onClick={ () => setShowSidebar(false) }/> : '' }
           <div className={ 'projects-list-box-inner' }>
             <ProjectList
               projectId={ projectId }
@@ -52,14 +53,13 @@ function TodoApp () {
               project.id
                 ? (
                   reservedKey(project.id)
-                    ? <Drawer drawerUrl={ project.id } />
+                    ? <Drawer drawerUrl={ project.id }/>
                     : <Project/>
                 )
                 : <NoProject setShowSidebar={ setShowSidebar }/>
             }
           </ProjectContext.Provider>
         </div>
-        <i/> { /* Thanks to this, we have three elements. Space-between works like a charm */ }
       </div>
     </>
   );
