@@ -22,11 +22,12 @@ $priority-high: #e74c3c;
 
 $hide-navbar-width: 1000px; // coincides with the values of smallScreen.js
 $navbar-height: 50px;
+$navbar-padding: 27px;
 $list-item-height: 32px;
 
 $navbar-width: 300px;
 $tasks-box-width: 1000px - $navbar-width;
-$tasks-box-min-width: 400px;
+$tasks-box-min-width: 350px;
 $task-padding: 10px;
 
 $login-form-panel-padding: 30px; //

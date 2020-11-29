@@ -30,8 +30,15 @@
     }
   }
 
-  > .task-content {
+  > .task__content {
     padding: $task-padding $task-padding $task-padding;
+
+  }
+  .task__action-button {
+    float: right;
+    color: $subtle-color;
+    //font-size: small;
+    //line-height: inherit;
   }
 }
 

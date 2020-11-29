@@ -48,7 +48,7 @@
 
 .tasks-list-box {
   //@extend %nice-scrolls;
-  padding: 20px !important;
+  padding: $task-padding !important;
   float: unset !important;
   justify-self: center;
   width: $tasks-box-width;
@@ -87,7 +87,7 @@ nav {
 }
 .nav-wrapper {
   //max-width: 1000px;
-  padding: 0 50px;
+  padding: 0 $navbar-padding;
   margin: 0 auto;
 }
 

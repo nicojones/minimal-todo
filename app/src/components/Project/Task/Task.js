@@ -54,7 +54,7 @@ function Task ({ task, level }) {
 
   return (
     <li className={ doneClass + ' bt-subtle task' } title={ task.timestamp }>
-      <div className="task-content parent-hover">
+      <div className="task__content parent-hover">
         <button
           className={ 'toggle-expand subtle btn-invisible material-icons tiny left btn-pr' + (expandedTask ? ' expanded' : '') + showExpanderClass }
           onClick={ () => toggleExpanded(!expandedTask) }
@@ -83,15 +83,14 @@ function Task ({ task, level }) {
 
         <span className="right">
           <button
-            className="child-hover btn-invisible ml-5 material-icons right subtle"
-            onClick={ () => onDelete(task) }
-          >delete
-          </button>
+            className="child-hover material-icons btn-invisible task__action-button"
+            onClick={ () => onDelete(task) }>delete</button>
+          <button
+            className="child-hover material-icons btn-invisible task__action-button"
+            onClick={ () => setModalOpen(true) }>edit</button>
+
           <TaskModal
-            trigger={ {
-              className: 'child-hover btn-invisible ml-5 material-icons right subtle',
-              text: 'edit'
-            } } task={ { ...task } }
+            task={ { ...task } }
             modalOpen={ modalOpen }
             setModalOpen={ setModalOpen }
           />

@@ -61,7 +61,9 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
 
   return (
     <>
-      <button className={ trigger.className } onClick={ () => setModalOpen(true) }>{ trigger.text }</button>
+      { trigger &&
+        <button className={ trigger.className } onClick={ () => setModalOpen(true) }>{ trigger.text }</button>
+      }
       <Modal
         modalOpen={ modalOpen }
         loading={ loading }
@@ -94,19 +96,23 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
             <div className="flex-row">
               <button
                 className={ 'btn-invisible priority prio-0 ' + (priority === 0 && 'active') }
-                onClick={ () => setPriority(0) } type="button">
+                onClick={ () => setPriority(0) } type="button"
+              >
                 <i className="material-icons">flag</i></button>
               <button
                 className={ 'btn-invisible priority prio-1 ' + (priority === 1 && 'active') }
-                onClick={ () => setPriority(1) } type="button">
+                onClick={ () => setPriority(1) } type="button"
+              >
                 <i className="material-icons">flag</i></button>
               <button
                 className={ 'btn-invisible priority prio-2 ' + (priority === 2 && 'active') }
-                onClick={ () => setPriority(2) } type="button">
+                onClick={ () => setPriority(2) } type="button"
+              >
                 <i className="material-icons">flag</i></button>
               <button
                 className={ 'btn-invisible priority prio-3 ' + (priority === 3 && 'active') }
-                onClick={ () => setPriority(3) } type="button">
+                onClick={ () => setPriority(3) } type="button"
+              >
                 <i className="material-icons">flag</i></button>
             </div>
           </div>
