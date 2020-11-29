@@ -28,7 +28,7 @@ exports.recursiveDelete = functions
     }
 
     const path = data.path;
-    console.log(
+    console.info(
       `User ${context.auth.uid} has requested to delete path ${path}`
     );
 

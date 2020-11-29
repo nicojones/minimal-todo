@@ -53,9 +53,9 @@ function Task ({ task, level }) {
   }
 
   return (
-    <li className={ doneClass + ' task' } data-tip={ task.timestamp }>
+    <li className={ doneClass + ' task' }>
       <Tooltip/>
-      <div className="task__content parent-hover">
+      <div className="task__content parent-hover" data-tip={ task.timestamp }>
         <button
           className={ 'toggle-expand subtle btn-invisible material-icons tiny left btn-pr' + (expandedTask ? ' expanded' : '') + showExpanderClass }
           onClick={ () => toggleExpanded(!expandedTask) }

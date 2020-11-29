@@ -5,6 +5,7 @@ import ProjectOptions from 'components/Project/ProjectOptions/ProjectOptions';
 import projectService from 'services/projectService';
 import { showToast } from 'services/toast';
 
+
 function ProjectHeader ({ projectFunctions, isLoading }) {
 
   const project = useContext(ProjectContext);
@@ -13,6 +14,7 @@ function ProjectHeader ({ projectFunctions, isLoading }) {
   async function deleteProject () {
     if (window.confirm(text.project.delete._)) {
       await projectService.deleteProject(project);
+      projectFunctions.setProject({ deleted: true })
     }
   }
 

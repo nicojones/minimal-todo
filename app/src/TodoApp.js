@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
 import { urls } from 'config/urls';
@@ -15,22 +15,22 @@ export const ProjectContext = React.createContext({});
 
 function TodoApp () {
   const history = useHistory();
-  const { projectKeyParam: projectId } = useParams();
+  const urlParams = useRef(useParams());
 
   const [project, setProject] = useState({ empty: true });
   const [showSidebar, setShowSidebar] = useState(!window.isSmallScreen);
   const [component, setComponent] = useState(<></>);
 
   useEffect(() => {
-    if (reservedKey(projectId)) { // It's a reserved URL, so we show the Drawer
-      setComponent(<Drawer drawerUrl={ projectId }/>);
+    if (reservedKey(urlParams.current.projectId)) { // It's a reserved URL, so we show the Drawer
+      setComponent(<Drawer drawerUrl={ urlParams.current.projectId }/>);
       return;
     }
     if (project.id) { // We have a project and it has an ID, so it's a user project
-      setComponent(<Project/>);
+      setComponent(<Project setProject={ changeToProject }/>);
       return;
     }
-    if (!projectId) { // There's some URL?
+    if (!urlParams.current.projectId) { // There's some URL?
       setComponent(<NoProject setShowSidebar={ setShowSidebar }/>); // no URL -> show this component
       return;
     }
@@ -39,6 +39,7 @@ function TodoApp () {
 
   function changeToProject (_project) {
     if (_project.id !== project.id) {
+      urlParams.current.projectId = _project.id || '';
       setProject(_project);
       history.push(urls.project(_project.id || ''));
     }
@@ -58,7 +59,7 @@ function TodoApp () {
             { showSidebar ? <div className="backdrop dark only-mobile" onClick={ () => setShowSidebar(false) }/> : '' }
             <div className={ 'projects-list-box-inner' }>
               <ProjectList
-                projectId={ projectId }
+                projectId={ urlParams.current.projectId }
                 changeToProject={ changeToProject }
               />
             </div>

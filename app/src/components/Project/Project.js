@@ -4,11 +4,11 @@ import taskService from 'services/taskService';
 import createTaskObject from 'functions/createTaskObject';
 import { text } from 'config/text';
 import projectService from 'services/projectService';
-import { ProjectContext } from '../../TodoApp';
+import { ProjectContext } from 'TodoApp';
 import ProjectHeader from './ProjectHeader';
 import Task from './Task/Task';
 
-function Project () {
+function Project ({ setProject }) {
 
   const project = useContext(ProjectContext);
 
@@ -38,7 +38,6 @@ function Project () {
     setShowCompleted(project.showCompleted);
     setIsLoading('p');
 
-    // const unsubscribeProject = projectService.getProject(project.id, setProject);
     const unsubscribeTasks = taskService.getTasksForProject(project.id, sort, (tasks) => {
       setProjectTasks(tasks);
       setIsLoading('');
@@ -87,6 +86,7 @@ function Project () {
     <>
       <div className={ isLoading === 'p' ? 'loader-input cover' : '' }>
         <ProjectHeader projectFunctions={ {
+          setProject,
           projectName, setProjectName,
           saveListName,
           editListName, setEditListName,

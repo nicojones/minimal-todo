@@ -66,7 +66,7 @@ function ProjectList ({ projectId, changeToProject }) {
 
   function setProject (_project) {
     if (_project.id === project.id) {
-      return; // can't change to itself... it also causes a re-render problem in the `useEffect`
+      changeToProject({ unselected: true }); // can't change to itself... it also causes a re-render problem in the `useEffect`
     }
     console.info('Changing project from', project.id, 'to', _project.id);
     changeToProject(_project);

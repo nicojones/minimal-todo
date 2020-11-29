@@ -37,7 +37,7 @@ function App () {
               <>
                 <Route path={ urls.signup } component={ Signup }/>
                 <Route path={ urls.login } component={ Login }/>
-                <Route path={ `${ urls.project(':projectKeyParam?') }` } component={ TodoApp }/>
+                <Route path={ `${ urls.project(':projectId?') }` } component={ TodoApp }/>
               </>
               : <Loader/>
             }
