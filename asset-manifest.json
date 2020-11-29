@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/todolist-react/static/css/main.93751519.chunk.css",
+    "main.css": "/todolist-react/static/css/main.c4ca9b6e.chunk.css",
     "main.js": "/todolist-react/static/js/main.f6441ed6.chunk.js",
     "runtime-main.js": "/todolist-react/static/js/runtime-main.cb4f4a82.js",
     "static/js/2.d0c19d60.chunk.js": "/todolist-react/static/js/2.d0c19d60.chunk.js",
@@ -11,7 +11,7 @@
   "entrypoints": [
     "static/js/runtime-main.cb4f4a82.js",
     "static/js/2.d0c19d60.chunk.js",
-    "static/css/main.93751519.chunk.css",
+    "static/css/main.c4ca9b6e.chunk.css",
     "static/js/main.f6441ed6.chunk.js"
   ]
 }
