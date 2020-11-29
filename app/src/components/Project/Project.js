@@ -42,11 +42,11 @@ function Project () {
     const unsubscribeTasks = taskService.getTasksForProject(project.id, sort, (tasks) => {
       setProjectTasks(tasks);
       setIsLoading('');
-    });
 
-    if (project.id && sort !== project.sort) {
-      projectService.updateProject({ ...project, sort });
-    }
+      if (project.id && sort !== project.sort) {
+        projectService.updateProject({ ...project, sort });
+      }
+    });
 
     return () => {
       // unsubscribeProject && unsubscribeProject();
