@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import './_project-list.scss';
 import { text } from 'config/text';
@@ -6,7 +6,8 @@ import projectService from 'services/projectService';
 import ProjectListDropdown from './ProjectListDropdown';
 import ColorPicker from 'components/ColorPicker/ColorPicker';
 import createProjectObject from 'functions/createProjectObject';
-import { drawerArray } from '../../../config/drawerConfig';
+import { drawerArray } from 'config/drawerConfig';
+import { ProjectContext } from 'TodoApp';
 
 function validProject (projectId, projects) {
   const proj = projects.find((p) => p.id === projectId);
@@ -14,18 +15,25 @@ function validProject (projectId, projects) {
   return proj || null; // otherwise don't set any project.
 }
 
-function ProjectList ({ projectId, project, changeToProject }) {
+function ProjectList ({ projectId, changeToProject }) {
+
+  const project = useContext(ProjectContext);
 
   const [isLoading, setIsLoading] = useState('');
   const [projects, setProjects] = useState([]);
 
   const [newProjectName, setNewProjectName] = useState('');
 
+  let onFirstLoad = true;
+
   useEffect(() => {
     const unsubscribeProjects = projectService.getListOfProjects((_projects) => {
       const _project = validProject(project.id || projectId, _projects);
-      console.log('i will change project for no reason', _project && _project.id);
-      _project && changeToProject(_project);
+      if (onFirstLoad) {
+        // We ONLY set project on the first load! never again
+        _project && changeToProject(_project);
+        onFirstLoad = false;
+      }
       setProjects(_projects);
     });
 
@@ -89,10 +97,10 @@ function ProjectList ({ projectId, project, changeToProject }) {
           </li>)
         }
         { projects.length ?
-        <li key="title" className="proj-li mb-5 bt-subtle">
-          <i className="material-icons inv">inbox</i>
-          <span className="btn-pl subtle">{ text.project.s }</span>
-        </li> : ''}
+          <li key="title" className="proj-li mb-5 bt-subtle">
+            <i className="material-icons inv">inbox</i>
+            <span className="btn-pl subtle">{ text.project.s }</span>
+          </li> : '' }
         {
           projects.map((proj) =>
             <li

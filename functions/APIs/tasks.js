@@ -23,8 +23,6 @@ exports.addTask = (request, response) => {
 
   const project = request.app.get('project');
 
-  console.log(project);
-
   const newTodoItem = {
     name: request.body.name,
     _name_lower: request.body.name.toLowerCase(),

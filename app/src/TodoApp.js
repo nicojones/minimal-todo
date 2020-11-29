@@ -17,11 +17,10 @@ function TodoApp () {
   const history = useHistory();
   const { projectKeyParam: projectId } = useParams();
 
-  const [project, setProject] = useState({});
+  const [project, setProject] = useState({empty: true});
   const [showSidebar, setShowSidebar] = useState(!window.isSmallScreen);
 
   function changeToProject (_project) {
-    console.log('somehow it changes project here i guess...', project.id, ' will change to: ', _project.id);
     if (_project.id !== project.id) {
       setProject(_project);
       history.push(urls.project(_project.id || ''));
@@ -37,18 +36,17 @@ function TodoApp () {
     <>
       <Navbar setShowSidebar={ setShowSidebar } showSidebar={ showSidebar }/>
       <div id="todo-app" className={ (showSidebar ? '' : ' hidden-bar') }>
-        <div className={ 'projects-list-box' }>
-          { showSidebar ? <div className="backdrop only-mobile" onClick={ () => setShowSidebar(false) }/> : '' }
-          <div className={ 'projects-list-box-inner' }>
-            <ProjectList
-              projectId={ projectId }
-              project={ project }
-              changeToProject={ changeToProject }
-            />
+        <ProjectContext.Provider value={ project }>
+          <div className={ 'projects-list-box' }>
+            { showSidebar ? <div className="backdrop only-mobile" onClick={ () => setShowSidebar(false) }/> : '' }
+            <div className={ 'projects-list-box-inner' }>
+              <ProjectList
+                projectId={ projectId }
+                changeToProject={ changeToProject }
+              />
+            </div>
           </div>
-        </div>
-        <div className="tasks-list-box flex-column">
-          <ProjectContext.Provider value={ project }>
+          <div className="tasks-list-box flex-column">
             {
               project.id
                 ? (
@@ -58,8 +56,8 @@ function TodoApp () {
                 )
                 : <NoProject setShowSidebar={ setShowSidebar }/>
             }
-          </ProjectContext.Provider>
-        </div>
+          </div>
+        </ProjectContext.Provider>
       </div>
     </>
   );

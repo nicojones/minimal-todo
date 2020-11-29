@@ -6,7 +6,7 @@ function createTaskObject (task) {
     cogoToast.error('No project id!', constants.toast);
     console.error(task);
   }
-  console.log('with level!!!', task.level);
+
   return {
     name: task.name || '',
     checked: task.checked || false,

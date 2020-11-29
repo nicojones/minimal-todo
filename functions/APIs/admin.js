@@ -37,13 +37,9 @@ module.exports._fixtures = (request, response) => {
     })
     .then((proj) => {
       const id = proj.id;
-      // const task = db.collection(`/projects/${ id }/tasks`).add({
-      //
-      // })
+      response.status(200).json({ message: 'SUCCESS'})
     })
     .then(() => {
-      console.log('DONE!');
-      response.status(200).json({ message: 'SUCCESS'})
     })
     .catch((err) => {
       console.error(err);
