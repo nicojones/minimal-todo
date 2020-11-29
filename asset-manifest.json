@@ -1,11 +1,11 @@
 {
   "files": {
-    "main.css": "/todolist-react/static/css/main.5cef28f2.chunk.css",
-    "main.js": "/todolist-react/static/js/main.c5002f3c.chunk.js",
+    "main.css": "/todolist-react/static/css/main.336a9974.chunk.css",
+    "main.js": "/todolist-react/static/js/main.ac88cb95.chunk.js",
     "runtime-main.js": "/todolist-react/static/js/runtime-main.cb4f4a82.js",
-    "static/js/2.bd31259a.chunk.js": "/todolist-react/static/js/2.bd31259a.chunk.js",
+    "static/js/2.79ddaab4.chunk.js": "/todolist-react/static/js/2.79ddaab4.chunk.js",
     "index.html": "/todolist-react/index.html",
-    "static/js/2.bd31259a.chunk.js.LICENSE.txt": "/todolist-react/static/js/2.bd31259a.chunk.js.LICENSE.txt",
+    "static/js/2.79ddaab4.chunk.js.LICENSE.txt": "/todolist-react/static/js/2.79ddaab4.chunk.js.LICENSE.txt",
     "static/media/balloon.e798b449.svg": "/todolist-react/static/media/balloon.e798b449.svg",
     "static/media/board.52700170.svg": "/todolist-react/static/media/board.52700170.svg",
     "static/media/book.9af88ef0.svg": "/todolist-react/static/media/book.9af88ef0.svg",
@@ -17,8 +17,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.cb4f4a82.js",
-    "static/js/2.bd31259a.chunk.js",
-    "static/css/main.5cef28f2.chunk.css",
-    "static/js/main.c5002f3c.chunk.js"
+    "static/js/2.79ddaab4.chunk.js",
+    "static/css/main.336a9974.chunk.css",
+    "static/js/main.ac88cb95.chunk.js"
   ]
 }
