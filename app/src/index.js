@@ -14,6 +14,7 @@ const root = document.getElementById('root');
 //   localStorage.setItem(osName.storage, JSON.stringify(guessClientOS()));
 // }
 const os = guessClientOS();
+os.isMobile = true;
 root.classList.add(os.isMobile ? 'mobile' : 'desktop');
 
 // ======================================== //

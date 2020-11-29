@@ -38,7 +38,7 @@ function TodoApp () {
       <div id="todo-app" className={ (showSidebar ? '' : ' hidden-bar') }>
         <ProjectContext.Provider value={ project }>
           <div className={ 'projects-list-box' }>
-            { showSidebar ? <div className="backdrop only-mobile" onClick={ () => setShowSidebar(false) }/> : '' }
+            { showSidebar ? <div className="backdrop dark only-mobile" onClick={ () => setShowSidebar(false) }/> : '' }
             <div className={ 'projects-list-box-inner' }>
               <ProjectList
                 projectId={ projectId }
