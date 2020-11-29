@@ -9,6 +9,7 @@ import { ProjectContext } from 'TodoApp';
 function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
 
   const [loading, setLoading] = useState(false);
+  const [loadingST, setLoadingST] = useState(false);
   const [subtaskName, setSubtaskName] = useState('');
   const [subtasks, setSubtasks] = useState(task.subtasks || []);
   const [taskName, setTaskName] = useState(task.name || '');
@@ -48,7 +49,7 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
 
   async function saveSubtask (e) {
     e.preventDefault();
-
+    setLoadingST(true);
     await taskService.addTask(createTaskObject({
       name: subtaskName,
       parentId: task.id,
@@ -56,7 +57,8 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
       projectId: project.id
     }));
 
-    e.target[0].value = '';
+    setLoadingST(false);
+    setSubtaskName('');
   }
 
   return (
@@ -119,14 +121,16 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
         </form>
 
         <ul className="list-unstyled flex-column">
-          <li key="new-subtask">
-            <form onSubmit={ saveSubtask }>
+          <li key="new-subtask" className={ loadingST ? ' loader-input' : '' }>
+            <form onSubmit={ saveSubtask } className="flex-row">
               <input
                 onChange={ (e) => setSubtaskName(e.target.value) }
                 placeholder={ text.task.subtasks }
+                value={ subtaskName }
                 className="input-field"
                 required minLength={ 3 }
               />
+              { subtaskName ? <button className="material-icons btn-invisible right">save</button> : '' }
             </form>
           </li>
           {
