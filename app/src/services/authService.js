@@ -14,7 +14,8 @@ export const authService = {
   },
 
   authState: (done) => {
-    auth().onIdTokenChanged((user) => {
+    // auth().onIdTokenChanged((user) => {
+    auth().onAuthStateChanged((user) => {
       clearTimeout(debounceAuth);
       debounceAuth = setTimeout(() => {
         user && user.getIdToken(true).then((token) => {
@@ -79,7 +80,7 @@ export const authService = {
     e.preventDefault();
 
     auth().signOut().then(() => {
-      showToast('success','You\'ve been signed out of the app');
+      showToast('success', 'You\'ve been signed out of the app');
     });
   },
 

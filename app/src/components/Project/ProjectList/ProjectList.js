@@ -27,7 +27,6 @@ function ProjectList ({ projectId, changeToProject }) {
   const onFirstLoad = useRef(true);
 
   useEffect(() => {
-    console.log('redoing it now')
     const unsubscribeProjects = projectService.getListOfProjects((_projects) => {
       const _project = validProject(project.id || projectId, _projects);
       if (onFirstLoad.current) {
@@ -52,7 +51,7 @@ function ProjectList ({ projectId, changeToProject }) {
       .then((snap) => {
         setNewProjectName('');
         setIsLoading('');
-        changeToProject(snap.id);
+        changeToProject(snap);
       });
   }
 
@@ -90,7 +89,7 @@ function ProjectList ({ projectId, changeToProject }) {
             title={ p.text.tooltip }
             className={ 'proj-li mb-5 parent-hover flex-row' + (projectId === p.url ? ' selected' : '') }
           >
-            <button className="btn-invisible left left-align" onClick={ () => setProject({ id: p.url }) }>
+            <button className="btn-invisible left left-align w-100" onClick={ () => setProject({ id: p.url }) }>
               <i className="material-icons tiny left btn-pr">{ p.icon }</i>
               <span className="btn-pl">{ p.text._ }</span>
             </button>
@@ -111,7 +110,7 @@ function ProjectList ({ projectId, changeToProject }) {
                 color={ proj.color } onChangeComplete={ (e) => changeColor(proj, e) }
                 icon={ proj.shared ? 'person' : 'lens' }
               />
-              <button className="btn-invisible left left-align btn-p" onClick={ () => setProject(proj) }>
+              <button className="btn-invisible left left-align btn-p w-100" onClick={ () => setProject(proj) }>
                 { proj.name }
                 {/*( { proj.openTasks } <span className="subtle">/ { proj.completedTasks }</span> )*/ }
               </button>

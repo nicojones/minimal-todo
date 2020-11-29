@@ -51,12 +51,11 @@ exports.addProject = (request, response) => {
     .collection(`/projects`)
     .add(newProject)
     .then((doc) => {
-      const project = {}; // doc.data();
-      project.id = doc.id;
+      newProject.id = doc.id;
 
       return response.json({
         message: `New project with id ${ doc.id } created`,
-        project: project
+        project: newProject
       });
     })
     .catch((error) => {
