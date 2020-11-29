@@ -1,17 +1,24 @@
 {
   "files": {
-    "main.css": "/todolist-react/static/css/main.c4ca9b6e.chunk.css",
-    "main.js": "/todolist-react/static/js/main.f6441ed6.chunk.js",
+    "main.css": "/todolist-react/static/css/main.5cef28f2.chunk.css",
+    "main.js": "/todolist-react/static/js/main.e59b9164.chunk.js",
     "runtime-main.js": "/todolist-react/static/js/runtime-main.cb4f4a82.js",
-    "static/js/2.d0c19d60.chunk.js": "/todolist-react/static/js/2.d0c19d60.chunk.js",
+    "static/js/2.bd31259a.chunk.js": "/todolist-react/static/js/2.bd31259a.chunk.js",
     "index.html": "/todolist-react/index.html",
-    "static/js/2.d0c19d60.chunk.js.LICENSE.txt": "/todolist-react/static/js/2.d0c19d60.chunk.js.LICENSE.txt",
-    "static/media/_app-loader.scss": "/todolist-react/static/media/loader.2fb57002.svg"
+    "static/js/2.bd31259a.chunk.js.LICENSE.txt": "/todolist-react/static/js/2.bd31259a.chunk.js.LICENSE.txt",
+    "static/media/balloon.e798b449.svg": "/todolist-react/static/media/balloon.e798b449.svg",
+    "static/media/board.52700170.svg": "/todolist-react/static/media/board.52700170.svg",
+    "static/media/book.9af88ef0.svg": "/todolist-react/static/media/book.9af88ef0.svg",
+    "static/media/calendar.667dab87.svg": "/todolist-react/static/media/calendar.667dab87.svg",
+    "static/media/_app-loader.scss": "/todolist-react/static/media/loader.2fb57002.svg",
+    "static/media/music.154532f7.svg": "/todolist-react/static/media/music.154532f7.svg",
+    "static/media/puzzle.c7f9f331.svg": "/todolist-react/static/media/puzzle.c7f9f331.svg",
+    "static/media/science.4185b725.svg": "/todolist-react/static/media/science.4185b725.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.cb4f4a82.js",
-    "static/js/2.d0c19d60.chunk.js",
-    "static/css/main.c4ca9b6e.chunk.css",
-    "static/js/main.f6441ed6.chunk.js"
+    "static/js/2.bd31259a.chunk.js",
+    "static/css/main.5cef28f2.chunk.css",
+    "static/js/main.e59b9164.chunk.js"
   ]
 }
