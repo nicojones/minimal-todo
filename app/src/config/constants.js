@@ -2,7 +2,12 @@ import { urls } from './urls';
 
 export const constants = {
   defaultProjectColor: '#aaa',
-  toast: { position: 'bottom-center' },
+  toast: {
+    position: 'bottom-center',
+    hideAfter: 200000,
+    renderIcon: () => '',
+    onClick: () => window.hideCogoToast()
+  },
   maxDepth: 3,
   defaultSort: 'timestamp,desc',
   sort: [

@@ -1,12 +1,7 @@
-$primary-color: #2f2fc8;
-$danger-color: #9d4a4a;
-$success-color: #6db36d;
-
-$danger-color-bg-text: white;
-$primary-color-bg-text: white;
+$primary-color: #34495e;
+$primary-color-bg-text: #fff;
 
 $open-task-bg-color: transparent;
-
 
 $primary-color-text: #333;
 $secondary-color-text: #888;
@@ -18,7 +13,8 @@ $app-background-color: #fff;
 $sidebar-color: #efefef;
 $loader-bg-color: #efefef;
 
-$navbar-color: #34495e;
+$navbar-color: $primary-color;
+$toast-bg-color: $primary-color;
 
 $priority-low: #3498db;
 $priority-med: #f1c40f;

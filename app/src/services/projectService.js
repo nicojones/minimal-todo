@@ -2,8 +2,7 @@ import { auth, db } from './firebase';
 import axios from 'axios';
 import environment from './environment';
 import { handleError } from './handleError';
-import cogoToast from 'cogo-toast';
-import { constants } from '../config/constants';
+import { showToast } from './toast';
 
 const projectService = {
 
@@ -40,7 +39,7 @@ const projectService = {
           console.info('Lists loaded: ', projects.length);
         });
     } catch (e) {
-      handleError('Error on fetching tasks: ', e);
+      handleError(e.response.data.message, e);
     }
   },
 
@@ -54,11 +53,11 @@ const projectService = {
         data: project,
         headers: projectService.headers()
       }).then((result) => {
-        // cogoToast.success(result.data.message, constants.toast);
+        // showToast('success', result.data.message);
         // console.info('result from Edit Project PUT', result);
       });
     } catch (e) {
-      handleError('Error on save project name: ', e);
+      handleError(e.response.data.message, e);
     }
   },
 
@@ -70,11 +69,11 @@ const projectService = {
         data: project,
         headers: projectService.headers()
       }).then((result) => {
-        cogoToast.success(result.data.message, constants.toast);
+        showToast('success', result.data.message);
         return result.data.project;
       });
     } catch (e) {
-      handleError('Error on create project: ', e);
+      handleError(e.response.data.message, e);
     }
   },
 
@@ -85,11 +84,11 @@ const projectService = {
         method: 'DELETE',
         headers: projectService.headers()
       }).then((result) => {
-        cogoToast.success(result.data.message, constants.toast);
+        showToast('success', result.data.message);
         console.info('result from project DELETE', result);
       });
     } catch (e) {
-      handleError('Error on delete project: ', e);
+      handleError(e.response.data.message, e);
     }
   },
 
@@ -100,11 +99,11 @@ const projectService = {
         method: 'DELETE',
         headers: projectService.headers()
       }).then((result) => {
-        cogoToast.success(result.data.message, constants.toast);
+        showToast('success', result.data.message);
         console.info('result from project task DELETE', result);
       });
     } catch (e) {
-      handleError('Error on delete project tasks: ', e);
+      handleError(e.response.data.message, e);
     }
   },
 
@@ -119,7 +118,7 @@ const projectService = {
         return result.data.user;
       });
     } catch (e) {
-      handleError('Error on searching email: ', e);
+      handleError(e.response.data.message, e);
     }
   },
 
@@ -131,11 +130,11 @@ const projectService = {
         headers: projectService.headers(),
         data: { username: username }
       }).then((result) => {
-        cogoToast.success(result.data.message, constants.toast);
+        showToast('success', result.data.message);
         console.info('result from joining Project', result);
       });
     } catch (e) {
-      handleError('Error on joining project: ', e);
+      handleError(e.response.data.message, e);
     }
   }
 };

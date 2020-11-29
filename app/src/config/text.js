@@ -96,7 +96,7 @@ export const text = {
     error: 'Invalid credentials',
     success: 'Welcome Back!',
     signupSuccess: 'Account created! Logging you in...',
-    invalidPass: 'Invalid login credentials',
+    invalidPass: 'Invalid Login credentials',
     invalidUser: 'No user exists for this email'
   },
 

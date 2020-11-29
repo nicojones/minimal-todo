@@ -34,7 +34,7 @@ exports.recursiveDelete = functions
 
     // Run a recursive delete on the given document or collection path.
     // The 'token' must be set in the functions config, and can be generated
-    // at the command line by running 'firebase login:ci'.
+    // at the command line by running 'firebase Login:ci'.
     await firebase_tools.firestore
       .delete(path, {
         project: process.env.GCLOUD_PROJECT,

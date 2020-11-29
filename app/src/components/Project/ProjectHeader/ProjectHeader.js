@@ -3,7 +3,7 @@ import { text } from 'config/text';
 import { ProjectContext } from 'TodoApp';
 import ProjectOptions from 'components/Project/ProjectOptions/ProjectOptions';
 import projectService from 'services/projectService';
-import cogoToast from 'cogo-toast';
+import { showToast } from 'services/toast';
 
 function ProjectHeader ({ projectFunctions, isLoading }) {
 
@@ -26,7 +26,7 @@ function ProjectHeader ({ projectFunctions, isLoading }) {
     const userEmail = prompt('User Email to join?');
     const user = await projectService.getUserByEmail(userEmail);
     if (!user) {
-      cogoToast.error(text.genericError);
+      showToast('error', text.genericError);
       console.error('error: ', user);
       return;
     }

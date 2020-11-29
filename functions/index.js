@@ -46,7 +46,7 @@ app.put('/project/:projectId/task/:taskId', auth, canAccessProject, updateTask);
 app.post('/user/search', auth, searchUserByEmail);
 
 // Users Auth functions
-// app.post('/login', loginUser);
+// app.post('/Login', loginUser);
 app.post('/signup', signUpUser);
 app.post('/user/image', auth, uploadProfilePhoto);
 app.post('/user', auth, updateUserDetails);

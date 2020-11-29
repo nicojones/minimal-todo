@@ -6,8 +6,10 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build --production",
+    "build-prod": "GENERATE_SOURCEMAP=false react-scripts build --production",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "analise": "source-map-explorer 'build/static/js/*.js'",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
@@ -31,6 +33,7 @@
     "gh-pages": "^3.1.0",
     "materialize-css": "^1.0.0-rc.2",
     "node-sass": "^4.0.0",
+    "source-map-explorer": "^2.5.1",
     "typescript": "^4.1.2"
   },
   "eslintConfig": {

@@ -17,7 +17,7 @@ function updateUids (projectId, userIds) {
       .collection(`/projects/${ projectId }/tasks`)
       .listDocuments()
       .then((val) => {
-        val.map((val) => {
+        val.forEach((val) => {
           // Update each task with the correct user ids!
           batch.update(val, { _uids: userIds });
         });
@@ -113,9 +113,8 @@ exports.deleteProjectTasks = (request, response) => {
       .collection(`/projects/${ projectId }/tasks`)
       .listDocuments()
       .then(val => {
-        val.map((val) => {
+        val.forEach((val) => {
           batch.delete(val);
-          // batch.update(val, { newValue: 3 });
         });
 
         return batch.commit();

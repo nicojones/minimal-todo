@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 
 import './_project-list.scss';
 import { text } from 'config/text';
@@ -24,15 +24,15 @@ function ProjectList ({ projectId, changeToProject }) {
 
   const [newProjectName, setNewProjectName] = useState('');
 
-  let onFirstLoad = true;
+  const onFirstLoad = useRef(true);
 
   useEffect(() => {
+    console.log('redoing it now')
     const unsubscribeProjects = projectService.getListOfProjects((_projects) => {
       const _project = validProject(project.id || projectId, _projects);
-      if (onFirstLoad) {
-        // We ONLY set project on the first load! never again
+      if (onFirstLoad.current) {
         _project && changeToProject(_project);
-        onFirstLoad = false;
+        onFirstLoad.current = false;
       }
       setProjects(_projects);
     });
@@ -56,10 +56,10 @@ function ProjectList ({ projectId, changeToProject }) {
       });
   }
 
-  async function deleteProject (project) {
+  async function deleteProject (_project) {
     if (window.confirm(text.project.delete.long)) {
-      setIsLoading(project.id);
-      await projectService.deleteProject(project);
+      setIsLoading(_project.id);
+      await projectService.deleteProject(_project);
       changeToProject('');
       setIsLoading('');
     }
@@ -73,9 +73,9 @@ function ProjectList ({ projectId, changeToProject }) {
     changeToProject(_project);
   }
 
-  async function changeColor (project, hexColor) {
+  async function changeColor (_project, hexColor) {
     return await projectService.updateProject({
-      ...project,
+      ..._project,
       color: hexColor
     });
   }

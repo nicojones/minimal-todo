@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { authService } from 'services/authService';
-import { Redirect, Link, useHistory } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 import { urls } from 'config/urls';
 import { text } from 'config/text';
-import { constants } from 'config/constants';
 import { LoggedInUserContext } from 'App';
-import cogoToast from 'cogo-toast';
 import LoginBox from './LoginBox';
+import { showToast } from 'services/toast';
 
 function Login () {
 
@@ -29,10 +28,10 @@ function Login () {
         if (responseData.user) {
           // setLogin({});
           setIsLoggedIn(true);
-          cogoToast.success(text.login.success, constants.toast);
+          showToast('success', text.login.success);
         } else {
           if (responseData.error.code === 400) {
-            cogoToast.error(text.login.error, constants.toast);
+            showToast('error', text.login.error);
           }
           console.info(responseData);
         }

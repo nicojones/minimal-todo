@@ -9,9 +9,9 @@ function Navbar ({ setShowSidebar, showSidebar }) {
       <div className={ 'navbar-fixed todo-navbar ' + ( showSidebar ? 'open' : 'closed' ) }>
         <nav className="navbar-hide">
           <div className="nav-wrapper">
-            <a className="sidenav-btn btn-subtle" onClick={ () => setShowSidebar(!showSidebar) }>
+            <button className="btn-invisible sidenav-btn btn-subtle" onClick={ () => setShowSidebar(!showSidebar) }>
               <i className="material-icons">menu</i>
-            </a>
+            </button>
             <ul className="right">
               <li>
                 <UserSettingsDropdown/>

@@ -1,10 +1,9 @@
 import axios from 'axios';
 import environment from './environment';
-import cogoToast from 'cogo-toast';
 import { auth } from './firebase';
 import { sha1 } from 'functions/sha1';
 import { text } from 'config/text';
-import { constants } from 'config/constants';
+import { showToast } from './toast';
 
 let debounceAuth;
 
@@ -68,11 +67,11 @@ export const authService = {
   loginCatch: (reason) => {
     console.error(reason, reason.code, reason.code === 'auth/user-not-found');
     if (reason.code === 'auth/wrong-password') {
-      cogoToast.error(text.login.invalidPass, constants.toast);
+      showToast('error', text.login.invalidPass);
     } else if (reason.code === 'auth/user-not-found') {
-      cogoToast.error(text.login.invalidUser, constants.toast);
+      showToast('error', text.login.invalidUser);
     } else {
-      cogoToast.error(reason.message, constants.toast);
+      showToast('error', reason.message);
     }
   },
 
@@ -80,7 +79,7 @@ export const authService = {
     e.preventDefault();
 
     auth().signOut().then(() => {
-      cogoToast.success('You\'ve been signed out of the app', { position: 'bottom-center' });
+      showToast('success','You\'ve been signed out of the app');
     });
   },
 

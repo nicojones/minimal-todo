@@ -1,9 +1,8 @@
-import cogoToast from 'cogo-toast';
-import { constants } from '../config/constants';
+import { showToast } from 'services/toast';
 
 function createTaskObject (task) {
   if (!task.projectId) {
-    cogoToast.error('No project id!', constants.toast);
+    showToast('error', 'No project id!');
     console.error(task);
   }
 
@@ -17,7 +16,7 @@ function createTaskObject (task) {
     description: task.description || '',
     projectId: task.projectId,
     priority: task.priority || 0
-  }
+  };
 }
 
 export default createTaskObject;

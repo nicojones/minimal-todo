@@ -1,8 +1,8 @@
 import { auth, db } from './firebase';
 import { handleError } from './handleError';
-import cogoToast from 'cogo-toast';
 import { urls } from '../config/urls';
 import { text } from '../config/text';
+import { showToast } from './toast';
 
 const drawerService = {
 
@@ -31,7 +31,7 @@ const drawerService = {
             .orderBy('priority', 'desc');
           break;
         default:
-          cogoToast.error(text.invalidDrawer);
+          showToast('error', text.invalidDrawer);
           done([]);
           return () => {};
       }

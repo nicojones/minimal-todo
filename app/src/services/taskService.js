@@ -2,9 +2,8 @@ import { db } from './firebase';
 import axios from 'axios';
 import environment from './environment';
 import { handleError } from './handleError';
-import cogoToast from 'cogo-toast';
 import { time } from 'functions/time';
-import { constants } from 'config/constants';
+import { showToast } from './toast';
 
 const taskService = {
 
@@ -27,7 +26,7 @@ const taskService = {
         headers: taskService.headers()
       }).then((response) => {
         console.info('result from PUT', response);
-        cogoToast.success(response.data.message, constants.toast);
+        showToast('success', response.data.message);
       });
     } catch (e) {
       handleError('Error on update task: ' + e.response.data.message, e);
@@ -45,7 +44,7 @@ const taskService = {
         headers: taskService.headers()
       }).then((response) => {
         console.info('result from POST', response);
-        cogoToast.success(response.data.message, constants.toast);
+        showToast('success', response.data.message);
         return response.data.taskId;
       });
     } catch (e) {
@@ -61,7 +60,7 @@ const taskService = {
         headers: taskService.headers()
       }).then((response) => {
         console.info('result from DELETE', response);
-        cogoToast.success(response.data.message, constants.toast);
+        showToast('success', response.data.message);
       });
     } catch (e) {
       handleError('Error on delete task: ' + e.response.data.message, e);

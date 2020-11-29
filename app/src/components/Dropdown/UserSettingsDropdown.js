@@ -24,7 +24,7 @@ function UserSettingsDropdown () {
             <li className="dropdown-item">
               <button className="btn-invisible left left-align w-100" onClick={ authService.logout }>
                 {/*<i className="material-icons subtle left">exit_to_app</i>*/}
-                {/*<span className="left">{ text.login.logout }</span>*/}
+                {/*<span className="left">{ text.Login.logout }</span>*/}
                 { text.login.logout }
               </button>
             </li>

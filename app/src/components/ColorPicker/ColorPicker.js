@@ -1,4 +1,4 @@
-import { TwitterPicker } from 'react-color';
+import TwitterPicker from 'react-color/lib/Twitter';
 import React, { useState } from 'react';
 
 function ColorPicker ({ onChangeComplete, color, icon }) {

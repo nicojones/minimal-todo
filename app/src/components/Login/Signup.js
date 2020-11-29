@@ -3,10 +3,9 @@ import { authService } from 'services/authService';
 import { Link, Redirect, useHistory } from 'react-router-dom';
 import { text } from 'config/text';
 import { urls } from 'config/urls';
-import { LoggedInUserContext } from '../App';
-import cogoToast from 'cogo-toast';
+import { LoggedInUserContext } from 'App';
 import LoginBox from './LoginBox';
-import { constants } from 'config/constants';
+import { showToast } from 'services/toast';
 
 function Signup () {
 
@@ -29,7 +28,7 @@ function Signup () {
         .then((responseData) => {
           setLoading(false);
           if (responseData.user) {
-            cogoToast.success(text.login.signupSuccess, constants.toast);
+            showToast('success', text.login.signupSuccess);
             setSignup({});
             setIsLoggedIn(true);
           }
@@ -40,13 +39,13 @@ function Signup () {
           } else {
             setSignupError(response.data);
             const errors = Object.values(response.data);
-            errors.length && cogoToast.error(errors[0], constants.toast);
+            errors.length && showToast('error', errors[0]);
           }
           setLoading(false);
         });
     } else {
       setSignupError(_signupError);
-      errors.length && cogoToast.error(errors[0], constants.toast);
+      errors.length && showToast('error', errors[0]);
     }
   }
 

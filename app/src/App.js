@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Route, Switch, HashRouter as Router } from 'react-router-dom';
-import Signup from './login/Signup';
-import Login from './login/Login';
+import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import Signup from 'components/Login/Signup';
+import Login from 'components/Login/Login';
 import TodoApp from './TodoApp';
 import { authService } from './services/authService';
 import Loader from './components/Loader/Loader';
@@ -9,6 +9,7 @@ import HomePage from './components/HomePage/HomePage';
 import { urls } from 'config/urls';
 
 export const LoggedInUserContext = React.createContext({});
+
 
 function App () {
 
