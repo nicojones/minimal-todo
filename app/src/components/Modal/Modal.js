@@ -31,7 +31,7 @@ function Modal ({ children, modalOpen, okButton, cancelButton, onAccept, onCance
                 </div>
               </div>
             </div>
-            <div className="backdrop" onClick={ onCancel }/>
+            <div className="backdrop dark" onClick={ onCancel }/>
           </>
           : ''
       }

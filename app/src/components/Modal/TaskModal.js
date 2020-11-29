@@ -70,7 +70,7 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
         okButton={ '<i class="material-icons right">save</i>' }
         cancelButton={ '<i class="material-icons right">close</i>' }
       >
-        {/*<h6 className="subtle mb-15 mt-5">{ project.name }</h6>*/}
+        {/*<h6 className="subtle mb-15 mt-5">{ project.name }</h6>*/ }
         <form onSubmit={ saveTask }>
           <div>
             {/*<label>{ text.task.name }</label>*/ }
@@ -92,14 +92,22 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
           <div>
             <label>{ text.task.prio._ }</label>
             <div className="flex-row">
-              <a className={ 'priority prio-0 ' + (priority === 0 && 'active') } onClick={ () => setPriority(0) }>
-                <i className="material-icons">flag</i></a>
-              <a className={ 'priority prio-1 ' + (priority === 1 && 'active') } onClick={ () => setPriority(1) }>
-                <i className="material-icons">flag</i></a>
-              <a className={ 'priority prio-2 ' + (priority === 2 && 'active') } onClick={ () => setPriority(2) }>
-                <i className="material-icons">flag</i></a>
-              <a className={ 'priority prio-3 ' + (priority === 3 && 'active') } onClick={ () => setPriority(3) }>
-                <i className="material-icons">flag</i></a>
+              <button
+                className={ 'btn-invisible priority prio-0 ' + (priority === 0 && 'active') }
+                onClick={ () => setPriority(0) } type="button">
+                <i className="material-icons">flag</i></button>
+              <button
+                className={ 'btn-invisible priority prio-1 ' + (priority === 1 && 'active') }
+                onClick={ () => setPriority(1) } type="button">
+                <i className="material-icons">flag</i></button>
+              <button
+                className={ 'btn-invisible priority prio-2 ' + (priority === 2 && 'active') }
+                onClick={ () => setPriority(2) } type="button">
+                <i className="material-icons">flag</i></button>
+              <button
+                className={ 'btn-invisible priority prio-3 ' + (priority === 3 && 'active') }
+                onClick={ () => setPriority(3) } type="button">
+                <i className="material-icons">flag</i></button>
             </div>
           </div>
         </form>

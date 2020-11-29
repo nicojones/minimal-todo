@@ -5,7 +5,7 @@ function ColorPicker ({ onChangeComplete, color, icon }) {
 
   const [showColorPicker, setShowColorPicker] = useState(false);
 
-  function setColor(colorChoice) {
+  function setColor (colorChoice) {
     setShowColorPicker(false);
     onChangeComplete(colorChoice.hex);
   }
@@ -17,13 +17,15 @@ function ColorPicker ({ onChangeComplete, color, icon }) {
           <i className="material-icons tiny left m0" style={ { color: color } }>{ icon }</i>
         </button>
         { showColorPicker ?
-          <div className="colorpicker">
+          <>
+            <div className="color-picker">
+              <TwitterPicker
+                color={ color }
+                onChangeComplete={ setColor }
+              />
+            </div>
             <div className="backdrop" onClick={ () => setShowColorPicker(false) }/>
-            <TwitterPicker
-              color={ color }
-              onChangeComplete={ setColor }
-            />
-          </div>
+          </>
           : ''
         }
               </span>
