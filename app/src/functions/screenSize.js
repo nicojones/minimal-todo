@@ -4,6 +4,7 @@ window.isSmallScreen = false;
 
 window.onresize = function () {
   window.isSmallScreen = (window.innerWidth < smallWindow);
+  document.getElementById('root').className = (window.isSmallScreen ? 'mobile' : 'desktop');
 }
 window.onresize();
 
