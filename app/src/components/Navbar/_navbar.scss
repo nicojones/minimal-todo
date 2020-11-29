@@ -27,3 +27,27 @@
     }
   }
 }
+
+#search-tasks {
+  margin: 0 0 0 20px;
+
+  > .input {
+    background: rgba($app-background-color, 0.3);
+    height: 0.6 * $navbar-height;
+    border: none;
+    border-radius: 3px;
+    padding: 10px;
+    box-sizing: border-box;
+    color: $very-subtle-color;
+    @include transition();
+
+    &:focus {
+      background: $app-background-color;
+      color: $primary-color-text;
+    }
+
+    &::placeholder {
+      color: $subtle-color;
+    }
+  }
+}

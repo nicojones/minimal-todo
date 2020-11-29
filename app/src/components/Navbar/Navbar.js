@@ -9,9 +9,15 @@ function Navbar ({ setShowSidebar, showSidebar }) {
       <div className={ 'navbar-fixed todo-navbar ' + ( showSidebar ? 'open' : 'closed' ) }>
         <nav className="navbar-hide">
           <div className="nav-wrapper">
-            <button className="btn-invisible sidenav-btn btn-subtle" onClick={ () => setShowSidebar(!showSidebar) }>
+            <button className="btn-invisible sidenav-btn btn-subtle left" onClick={ () => setShowSidebar(!showSidebar) }>
               <i className="material-icons">menu</i>
             </button>
+            {/*<button className="btn-invisible sidenav-btn btn-subtle left" onClick={ () => setShowSidebar(!showSidebar) }>*/}
+            {/*  <i className="material-icons">inbox</i>*/}
+            {/*</button>*/}
+            {/*<form className="left" id="search-tasks">*/}
+            {/*  <input type="text" className="input" placeholder={ text.task.search }/>*/}
+            {/*</form>*/}
             <ul className="right">
               <li>
                 <UserSettingsDropdown/>

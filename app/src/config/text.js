@@ -31,7 +31,8 @@ export const text = {
       low: 'Low priority',
       high: 'High priority',
       urgent: 'Urgent'
-    }
+    },
+    search: 'Search...'
   },
 
   drawer: {
@@ -88,7 +89,7 @@ export const text = {
 
   genericError: 'An error occurred. Please see console for details',
 
-  loggedInAs: (name) => `Logged in as ${ name }.`,
+  loggedInAs: (name) => `Logged in as ${ name }`,
 
   login: {
     login: 'Log in',
