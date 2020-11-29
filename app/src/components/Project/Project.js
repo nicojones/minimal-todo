@@ -13,6 +13,7 @@ function Project () {
   const project = useContext(ProjectContext);
 
   const [sort, setSort] = useState(project.sort);
+  const [taskName, setTaskName] = useState('');
   const [projectTasks, setProjectTasks] = useState([]);
   const [isLoading, setIsLoading] = useState('yes');
   const [showCompleted, setShowCompleted] = useState(project.showCompleted);
@@ -31,8 +32,6 @@ function Project () {
   const addTaskPh = useMemo(() => {
     return text.task.addTaskPh();
   }, [project.id]);
-
-  let taskName = '';
 
   useEffect(() => {
     setProjectName(project.name);
@@ -58,22 +57,17 @@ function Project () {
   async function addTask (e) {
     e.preventDefault();
     setIsLoading('t');
-    console.log(createTaskObject({
-      name: taskName,
-      projectId: project.id
-    }));
-    // inputElement.current && (inputElement.current.target.value = '');
 
     await taskService.addTask(createTaskObject({
       name: taskName,
       projectId: project.id
     }));
-    e.target[0].value = '';
     setIsLoading('');
+    setTaskName('');
   }
 
   function taskNameChange (e) {
-    taskName = e.target.value;
+    setTaskName(e.target.value);
   }
 
   async function saveListName (e) {
@@ -120,16 +114,19 @@ function Project () {
           <li className="task">
             <form
               onSubmit={ addTask }
-              className={ 'w-100 flex-row task-content form-inline' + (isLoading === 't' ? ' loader-input' : '') }
+              className={ 'flex-row task-content form-inline' + (isLoading === 't' ? ' loader-input' : '') }
             >
               {/*className={ 'flex-row task-content form-inline' + (isLoading === 't' ? ' loader-input' : '') }>*/ }
               <i /* Just to give the right padding */ className="material-icons left v-hidden btn-p">add</i>
-              <i className="material-icons left subtle btn-pr">add</i>
-              <div className="form-group">
+              <button className="btn-invisible p0">
+                <i className="material-icons left subtle btn-pr">{ taskName ? 'save' : 'add' }</i>
+              </button>
+              <div className="form-group w-100">
                 <div className="input-group mb-2">
                   <input
-                    onChange={ taskNameChange } className="invisible f-100"
+                    onChange={ taskNameChange } className="invisible f-100 btn-pl"
                     placeholder={ addTaskPh } required
+                    value={ taskName }
                     disabled={ isLoading === 't' }
                     autoComplete="off" /*ref={ inputElement }*/
                   />

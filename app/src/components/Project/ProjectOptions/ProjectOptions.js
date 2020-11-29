@@ -23,10 +23,10 @@ function ProjectOptions ({ sort, setSort, children }) {
               <ul className="dropdown dd-left dd-20 dd-high">
                 {
                   constants.sort.map((d) =>
-                    <li key={ d.sort } className={ 'dropdown-item' + (d.sort === sort ? ' selected' : '') }>
+                    <li key={ d.sort } className={ 'dropdown-item' }>
                       <button className="btn-invisible" onClick={ () => setSort(d.sort) }>
-                        { d.icon && <i className="material-icons tiny left">{ d.icon }</i> }
-                        { d.name }
+                        { d.icon && <i className="material-icons tiny left btn-p">{ d.icon }</i> }
+                        <span className={ (d.sort === sort ? ' bold' : '') }>{ d.name }</span>
                       </button>
                     </li>
                   )

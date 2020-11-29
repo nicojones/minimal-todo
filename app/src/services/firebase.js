@@ -11,10 +11,10 @@ export const analytics = firebase.analytics;
 export const auth = firebase.auth;
 export const db = firebase.firestore;
 
-// if (environment.production) {
-//   analytics();
-// } else {
+if (environment.production) {
+  analytics();
+} else {
   // IS DEV
-  // db().useEmulator('localhost', 8080);
-  // auth().useEmulator('http://localhost:9099/');
-// }
+  db().useEmulator('localhost', 8080);
+  auth().useEmulator('http://localhost:9099/');
+}

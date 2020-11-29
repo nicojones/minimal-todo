@@ -67,10 +67,10 @@
 }
 
 .btn-pr {
-  padding-right: $todo-button-padding;
+  padding-right: $todo-button-padding !important;
 }
 .btn-pl {
-  padding-left: $todo-button-padding;
+  padding-left: $todo-button-padding !important;
 }
 .btn-p {
   @extend .btn-pr;
@@ -127,6 +127,9 @@
 }
 .subtle-bg {
   background: $subtle-color !important;
+}
+.bold {
+  font-weight: bold;
 }
 
 .btn-subtle {

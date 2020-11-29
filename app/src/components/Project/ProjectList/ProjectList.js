@@ -112,17 +112,17 @@ function ProjectList ({ projectId, project, changeToProject }) {
           )
         }
         <li key="new-project" className="proj-li mb-5 parent-hover flex-row">
-          <button className="btn-invisible child-hover ch-hidden left">
-            <label htmlFor="new-project-input" className="pointer">
-              <i className="tiny material-icons subtle">add</i>
-            </label>
-          </button>
           <form
             onSubmit={ addNewProject }
-            className={ 'add-project flex-row w-100' + (isLoading === 'new' ? ' loader-input' : '') }
+            className={ 'add-project flex-row w-100 p0 ' + (isLoading === 'new' ? ' loader-input' : '') }
           >
+            <button className="btn-invisible child-hover ch-hidden left">
+              <label htmlFor="new-project-input" className="pointer">
+                <i className="tiny material-icons subtle">{ newProjectName ? 'save' : 'add' }</i>
+              </label>
+            </button>
             <input
-              className="invisible left-align"
+              className="invisible left-align btn-pl"
               onChange={ (e) => setNewProjectName(e.target.value) }
               required minLength="3"
               disabled={ isLoading === 'new' }
