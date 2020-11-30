@@ -105,7 +105,25 @@ export const text = {
     success: 'Welcome Back!',
     signupSuccess: 'Account created! Logging you in...',
     invalidPass: 'Invalid Login credentials',
-    invalidUser: 'No user exists for this email'
+    invalidUser: 'No user exists for this email',
+    f: {
+      email: {
+        _: 'Email',
+        ph: 'Enter your email'
+      },
+      password: {
+        _: 'Password',
+        ph: 'Enter your password'
+      },
+      name: {
+        _: 'Name',
+        ph: 'What\'s your name?'
+      },
+      username: {
+        _: 'Username',
+        ph: 'Choose a username'
+      }
+    }
   },
 
   sort: {

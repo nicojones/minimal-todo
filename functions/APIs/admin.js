@@ -20,7 +20,6 @@ module.exports._fixtures = (request, response) => {
     .then((data) => {
       user.userId = data.uid;
       delete user.password;
-      delete user.confirm;
 
       // Create user and set data
       return db.doc(`/users/${ user.username }`).set(user);

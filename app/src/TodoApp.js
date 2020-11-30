@@ -12,6 +12,7 @@ import Drawer from './components/Drawer/Drawer';
 import reservedKey from './functions/reservedKey';
 
 export const ProjectContext = React.createContext({});
+export const ProjectDispatch = React.createContext({});
 
 function TodoApp () {
   const history = useHistory();
@@ -20,8 +21,13 @@ function TodoApp () {
   const [project, setProject] = useState({ empty: true });
   const [showSidebar, setShowSidebar] = useState(!window.isSmallScreen);
   const [component, setComponent] = useState(<></>);
+  // const [currProject, projectDispatch] = useReducer(changeToProject, project);
 
   useEffect(() => {
+    if (!urlParams.current.projectId) { // There's some URL?
+      setComponent(<NoProject setShowSidebar={ setShowSidebar }/>); // no URL -> show this component
+      return;
+    }
     if (reservedKey(urlParams.current.projectId)) { // It's a reserved URL, so we show the Drawer
       setComponent(<Drawer drawerUrl={ urlParams.current.projectId }/>);
       return;
@@ -30,14 +36,13 @@ function TodoApp () {
       setComponent(<Project setProject={ changeToProject }/>);
       return;
     }
-    if (!urlParams.current.projectId) { // There's some URL?
-      setComponent(<NoProject setShowSidebar={ setShowSidebar }/>); // no URL -> show this component
-      return;
-    }
     setComponent(<></>); // either the project hasn't loaded, or isn't valid. we must wait
-  }, [project.id])
+  }, [project.id]);
 
   function changeToProject (_project) {
+    // if (_project.empty) {
+    //   return;
+    // }
     if (_project.id !== project.id) {
       urlParams.current.projectId = _project.id || '';
       setProject(_project);
@@ -52,23 +57,26 @@ function TodoApp () {
 
   return (
     <>
-      <Navbar setShowSidebar={ setShowSidebar } showSidebar={ showSidebar }/>
-      <div id="todo-app" className={ (showSidebar ? '' : ' hidden-bar') }>
+      <ProjectDispatch.Provider value={ changeToProject }>
         <ProjectContext.Provider value={ project }>
-          <div className={ 'projects-list-box' }>
-            { showSidebar ? <div className="backdrop dark only-mobile" onClick={ () => setShowSidebar(false) }/> : '' }
-            <div className={ 'projects-list-box-inner' }>
-              <ProjectList
-                projectId={ urlParams.current.projectId }
-                changeToProject={ changeToProject }
-              />
+          <Navbar setShowSidebar={ setShowSidebar } showSidebar={ showSidebar }/>
+          <div id="todo-app" className={ (showSidebar ? '' : ' hidden-bar') }>
+            <div className={ 'projects-list-box' }>
+              { showSidebar ?
+                <div className="backdrop dark only-mobile" onClick={ () => setShowSidebar(false) }/> : '' }
+              <div className={ 'projects-list-box-inner' }>
+                <ProjectList
+                  projectId={ urlParams.current.projectId }
+                  changeToProject={ changeToProject }
+                />
+              </div>
+            </div>
+            <div className="tasks-list-box flex-column">
+              { component }
             </div>
           </div>
-          <div className="tasks-list-box flex-column">
-            { component }
-          </div>
         </ProjectContext.Provider>
-      </div>
+      </ProjectDispatch.Provider>
     </>
   );
 }

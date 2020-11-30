@@ -17,7 +17,7 @@ function App () {
   const [user, setUser] = useState(false);
 
   authService.authState((user) => {
-    console.info('User logged in: ', !!user);
+    console.info(`User is ${ user ? '' : 'NOT '}logged in`);
     setUser(user);
     setLoaded(true);
   });

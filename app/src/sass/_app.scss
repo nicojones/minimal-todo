@@ -167,3 +167,9 @@ nav {
 .prio-3 {
   color: $priority-high;
 }
+
+input:focus {
+  border-bottom: 1px solid $subtle-color !important;
+  box-shadow: 0 2px 0 0 $subtle-color !important;
+  box-sizing: border-box !important;
+}

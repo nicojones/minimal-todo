@@ -30,6 +30,10 @@
 
 #search-tasks {
   margin: 0 0 0 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative; // needed for the dropdown.
 
   > .input {
     background: rgba($app-background-color, 0.3);
@@ -37,9 +41,10 @@
     border: none;
     border-radius: 3px;
     padding: 10px;
+    margin: 0;
     box-sizing: border-box;
     color: $very-subtle-color;
-    @include transition();
+    @include transition(0.2s ease-in-out);
 
     &:focus {
       background: $app-background-color;
@@ -47,7 +52,23 @@
     }
 
     &::placeholder {
-      color: $subtle-color;
+      color: white;
     }
   }
+}
+
+.search-results {
+  position: absolute;
+  background: white;
+  margin: 0;
+  top: 50px;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
+  width: max-content;
+  z-index: 1;
+  max-height: 70vh;
+  overflow: auto;
+  padding: 0;
 }

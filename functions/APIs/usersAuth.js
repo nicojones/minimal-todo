@@ -20,7 +20,6 @@ exports.signUpUser = (request, response) => {
     name: request.body.name,
     email: request.body.email,
     password: request.body.password,
-    confirm: request.body.confirm,
     username: request.body.username
   };
 

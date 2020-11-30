@@ -10,11 +10,17 @@ import { showToast } from 'services/toast';
 function Signup () {
 
   const history = useHistory();
-  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('user'));
+
+  const [loggingIn, setLoggingIn] = useState(false);
   const [signup, setSignup] = useState({});
   const [loading, setLoading] = useState(false);
   const [signupError, setSignupError] = useState({});
 
+  // If the user is logged in already, redirect to the app!
+  if (React.useContext(LoggedInUserContext)) {
+    history.push(urls.app);
+    return null;
+  }
 
   async function onSubmit (e) {
     e.preventDefault();
@@ -30,10 +36,10 @@ function Signup () {
           if (responseData.user) {
             showToast('success', text.login.signupSuccess);
             setSignup({});
-            setIsLoggedIn(true);
+            setLoggingIn(true);
           }
         })
-        .catch(({ response } ) => {
+        .catch(({ response }) => {
           if (response.data && response.data.code) {
             authService.loginCatch(response.data);
           } else {
@@ -49,60 +55,66 @@ function Signup () {
     }
   }
 
-  // If the user is logged in already, redirect to the app!
-  if (React.useContext(LoggedInUserContext)) {
-    history.push(urls.app);
-    return null;
+  function updateSignup (partial) {
+    setSignup({ ...signup, ...partial });
   }
 
   return (
     <>
       {
-        isLoggedIn
+        loggingIn
           ? <Redirect to="/app"/>
           :
           <>
             <LoginBox data-tip={ text.login.signup } loading={ loading }>
               <form onSubmit={ onSubmit } className="flex-center-self">
-                <input
-                  value={ signup.email || '' } onChange={ (e) => setSignup({
-                  ...signup,
-                  email: e.target.value
-                }) } placeholder="email" type="email" required autoFocus autoComplete="off"
-                />
-                { signupError.email && <small>{ signupError.email }</small> }
-                <input
-                  value={ signup.name || '' } onChange={ (e) => setSignup({
-                  ...signup,
-                  name: e.target.value
-                }) } placeholder="name" required autoComplete="off"
-                />
-                { signupError.name && <small>{ signupError.name }</small> }
-                <input
-                  value={ signup.username || '' } onChange={ (e) => setSignup({
-                  ...signup,
-                  username: e.target.value
-                }) } placeholder="username" required autoComplete="off"
-                />
-                { signupError.username && <small>{ signupError.username }</small> }
-                <input
-                  value={ signup.password || '' } onChange={ (e) => setSignup({
-                  ...signup,
-                  password: e.target.value
-                }) } placeholder="password" type="password" required autoComplete="off"
-                />
-                { signupError.password && <small>{ signupError.password }</small> }
-                <input
-                  value={ signup.confirm || '' } onChange={ (e) => setSignup({
-                  ...signup,
-                  confirm: e.target.value
-                }) } placeholder="confirm" type="password" required autoComplete="off"
-                />
-                { signupError.password && <small>{ signupError.password }</small> }
-                <div className="flex-row">
-                  <button type="submit" className="btn btn-block">{ text.login.signup }</button>
+
+                <div className="form-group">
+                  <label>{ text.login.f.name._ }</label>
+                  <input
+                    value={ signup.name || '' }
+                    onChange={ (e) => updateSignup({ name: e.target.value }) }
+                    placeholder={ text.login.f.name.ph } required autoComplete="off"
+                  />
+                  { signupError.name && <small>{ signupError.name }</small> }
+                </div>
+
+                <div className="form-group">
+                  <label>{ text.login.f.email._ }</label>
+                  <input
+                    value={ signup.email || '' }
+                    onChange={ (e) => updateSignup({ email: e.target.value }) }
+                    placeholder={ text.login.f.email.ph } type="email" required autoFocus autoComplete="off"
+                  />
+                  { signupError.email && <small>{ signupError.email }</small> }
+                </div>
+
+                <div className="form-group">
+                  <label>{ text.login.f.username._ }</label>
+                  <input
+                    value={ signup.username || '' }
+                    onChange={ (e) => updateSignup({ username: e.target.value }) }
+                    placeholder={ text.login.f.username.ph } required autoComplete="off"
+                  />
+                  { signupError.username && <small>{ signupError.username }</small> }
+                </div>
+
+                <div className="form-group">
+                  <label>{ text.login.f.password._ }</label>
+                  <input
+                    value={ signup.password || '' }
+                    onChange={ (e) => updateSignup({ password: e.target.value }) }
+                    placeholder={ text.login.f.password.ph } type="password" required autoComplete="off"
+                  />
+                  { signupError.password && <small>{ signupError.password }</small> }
+                </div>
+
+                <br/>
+                <div className="flex-column">
+                  <button type="submit" className="btn btn-block btn-invisible">{ text.login.signup }</button>
                   <Link to={ urls.login } className="btn-flat">{ text.login.yesAccount } { text.login.login }</Link>
                 </div>
+
               </form>
             </LoginBox>
           </>

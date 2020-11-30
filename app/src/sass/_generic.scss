@@ -139,8 +139,8 @@
 
 .btn-invisible {
   @extend .btn-subtle;
-  background: transparent;
-  color: inherit;
+  background: transparent !important;
+  color: inherit !important;
   padding: 0 $todo-button-padding;
 
   &:focus {

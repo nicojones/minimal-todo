@@ -1,4 +1,4 @@
-import { db } from './firebase';
+import { auth, db } from './firebase';
 import axios from 'axios';
 import environment from './environment';
 import { handleError } from './handleError';
@@ -108,6 +108,31 @@ const taskService = {
         });
     } catch (e) {
       handleError('Error on updating "checked" task: ', e);
+    }
+  },
+
+  searchTask: (searchTerm) => {
+    try {
+      return taskService.db
+        .collectionGroup('tasks')
+        .where('_uids', 'array-contains', auth().currentUser.uid)
+        .where('_name_lower', '>=', searchTerm.toLowerCase())
+        .where('_name_lower', '<=', searchTerm.toLowerCase() + 'zzz')
+        .orderBy('_name_lower', 'asc')
+        .get()
+        .then((doc) => {
+          const results = [];
+          doc.forEach((d) => {
+            results.push({
+              ...d.data(),
+              id: d.id
+            });
+          });
+          console.log(results);
+          return results;
+        });
+    } catch (e) {
+      handleError('Error on searching tasks: ', e);
     }
   }
 

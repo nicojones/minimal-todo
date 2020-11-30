@@ -14,8 +14,8 @@ export const authService = {
   },
 
   authState: (done) => {
-    // auth().onIdTokenChanged((user) => {
-    auth().onAuthStateChanged((user) => {
+    auth().onIdTokenChanged((user) => {
+    // auth().onAuthStateChanged((user) => {
       clearTimeout(debounceAuth);
       debounceAuth = setTimeout(() => {
         user && user.getIdToken(true).then((token) => {
@@ -94,11 +94,8 @@ export const authService = {
     if (!signupData.email || signupData.email.length <= 5) {
       return { email: 'Invalid email' };
     }
-    if (!signupData.password || !signupData.confirm) {
+    if (!signupData.password) {
       return { password: 'Password can\'t be empty' };
-    }
-    if (signupData.password !== signupData.confirm) {
-      return { password: 'Passwords don\'t match' };
     }
     return {};
   }

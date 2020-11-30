@@ -36,7 +36,7 @@ const projectService = {
           // done([...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects]);
           done(projects);
 
-          console.info('Lists loaded: ', projects.length);
+          console.info(`${ projects.length } projects loaded`);
         });
     } catch (e) {
       handleError(e.response.data.message, e);
@@ -44,7 +44,6 @@ const projectService = {
   },
 
   updateProject: async (project) => {
-    // console.info('Updating project ', project);
 
     try {
       return await axios({

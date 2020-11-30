@@ -2,7 +2,7 @@
   "name": "todo",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://nicojones.github.io/todolist-react",
+  "homepage": "https://minimaltodo.com",
   "scripts": {
     "start": "react-scripts start",
     "build-sm": "react-scripts build --production",

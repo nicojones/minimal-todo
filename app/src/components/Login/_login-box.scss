@@ -4,5 +4,7 @@
 .login-box {
   padding: $login-form-panel-padding;
   max-width: unquote('min(#{$login-form-max-width}, 95vw)');
-  @include box_shadow(30px, -15px);
+  border: 1px solid $subtle-color;
+  min-width: 0.7 * $login-form-max-width;
 }
+

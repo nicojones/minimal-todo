@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import UserSettingsDropdown from 'components/Dropdown/UserSettingsDropdown';
 import './_navbar.scss';
 import { text } from 'config/text';
 import Tooltip from '../Tooltip/Tooltip';
+import { urls } from '../../config/urls';
+import NavbarSearch from './NavbarSearch';
+import { ProjectDispatch } from 'TodoApp';
 
 function Navbar ({ setShowSidebar, showSidebar }) {
+
+  const projectDispatch = useContext(ProjectDispatch);
 
   return (
     <>
@@ -15,12 +20,10 @@ function Navbar ({ setShowSidebar, showSidebar }) {
               onClick={ () => setShowSidebar(!showSidebar) }>
               <i className="material-icons">menu</i>
             </button>
-            {/*<button className="btn-invisible sidenav-btn btn-subtle left" onClick={ () => setShowSidebar(!showSidebar) }>*/}
-            {/*  <i className="material-icons">inbox</i>*/}
-            {/*</button>*/}
-            {/*<form className="left" id="search-tasks">*/}
-            {/*  <input type="text" className="input" placeholder={ text.task.search }/>*/}
-            {/*</form>*/}
+            <button className="btn-invisible sidenav-btn btn-subtle left" onClick={ () => projectDispatch({ id: urls.inboxUrl }) }>
+              <i className="material-icons">home</i>
+            </button>
+            <NavbarSearch/>
             <ul className="right">
               <li>
                 <UserSettingsDropdown/>
