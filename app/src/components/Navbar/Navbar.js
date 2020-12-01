@@ -24,7 +24,7 @@ function Navbar ({ setShowSidebar, showSidebar }) {
               <i className="material-icons">home</i>
             </button>
             <NavbarSearch/>
-            <ul className="right">
+            <ul className="navbar-right">
               <li>
                 <UserSettingsDropdown/>
               </li>

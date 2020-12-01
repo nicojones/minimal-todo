@@ -14,9 +14,13 @@ function NavbarSearch () {
     e.preventDefault();
 
     taskService.searchTask(search).then((results) => {
-      setResults(results);
+      if (results.length) {
+        setResults(results);
+      } else {
+        setResults([{ name: text.task.noResults }]);
+      }
       console.log('set the results', results);
-    })
+    });
   }
 
   function goToResult (result) {
@@ -25,7 +29,6 @@ function NavbarSearch () {
     projectDispatch({ id: result.projectId });
   }
 
-  console.log('results', results.length);
   return (
     <>
       <form className="left" id="search-tasks" onSubmit={ searchResults }>
@@ -33,19 +36,22 @@ function NavbarSearch () {
         <input
           type="text" className="input" placeholder={ text.task.search } value={ search }
           onChange={ (e) => setSearch(e.target.value) }
+          required={ true } minLength={ 2 }
         />
         {
           results.length
             ? <>
-                <div className="backdrop dark" onClick={ () => setResults([]) }/>
-                <ul className="search-results dropdown dd-big">{
-                  results.map((r) =>
-                    <li key={ r.id } className="dropdown-item pointer" onClick={ () => goToResult(r) }>
-                      <i className="material-icons left subtle tiny btn-pr">{ r.checked ? 'check_box' : 'check_box_outline_blank' }</i>
-                      { r.name }
-                    </li>)
-                }</ul>
-              </>
+              <div className="backdrop dark" onClick={ () => setResults([]) }/>
+              <ul className="search-results dropdown">{
+                results.map((r) =>
+                  <li key={ r.id } className="dropdown-item pointer" onClick={ () => r.projectId && goToResult(r) }>
+                    <i
+                      className="material-icons left subtle btn-pr "
+                    >{ r.checked ? 'check_box' : 'check_box_outline_blank' }</i>
+                    { r.name }
+                  </li>)
+              }</ul>
+            </>
             : ''
         }
       </form>

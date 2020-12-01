@@ -20,13 +20,13 @@ function Footer () {
         </div>
         <div className="copyright">
           <div className="container">
-            <p className="left">&copy; { new Date().getFullYear() } Nico Kupfer</p>
-            <p className="right">
+            <small className="left subtle">Copyright &copy; { new Date().getFullYear() } Nico Kupfer</small>
+            <small className="right subtle">
               <a
                 className="btn-invisible" href="https://github.com/nicojones/todolist-react"
                 target="_blank"
               >Code on Github</a>
-            </p>
+            </small>
           </div>
         </div>
       </footer>

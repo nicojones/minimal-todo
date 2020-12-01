@@ -34,7 +34,8 @@ export const text = {
       high: 'High priority',
       urgent: 'Urgent'
     },
-    search: 'Search...'
+    search: 'Search...',
+    noResults: 'No results found'
   },
 
   drawer: {

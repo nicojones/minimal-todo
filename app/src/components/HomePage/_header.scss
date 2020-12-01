@@ -79,4 +79,7 @@ $header-btn-m: 10px;
 }
 .copyright {
   border-top: 2px solid $very-subtle-color;
+  height: 50px;
+  display: flex;
+  align-items: center;
 }

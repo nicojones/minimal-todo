@@ -6,7 +6,7 @@ function Modal ({ children, modalOpen, okButton, cancelButton, onAccept, onCance
     <>
       {
         modalOpen ? <>
-            <div className={ 'z-depth-5 modal' }>
+            <div className={ 'modal' }>
               <div className={ (loading ? ' loader-input cover' : '') }>
                 <div className="modal-content">
                   { children }

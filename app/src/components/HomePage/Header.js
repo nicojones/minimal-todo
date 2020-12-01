@@ -16,7 +16,7 @@ function Header ({ loaded }) {
 
   const link = useMemo(() => {
     if (!loaded) {
-      return <></>;
+      return <><a className="btn btn-flat main-btn red">&nbsp;&nbsp;&nbsp;...&nbsp;&nbsp;&nbsp;</a></>;
     }
     if (user) {
       return <a className="btn btn-flat main-btn red" onClick={ () => history.push(urls.app) }>{ text.gotoApp }</a>;
