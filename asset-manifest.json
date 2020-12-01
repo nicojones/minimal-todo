@@ -1,24 +1,26 @@
 {
   "files": {
-    "main.css": "/static/css/main.7a43d439.chunk.css",
-    "main.js": "/static/js/main.35d773ca.chunk.js",
+    "main.css": "/static/css/main.3ad06504.chunk.css",
+    "main.js": "/static/js/main.d200d90c.chunk.js",
     "runtime-main.js": "/static/js/runtime-main.3252d197.js",
-    "static/js/2.ad59dc5f.chunk.js": "/static/js/2.ad59dc5f.chunk.js",
+    "static/js/2.27c76a87.chunk.js": "/static/js/2.27c76a87.chunk.js",
     "index.html": "/index.html",
-    "static/js/2.ad59dc5f.chunk.js.LICENSE.txt": "/static/js/2.ad59dc5f.chunk.js.LICENSE.txt",
+    "static/js/2.27c76a87.chunk.js.LICENSE.txt": "/static/js/2.27c76a87.chunk.js.LICENSE.txt",
     "static/media/balloon.e798b449.svg": "/static/media/balloon.e798b449.svg",
     "static/media/board.52700170.svg": "/static/media/board.52700170.svg",
     "static/media/book.9af88ef0.svg": "/static/media/book.9af88ef0.svg",
     "static/media/calendar.667dab87.svg": "/static/media/calendar.667dab87.svg",
+    "static/media/landing-img.7da4cb08.svg": "/static/media/landing-img.7da4cb08.svg",
     "static/media/_app-loader.scss": "/static/media/loader.2fb57002.svg",
+    "static/media/logo.18405402.png": "/static/media/logo.18405402.png",
     "static/media/music.154532f7.svg": "/static/media/music.154532f7.svg",
     "static/media/puzzle.c7f9f331.svg": "/static/media/puzzle.c7f9f331.svg",
     "static/media/science.4185b725.svg": "/static/media/science.4185b725.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.3252d197.js",
-    "static/js/2.ad59dc5f.chunk.js",
-    "static/css/main.7a43d439.chunk.css",
-    "static/js/main.35d773ca.chunk.js"
+    "static/js/2.27c76a87.chunk.js",
+    "static/css/main.3ad06504.chunk.css",
+    "static/js/main.d200d90c.chunk.js"
   ]
 }
