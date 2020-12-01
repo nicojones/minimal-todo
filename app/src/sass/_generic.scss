@@ -118,6 +118,10 @@
   flex: 1 0 100%;
 }
 
+.f-50 {
+  flex: 1 0 50%;
+}
+
 .relative {
   position: relative;
 }
@@ -183,3 +187,14 @@
 //.r-180 {
 //  transform: rotate(180deg);
 //}
+
+@media (max-width: $mobile-breakpoint) {
+  .hide-sm {
+    display: none;
+  }
+}
+@media (min-width: $mobile-breakpoint) {
+  .hide-lg {
+    display: none;
+  }
+}

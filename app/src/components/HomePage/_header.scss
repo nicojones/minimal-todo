@@ -1,0 +1,82 @@
+@import 'src/sass/colors';
+
+$header-height: 80px;
+
+$header-btn-m: 10px;
+
+.header-area {
+  display: inline-block;
+  width: 100vw;
+  height: $header-height;
+}
+
+.headroom {
+  position: fixed;
+  height: $header-height;
+  width: 100vw;
+  display: inline-block;
+}
+
+.navbar {
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+  max-width: $landing-width;
+  height: $header-height;
+  background: $app-background-color;
+  align-items: center;
+
+  %navbar-start {
+    //margin-right: auto;
+    justify-self: flex-start;
+  }
+
+  &-brand {
+    @extend %navbar-start;
+    height: 0.8 * $navbar-height;
+  }
+  &-toggler {
+    @extend %navbar-start;
+  }
+  &-links {
+    text-decoration: none;
+
+    &-ul {
+      display: flex;
+    }
+
+    .desktop & {
+      margin-left: auto;
+
+      > .navbar-links-ul {
+        flex-direction: row;
+        > .nav-item {
+          margin: 0 $header-btn-m;
+        }
+      }
+    }
+    .mobile & {
+      display: none;
+
+      > .navbar-links-ul {
+        flex-direction: column;
+      }
+    }
+  }
+
+  .main-btn {
+    border-radius: 8px;
+    color: white;
+    margin: 0 #{ 1.5 * $header-btn-m };
+    .mobile & {
+      margin-left: auto;
+    }
+  }
+}
+
+.footer {
+  border-top: 4px solid $very-subtle-color;
+}
+.copyright {
+  border-top: 2px solid $very-subtle-color;
+}

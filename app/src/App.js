@@ -5,7 +5,7 @@ import Login from 'components/Login/Login';
 import TodoApp from './TodoApp';
 import { authService } from './services/authService';
 import Loader from './components/Loader/Loader';
-import HomePage from './components/HomePage/HomePage';
+import LandingPage from './components/HomePage/LandingPage';
 import { urls } from 'config/urls';
 
 export const LoggedInUserContext = React.createContext({});
@@ -30,7 +30,7 @@ function App () {
             renders the first one that matches the current URL. */ }
           <Switch>
             <Route path={ urls.home } exact={ true }>
-              <HomePage loaded={ loaded }/>
+              <LandingPage loaded={ loaded }/>
             </Route>
             { loaded
               ?

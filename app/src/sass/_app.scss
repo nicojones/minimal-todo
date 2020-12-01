@@ -14,7 +14,7 @@
     //  visibility: hidden;
     //}
     .projects-list-box-inner {
-      left: -$navbar-width;
+      left: -$sidebar-width;
     }
     .projects-list-box {
       max-width: 0;
@@ -26,16 +26,16 @@
   display: inline-block;
   min-height: 100px;
   left: 0;
-  max-width: $navbar-width;
+  max-width: $sidebar-width;
 }
 
 .projects-list-box {
-  flex: 0 0 $navbar-width;
+  flex: 0 0 $sidebar-width;
   @extend %left-sidebar;
   @include transition();
   &-inner {
     @include transition();
-    width: $navbar-width;
+    width: $sidebar-width;
     @extend %left-sidebar;
     background: $sidebar-color;
     overflow: auto;

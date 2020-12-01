@@ -1,37 +1,59 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import { LoggedInUserContext } from 'App';
 import { text } from 'config/text';
 import { urls } from 'config/urls';
-import { Link } from 'react-router-dom';
-import { authService } from 'services/authService';
+import todoLogo from 'assets/logo.png';
+import { useHistory } from 'react-router-dom';
+import './_header.scss';
+import HeaderLinks from './HeaderLinks';
 
 function Header ({ loaded }) {
+
   const user = useContext(LoggedInUserContext);
+  const history = useHistory();
+
+  const [showMenu, setShowMenu] = useState(false);
+
+  const link = useMemo(() => {
+    if (!loaded) {
+      return <></>;
+    }
+    if (user) {
+      return <a className="btn btn-flat main-btn red" onClick={ () => history.push(urls.app) }>{ text.gotoApp }</a>;
+    }
+    // else
+    return <>
+      <a className="btn btn-flat main-btn red" onClick={ () => history.push(urls.login) }>{ text.login.login }</a>
+      <a className="btn btn-flat" onClick={ () => history.push(urls.signup) }>{ text.login.signup }</a>
+    </>;
+
+  }, [user, loaded]);
+
+
 
   return (
     <>
-      <nav className="grey">
-        <div className="nav-wrapper container">
-          <Link to={ urls.app } className="brand-logo">Todo List</Link>
-          <ul id="nav-mobile" className="right hide-on-med-and-down">
-            {
-              user
-                ? loaded && <>
-                <li><Link to={ urls.app }>{ text.gotoApp }</Link></li>
-                <li><a
-                  href="#logout" onClick={ authService.logout }
-                  className="btn-invisible"
-                >{ text.login.logout }</a>
-                </li>
-              </>
-                : loaded && <>
-                <li><Link to={ urls.login }>{ text.login.login }</Link></li>
-                <li><Link to={ urls.signup }>{ text.login.signup }</Link></li>
-              </>
-            }
-          </ul>
+      <header className="header-area">
+        <div className="navbar-area headroom">
+          <nav className="navbar">
+            <button
+              className="hide-lg navbar-toggler btn-invisible" type="button" aria-label="Toggle navigation"
+              onClick={ () => setShowMenu(!showMenu) }
+            >
+              <i className="material-icons">menu</i>
+            </button>
+            <a className="navbar-brand" href={ urls.home }>
+              <img src={ todoLogo } alt="Logo" height="100%"/>
+            </a>
+
+            <div className="navbar-links">
+              <HeaderLinks/>
+            </div>
+
+            { link }
+          </nav>
         </div>
-      </nav>
+      </header>
     </>
   );
 }

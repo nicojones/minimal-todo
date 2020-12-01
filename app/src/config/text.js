@@ -1,6 +1,8 @@
 import { randArray } from '../functions/randArray';
 
 export const text = {
+  appName: 'Minimal Todo',
+  appDesc: 'A simple, clean and minimalist Todo App',
   gotoApp: 'Open app',
 
   task: {

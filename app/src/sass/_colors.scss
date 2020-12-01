@@ -25,8 +25,8 @@ $navbar-height: 50px;
 $navbar-padding: 22px;
 $list-item-height: 32px;
 
-$navbar-width: 300px;
-$tasks-box-width: 1000px - $navbar-width;
+$sidebar-width: 300px;
+$tasks-box-width: 1000px - $sidebar-width;
 $tasks-box-min-width: 350px;
 $task-padding: 10px;
 
@@ -34,3 +34,8 @@ $login-form-panel-padding: 30px; //
 $login-form-max-width: 450px;
 
 $todo-button-padding: 6px;
+
+$mobile-breakpoint: 700px;
+$desktop-breakpoint: 1200px;
+
+$landing-width: 1200px;
