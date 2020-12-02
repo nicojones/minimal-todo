@@ -117,12 +117,13 @@
   opacity: 0.333; // 1/3, hence the 3
 }
 
-$fff: 10;
-@while ($fff <= 90) {
+$fff: 30;
+$max-fff: 100 - $fff;
+@while ($fff <= $max-fff) {
   .f-#{ $fff } {
     flex: 0 0 #{$fff}#{'%'};
   }
-  $fff: $fff + 10;
+  $fff: $fff + 5;
 }
 
 

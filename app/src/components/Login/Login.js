@@ -13,7 +13,7 @@ function Login () {
 
   const [loading, setLoading] = useState(false);
   const [loginFormData, setLoginFormData] = useState({});
-  const [loggingIn, setLoggingIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   // If the user is logged in already, redirect to the app!
   if (React.useContext(LoggedInUserContext)) {
@@ -34,7 +34,7 @@ function Login () {
 
         if (responseData.user) {
           setLoginFormData({});
-          setLoggingIn(true);
+          setLoggedIn(true);
           showToast('success', text.login.success);
         } else {
           if (responseData.error.code === 400) {
@@ -52,7 +52,7 @@ function Login () {
   return (
     <>
       {
-        loggingIn
+        loggedIn
           ? <Redirect to={ urls.app }/>
           :
           <>

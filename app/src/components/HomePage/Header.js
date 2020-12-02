@@ -1,34 +1,18 @@
-import React, { useContext, useMemo, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { LoggedInUserContext } from 'App';
 import { text } from 'config/text';
 import { urls } from 'config/urls';
-import todoLogo from 'assets/logo.png';
 import { Link } from 'react-router-dom';
 import './_header.scss';
 import HeaderLinks from './HeaderLinks';
+import Logo from '../Logo/Logo';
 
-function Header ({ loaded }) {
+function Header () {
 
   const user = useContext(LoggedInUserContext);
 
   const [showMenu, setShowMenu] = useState(false);
-
-  const link = useMemo(() => {
-    if (!loaded) {
-      return <><a className="btn main-btn goto-app">&nbsp;&nbsp;&nbsp;...&nbsp;&nbsp;&nbsp;</a></>;
-    }
-    if (user) {
-      return <Link className="btn main-btn goto-app" to={ urls.app }>{ text.gotoApp }</Link>;
-    }
-    // else
-    return <>
-      <Link className="btn main-btn goto-app" to={ urls.login }>{ text.login.login }</Link>
-      <Link className="btn" to={ urls.signup }>{ text.login.signup }</Link>
-    </>;
-
-  }, [user, loaded]);
-
-
+  const [showDropdown, setShowDropdown] = useState(false);
 
   return (
     <>
@@ -42,14 +26,38 @@ function Header ({ loaded }) {
               <i className="material-icons medium">menu</i>
             </button>
             <a className="navbar-brand" href={ urls.home }>
-              <img src={ todoLogo } alt="Logo" height="100%"/>
+              {/*<img src={ todoLogo } alt="Logo" width="100%"/>*/}
+              { text.appName }
             </a>
+            <Logo/>
 
             <div className="navbar-links">
               <HeaderLinks/>
             </div>
 
-            { link }
+            {
+              user
+                ? <Link className="btn main-btn goto-app" to={ urls.app }>{ text.gotoApp }</Link>
+                : <>
+                <span className="relative">
+                  <button className="btn main-btn goto-app" onClick={ () => setShowDropdown(true) }
+                  >{ text.gotoApp }</button>
+                  {
+                    showDropdown && <>
+                      <ul className="dropdown goto-app-dd">
+                        <li className="dropdown-item">
+                          <Link className="btn" to={ urls.login }>{ text.login.login }</Link>
+                        </li>
+                        <li className="dropdown-item">
+                          <Link className="btn" to={ urls.signup }>{ text.login.signup }</Link>
+                        </li>
+                      </ul>
+                      <div className="backdrop" onClick={ () => setShowDropdown(false) }/>
+                    </>
+                  }
+                </span>
+                </>
+            }
           </nav>
         </div>
       </header>

@@ -180,11 +180,24 @@ input:focus {
 }
 
 .main-btn {
-  background-color: $red;
   //border-radius: 8px;
   color: white !important;
   @include transition();
   &:hover {
     @include box_shadow();
   }
+  &, &:hover, &:focus {
+    background-color: $red !important; /* important because of forms.scss */
+  }
+}
+
+.center-logo {
+  $icon-size: 0.8 * $header-height;
+  position: fixed;
+  height: $header-height;
+  width: $icon-size;
+  left: 50%;
+  margin-left: -0.5 * $icon-size;
+  display: flex;
+  align-items: center;
 }

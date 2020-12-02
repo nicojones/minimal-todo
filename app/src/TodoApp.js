@@ -51,8 +51,7 @@ function TodoApp () {
   }
 
   if (!React.useContext(LoggedInUserContext)) {
-    history.push(urls.home);
-    // history.push(urls.login); // and in some cases go to the login
+    history.push(urls.login); // and in some cases go to the login
     return null;
   }
 

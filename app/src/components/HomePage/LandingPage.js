@@ -9,17 +9,17 @@ import writeImage from 'assets/landing/write.svg';
 import exploreImage from 'assets/landing/explore.svg';
 import calendarImage from 'assets/landing/calendar.svg';
 import createImage from 'assets/landing/create.svg';
-import readImage from 'assets/landing/read.svg';
+import readImage from 'assets/landing/office.svg';
 import FeatureBox from './FeatureBox';
 import { text } from 'config/text';
 
 
-function LandingPage ({ loaded }) {
+function LandingPage () {
 
 
   return (
     <>
-      <Header loaded={ loaded }/>
+      <Header/>
       <div className="landing-content">
         <div className="flex-row w-100 flex-wrap">
           <div className="f-50 flex-column">

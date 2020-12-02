@@ -1,16 +1,12 @@
 import React from 'react';
 import './_login-box.scss';
-import { Link } from 'react-router-dom';
-import { urls } from 'config/urls';
-import todoLogo from 'assets/logo.png';
+import Logo from 'components/Logo/Logo';
 
 function LoginBox ({ children, title, loading }) {
 
   return (
     <>
-      <Link className="btn center-logo" to={ urls.home }>
-        <img src={ todoLogo } alt="Logo" width="100%"/>
-      </Link>
+      <Logo/>
 
       <div className={ 'flex-column vh-100 place-center' + ( loading ? ' loader-input cover' : '' ) }>
         <div className="login-box relative">

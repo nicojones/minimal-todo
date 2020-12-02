@@ -150,7 +150,7 @@ export const text = {
     title: 'minimal todo',
     sub: 'Your new productivity tool',
     feature: {
-      _: 'Features',
+      _: 'What and why?',
       todo: 'Packed with all you need, with only what you need',
       write: 'Don\'t get distracted and focus on what matters',
       calendar: 'Increase your productivity and reduce stress',

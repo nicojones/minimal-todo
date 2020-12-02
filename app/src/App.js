@@ -7,6 +7,7 @@ import { authService } from './services/authService';
 import Loader from './components/Loader/Loader';
 import LandingPage from './components/HomePage/LandingPage';
 import { urls } from 'config/urls';
+import NotFound from './components/NotFound/NotFound';
 
 export const LoggedInUserContext = React.createContext({});
 
@@ -30,7 +31,7 @@ function App () {
             renders the first one that matches the current URL. */ }
           <Switch>
             <Route path={ urls.home } exact={ true }>
-              <LandingPage loaded={ loaded }/>
+              <LandingPage/>
             </Route>
             { loaded
               ?
@@ -38,6 +39,7 @@ function App () {
                 <Route path={ urls.signup } component={ Signup }/>
                 <Route path={ urls.login } component={ Login }/>
                 <Route path={ `${ urls.project(':projectId?') }` } component={ TodoApp }/>
+                <Route component={ NotFound }/>
               </>
               : <Loader/>
             }

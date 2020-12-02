@@ -4,7 +4,7 @@ import './_feature.scss';
 function FeatureBox ({ img, title }) {
   return (
     <>
-      <div className="f-30 place-center">
+      <div className="f-45 place-center">
         <div className="feature">
           <h6 className="feature__title">{ title }</h6>
           <div className="place-center">
