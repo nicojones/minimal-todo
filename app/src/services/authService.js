@@ -85,9 +85,9 @@ export const authService = {
   },
 
   validateSignup: (signupData) => {
-    if (!signupData.username) {
-      return { username: 'Must enter a valid username' };
-    }
+    // if (!signupData.username) {
+    //   return { username: 'Must enter a valid username' };
+    // }
     if (!signupData.name || signupData.name.length <= 2) {
       return { name: 'Must enter a longer name' };
     }

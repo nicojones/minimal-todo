@@ -116,6 +116,7 @@ export const text = {
       },
       password: {
         _: 'Password',
+        new: 'Choose a password',
         ph: 'Enter your password'
       },
       name: {
@@ -149,12 +150,13 @@ export const text = {
     title: 'minimal todo',
     sub: 'Your new productivity tool',
     feature: {
+      _: 'Features',
       todo: 'Packed with all you need, with only what you need',
       write: 'Don\'t get distracted and focus on what matters',
       calendar: 'Increase your productivity and reduce stress',
-      read: 'Manage your time better, enjoy your free time better',
-      create: 'Freeing your mind of tasks leaves space for creativity',
-      explore: 'Don\'t get distracted and focus on what matters',
+      read: 'Manage your time smarter, enjoy your free time calmer',
+      create: 'Free your mind of tasks and make space for creativity',
+      explore: 'Reduce procrastination, work better and get more of life',
     }
   }
 };

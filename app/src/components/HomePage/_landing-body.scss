@@ -24,8 +24,21 @@ $svg-img: 200px;
   max-height: 80vw;
 }
 
-.features-section {
+
+.section-box {
   margin: 50px 0;
+
+  .section-title {
+    font-size: 1.25rem;
+    text-transform: uppercase;
+    letter-spacing: 8px;
+    color: $red;
+    text-align: center;
+    font-family: nunito, sans-serif;
+    margin-bottom: 25px;
+  }
+}
+.features-section {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -36,3 +49,4 @@ $svg-img: 200px;
   display: flex;
   flex-direction: column;
 }
+

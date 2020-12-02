@@ -89,18 +89,18 @@ function Signup () {
                   { signupError.email && <small>{ signupError.email }</small> }
                 </div>
 
-                <div className="form-group">
-                  <label>{ text.login.f.username._ }</label>
-                  <input
-                    value={ signup.username || '' }
-                    onChange={ (e) => updateSignup({ username: e.target.value }) }
-                    placeholder={ text.login.f.username.ph } required autoComplete="off"
-                  />
-                  { signupError.username && <small>{ signupError.username }</small> }
-                </div>
+                {/*<div className="form-group">*/}
+                {/*  <label>{ text.login.f.username._ }</label>*/}
+                {/*  <input*/}
+                {/*    value={ signup.username || '' }*/}
+                {/*    onChange={ (e) => updateSignup({ username: e.target.value }) }*/}
+                {/*    placeholder={ text.login.f.username.ph } required autoComplete="off"*/}
+                {/*  />*/}
+                {/*  { signupError.username && <small>{ signupError.username }</small> }*/}
+                {/*</div>*/}
 
                 <div className="form-group">
-                  <label>{ text.login.f.password._ }</label>
+                  <label>{ text.login.f.password.new }</label>
                   <input
                     value={ signup.password || '' }
                     onChange={ (e) => updateSignup({ password: e.target.value }) }

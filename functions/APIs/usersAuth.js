@@ -20,7 +20,8 @@ exports.signUpUser = (request, response) => {
     name: request.body.name,
     email: request.body.email,
     password: request.body.password,
-    username: request.body.username
+    username: request.body.email // why not. for now username is the email.
+    // username: request.body.username
   };
 
   const { valid, errors } = validateSignUpData(newUser);

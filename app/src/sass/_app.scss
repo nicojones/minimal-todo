@@ -180,7 +180,7 @@ input:focus {
 }
 
 .main-btn {
-  @extend .red;
+  background-color: $red;
   //border-radius: 8px;
   color: white !important;
   @include transition();

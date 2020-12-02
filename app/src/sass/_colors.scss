@@ -1,6 +1,8 @@
 $primary-color: #34495e;
 $primary-color-bg-text: #fff;
 
+$red: #e74c3c;
+
 $open-task-bg-color: transparent;
 
 $primary-color-text: #333;
@@ -19,7 +21,7 @@ $toast-bg-color: $primary-color;
 
 $priority-low: #3498db;
 $priority-med: #f1c40f;
-$priority-high: #e74c3c;
+$priority-high: $red;
 
 $hide-navbar-width: 1000px; // coincides with the values of smallScreen.js
 $navbar-height: 50px;

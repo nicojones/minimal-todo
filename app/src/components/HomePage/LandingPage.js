@@ -32,13 +32,16 @@ function LandingPage ({ loaded }) {
             <img src={ landingImage } alt="Present app" className="svg-img svg-img--big"/>
           </div>
         </div>
-        <div className="features-section">
-          <FeatureBox img={ todoImage } title={ text.landing.feature.todo }/>
-          <FeatureBox img={ writeImage } title={ text.landing.feature.write }/>
-          <FeatureBox img={ calendarImage } title={ text.landing.feature.calendar }/>
-          <FeatureBox img={ exploreImage } title={ text.landing.feature.explore }/>
-          <FeatureBox img={ readImage } title={ text.landing.feature.read }/>
-          <FeatureBox img={ createImage } title={ text.landing.feature.create }/>
+        <div className="section-box">
+          <h6 className="section-title">{ text.landing.feature._ }</h6>
+          <div className="features-section">
+            <FeatureBox img={ todoImage } title={ text.landing.feature.todo }/>
+            <FeatureBox img={ writeImage } title={ text.landing.feature.write }/>
+            <FeatureBox img={ calendarImage } title={ text.landing.feature.calendar }/>
+            <FeatureBox img={ exploreImage } title={ text.landing.feature.explore }/>
+            <FeatureBox img={ readImage } title={ text.landing.feature.read }/>
+            <FeatureBox img={ createImage } title={ text.landing.feature.create }/>
+          </div>
         </div>
       </div>
       <Footer/>

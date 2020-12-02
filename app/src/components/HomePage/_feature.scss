@@ -3,7 +3,7 @@
 
 .feature {
   // JUST A TEST
-  height: 300px;
+  height: 350px;
   overflow: hidden;
   ////////
 
@@ -24,8 +24,9 @@
   }
 
   &__image {
+    $img-width: 300px;
     max-width: 90%;
-    min-width: 200px;
-    width: 200px;
+    min-width: $img-width;
+    width: $img-width;
   }
 }

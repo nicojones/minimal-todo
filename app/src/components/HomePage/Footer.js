@@ -23,7 +23,7 @@ function Footer () {
             <small className="left subtle">Copyright &copy; { new Date().getFullYear() } Nico Kupfer</small>
             <small className="right subtle">
               <a
-                className="btn" href="https://github.com/nicojones/todolist-react"
+                className="btn" href="https://github.com/nicojones/minimal-todo"
                 target="_blank"
               >Code on Github</a>
             </small>
