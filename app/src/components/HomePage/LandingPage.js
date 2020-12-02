@@ -32,6 +32,7 @@ function LandingPage () {
             <img src={ landingImage } alt="Present app" className="svg-img svg-img--big"/>
           </div>
         </div>
+        <a name="features" style={ { position: 'relative', top: -80 }}/>
         <div className="section-box">
           <h6 className="section-title">{ text.landing.feature._ }</h6>
           <div className="features-section">

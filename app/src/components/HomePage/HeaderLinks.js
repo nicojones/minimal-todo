@@ -4,12 +4,12 @@ function HeaderLinks ({ className }) {
 
   return (
     <ul className={ 'navbar-links-ul ' + className }>
-      <li className="nav-item active">
-        <a className="btn" href="#home">Home</a>
-      </li>
-      <li className="nav-item">
-        <a className="btn" href="#about">About </a>
-      </li>
+      {/*<li className="nav-item active">*/}
+      {/*  <a className="btn" href="#home">Home</a>*/}
+      {/*</li>*/}
+      {/*<li className="nav-item">*/}
+      {/*  <a className="btn" href="#about">About </a>*/}
+      {/*</li>*/}
       <li className="nav-item">
         <a className="btn" href="#features">Features</a>
       </li>

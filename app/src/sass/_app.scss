@@ -184,10 +184,11 @@ input:focus {
   color: white !important;
   @include transition();
   &:hover {
-    @include box_shadow();
+    @include box_shadow(10px, -2px);
   }
-  &, &:hover, &:focus {
-    background-color: $red !important; /* important because of forms.scss */
+  background-color: $red;
+  &:hover, &:focus {
+    background-color: rgba($red, 0.9) !important; /* important because of forms.scss */
   }
 }
 

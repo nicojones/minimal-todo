@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Signup from 'components/Login/Signup';
 import Login from 'components/Login/Login';
 import TodoApp from './TodoApp';
@@ -18,7 +18,7 @@ function App () {
   const [user, setUser] = useState(false);
 
   authService.authState((user) => {
-    console.info(`User is ${ user ? '' : 'NOT '}logged in`);
+    console.info(`User is ${ user ? '' : 'NOT ' }logged in`);
     setUser(user);
     setLoaded(true);
   });
@@ -26,25 +26,25 @@ function App () {
   return (
     <>
       <LoggedInUserContext.Provider value={ user }>
-        <Router>
-          {/* A <Switch> looks through its children <Route>s and
+        { loaded
+          ?
+          <>
+            <Router>
+              {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */ }
-          <Switch>
-            <Route path={ urls.home } exact={ true }>
-              <LandingPage/>
-            </Route>
-            { loaded
-              ?
-              <>
-                <Route path={ urls.signup } component={ Signup }/>
-                <Route path={ urls.login } component={ Login }/>
-                <Route path={ `${ urls.project(':projectId?') }` } component={ TodoApp }/>
+              <Switch>
+                <Route path={ urls.home } exact={ true }>
+                  <LandingPage/>
+                </Route>
+                <Route exact path={ urls.signup } component={ Signup }/>
+                <Route exact path={ urls.login } component={ Login }/>
+                <Route exact path={ `${ urls.project(':projectId?') }` } component={ TodoApp }/>
                 <Route component={ NotFound }/>
-              </>
-              : <Loader/>
-            }
-          </Switch>
-        </Router>
+              </Switch>
+            </Router>
+          </>
+          : <Loader/>
+        }
       </LoggedInUserContext.Provider>
     </>
   );
