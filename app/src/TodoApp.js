@@ -10,6 +10,7 @@ import NoProject from 'components/NoProject/NoProject';
 import ProjectList from 'components/Project/ProjectList';
 import Drawer from './components/Drawer/Drawer';
 import reservedKey from './functions/reservedKey';
+import { text } from './config/text';
 
 export const ProjectContext = React.createContext({});
 export const ProjectDispatch = React.createContext({});
@@ -25,7 +26,8 @@ function TodoApp () {
 
   useEffect(() => {
     if (!urlParams.current.projectId) { // There's some URL?
-      setComponent(<NoProject setShowSidebar={ setShowSidebar }/>); // no URL -> show this component
+      setComponent(<NoProject setShowSidebar={ setShowSidebar } addText={text.project.noSelected}
+        inspireText={ text.project.inspire }/>); // no URL -> show this component
       return;
     }
     if (reservedKey(urlParams.current.projectId)) { // It's a reserved URL, so we show the Drawer

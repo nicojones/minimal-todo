@@ -36,11 +36,12 @@ function ProjectHeader ({ projectFunctions, isLoading }) {
   }
 
   async function toggleShowCompleted (showCompleted) {
+    console.log(showCompleted);
     projectFunctions.setShowCompleted(showCompleted);
-    await projectService.updateProject({
-      ...project,
-      showCompleted
-    });
+    // await projectService.updateProject({
+    //   ...project,
+    //   showCompleted
+    // });
   }
 
   return (

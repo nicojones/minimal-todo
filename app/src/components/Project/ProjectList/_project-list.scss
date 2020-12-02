@@ -15,8 +15,14 @@
     }
 
     .add-project {
-      padding: 0 6px;
       flex: 1 0 90%;
+      width: 100%;
+      padding: 0;
+      align-items: center;
+    }
+    .add-project__input {
+      text-align: left;
+      height: $list-item-height;
     }
   }
 

@@ -84,5 +84,11 @@ $header-btn-m: 10px;
   border-top: 2px solid $very-subtle-color;
   height: 50px;
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.copyright__content {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
 }

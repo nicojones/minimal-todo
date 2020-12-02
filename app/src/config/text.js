@@ -58,14 +58,14 @@ export const text = {
   // uncompleted: 'My tasks',
   allTasksCompleted: () => {
     const incomplete = [
-      '😁 All tasks completed!',
-      'Now that\'s what I call a clean list 🥳',
-      'Wow, such empty 👏',
-      'Finitto? Go for a cappuccino ☕️',
-      'All tasks done, time for a break 🏖',
-      'So productive. I\'m impressed 😎',
-      'Make a Todolist: Done ✅',
-      'I am Finnish 🇫🇮 with all tasks.'
+      'All tasks completed!',
+      'Now that\'s what I call a clean list',
+      'Wow, such empty',
+      'Finitto? Go for a cappuccino',
+      'All tasks done, time for a break',
+      'So productive. I\'m impressed',
+      'Make a Todolist: Done',
+      'I am Finnish with all tasks.'
     ];
     return randArray(incomplete);
   },

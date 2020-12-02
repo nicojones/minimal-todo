@@ -93,6 +93,11 @@ a {
   &.btn {
     color: inherit;;
   }
+  &.u {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
 html{
@@ -222,4 +227,10 @@ input.invisible {
 .material-icons {
   text-rendering: optimizeLegibility;
   font-feature-settings: 'liga';
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 1280px;
+  width: 90%;
 }

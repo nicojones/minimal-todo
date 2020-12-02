@@ -113,7 +113,7 @@ function Signup () {
                 <div className="flex-column">
                   <button type="submit" className="btn btn-block main-btn">{ text.login.signup }</button>
                   <hr/>
-                  <Link className="no-color" to={ urls.login }>{ text.login.yesAccount } { text.login.login }</Link>
+                  <Link className="no-color u" to={ urls.login }>{ text.login.yesAccount } { text.login.login }</Link>
                 </div>
 
               </form>

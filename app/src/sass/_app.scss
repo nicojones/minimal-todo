@@ -53,7 +53,7 @@
   justify-self: center;
   width: $tasks-box-width;
   min-width: $tasks-box-min-width;
-  margin: 0 auto;
+  margin: $navbar-height auto 0;
 }
 
 .loader-input {

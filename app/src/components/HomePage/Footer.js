@@ -19,11 +19,11 @@ function Footer () {
           </div>
         </div>
         <div className="copyright">
-          <div className="container">
+          <div className="container copyright__content">
             <small className="left subtle">Copyright &copy; { new Date().getFullYear() } Nico Kupfer</small>
             <small className="right subtle">
               <a
-                className="btn" href="https://github.com/nicojones/minimal-todo"
+                className="no-color u" href="https://github.com/nicojones/minimal-todo"
                 target="_blank"
               >Code on Github</a>
             </small>

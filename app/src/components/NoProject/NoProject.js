@@ -1,4 +1,3 @@
-import { text } from 'config/text';
 import React, { useMemo } from 'react';
 import { randArray } from 'functions/randArray';
 import './_no-project.scss';
@@ -13,21 +12,21 @@ import scienceIcon from 'assets/task-bg/science.svg';
 
 const icons = [balloonIcon, boardIcon, bookIcon, calendarIcon, musicIcon, puzzleIcon, scienceIcon];
 
-function NoProject ({ setShowSidebar }) {
+function NoProject ({ className, setShowSidebar, inspireText, addText }) {
 
   const myIcon = useMemo(() => {
     return randArray(icons);
-  }, [])
+  }, []);
 
   return (
     <>
-      <div className="no-project">
-        <h5 className="center-align">{ text.project.inspire }</h5>
+      <div className={ 'no-project ' + className }>
+        <h5 className="center-align">{ inspireText }</h5>
         <img alt="inspiration" src={ myIcon } className="no-task-img"/>
-        <button
+        { addText && <button
           className="btn btn-border left-align flex-center-self subtle"
           onClick={ () => setShowSidebar(true) }
-        >{ text.project.noSelected }</button>
+        >{ addText }</button> }
       </div>
     </>
   );

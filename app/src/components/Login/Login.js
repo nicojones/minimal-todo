@@ -81,7 +81,7 @@ function Login () {
                   <button type="submit" className="btn btn-block main-btn">{ text.login.login }</button>
                   <hr/>
                   <Link
-                    to={ urls.signup } className="no-color"
+                    to={ urls.signup } className="no-color u"
                   >{ text.login.noAccount } { text.login.signup }</Link>
                 </div>
               </form>

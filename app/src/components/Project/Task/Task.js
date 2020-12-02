@@ -17,7 +17,8 @@ function Task ({ task, level }) {
 
   const openLength = subtasks.filter((s) => !s.checked).length || 0;
 
-  const doneClass = (task.checked ? (project.showCompleted ? 'done' : 'hidden') : '');
+  const doneClass = (task.checked && project.showCompleted && 'done') || '';
+  // const doneClass = (task.checked ? (project.showCompleted ? 'done' : '') : '');
 
   const showExpanderClass = ((project.showCompleted ? subtasks.length : openLength) ? '' : ' v-hidden')
 

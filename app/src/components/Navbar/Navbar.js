@@ -13,7 +13,9 @@ function Navbar ({ setShowSidebar, showSidebar }) {
 
   return (
     <>
-      <div className={ 'navbar-fixed todo-navbar ' + ( showSidebar ? 'open' : 'closed' ) }>
+      <button className="todo-navbar__button btn"><i className="material-icons"
+        onClick={ () => setShowSidebar(!showSidebar) }>menu</i></button>
+      <div className={ 'todo-navbar ' + ( showSidebar ? 'open' : 'closed' ) }>
         <nav className="navbar-hide">
           <div className="nav-wrapper">
             <button className="navbar-btn btn left" data-tip={ text.menu.menu }

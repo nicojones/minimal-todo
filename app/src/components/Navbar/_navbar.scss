@@ -3,6 +3,9 @@
 
 #root {
   .todo-navbar {
+    position: fixed;
+    width: 100%;
+
     > .navbar-hide {
       background-color: $navbar-color;
       color: $navbar-color-text;
@@ -25,11 +28,18 @@
       }
     }
 
-    &.open, &.closed:hover {
+    &.open {
       > .navbar-hide {
         margin-top: 0;
       }
     }
+  }
+
+  .todo-navbar__button {
+    position: fixed;
+    left: $navbar-padding;
+    top: 2px; // somehow...
+    height: $navbar-height;
   }
 }
 
