@@ -13,7 +13,7 @@ function ColorPicker ({ onChangeComplete, color, icon }) {
   return (
     <>
       <span className="relative">
-        <button className="btn-invisible h-100" onClick={ () => setShowColorPicker(true) }>
+        <button className="ib h-100" onClick={ () => setShowColorPicker(true) }>
           <i className="material-icons tiny left m0" style={ { color: color } }>{ icon }</i>
         </button>
         { showColorPicker ?

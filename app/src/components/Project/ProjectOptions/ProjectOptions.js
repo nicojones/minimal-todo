@@ -16,7 +16,7 @@ function ProjectOptions ({ sort, setSort, children }) {
         <>
           <Tooltip/>
           { sort && // Only if the `sort` is passed from the parent.
-          <button className="btn-invisible" onClick={ () => showSortDropdown(true) } data-tip={ text.sort._ }>
+          <button className="btn" onClick={ () => showSortDropdown(true) } data-tip={ text.sort._ }>
             <i className="material-icons">swap_vert</i>
           </button>
           }
@@ -27,7 +27,7 @@ function ProjectOptions ({ sort, setSort, children }) {
                 {
                   constants.sort.map((d) =>
                     <li key={ d.sort } className={ 'dropdown-item' }>
-                      <button className="btn-invisible" onClick={ () => setSort(d.sort) }>
+                      <button className="ib" onClick={ () => setSort(d.sort) }>
                         { d.icon && <i className="material-icons tiny left btn-p">{ d.icon }</i> }
                         <span className={ (d.sort === sort ? ' bold' : '') }>{ d.name }</span>
                       </button>
@@ -40,7 +40,7 @@ function ProjectOptions ({ sort, setSort, children }) {
           }
           {
             children && // Only if the `more` is passed from the parent.
-            <button className="btn-invisible" onClick={ () => showMoreDropdown(true) }>
+            <button className="btn" onClick={ () => showMoreDropdown(true) }>
               <i className="material-icons" data-tip={ text.project.more }>more_horiz</i></button>
           }
           {

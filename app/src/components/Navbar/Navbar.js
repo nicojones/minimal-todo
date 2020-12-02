@@ -16,11 +16,11 @@ function Navbar ({ setShowSidebar, showSidebar }) {
       <div className={ 'navbar-fixed todo-navbar ' + ( showSidebar ? 'open' : 'closed' ) }>
         <nav className="navbar-hide">
           <div className="nav-wrapper">
-            <button className="btn-invisible sidenav-btn btn-subtle left" data-tip={ text.menu.menu }
+            <button className="navbar-btn btn left" data-tip={ text.menu.menu }
               onClick={ () => setShowSidebar(!showSidebar) }>
               <i className="material-icons">menu</i>
             </button>
-            <button className="btn-invisible sidenav-btn btn-subtle left" onClick={ () => projectDispatch({ id: urls.inboxUrl }) }>
+            <button className="navbar-btn btn left" onClick={ () => projectDispatch({ id: urls.inboxUrl }) }>
               <i className="material-icons">home</i>
             </button>
             <NavbarSearch/>

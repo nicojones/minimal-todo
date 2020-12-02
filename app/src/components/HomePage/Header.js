@@ -3,28 +3,27 @@ import { LoggedInUserContext } from 'App';
 import { text } from 'config/text';
 import { urls } from 'config/urls';
 import todoLogo from 'assets/logo.png';
-import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './_header.scss';
 import HeaderLinks from './HeaderLinks';
 
 function Header ({ loaded }) {
 
   const user = useContext(LoggedInUserContext);
-  const history = useHistory();
 
   const [showMenu, setShowMenu] = useState(false);
 
   const link = useMemo(() => {
     if (!loaded) {
-      return <><a className="btn btn-flat main-btn red">&nbsp;&nbsp;&nbsp;...&nbsp;&nbsp;&nbsp;</a></>;
+      return <><a className="btn main-btn goto-app">&nbsp;&nbsp;&nbsp;...&nbsp;&nbsp;&nbsp;</a></>;
     }
     if (user) {
-      return <a className="btn btn-flat main-btn red" onClick={ () => history.push(urls.app) }>{ text.gotoApp }</a>;
+      return <Link className="btn main-btn goto-app" to={ urls.app }>{ text.gotoApp }</Link>;
     }
     // else
     return <>
-      <a className="btn btn-flat main-btn red" onClick={ () => history.push(urls.login) }>{ text.login.login }</a>
-      <a className="btn btn-flat" onClick={ () => history.push(urls.signup) }>{ text.login.signup }</a>
+      <Link className="btn main-btn goto-app" to={ urls.login }>{ text.login.login }</Link>
+      <Link className="btn" to={ urls.signup }>{ text.login.signup }</Link>
     </>;
 
   }, [user, loaded]);
@@ -37,10 +36,10 @@ function Header ({ loaded }) {
         <div className="navbar-area headroom">
           <nav className="navbar">
             <button
-              className="hide-lg navbar-toggler btn-invisible" type="button" aria-label="Toggle navigation"
+              className="hide-lg navbar-toggler btn" type="button" aria-label="Toggle navigation"
               onClick={ () => setShowMenu(!showMenu) }
             >
-              <i className="material-icons">menu</i>
+              <i className="material-icons medium">menu</i>
             </button>
             <a className="navbar-brand" href={ urls.home }>
               <img src={ todoLogo } alt="Logo" height="100%"/>

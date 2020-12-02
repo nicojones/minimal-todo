@@ -64,9 +64,7 @@ $header-btn-m: 10px;
     }
   }
 
-  .main-btn {
-    border-radius: 8px;
-    color: white;
+  .goto-app {
     margin: 0 #{ 1.5 * $header-btn-m };
     .mobile & {
       margin-left: auto;

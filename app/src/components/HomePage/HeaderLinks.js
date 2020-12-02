@@ -5,22 +5,22 @@ function HeaderLinks ({ className }) {
   return (
     <ul className={ 'navbar-links-ul ' + className }>
       <li className="nav-item active">
-        <a className="btn btn-flat" href="#home">Home</a>
+        <a className="btn" href="#home">Home</a>
       </li>
       <li className="nav-item">
-        <a className="btn btn-flat" href="#about">About </a>
+        <a className="btn" href="#about">About </a>
       </li>
       <li className="nav-item">
-        <a className="btn btn-flat" href="#features">Features</a>
+        <a className="btn" href="#features">Features</a>
       </li>
       {/*<li className="nav-item">*/}
-      {/*  <a className="btn btn-flat" href="#portfolio">Portfolio</a>*/}
+      {/*  <a className="btn" href="#portfolio">Portfolio</a>*/}
       {/*</li>*/}
       {/*<li className="nav-item">*/}
-      {/*  <a className="btn btn-flat" href="#blog">Blog</a>*/}
+      {/*  <a className="btn" href="#blog">Blog</a>*/}
       {/*</li>*/}
       {/*<li className="nav-item">*/}
-      {/*  <a className="btn btn-flat" href="#contact">Contact</a>*/}
+      {/*  <a className="btn" href="#contact">Contact</a>*/}
       {/*</li>*/}
     </ul>
   );

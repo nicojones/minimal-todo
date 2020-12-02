@@ -32,7 +32,7 @@ function ProjectListDropdown ({ project, onDelete }) {
 
   return (
     <>
-      <button className="btn-invisible child-hover ch-hidden ml-auto" onClick={ () => setDropdownShown(true) }>
+      <button className="btn child-hover ch-hidden ml-auto" onClick={ () => setDropdownShown(true) }>
         <i className="tiny material-icons subtle">more_horiz</i>
       </button>
       {
@@ -40,12 +40,12 @@ function ProjectListDropdown ({ project, onDelete }) {
         <>
           <ul className="dropdown dd-left" onClick={ () => setDropdownShown(false) }>
             <li className="dropdown-item">
-              <button className="btn-invisible left left-align w-100 p-10" onClick={ () => onAction('delete', project) }>
+              <button className="ib left left-align w-100 p-10" onClick={ () => onAction('delete', project) }>
                 <i className="tiny material-icons subtle">delete</i> {text.project.delete._}
               </button>
             </li>
             <li className="dropdown-item">
-              <button className="btn-invisible left left-align w-100 p-10" onClick={ () => onAction('share', project) }>
+              <button className="ib left left-align w-100 p-10" onClick={ () => onAction('share', project) }>
                 <i className="tiny material-icons subtle">person_add</i> {text.project.share}
               </button>
             </li>

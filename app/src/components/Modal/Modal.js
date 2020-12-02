@@ -16,7 +16,7 @@ function Modal ({ children, modalOpen, okButton, cancelButton, onAccept, onCance
                     okButton &&
                     <button
                       onClick={ onAccept }
-                      className="modal-close waves-effect waves-green btn-flat btn"
+                      className="modal-close waves-effect waves-green btn"
                       dangerouslySetInnerHTML={ { __html: okButton } }
                     />
                   }
@@ -24,7 +24,7 @@ function Modal ({ children, modalOpen, okButton, cancelButton, onAccept, onCance
                     cancelButton &&
                     <button
                       onClick={ onCancel }
-                      className="modal-close waves-effect waves-red btn-flat btn left"
+                      className="modal-close waves-effect waves-red btn left"
                       dangerouslySetInnerHTML={ { __html: cancelButton } }
                     />
                   }

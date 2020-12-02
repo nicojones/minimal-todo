@@ -118,7 +118,7 @@ function Project ({ setProject }) {
             >
               {/*className={ 'flex-row task__content form-inline' + (isLoading === 't' ? ' loader-input' : '') }>*/ }
               <i /* Just to give the right padding */ className="material-icons left v-hidden btn-p">add</i>
-              <button className="btn-invisible p0">
+              <button className="btn p0">
                 <i className="material-icons left subtle btn-pr">{ taskName ? 'save' : 'add' }</i>
               </button>
               <div className="form-group w-100">

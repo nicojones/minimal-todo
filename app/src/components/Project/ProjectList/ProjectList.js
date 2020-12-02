@@ -89,7 +89,7 @@ function ProjectList ({ projectId, changeToProject }) {
             data-tip={ p.text.tooltip }
             className={ 'proj-li mb-5 parent-hover flex-row' + (projectId === p.url ? ' selected' : '') }
           >
-            <button className="btn-invisible left left-align w-100" onClick={ () => setProject({ id: p.url }) }>
+            <button className="ib left left-align w-100" onClick={ () => setProject({ id: p.url }) }>
               <i className="material-icons tiny left btn-pr">{ p.icon }</i>
               <span className="btn-pl">{ p.text._ }</span>
             </button>
@@ -110,7 +110,7 @@ function ProjectList ({ projectId, changeToProject }) {
                 color={ proj.color } onChangeComplete={ (e) => changeColor(proj, e) }
                 icon={ proj.shared ? 'person' : 'lens' }
               />
-              <button className="btn-invisible left left-align btn-p w-100" onClick={ () => setProject(proj) }>
+              <button className="ib left left-align btn-p w-100" onClick={ () => setProject(proj) }>
                 { proj.name }
                 {/*( { proj.openTasks } <span className="subtle">/ { proj.completedTasks }</span> )*/ }
               </button>
@@ -123,7 +123,7 @@ function ProjectList ({ projectId, changeToProject }) {
             onSubmit={ addNewProject }
             className={ 'add-project flex-row w-100 p0 ' + (isLoading === 'new' ? ' loader-input' : '') }
           >
-            <button className="btn-invisible child-hover ch-hidden left">
+            <button className="ib child-hover ch-hidden left">
               <label htmlFor="new-project-input" className="pointer">
                 <i className="tiny material-icons subtle">{ newProjectName ? 'save' : 'add' }</i>
               </label>

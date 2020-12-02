@@ -25,7 +25,7 @@ function NoProject ({ setShowSidebar }) {
         <h5 className="center-align">{ text.project.inspire }</h5>
         <img alt="inspiration" src={ myIcon } className="no-task-img"/>
         <button
-          className="btn-flat btn-border left-align flex-center-self subtle"
+          className="btn btn-border left-align flex-center-self subtle"
           onClick={ () => setShowSidebar(true) }
         >{ text.project.noSelected }</button>
       </div>

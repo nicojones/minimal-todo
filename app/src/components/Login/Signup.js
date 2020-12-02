@@ -111,8 +111,9 @@ function Signup () {
 
                 <br/>
                 <div className="flex-column">
-                  <button type="submit" className="btn btn-block btn-invisible">{ text.login.signup }</button>
-                  <Link to={ urls.login } className="btn-flat">{ text.login.yesAccount } { text.login.login }</Link>
+                  <button type="submit" className="btn btn-block main-btn">{ text.login.signup }</button>
+                  <hr/>
+                  <Link className="no-color" to={ urls.login }>{ text.login.yesAccount } { text.login.login }</Link>
                 </div>
 
               </form>

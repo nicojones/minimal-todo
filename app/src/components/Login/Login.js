@@ -78,9 +78,10 @@ function Login () {
                 </div>
                 <br/>
                 <div className="flex-column">
-                  <button type="submit" className="btn btn-block btn-invisible">{ text.login.login }</button>
+                  <button type="submit" className="btn btn-block main-btn">{ text.login.login }</button>
+                  <hr/>
                   <Link
-                    to={ urls.signup } className="btn-flat right"
+                    to={ urls.signup } className="no-color"
                   >{ text.login.noAccount } { text.login.signup }</Link>
                 </div>
               </form>

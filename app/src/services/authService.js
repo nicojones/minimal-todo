@@ -79,7 +79,7 @@ export const authService = {
   logout: (e) => {
     e.preventDefault();
 
-    auth().signOut().then(() => {
+    return auth().signOut().then(() => {
       showToast('success', 'You\'ve been signed out of the app');
     });
   },

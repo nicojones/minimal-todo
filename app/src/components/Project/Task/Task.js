@@ -57,7 +57,7 @@ function Task ({ task, level }) {
       <Tooltip/>
       <div className="task__content parent-hover" data-tip={ task.timestamp }>
         <button
-          className={ 'toggle-expand subtle btn-invisible material-icons tiny left btn-pr' + (expandedTask ? ' expanded' : '') + showExpanderClass }
+          className={ 'toggle-expand subtle ib material-icons tiny left btn-pr' + (expandedTask ? ' expanded' : '') + showExpanderClass }
           onClick={ () => toggleExpanded(!expandedTask) }
         >chevron_right
         </button>
@@ -72,7 +72,7 @@ function Task ({ task, level }) {
           <div/>
         </label>
         <button
-          className={ 'left-align btn-invisible ' + (task.checked ? '' : '') }
+          className={ 'left-align ib ' + (task.checked ? '' : '') }
           onClick={ () => setModalOpen(true) }
         >
           <span className="task-name">{ task.name }</span>
@@ -86,11 +86,11 @@ function Task ({ task, level }) {
 
         <span className="ml-auto flex-row">
           <button
-            className="child-hover material-icons btn-invisible task__action-button"
+            className="child-hover material-icons ib task__action-button"
             data-tip={ text.task.delete._ }
             onClick={ () => onDelete(task) }>delete</button>
           <button
-            className="child-hover material-icons btn-invisible task__action-button"
+            className="child-hover material-icons ib task__action-button"
             data-tip={ text.task.edit }
             onClick={ () => setModalOpen(true) }>edit</button>
 

@@ -92,11 +92,13 @@ nav {
   display: flex;
   align-items: center;
   height: $navbar-height;
+
+  .navbar-btn {
+    color: $navbar-color-text;
+  }
+
 }
 
-.sidenav-btn {
-  display: inline-block;
-}
 
 
 .dropdown {
@@ -175,4 +177,14 @@ input:focus {
   border-bottom: 1px solid $subtle-color !important;
   box-shadow: 0 2px 0 0 $subtle-color !important;
   box-sizing: border-box !important;
+}
+
+.main-btn {
+  @extend .red;
+  //border-radius: 8px;
+  color: white !important;
+  @include transition();
+  &:hover {
+    @include box_shadow();
+  }
 }

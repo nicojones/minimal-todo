@@ -20,6 +20,8 @@ $svg-img: 200px;
 .svg-img--big {
   height: 3 * $svg-img;
   width: 3 * $svg-img;
+  max-width: 80vw;
+  max-height: 80vw;
 }
 
 .footer-links {

@@ -86,7 +86,7 @@ export const text = {
     },
     add: {
       // _: 'Add a new project',
-      ph: 'Enter a name for a new project'
+      ph: 'Create new project'
     },
     title: {
       _: 'Click to edit title'

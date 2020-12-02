@@ -26,21 +26,60 @@ html {
   abc: none;
 }
 
-/* This is needed for some mobile phones to display the Google Icon font properly */
-.material-icons {
-  text-rendering: optimizeLegibility;
-  font-feature-settings: 'liga';
+// shared styles
+.btn {
+  border: $button-border;
+  border-radius: $button-radius;
+  display: inline-block;
+  height: $button-height;
+  line-height: $button-height;
+  padding: $button-padding;
+  text-transform: uppercase;
+  vertical-align: middle;
+  background: transparent;
+  -webkit-tap-highlight-color: transparent; // Gets rid of tap active state
+}
+// Shared icon styles
+.btn,
+.btn-large,
+.btn-small {
+  font-size: $button-font-size;
+  outline: 0;
+  i {
+    font-size: $button-icon-font-size;
+    line-height: inherit;
+  }
 }
 
-i {
+i.material-icons {
   line-height: inherit;
 
   &.tiny {
     font-size: 1rem;
   }
+  &.medium {
+    font-size: 2rem;
+  }
+  &.large {
+    font-size: 4rem;
+  }
 }
+
+//// Large button
+//.btn-large {
+//  @extend .btn;
+//  height: $button-large-height;
+//  line-height: $button-large-height;
+//  font-size: $button-large-font-size;
+//  padding: 0 28px;
+//
+//  i {
+//    font-size: $button-large-icon-font-size;
+//  }
+//}
+//@import "../../node_modules/materialize-css/sass/components/buttons";
+
 @import "../../node_modules/materialize-css/sass/components/grid";
-@import "../../node_modules/materialize-css/sass/components/buttons";
 @import "../../node_modules/materialize-css/sass/components/modal";
 @import "../../node_modules/materialize-css/sass/components/forms/forms";
 
@@ -51,6 +90,9 @@ ul {
 
 a {
   text-decoration: none;
+  &.btn {
+    color: inherit;;
+  }
 }
 
 html{
@@ -109,6 +151,7 @@ h6 { font-size: $h6-fontsize; line-height: 110%; margin: ($h6-fontsize / 1.5) 0 
 
 input.as-title.h5 {
   height: 1.1 * $h5-fontsize;
+  @extend h5;
 }
 
 input.invisible {
@@ -170,7 +213,13 @@ input.invisible {
   }
   margin: 0 !important; // just like a button
 
-  &.btn-invisible {
+  &.btn {
     font-size: 1.5rem !important;
   }
+}
+
+/* This is needed for some mobile phones to display the Google Icon font properly */
+.material-icons {
+  text-rendering: optimizeLegibility;
+  font-feature-settings: 'liga';
 }

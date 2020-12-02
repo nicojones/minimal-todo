@@ -97,22 +97,22 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
             <label>{ text.task.prio._ }</label>
             <div className="flex-row">
               <button
-                className={ 'btn-invisible priority prio-0 ' + (priority === 0 && 'active') }
+                className={ 'btn priority prio-0 ' + (priority === 0 && 'active') }
                 onClick={ () => setPriority(0) } type="button"
               >
                 <i className="material-icons">flag</i></button>
               <button
-                className={ 'btn-invisible priority prio-1 ' + (priority === 1 && 'active') }
+                className={ 'btn priority prio-1 ' + (priority === 1 && 'active') }
                 onClick={ () => setPriority(1) } type="button"
               >
                 <i className="material-icons">flag</i></button>
               <button
-                className={ 'btn-invisible priority prio-2 ' + (priority === 2 && 'active') }
+                className={ 'btn priority prio-2 ' + (priority === 2 && 'active') }
                 onClick={ () => setPriority(2) } type="button"
               >
                 <i className="material-icons">flag</i></button>
               <button
-                className={ 'btn-invisible priority prio-3 ' + (priority === 3 && 'active') }
+                className={ 'btn priority prio-3 ' + (priority === 3 && 'active') }
                 onClick={ () => setPriority(3) } type="button"
               >
                 <i className="material-icons">flag</i></button>
@@ -130,7 +130,7 @@ function TaskModal ({ trigger, task, modalOpen, setModalOpen }) {
                 className="input-field"
                 required minLength={ 3 }
               />
-              { subtaskName ? <button className="material-icons btn-invisible right">save</button> : '' }
+              { subtaskName ? <button className="material-icons btn right">save</button> : '' }
             </form>
           </li>
           {

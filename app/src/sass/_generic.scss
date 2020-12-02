@@ -100,6 +100,9 @@
 .flex-center-self {
   align-self: center;
 }
+.flex-wrap {
+  flex-wrap: wrap;
+}
 
 .place-center {
   align-items: center;
@@ -137,28 +140,17 @@ $fff: 10;
   font-weight: bold;
 }
 
-.btn-subtle {
+.btn {
   border: 0;
   cursor: pointer;
-}
 
-.btn-invisible {
-  @extend .btn-subtle;
-  background: transparent !important;
-  color: inherit !important;
-  padding: 0 $todo-button-padding;
-
-  &:focus {
+  &:focus, &:hover {
     background: transparent;
   }
 }
 
 .btn-border {
   border: 1px solid !important;
-}
-
-.ib {
-  display: inline-block;
 }
 
 .v-hidden {
@@ -191,6 +183,20 @@ $fff: 10;
   float: right !important;
 }
 
+.no-color {
+  color: inherit;
+}
+
+.ib {
+  // invisible button
+  border: none;
+  outline: none;
+  cursor: pointer;
+  //padding: 0;
+  line-height: normal;
+  background: transparent;
+}
+
 .backdrop {
   content: "";
   position: fixed;
@@ -220,4 +226,8 @@ $fff: 10;
   .hide-lg {
     display: none;
   }
+}
+
+button:focus {
+  background: transparent !important; // set by FORMS!!!;
 }
