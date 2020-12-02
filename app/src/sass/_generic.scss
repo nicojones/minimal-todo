@@ -120,7 +120,7 @@
 $fff: 10;
 @while ($fff <= 90) {
   .f-#{ $fff } {
-    flex: 1 0 #{$fff}#{'%'};
+    flex: 0 0 #{$fff}#{'%'};
   }
   $fff: $fff + 10;
 }

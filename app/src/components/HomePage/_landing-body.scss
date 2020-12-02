@@ -24,6 +24,14 @@ $svg-img: 200px;
   max-height: 80vw;
 }
 
+.features-section {
+  margin: 50px 0;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  display: flex;
+}
+
 .footer-links {
   display: flex;
   flex-direction: column;

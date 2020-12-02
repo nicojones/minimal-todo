@@ -143,5 +143,18 @@ export const text = {
     settings: {
       _: 'Settings'
     }
+  },
+
+  landing: {
+    title: 'minimal todo',
+    sub: 'Your new productivity tool',
+    feature: {
+      todo: 'Packed with all you need, with only what you need',
+      write: 'Don\'t get distracted and focus on what matters',
+      calendar: 'Increase your productivity and reduce stress',
+      read: 'Manage your time better, enjoy your free time better',
+      create: 'Freeing your mind of tasks leaves space for creativity',
+      explore: 'Don\'t get distracted and focus on what matters',
+    }
   }
 };

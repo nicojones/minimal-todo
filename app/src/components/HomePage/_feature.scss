@@ -1,0 +1,31 @@
+@import 'src/sass/colors';
+@import 'src/sass/mixins';
+
+.feature {
+  // JUST A TEST
+  height: 300px;
+  overflow: hidden;
+  ////////
+
+  padding: 25px 25px 0;
+  margin-bottom: 25px;
+  border: 1px solid $very-subtle-color;
+  @include transition();
+
+  &:hover {
+    @include box_shadow();
+  }
+
+  &__title {
+    text-align: center;
+    min-height: 80px;
+    color: $subtle-color;
+    margin: 0;
+  }
+
+  &__image {
+    max-width: 90%;
+    min-width: 200px;
+    width: 200px;
+  }
+}
