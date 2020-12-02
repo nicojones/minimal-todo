@@ -137,7 +137,7 @@ function Project ({ setProject }) {
               <button className="btn p0">
                 <i className="material-icons left subtle btn-pr">{ taskName ? 'save' : 'add' }</i>
               </button>
-              <div className="form-group w-100">
+              <div className="flex-center-start w-100">
                 <div className="input-group mb-2">
                   <input
                     onChange={ taskNameChange } className="invisible f-100 btn-pl"

@@ -1,6 +1,12 @@
 @import 'src/sass/colors';
 @import 'mixins';
 
+.container {
+  margin: 0 auto;
+  width: $landing-width;
+  max-width: 95%;
+}
+
 #todo-app {
   @extend .flex-row;
   justify-content: space-between;
