@@ -32,7 +32,7 @@ function ProjectListDropdown ({ project, onDelete }) {
 
   return (
     <>
-      <button className="btn child-hover ch-hidden ml-auto" onClick={ () => setDropdownShown(true) }>
+      <button className="btn child-hover ml-auto" onClick={ () => setDropdownShown(true) }>
         <i className="tiny material-icons subtle">more_horiz</i>
       </button>
       {

@@ -49,12 +49,7 @@
 
   @media (pointer: fine) {
     .child-hover {
-      display: none;
-
-      &.ch-hidden {
-        display: inline-block;
-        visibility: hidden;
-      }
+      visibility: hidden;
     }
   }
   @media (pointer: coarse) {
@@ -65,7 +60,6 @@
 
   &:hover {
     .child-hover {
-      display: inline-block;
       visibility: visible;
     }
   }

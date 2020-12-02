@@ -85,13 +85,13 @@ function Task ({ task, level }) {
           { task.description && <small className="subtle ml-5">{ task.description }</small> }
         </button>
 
-        <span className="ml-auto flex-row">
+        <span className="child-hover ml-auto flex-row">
           <button
-            className="child-hover material-icons ib task__action-button"
+            className="material-icons ib task__action-button"
             data-tip={ text.task.delete._ }
             onClick={ () => onDelete(task) }>delete</button>
           <button
-            className="child-hover material-icons ib task__action-button"
+            className="material-icons ib task__action-button"
             data-tip={ text.task.edit }
             onClick={ () => setModalOpen(true) }>edit</button>
 

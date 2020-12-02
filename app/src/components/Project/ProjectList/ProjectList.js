@@ -123,7 +123,7 @@ function ProjectList ({ projectId, changeToProject }) {
             onSubmit={ addNewProject }
             className={ 'add-project flex-row ' + (isLoading === 'new' ? ' loader-input' : '') }
           >
-            <button className="ib child-hover ch-hidden left">
+            <button className="ib child-hover left">
               <label htmlFor="new-project-input" className="pointer">
                 <i className="tiny material-icons subtle">{ newProjectName ? 'save' : 'add' }</i>
               </label>
