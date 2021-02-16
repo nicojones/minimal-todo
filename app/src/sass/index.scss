@@ -6,7 +6,7 @@
 @import 'src/sass/forms';
 
 
-@import 'app';
+@import 'src/sass/app';
 
 body {
   background: $app-background-color;
@@ -23,8 +23,9 @@ body {
 // Invisible!
 .material-icons.inv {
   @extend .tiny;
-  @extend .btn-p;
+  //@extend .btn-p;
   @extend .v-hidden;
+
 }
 
 //.ct-toast {
