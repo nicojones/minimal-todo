@@ -1,6 +1,5 @@
-import React from 'react';
-import { PDefault } from '../../interfaces';
-
+import React from "react";
+import { PDefault } from "../../interfaces";
 
 interface ModalAttrs {
   children: any;
@@ -11,41 +10,40 @@ interface ModalAttrs {
   onCancel: (event: PDefault) => any;
   loading: boolean;
 }
-export function Modal ({ children, modalOpen, okButton, cancelButton, onAccept, onCancel, loading }: ModalAttrs) {
-
-  return (
+export const Modal = ({
+  children,
+  modalOpen,
+  okButton,
+  cancelButton,
+  onAccept,
+  onCancel,
+  loading,
+}: ModalAttrs) =>
+  modalOpen ? (
     <>
-      {
-        modalOpen ? <>
-            <div className={ 'modal' }>
-              <div className={ (loading ? ' loader-input cover' : '') }>
-                <div className="modal-content">
-                  { children }
-                </div>
-                <div className="modal-footer">
-                  {
-                    okButton &&
-                    <button
-                      onClick={ onAccept }
-                      className="modal-close waves-effect waves-green btn"
-                      dangerouslySetInnerHTML={ { __html: okButton } }
-                    />
-                  }
-                  {
-                    cancelButton &&
-                    <button
-                      onClick={ onCancel }
-                      className="modal-close waves-effect waves-red btn left"
-                      dangerouslySetInnerHTML={ { __html: cancelButton } }
-                    />
-                  }
-                </div>
-              </div>
-            </div>
-            <div className="backdrop dark" onClick={ onCancel }/>
-          </>
-          : ''
-      }
+      <div className={"modal"}>
+        <div className={loading ? " loader-input cover" : ""}>
+          <div className="modal-content">{children}</div>
+          <div className="modal-footer">
+            {okButton && (
+              <button
+                onClick={onAccept}
+                className="modal-close waves-effect waves-green btn"
+                dangerouslySetInnerHTML={{ __html: okButton }}
+              />
+            )}
+            {cancelButton && (
+              <button
+                onClick={onCancel}
+                className="modal-close waves-effect waves-red btn left"
+                dangerouslySetInnerHTML={{ __html: cancelButton }}
+              />
+            )}
+          </div>
+        </div>
+      </div>
+      <div className="backdrop dark" onClick={onCancel} />
     </>
+  ) : (
+    null
   );
-}

@@ -14,7 +14,7 @@ import { IUser } from './interfaces';
 export const LoggedInUserContext = React.createContext<IUser>({} as IUser);
 
 
-export function App () {
+export const App = () => {
 
   const [loaded, setLoaded] = useState(false);
   const [user, setUser] = useState<IUser>(false as unknown as IUser);

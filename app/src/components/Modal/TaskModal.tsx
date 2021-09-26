@@ -1,11 +1,16 @@
-import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
-import { text } from 'config';
-import { taskService } from 'services';
-import { createTaskObject } from 'functions/create-task-object';
-import { Modal } from 'components/Modal/Modal';
-import { ProjectContext } from 'TodoApp';
-import { ITask, PDefault } from 'interfaces';
-
+import React, {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { text } from "config";
+import { taskService } from "services";
+import { createTaskObject } from "functions/create-task-object";
+import { Modal } from "components/Modal/Modal";
+import { ProjectContext } from "TodoApp";
+import { ITask, PDefault } from "interfaces";
 
 interface TaskModalAttrs {
   trigger?: {
@@ -16,26 +21,34 @@ interface TaskModalAttrs {
   modalOpen: boolean;
   setModalOpen: Dispatch<SetStateAction<boolean>>;
 }
-export function TaskModal ({ trigger, task, modalOpen, setModalOpen }: TaskModalAttrs) {
-
+export const TaskModal = ({
+  trigger,
+  task,
+  modalOpen,
+  setModalOpen,
+}: TaskModalAttrs) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [loadingST, setLoadingST] = useState<boolean>(false);
-  const [subtaskName, setSubtaskName] = useState<string>('');
+  const [subtaskName, setSubtaskName] = useState<string>("");
   const [subtasks, setSubtasks] = useState<ITask[]>(task.subtasks || []);
-  const [taskName, setTaskName] = useState<ITask['name']>(task.name || '');
-  const [taskDesc, setTaskDesc] = useState<ITask['description']>(task.description || '');
-  const [priority, setPriority] = useState<ITask['priority']>(task.priority || 0);
+  const [taskName, setTaskName] = useState<ITask["name"]>(task.name || "");
+  const [taskDesc, setTaskDesc] = useState<ITask["description"]>(
+    task.description || ""
+  );
+  const [priority, setPriority] = useState<ITask["priority"]>(
+    task.priority || 0
+  );
 
   const project = useContext(ProjectContext);
 
   useEffect(() => {
-    setTaskName(task.name || '');
+    setTaskName(task.name || "");
     setSubtasks(task.subtasks || []);
-    setTaskDesc(task.description || '');
+    setTaskDesc(task.description || "");
     setPriority(task.priority || 0);
   }, [task]);
 
-  async function saveTask (e: PDefault) {
+  async function saveTask(e: PDefault) {
     e.preventDefault();
 
     setLoading(true);
@@ -44,7 +57,7 @@ export function TaskModal ({ trigger, task, modalOpen, setModalOpen }: TaskModal
       ...task,
       name: taskName,
       priority: priority,
-      description: taskDesc
+      description: taskDesc,
     });
 
     setLoading(false);
@@ -52,115 +65,144 @@ export function TaskModal ({ trigger, task, modalOpen, setModalOpen }: TaskModal
     setModalOpen(false);
   }
 
-  async function toggleSubtask (subtask: ITask) {
+  async function toggleSubtask(subtask: ITask) {
     subtask.checked = !subtask.checked;
     await taskService.toggleTask(subtask);
   }
 
-  async function saveSubtask (e: PDefault) {
+  async function saveSubtask(e: PDefault) {
     e.preventDefault();
     setLoadingST(true);
-    await taskService.addTask(createTaskObject({
-      name: subtaskName,
-      parentId: task.id,
-      level: task.level + 1,
-      projectId: project.id
-    }));
+    await taskService.addTask(
+      createTaskObject({
+        name: subtaskName,
+        parentId: task.id,
+        level: task.level + 1,
+        projectId: project.id,
+      })
+    );
 
     setLoadingST(false);
-    setSubtaskName('');
+    setSubtaskName("");
   }
 
   return (
     <>
-      { trigger &&
-        <button className={ trigger.className } onClick={ () => setModalOpen(true) }>{ trigger.text }</button>
-      }
+      {trigger && (
+        <button
+          className={trigger.className}
+          onClick={() => setModalOpen(true)}
+        >
+          {trigger.text}
+        </button>
+      )}
       <Modal
-        modalOpen={ modalOpen }
-        loading={ loading }
-        onAccept={ saveTask }
-        onCancel={ () => setModalOpen(false) }
-        okButton={ '<i class="material-icons right">save</i>' }
-        cancelButton={ '<i class="material-icons right">close</i>' }
+        modalOpen={modalOpen}
+        loading={loading}
+        onAccept={saveTask}
+        onCancel={() => setModalOpen(false)}
+        okButton={'<i class="material-icons right">save</i>'}
+        cancelButton={'<i class="material-icons right">close</i>'}
       >
-        {/*<h6 className="subtle mb-15 mt-5">{ project.name }</h6>*/ }
-        <form onSubmit={ saveTask }>
+        {/*<h6 className="subtle mb-15 mt-5">{ project.name }</h6>*/}
+        <form onSubmit={saveTask}>
           <div>
-            {/*<label>{ text.task.name }</label>*/ }
+            {/*<label>{ text.task.name }</label>*/}
             <input
-              value={ taskName } required minLength={ 3 }
-              placeholder={ text.task.name }
-              onChange={ (e) => setTaskName(e.target.value) }
+              value={taskName}
+              required
+              minLength={3}
+              placeholder={text.task.name}
+              onChange={(e) => setTaskName(e.target.value)}
             />
           </div>
           <div>
-            {/*<label>{ text.task.notes }</label>*/ }
+            {/*<label>{ text.task.notes }</label>*/}
             <input
-              value={ taskDesc }
+              value={taskDesc}
               className="materialize-textarea"
-              placeholder={ text.task.notes }
-              onChange={ (e) => setTaskDesc(e.target.value) }
+              placeholder={text.task.notes}
+              onChange={(e) => setTaskDesc(e.target.value)}
             />
           </div>
           <div>
-            <label>{ text.task.prio._ }</label>
+            <label>{text.task.prio._}</label>
             <div className="flex-row">
               <button
-                className={ 'btn priority prio-0 ' + (priority === 0 && 'active') }
-                onClick={ () => setPriority(0) } type="button"
+                className={
+                  "btn priority prio-0 " + (priority === 0 && "active")
+                }
+                onClick={() => setPriority(0)}
+                type="button"
               >
-                <i className="material-icons">flag</i></button>
+                <i className="material-icons">flag</i>
+              </button>
               <button
-                className={ 'btn priority prio-1 ' + (priority === 1 && 'active') }
-                onClick={ () => setPriority(1) } type="button"
+                className={
+                  "btn priority prio-1 " + (priority === 1 && "active")
+                }
+                onClick={() => setPriority(1)}
+                type="button"
               >
-                <i className="material-icons">flag</i></button>
+                <i className="material-icons">flag</i>
+              </button>
               <button
-                className={ 'btn priority prio-2 ' + (priority === 2 && 'active') }
-                onClick={ () => setPriority(2) } type="button"
+                className={
+                  "btn priority prio-2 " + (priority === 2 && "active")
+                }
+                onClick={() => setPriority(2)}
+                type="button"
               >
-                <i className="material-icons">flag</i></button>
+                <i className="material-icons">flag</i>
+              </button>
               <button
-                className={ 'btn priority prio-3 ' + (priority === 3 && 'active') }
-                onClick={ () => setPriority(3) } type="button"
+                className={
+                  "btn priority prio-3 " + (priority === 3 && "active")
+                }
+                onClick={() => setPriority(3)}
+                type="button"
               >
-                <i className="material-icons">flag</i></button>
+                <i className="material-icons">flag</i>
+              </button>
             </div>
           </div>
         </form>
 
         <ul className="list-unstyled flex-column">
-          <li key="new-subtask" className={ loadingST ? ' loader-input' : '' }>
-            <form onSubmit={ saveSubtask } className="flex-row">
+          <li key="new-subtask" className={loadingST ? " loader-input" : ""}>
+            <form onSubmit={saveSubtask} className="flex-row">
               <input
-                onChange={ (e) => setSubtaskName(e.target.value) }
-                placeholder={ text.task.subtasks }
-                value={ subtaskName }
+                onChange={(e) => setSubtaskName(e.target.value)}
+                placeholder={text.task.subtasks}
+                value={subtaskName}
                 className="input-field"
-                required minLength={ 3 }
+                required
+                minLength={3}
               />
-              { subtaskName ? <button className="material-icons btn right">save</button> : '' }
+              {subtaskName ? (
+                <button className="material-icons btn right">save</button>
+              ) : (
+                ""
+              )}
             </form>
           </li>
-          {
-            (subtasks || []).map((sub) =>
-              <li key={ sub.id } data-tip={ sub.timestamp } className="block">
-                <label className="left">
-                  <input
-                    type="checkbox" checked={ sub.checked }
-                    id={ sub.id }
-                    className="material-cb"
-                    onChange={ () => toggleSubtask(sub) }
-                  />
-                  <div/>
-                </label>
-                <span className="left">{ sub.name }</span>
-              </li>
-            )
-          }
+          {(subtasks || []).map((sub) => (
+            <li key={sub.id} data-tip={sub.timestamp} className="block">
+              <label className="left">
+                <input
+                  type="checkbox"
+                  checked={sub.checked}
+                  id={sub.id}
+                  className="material-cb"
+                  onChange={() => toggleSubtask(sub)}
+                />
+                <div />
+              </label>
+              <span className="left">{sub.name}</span>
+            </li>
+          ))}
         </ul>
       </Modal>
     </>
   );
-}
+};

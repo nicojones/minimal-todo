@@ -1,13 +1,14 @@
 import axios from 'axios';
 import { environment } from './environment';
 import { auth } from './firebase';
-import { sha1 } from 'functions/sha1';
 import { text } from 'config/text';
 import { showToast } from './toast';
 import { ISignupForm, ISignupFormError } from '../interfaces/signup-form.interface';
 import { ILoginForm, IUser, PDefault } from '../interfaces';
 import firebase from 'firebase/app';
 
+
+const sha1 = require('sha1');
 
 let debounceAuth: any;
 
@@ -19,7 +20,7 @@ export const authService = {
 
   authState: (done: (user: IUser) => any) => {
     auth().onIdTokenChanged((user) => {
-    // auth().onAuthStateChanged((user) => {
+      // auth().onAuthStateChanged((user) => {
       clearTimeout(debounceAuth);
       debounceAuth = setTimeout(() => {
         user && user.getIdToken(true).then((token: string) => {
@@ -32,17 +33,14 @@ export const authService = {
   },
 
   signup: (signupData: ISignupForm) => {
-    return sha1(signupData.password)
-      .then((sha1Password) => {
-        return axios({
-          url: `${ environment.url }/signup`,
-          method: 'POST',
-          data: {
-            ...signupData,
-            password: sha1Password
-          }
-        });
-      })
+    return axios({
+      url: `${ environment.url }/signup`,
+      method: 'POST',
+      data: {
+        ...signupData,
+        password: sha1(signupData.password)
+      }
+    })
       .then((response) => {
         return authService.login({
           email: signupData.email,
@@ -54,10 +52,8 @@ export const authService = {
   login: (loginData: ILoginForm) => {
     let userCredential: firebase.auth.UserCredential;
 
-    return sha1(loginData.password)
-      .then((sha1Password) => {
-        return auth().signInWithEmailAndPassword(loginData.email, sha1Password);
-      })
+    return auth()
+      .signInWithEmailAndPassword(loginData.email, sha1(loginData.password))
       .then((response: firebase.auth.UserCredential) => {
         // @ts-ignore
         localStorage.setItem('uid', JSON.stringify(response.user.uid));
@@ -71,7 +67,7 @@ export const authService = {
       });
   },
 
-  loginCatch: (reason: {code: string; message: string}) => {
+  loginCatch: (reason: { code: string; message: string }) => {
     console.error(reason, reason.code, reason.code === 'auth/user-not-found');
     if (reason.code === 'auth/wrong-password') {
       showToast('error', text.login.invalidPass);
@@ -90,7 +86,7 @@ export const authService = {
     });
   },
 
-  validateSignup: (signupData: ISignupForm): ISignupFormError  => {
+  validateSignup: (signupData: ISignupForm): ISignupFormError => {
     // if (!signupData.username) {
     //   return { username: 'Must enter a valid username' };
     // }

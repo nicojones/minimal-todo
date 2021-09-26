@@ -1,21 +1,19 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import 'sass/index.scss';
-import { App } from './App';
+import React from "react";
+import ReactDOM from "react-dom";
+import "sass/index.scss";
+import { App } from "./App";
 // import 'assets/images';
-import { screenSize } from 'functions/screen-size';
-
+import { screenSize } from "functions/screen-size";
 
 // ======================================== //
 screenSize();
 
 ReactDOM.render(
   <React.StrictMode>
-    <App/>
+    <App />
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
-
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

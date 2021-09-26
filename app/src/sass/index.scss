@@ -23,7 +23,7 @@ body {
 // Invisible!
 .material-icons.inv {
   @extend .tiny;
-  //@extend .btn-p;
+  @extend .btn-p;
   @extend .v-hidden;
 
 }
