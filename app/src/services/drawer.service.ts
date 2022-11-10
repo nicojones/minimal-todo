@@ -1,9 +1,10 @@
-import { auth, db } from './firebase';
-import { handleError } from './handle-error';
-import { urls } from '../config/urls';
-import { text } from '../config/text';
-import { showToast } from './toast';
-import { ITask, SortDirection } from '../interfaces';
+import {auth, db} from './firebase';
+import {urls} from '../config/urls';
+import {text} from '../config/text';
+import {showToast} from './toast';
+import {ITask, SortDirection} from '../interfaces';
+import {authService} from "./auth.service";
+import {constants} from "../config";
 
 
 export const drawerService = {
@@ -11,7 +12,7 @@ export const drawerService = {
   db: db(),
 
   headers: () => {
-    return { authorization: localStorage.getItem('AuthToken') };
+    return {authorization: localStorage.getItem(constants.storageKey.AUTH_TOKEN)};
   },
 
   getDrawer: (drawerKey: string, sort: string, done: (tasks: ITask[]) => any) => {
@@ -19,7 +20,7 @@ export const drawerService = {
     try {
       const taskCollection = drawerService.db
         .collectionGroup('tasks')
-        .where('_uids', 'array-contains', (auth().currentUser as { uid: string}).uid);
+        .where('_uids', 'array-contains', (auth().currentUser as { uid: string }).uid);
       let query;
       switch (drawerKey) {
         case urls.inboxUrl:
@@ -35,7 +36,8 @@ export const drawerService = {
         default:
           showToast('error', text.drawer.invalidDrawer);
           done([]);
-          return () => {};
+          return () => {
+          };
       }
       //
       if (query) {
@@ -58,7 +60,7 @@ export const drawerService = {
         });
       }
     } catch (e) {
-      handleError('Error on fetching drawer: ', e);
+      authService.handleError('Error on fetching drawer: ', e);
     }
   },
 };

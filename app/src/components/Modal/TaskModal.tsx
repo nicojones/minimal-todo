@@ -1,16 +1,10 @@
-import React, {
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
-import { text } from "config";
-import { taskService } from "services";
-import { createTaskObject } from "functions/create-task-object";
-import { Modal } from "components/Modal/Modal";
-import { ProjectContext } from "TodoApp";
-import { ITask, PDefault } from "interfaces";
+import React, {Dispatch, SetStateAction, useContext, useEffect, useState,} from "react";
+import {text} from "config";
+import {taskService} from "services";
+import {createTaskObject} from "functions/create-task-object";
+import {Modal} from "components/Modal/Modal";
+import {ProjectContext} from "TodoApp";
+import {ITask, PDefault} from "interfaces";
 
 interface TaskModalAttrs {
   trigger?: {
@@ -21,12 +15,10 @@ interface TaskModalAttrs {
   modalOpen: boolean;
   setModalOpen: Dispatch<SetStateAction<boolean>>;
 }
-export const TaskModal = ({
-  trigger,
-  task,
-  modalOpen,
-  setModalOpen,
-}: TaskModalAttrs) => {
+
+export const TaskModal = (
+  {trigger, task, modalOpen, setModalOpen}: TaskModalAttrs
+) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [loadingST, setLoadingST] = useState<boolean>(false);
   const [subtaskName, setSubtaskName] = useState<string>("");
@@ -53,12 +45,15 @@ export const TaskModal = ({
 
     setLoading(true);
 
-    await taskService.updateTask({
-      ...task,
-      name: taskName,
-      priority: priority,
-      description: taskDesc,
-    });
+    await taskService.updateTask(
+      project,
+      {
+        ...task,
+        name: taskName,
+        priority: priority,
+        description: taskDesc,
+      }
+    );
 
     setLoading(false);
 
@@ -66,19 +61,21 @@ export const TaskModal = ({
   }
 
   async function toggleSubtask(subtask: ITask) {
-    subtask.checked = !subtask.checked;
-    await taskService.toggleTask(subtask);
+    subtask.done = !subtask.done;
+    await taskService.toggleTask(project, subtask);
+    setSubtasks([...subtasks]);
   }
 
   async function saveSubtask(e: PDefault) {
     e.preventDefault();
     setLoadingST(true);
     await taskService.addTask(
+      project,
       createTaskObject({
         name: subtaskName,
         parentId: task.id,
         level: task.level + 1,
-        projectId: project.id,
+        project: project.id,
       })
     );
 
@@ -191,12 +188,12 @@ export const TaskModal = ({
               <label className="left">
                 <input
                   type="checkbox"
-                  checked={sub.checked}
+                  checked={sub.done}
                   id={sub.id}
                   className="material-cb"
                   onChange={() => toggleSubtask(sub)}
                 />
-                <div />
+                <div/>
               </label>
               <span className="left">{sub.name}</span>
             </li>

@@ -1,18 +1,16 @@
-import { IProject } from './project.interface';
+import {IProject} from './project.interface';
+import {Identifiable} from "./identifiable.interface";
 
 
-export interface ITask {
-  id: string;
+export interface ITask<DateType = number> extends Identifiable<DateType> {
   name: string;
   description: string;
-  checked: boolean;
+  done: boolean;
   expanded: boolean;
-  subtasks: ITask[];
+  subtasks: ITask<DateType>[];
   level: number;
   priority: number;
   parentId: ITask['id'];
-  timestamp: {
-    seconds: number;
-  } | Date;
-  projectId: IProject['id'];
+  timestamp: DateType;
+  project: IProject['id'];
 }

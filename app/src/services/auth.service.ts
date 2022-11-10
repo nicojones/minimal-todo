@@ -1,11 +1,10 @@
-import axios from 'axios';
-import { environment } from './environment';
-import { auth } from './firebase';
-import { text } from 'config/text';
-import { showToast } from './toast';
-import { ISignupForm, ISignupFormError } from '../interfaces/signup-form.interface';
-import { ILoginForm, IUser, PDefault } from '../interfaces';
-import firebase from 'firebase/app';
+import {auth, pbClient} from './firebase';
+import {text} from 'config/text';
+import {showToast} from './toast';
+import {ISignupForm, ISignupFormError} from '../interfaces/signup-form.interface';
+import {ILoginForm, LoginResponse, PbUser, PDefault} from '../interfaces';
+import {constants, urls} from "../config";
+import {PbError} from "../interfaces/pb-error.interface";
 
 
 const sha1 = require('sha1');
@@ -15,56 +14,71 @@ let debounceAuth: any;
 export const authService = {
 
   setToken: (token: string) => {
-    localStorage.setItem('AuthToken', token);
+    localStorage.setItem(constants.storageKey.AUTH_TOKEN, token);
   },
 
-  authState: (done: (user: IUser) => any) => {
-    auth().onIdTokenChanged((user) => {
-      // auth().onAuthStateChanged((user) => {
-      clearTimeout(debounceAuth);
-      debounceAuth = setTimeout(() => {
-        user && user.getIdToken(true).then((token: string) => {
-          authService.setToken(token);
-        });
-
-        done(user as IUser);
-      }, 300);
-    });
+  getToken: (): string | null => {
+    return localStorage.getItem(constants.storageKey.AUTH_TOKEN);
   },
 
-  signup: (signupData: ISignupForm) => {
-    return axios({
-      url: `${ environment.url }/signup`,
-      method: 'POST',
-      data: {
-        ...signupData,
-        password: sha1(signupData.password)
-      }
-    })
-      .then((response) => {
-        return authService.login({
-          email: signupData.email,
-          password: signupData.password
-        });
-      });
+  setUser: (user: PbUser) => {
+    localStorage.setItem(constants.storageKey.PB_USER, JSON.stringify(user || null));
   },
 
-  login: (loginData: ILoginForm) => {
-    let userCredential: firebase.auth.UserCredential;
+  getUser: (): PbUser | null => {
+    const userString: string | null = localStorage.getItem(constants.storageKey.PB_USER);
+    if (userString) {
+      return JSON.parse(userString)
+    }
+    return null;
+  },
 
-    return auth()
-      .signInWithEmailAndPassword(loginData.email, sha1(loginData.password))
-      .then((response: firebase.auth.UserCredential) => {
-        // @ts-ignore
-        localStorage.setItem('uid', JSON.stringify(response.user.uid));
-        userCredential = response;
-        // @ts-ignore
-        return auth().currentUser.getIdToken();
+  handleError: (label: string, error: PbError) => {
+    (window as any).PB_ERROR = error;
+
+    showToast('error', label + ' -- ' + error.message)
+
+    if ([401, 403].includes(error.code)) {
+      localStorage.removeItem(constants.storageKey.AUTH_TOKEN);
+      localStorage.removeItem(constants.storageKey.PB_USER);
+      window.location.hash = urls.login;
+    }
+  },
+
+  authState: (done: (user: PbUser | null) => any) => {
+    done(authService.getUser());
+  },
+
+  signup: (signupData: ISignupForm): Promise<PbUser> => {
+    let user: PbUser;
+    return (pbClient.users.create({
+      email: signupData.email,
+      password: signupData.password,
+      passwordConfirm: signupData.password,
+    }) as Promise<unknown> as Promise<PbUser>)
+      .then(() => {
+        return authService.login({email: signupData.email, password: signupData.password})
       })
-      .then((authToken) => {
-        authService.setToken(authToken);
-        return userCredential;
-      });
+      .then((response: LoginResponse) => {
+        user = response.user;
+        return pbClient.records.update('profiles', response.user.profile.id, {
+          name: signupData.name,
+        });
+      })
+      .then((a) => {
+        return pbClient.users.requestVerification(signupData.email)
+      })
+      .then(() => user)
+  },
+
+  login: (loginData: ILoginForm): Promise<LoginResponse> => {
+    return (pbClient.users
+      .authViaEmail(loginData.email, loginData.password) as Promise<unknown> as Promise<LoginResponse>)
+      .then((response: LoginResponse) => {
+        authService.setToken(response.token);
+        authService.setUser(response.user);
+        return response;
+      })
   },
 
   loginCatch: (reason: { code: string; message: string }) => {
@@ -91,13 +105,13 @@ export const authService = {
     //   return { username: 'Must enter a valid username' };
     // }
     if (!signupData.name || signupData.name.length <= 2) {
-      return { name: 'Must enter a longer name' };
+      return {name: 'Must enter a longer name'};
     }
     if (!signupData.email || signupData.email.length <= 5) {
-      return { email: 'Invalid email' };
+      return {email: 'Invalid email'};
     }
     if (!signupData.password) {
-      return { password: 'Password can\'t be empty' };
+      return {password: 'Password can\'t be empty'};
     }
     return {};
   }

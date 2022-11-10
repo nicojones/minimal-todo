@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import "./_task.scss";
-import { Tooltip } from "components/Tooltip/Tooltip";
-import { TaskModal } from "components/Modal/TaskModal";
-import { taskService } from "services";
-import { constants, text } from "config";
-import { ProjectContext } from "TodoApp";
-import { IProject, ITask } from "interfaces";
+import {Tooltip} from "components/Tooltip/Tooltip";
+import {TaskModal} from "components/Modal/TaskModal";
+import {taskService} from "services";
+import {constants, text} from "config";
+import {ProjectContext} from "TodoApp";
+import {IProject, ITask} from "interfaces";
 
 interface TaskAttrs {
   task: ITask;
@@ -20,9 +20,9 @@ export const Task = ({ task, level }: TaskAttrs) => {
 
   const project = useContext<IProject>(ProjectContext);
 
-  const openLength = subtasks.filter((s: ITask) => !s.checked).length || 0;
+  const openLength = subtasks.filter((s: ITask) => !s.done).length || 0;
 
-  const doneClass = (task.checked && project.showCompleted && "done") || "";
+  const doneClass = (task.done && project.showCompleted && "done") || "";
   // const doneClass = (task.checked ? (project.showCompleted ? 'done' : '') : '');
 
   const showExpanderClass = (
@@ -36,15 +36,14 @@ export const Task = ({ task, level }: TaskAttrs) => {
   }, [task.subtasks]);
 
   async function toggleCompleted(task: ITask) {
-    task.checked = !task.checked;
+    task.done = !task.done;
     // after changing the state...
-    if (task.checked) {
+    if (task.done) {
       // set all subtasks as checked, since the main task was marked as checked.
       // (task.subtasks || []).forEach((_task) => _task.checked = true);
       task.expanded = false;
     }
-    await taskService.toggleTask(task);
-    // await taskService.updateTask(project.id, task);
+    await taskService.toggleTask(project, task);
   }
 
   /**
@@ -81,13 +80,13 @@ export const Task = ({ task, level }: TaskAttrs) => {
           <input
             type="checkbox"
             className="material-cb"
-            checked={task.checked}
+            checked={task.done}
             onChange={() => toggleCompleted(task)}
           />
           <div />
         </label>
         <button
-          className={"left-align ib " + (task.checked ? "" : "")}
+          className={"left-align ib " + (task.done ? "" : "")}
           onClick={() => setModalOpen(true)}
         >
           <span className="task-name">{task.name}</span>

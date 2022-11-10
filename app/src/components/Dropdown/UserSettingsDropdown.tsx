@@ -1,15 +1,15 @@
-import React, { useContext, useState } from 'react';
-import { authService } from 'services/auth.service';
-import { LoggedInUserContext } from 'App';
-import { text } from 'config';
-import { IUser } from '../../interfaces';
+import React, {useContext, useState} from 'react';
+import {authService} from 'services/auth.service';
+import {LoggedInUserContext} from 'App';
+import {text} from 'config';
+import {IUser} from '../../interfaces';
 
 
 export function UserSettingsDropdown () {
 
   const [dropdownShown, setDropdownShown] = useState<boolean>(false);
 
-  const user = useContext<IUser>(LoggedInUserContext);
+  const user = useContext<IUser | null>(LoggedInUserContext);
 
   return (
     <>
@@ -28,7 +28,7 @@ export function UserSettingsDropdown () {
               </button>
             </li>
             <li className="">
-              <small className="left subtle btn-p">{ text.loggedInAs(user.email) }</small>
+              <small className="left subtle btn-p">{ text.loggedInAs(user?.email as string) }</small>
             </li>
           </ul>
           <div className="backdrop" onClick={ () => setDropdownShown(false) }/>

@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-
+  pocketbase: "http://kupfer.es:8090",
   firebase: {
     apiKey: 'AIzaSyDxmJzv3ccl0_ouKB9oVSzWIsn6uysYMLQ',
     databaseURL: 'https://todo-list-react-33431.firebaseio.com',

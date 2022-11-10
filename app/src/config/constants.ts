@@ -1,6 +1,6 @@
-import { urls } from './urls';
-import { text } from './text';
-import { CTOptions } from 'cogo-toast';
+import {urls} from './urls';
+import {text} from './text';
+import {CTOptions} from 'cogo-toast';
 
 
 export const constants = {
@@ -22,5 +22,9 @@ export const constants = {
   drawerSort: {
     [urls.inboxUrl]: 'timestamp,desc',
     [urls.priorityUrl]: 'priority,desc'
+  },
+  storageKey: {
+    PB_USER: "PB_USER",
+    AUTH_TOKEN: "AUTH_TOKEN"
   }
 };

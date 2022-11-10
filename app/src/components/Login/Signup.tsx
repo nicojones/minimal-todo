@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { authService } from "services/auth.service";
-import { Link, Redirect, useHistory } from "react-router-dom";
-import { showToast } from "services/toast";
-import { LoggedInUserContext } from "App";
-import { text, urls } from "config";
+import React, {useState} from "react";
+import {authService} from "services/auth.service";
+import {Link, Redirect, useHistory} from "react-router-dom";
+import {showToast} from "services/toast";
+import {LoggedInUserContext} from "App";
+import {text, urls} from "config";
 import {LoginBox} from "components/Login/LoginBox";
-import { ISignupForm, ISignupFormError, PDefault } from "interfaces";
+import {ISignupForm, ISignupFormError, PbUser, PDefault} from "interfaces";
 
 export const Signup = () => {
   const history = useHistory();
@@ -30,9 +30,9 @@ export const Signup = () => {
       setLoading(true);
       authService
         .signup(signup)
-        .then((responseData) => {
+        .then((responseData: PbUser) => {
           setLoading(false);
-          if (responseData.user) {
+          if (responseData.id) {
             showToast("success", text.login.signupSuccess);
             setSignup({} as ISignupForm);
             setLoggingIn(true);

@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "https://minimaltodo.com",
   "scripts": {
-    "start": "react-scripts start --host=todolist.local",
+    "start": "react-scripts start --port=3333",
     "build-sm": "react-scripts build --production",
     "build": "GENERATE_SOURCEMAP=false react-scripts build --production",
     "test": "react-scripts test",
@@ -17,6 +17,7 @@
     "axios": "^0.21.0",
     "cogo-toast": "^4.2.3",
     "firebase": "^8.0.2",
+    "pocketbase": "^0.7.4",
     "react": "^17.0.1",
     "react-color": "^2.19.3",
     "react-dom": "^17.0.1",

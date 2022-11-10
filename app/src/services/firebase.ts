@@ -1,13 +1,16 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
-import { environment } from './environment';
+import PocketBase from 'pocketbase';
+import {environment} from './environment';
 
 
 firebase.initializeApp(environment.firebase);
 
 export const auth = firebase.auth;
 export const db = firebase.firestore;
+
+export const pbClient = new PocketBase(environment.pocketbase);
 
 // if (!environment.production) {
 //   // IS DEV

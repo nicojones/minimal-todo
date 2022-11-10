@@ -1,10 +1,11 @@
-import { auth, db } from './firebase';
-import axios from 'axios';
-import { environment } from './environment';
-import { handleError } from './handle-error';
-import { time } from 'functions/time';
-import { showToast } from './toast';
-import { IProject, ITask, SortDirection } from '../interfaces';
+import {auth, db, pbClient} from './firebase';
+import {showToast} from './toast';
+import {IProject, ITask, PbItem} from '../interfaces';
+import {authService} from "./auth.service";
+import {constants} from "../config";
+import {ID} from "../interfaces/identifiable.interface";
+import {taskToDto} from "../functions/task-to-dto.function";
+import {projectToDto} from "../functions/project-to-dto.function";
 
 
 export const taskService = {
@@ -12,105 +13,85 @@ export const taskService = {
   db: db(),
 
   headers: () => {
-    return { authorization: localStorage.getItem('AuthToken') };
+    return {authorization: localStorage.getItem(constants.storageKey.AUTH_TOKEN)};
   },
 
-  updateTask: async (task: ITask) => {
-    console.info('Updating task ', task.name);
-
-    // @ts-ignore -> When deleting "subtasks", subtasks is not a required property anymore since it can be undefined...
-    delete task.subtasks; // we don't send this to the server!!
-
+  updateTask: async (project: IProject, task: ITask) => {
     try {
-      return await axios({
-        url: environment.url + `/project/${ task.projectId }/task/${ task.id }`,
-        method: 'PUT',
-        data: task,
-        headers: taskService.headers()
-      }).then((response) => {
-        console.info('result from PUT', response);
-        showToast('success', response.data.message);
-      });
+      pbClient.records.update(
+        'projects',
+        task.project,
+        projectToDto(project)
+      );
+      return pbClient.records.update("tasks", task.id, taskToDto(task))
     } catch (e) {
-      handleError('Error on update task: ' + e.response.data.message, e);
+      authService.handleError('Error on update task: ' + e.response.data.message, e);
     }
   },
 
-  addTask: async (task: ITask) => {
-    console.info('Adding task ', task.name);
-
+  addTask: async (project: IProject, task: ITask): Promise<ID> => {
     try {
-      return await axios({
-        url: environment.url + `/project/${ task.projectId }/task`,
-        method: 'POST',
-        data: task,
-        headers: taskService.headers()
-      }).then((response) => {
-        console.info('result from POST', response);
-        showToast('success', response.data.message);
-        return response.data.taskId;
-      });
-    } catch (e) {
-      handleError('Error on save task: ' + e.response.data.message, e);
+      return pbClient.records.create('tasks', taskToDto(task))
+        .then((response: unknown) => {
+          return (response as ITask).id;
+        })
+        .then((taskId: ID) => {
+          pbClient.records.update(
+            'projects',
+            project.id,
+            {...project, tasks: [...project.tasks, taskId]} as IProject
+          )
+          return taskId;
+        })
+    } catch (e: any) {
+      authService.handleError('Error on save task: ', e);
+      return "";
     }
   },
 
   deleteTask: async (task: ITask) => {
     try {
-      return await axios({
-        url: environment.url + `/project/${ task.projectId }/task/${ task.id }`,
-        method: 'DELETE',
-        headers: taskService.headers()
-      }).then((response) => {
-        console.info('result from DELETE', response);
-        showToast('success', response.data.message);
+      return pbClient.records.delete(`tasks`, task.id)
+        .then((response) => {
+          console.info('result from DELETE', response);
+          showToast(response ? 'success' : 'error', response ? 'Deleted' : 'Error');
+        });
+    } catch (e) {
+      authService.handleError('Error on delete task: ', e);
+    }
+  },
+
+  getTasksForProject: (
+    projectKey: IProject['id'],
+    sort: IProject['sort'],
+    done: (tasks: ITask[]) => any,
+    realtime: boolean = true
+  ) => {
+    try {
+      (pbClient.records.getFullList("tasks", 10000, {
+        filter: `project = "${projectKey}"`,
+        sort: sort
+      }) as unknown as Promise<PbItem<ITask>[]>)
+        .then((results: PbItem<ITask>[]) => {
+          done(results)
+        });
+    } catch (e) {
+      authService.handleError('Error on fetching tasks: ', e);
+    }
+
+    if (realtime) {
+      pbClient.realtime.subscribe(`projects/${projectKey}`, (action: any) => {
+        taskService.getTasksForProject(projectKey, sort, done, false);
       });
-    } catch (e) {
-      handleError('Error on delete task: ' + e.response.data.message, e);
     }
+    return () => pbClient.realtime.unsubscribe(`projects/${projectKey}/tasks`);
   },
 
-  getTasksForProject: (projectKey: IProject['id'], sort: IProject['sort'], done: (tasks: ITask[]) => any) => {
-    const [sortField, sortDirection] = sort.split(',');
+  toggleTask: (project: IProject, task: ITask) => {
     try {
-      return taskService.db
-        .collection(`/projects/${ projectKey }/tasks`)
-        .orderBy('level', 'desc')
-        .orderBy(sortField, sortDirection as SortDirection)
-        .onSnapshot((tasksDoc) => {
-          const tasks: any = {};
-          tasksDoc.forEach((taskDoc) => {
-            const id = taskDoc.id;
-            const task: any = taskDoc.data();
-            const parentId = task.parentId || 'root_task';
-
-            tasks[parentId] = tasks[parentId] || [];
-            tasks[parentId].push({
-              id,
-              ...task,
-              projectId: projectKey,
-              timestamp: time(task.timestamp.seconds * 1000),
-              subtasks: tasks[id] || []
-            });
-            delete tasks[id];
-          });
-          done(tasks['root_task'] || []);
-        });
+      return taskService.updateTask(project, task);
     } catch (e) {
-      handleError('Error on fetching tasks: ', e);
-    }
-  },
-
-  toggleTask: (task: ITask) => {
-    try {
-      return taskService.db
-        .doc(`/projects/${ task.projectId }/tasks/${ task.id }`)
-        .update({
-          checked: task.checked,
-          expanded: task.expanded
-        });
-    } catch (e) {
-      handleError('Error on updating "checked" task: ', e);
+      authService.handleError('Error on updating "checked" task: ', e);
     }
   },
 
@@ -119,7 +100,7 @@ export const taskService = {
       return taskService.db
         .collectionGroup('tasks')
         // @ts-ignore
-        .where('_uids', 'array-contains', auth().currentUser.uid)
+        .where('_uids', 'array-contains', auth().currentUser?.uid)
         .where('_name_lower', '>=', searchTerm.toLowerCase())
         .where('_name_lower', '<=', searchTerm.toLowerCase() + 'zzz')
         .orderBy('_name_lower', 'asc')
@@ -136,7 +117,7 @@ export const taskService = {
           return results;
         });
     } catch (e) {
-      handleError('Error on searching tasks: ', e);
+      authService.handleError('Error on searching tasks: ', e);
     }
   }
 

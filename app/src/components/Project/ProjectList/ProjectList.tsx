@@ -1,14 +1,14 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 
 import "./_project-list.scss";
-import { text } from "config";
-import { ProjectContext } from "TodoApp";
-import { ColorPicker } from "components/ColorPicker/ColorPicker";
-import { projectService } from "services/project.service";
-import { drawerArray } from "config/drawer-config";
-import { ProjectListDropdown } from "components/Project/ProjectList/ProjectListDropdown";
-import { createProjectObject } from "functions/create-project-object";
-import { IProject, PDefault } from "../../../interfaces";
+import {text} from "config";
+import {ProjectContext} from "TodoApp";
+import {ColorPicker} from "components/ColorPicker/ColorPicker";
+import {projectService} from "services/project.service";
+import {drawerArray} from "config/drawer-config";
+import {ProjectListDropdown} from "components/Project/ProjectList/ProjectListDropdown";
+import {createProjectObject} from "functions/create-project-object";
+import {IProject, PbItem, PDefault} from "../../../interfaces";
 
 function validProject(projectId: IProject["id"], projects: IProject[]) {
   const proj = projects.find((p: IProject) => p.id === projectId);
@@ -20,10 +20,10 @@ interface ProjectListAttrs {
   projectId: IProject["id"];
   changeToProject: (project: IProject) => any;
 }
-export const ProjectList = ({
-  projectId,
-  changeToProject,
-}: ProjectListAttrs) => {
+
+export const ProjectList = (
+  {projectId, changeToProject}: ProjectListAttrs
+) => {
   const project = useContext(ProjectContext);
 
   const [isLoading, setIsLoading] = useState("");
@@ -48,7 +48,7 @@ export const ProjectList = ({
     return () => {
       unsubscribeProjects && unsubscribeProjects();
     };
-  }, []);
+  }, [projectId]);
 
   function addNewProject(e: PDefault) {
     e.preventDefault();
@@ -60,7 +60,7 @@ export const ProjectList = ({
       .then((snap) => {
         setNewProjectName("");
         setIsLoading("");
-        changeToProject(snap);
+        changeToProject(snap as PbItem<IProject>);
       });
   }
 
@@ -75,7 +75,7 @@ export const ProjectList = ({
 
   function setProject(_project: IProject) {
     if (_project.id === project.id) {
-      changeToProject({ unselected: true } as unknown as IProject); // can't change to itself... it also causes a re-render problem in the `useEffect`
+      changeToProject({unselected: true} as unknown as IProject); // can't change to itself... it also causes a re-render problem in the `useEffect`
     }
     console.info("Changing project from", project.id, "to", _project.id);
     changeToProject(_project);
@@ -101,7 +101,7 @@ export const ProjectList = ({
         >
           <button
             className="ib left left-align w-100"
-            onClick={() => setProject({ id: p.url } as IProject)}
+            onClick={() => setProject({id: p.url} as IProject)}
           >
             <i className="material-icons tiny left btn-pr">{p.icon}</i>
             <span className="btn-pl">{p.text._}</span>
@@ -137,7 +137,7 @@ export const ProjectList = ({
             {proj.name}
             {/*( { proj.openTasks } <span className="subtle">/ { proj.completedTasks }</span> )*/}
           </button>
-          <ProjectListDropdown project={proj} onDelete={deleteProject} />
+          <ProjectListDropdown project={proj} onDelete={deleteProject}/>
         </li>
       ))}
       <li key="new-project" className="proj-li mb-5 parent-hover flex-row">

@@ -1,103 +1,72 @@
-import { auth, db } from './firebase';
+import {pbClient} from './firebase';
 import axios from 'axios';
-import { environment } from './environment';
-import { handleError } from './handle-error';
-import { showToast } from './toast';
-import { IProject } from '../interfaces';
+import {environment} from './environment';
+import {showToast} from './toast';
+import {IProject, PbItem} from '../interfaces';
+import {authService} from "./auth.service";
+import {constants} from "../config";
+import {projectToDto} from "../functions/project-to-dto.function";
 
 
 export const projectService = {
 
-  db: db(),
-
   headers: () => {
-    return { authorization: localStorage.getItem('AuthToken') };
+    return {authorization: localStorage.getItem(constants.storageKey.AUTH_TOKEN)};
   },
 
-  getListOfProjects: (done: (projects: IProject[]) => any) => {
+  getListOfProjects: (
+    done: (projects: PbItem<IProject>[]) => any,
+    realtime: boolean = true
+  ): (() => any) => {
     try {
-      return projectService.db
-        .collection(`/projects`)
-        .where('_uids', 'array-contains', (auth().currentUser as any).uid)
-        // .orderBy('timestamp', 'desc')
-        .onSnapshot((projectsDoc) => {
-
-          const projects: IProject[] = [];
-          projectsDoc.forEach((doc) => {
-            const projectData = doc.data();
-            projects.push({
-              id: doc.id,
-              name: projectData.name,
-              shared: projectData.shared,
-              sort: projectData.sort,
-              showCompleted: projectData.showCompleted,
-              color: projectData.color
-            } as IProject);
-          });
-
-          // done([...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects]);
-          done(projects);
-
-          console.info(`${ projects.length } projects loaded`);
-        });
+      pbClient.records.getFullList('projects', 200 /* batch size */, {
+        sort: '-created',
+        filter: ''
+      })
+        .then((p) => {
+          done(p as unknown as PbItem<IProject>[])
+        })
     } catch (e) {
-      handleError(e.response.data.message, e);
+      authService.handleError(e.response.data.message, e);
     }
+
+    if (realtime) {
+      pbClient.realtime.subscribe(`projects`, () => {
+        projectService.getListOfProjects(done, false);
+      });
+    }
+    return () => pbClient.realtime.unsubscribe(`projects`);
   },
 
   updateProject: async (project: IProject) => {
 
     try {
-      return await axios({
-        url: environment.url + `/project/${ project.id }`,
-        method: 'PUT',
-        data: project,
-        headers: projectService.headers()
-      }).then((result) => {
-        // showToast('success', result.data.message);
-        // console.info('result from Edit Project PUT', result);
-      });
+      return pbClient.records.update('projects', project.id, projectToDto(project));
     } catch (e) {
-      handleError(e.response.data.message, e);
+      authService.handleError(e.response.data.message, e);
     }
   },
 
-  newProject: async (project: IProject) => {
+  newProject: async (project: IProject): Promise<PbItem<IProject> | void> => {
     try {
-      return await axios({
-        url: environment.url + `/project`,
-        method: 'POST',
-        data: project,
-        headers: projectService.headers()
-      }).then((result) => {
-        console.log(result);
-        showToast('success', result.data.message);
-        return result.data.project;
-      });
+      return pbClient.records.create('projects', projectToDto(project)) as unknown as Promise<PbItem<IProject>>;
     } catch (e) {
-      handleError(e.response.data.message, e);
+      authService.handleError('Error adding project', e);
     }
   },
 
   deleteProject: async (project: IProject) => {
     try {
-      return await axios({
-        url: environment.url + `/project/${ project.id }`,
-        method: 'DELETE',
-        headers: projectService.headers()
-      }).then((result) => {
-        showToast('success', result.data.message);
-        console.info('result from project DELETE', result);
-      });
+      pbClient.records.delete('projects', project.id);
     } catch (e) {
-      handleError(e.response.data.message, e);
+      authService.handleError('Error deleting project', e);
     }
   },
 
   deleteProjectTasks: async (project: IProject) => {
     try {
       return await axios({
-        url: environment.url + `/project/${ project.id }/only-tasks`,
+        url: environment.url + `/project/${project.id}/only-tasks`,
         method: 'DELETE',
         headers: projectService.headers()
       }).then((result) => {
@@ -105,7 +74,7 @@ export const projectService = {
         console.info('result from project task DELETE', result);
       });
     } catch (e) {
-      handleError(e.response.data.message, e);
+      authService.handleError(e.response.data.message, e);
     }
   },
 
@@ -114,29 +83,29 @@ export const projectService = {
       return await axios({
         url: environment.url + `/user/search/`,
         method: 'POST',
-        data: { email: userEmail },
+        data: {email: userEmail},
         headers: projectService.headers(),
       }).then((result) => {
         return result.data.user;
       });
     } catch (e) {
-      handleError(e.response.data.message, e);
+      authService.handleError(e.response.data.message, e);
     }
   },
 
   addUserToProject: async (project: IProject, username: string) => {
     try {
       return await axios({
-        url: environment.url + `/project/${ project.id }/join`,
+        url: environment.url + `/project/${project.id}/join`,
         method: 'POST',
         headers: projectService.headers(),
-        data: { username: username }
+        data: {username: username}
       }).then((result) => {
         showToast('success', result.data.message);
         console.info('result from joining Project', result);
       });
     } catch (e) {
-      handleError(e.response.data.message, e);
+      authService.handleError(e.response.data.message, e);
     }
   }
 };

@@ -1,26 +1,20 @@
-import React, {
-  ChangeEvent,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import React, {ChangeEvent, useContext, useEffect, useMemo, useState,} from "react";
 import "./_project.scss";
-import { taskService } from "services/task.service";
-import { createTaskObject } from "functions/create-task-object";
-import { projectService } from "services/project.service";
-import { Task } from "components/Project/Task/Task";
-import { ProjectHeader } from "components/Project/ProjectHeader/ProjectHeader";
-import { text } from "config";
-import { NoProject } from "components/NoProject/NoProject";
-import { ProjectContext } from "TodoApp";
-import { IProject, ITask, LoadingStates, PDefault } from "../../interfaces";
+import {taskService} from "services/task.service";
+import {createTaskObject} from "functions/create-task-object";
+import {projectService} from "services/project.service";
+import {Task} from "components/Project/Task/Task";
+import {ProjectHeader} from "components/Project/ProjectHeader/ProjectHeader";
+import {text} from "config";
+import {NoProject} from "components/NoProject/NoProject";
+import {ProjectContext} from "TodoApp";
+import {IProject, ITask, LoadingStates, PDefault} from "../../interfaces";
 
 interface ProjectAttrs {
   changeToProject: (project: IProject) => any;
 }
 
-export const Project = ({ changeToProject }: ProjectAttrs) => {
+export const Project = ({changeToProject}: ProjectAttrs) => {
   const project = useContext<IProject>(ProjectContext);
 
   const [sort, setSort] = useState(project.sort);
@@ -33,8 +27,8 @@ export const Project = ({ changeToProject }: ProjectAttrs) => {
   );
   const [editListName, setEditListName] = useState(false);
 
-  const open = projectTasks.filter((task: ITask) => !task.checked);
-  const completed = projectTasks.filter((task: ITask) => !!task.checked);
+  const open = projectTasks.filter((task: ITask) => !task.done);
+  const completed = projectTasks.filter((task: ITask) => !!task.done);
 
   // const inputElement = useRef(null);
 
@@ -42,7 +36,7 @@ export const Project = ({ changeToProject }: ProjectAttrs) => {
     if (completed.length && !open.length && !showCompleted) {
       return (
         <li>
-          <NoProject className="o-1" inspireText={text.allTasksCompleted()} />
+          <NoProject className="o-1" inspireText={text.allTasksCompleted()}/>
         </li>
       );
     }
@@ -59,10 +53,12 @@ export const Project = ({ changeToProject }: ProjectAttrs) => {
     setShowCompleted(project.showCompleted);
     setIsLoading("p");
 
-    const unsubscribeTasks = taskService.getTasksForProject(
+    let unsubscribeProject: () => any;
+    taskService.getTasksForProject(
       project.id,
       sort,
       (tasks: ITask[]) => {
+        console.log("THE TASKS", tasks);
         setProjectTasks(tasks);
         setIsLoading("");
 
@@ -76,8 +72,7 @@ export const Project = ({ changeToProject }: ProjectAttrs) => {
     );
 
     return () => {
-      // unsubscribeProject && unsubscribeProject();
-      unsubscribeTasks && unsubscribeTasks();
+      unsubscribeProject && unsubscribeProject();
     };
   }, [project.id, sort]);
 
@@ -86,9 +81,10 @@ export const Project = ({ changeToProject }: ProjectAttrs) => {
     setIsLoading("t");
 
     await taskService.addTask(
+      project,
       createTaskObject({
         name: taskName,
-        projectId: project.id,
+        project: project.id,
       })
     );
     setIsLoading("");
@@ -103,7 +99,7 @@ export const Project = ({ changeToProject }: ProjectAttrs) => {
     e.preventDefault();
 
     setIsLoading("n");
-    await update({ name: projectName });
+    await update({name: projectName});
     setEditListName(false);
     setIsLoading("");
   }
@@ -114,8 +110,6 @@ export const Project = ({ changeToProject }: ProjectAttrs) => {
       ...projectPartial,
     });
   }
-
-  console.log("ALL", allCompleted);
 
   return (
     <div className={isLoading === "p" ? "loader-input cover" : ""}>
@@ -137,10 +131,10 @@ export const Project = ({ changeToProject }: ProjectAttrs) => {
 
       <ul>
         {open.map((task) => (
-          <Task key={task.id} task={task} level={0} />
+          <Task key={task.id} task={task} level={0}/>
         ))}
         {showCompleted &&
-          completed.map((task) => <Task key={task.id} task={task} />)}
+          completed.map((task) => <Task key={task.id} task={task}/>)}
 
         <li className="task">
           <form

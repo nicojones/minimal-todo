@@ -1,12 +1,11 @@
-import React, { useState } from "react";
-import { authService } from "services/auth.service";
-import { Link, Redirect, useHistory } from "react-router-dom";
-import { showToast } from "services/toast";
-import { text, urls } from "config";
-import { LoginBox } from "components/Login/LoginBox";
-import { LoggedInUserContext } from "App";
-import { ILoginForm, PDefault } from "../../interfaces";
-import firebase from "firebase/app";
+import React, {useState} from "react";
+import {authService} from "services/auth.service";
+import {Link, Redirect, useHistory} from "react-router-dom";
+import {showToast} from "services/toast";
+import {text, urls} from "config";
+import {LoginBox} from "components/Login/LoginBox";
+import {LoggedInUserContext} from "App";
+import {ILoginForm, LoginResponse, PDefault} from "../../interfaces";
 
 export const Login = () => {
   const history = useHistory();
@@ -31,9 +30,7 @@ export const Login = () => {
     authService
       .login(loginFormData)
       .then(
-        (
-          responseData: firebase.auth.UserCredential /* Returns {user, error}! */
-        ) => {
+        (responseData: LoginResponse) => {
           setLoading(false);
 
           if (responseData.user) {
@@ -55,7 +52,7 @@ export const Login = () => {
   }
 
   return loggedIn ? (
-    <Redirect to={urls.app} />
+    <Redirect to={urls.app}/>
   ) : (
     <LoginBox data-tip={text.login.login} loading={loading}>
       <form onSubmit={onSubmit} className="flex-center-self">
@@ -91,12 +88,12 @@ export const Login = () => {
             required
           />
         </div>
-        <br />
+        <br/>
         <div className="flex-column">
           <button type="submit" className="btn btn-block main-btn">
             {text.login.login}
           </button>
-          <hr />
+          <hr/>
           <Link to={urls.signup} className="no-color u">
             {text.login.noAccount} {text.login.signup}
           </Link>

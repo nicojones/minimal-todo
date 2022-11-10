@@ -1,29 +1,31 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { authService } from 'services/auth.service';
-import { TodoApp } from 'TodoApp';
-import { Signup } from 'components/Login/Signup';
-import { Loader } from 'components/Loader/Loader';
-import { Login } from 'components/Login/Login';
-import { LandingPage } from 'components/HomePage/LandingPage';
-import { NotFound } from 'components/NotFound/NotFound';
-import { urls } from 'config';
-import { IUser } from './interfaces';
+import React, {useEffect, useState} from 'react';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {authService} from 'services/auth.service';
+import {TodoApp} from 'TodoApp';
+import {Signup} from 'components/Login/Signup';
+import {Loader} from 'components/Loader/Loader';
+import {Login} from 'components/Login/Login';
+import {LandingPage} from 'components/HomePage/LandingPage';
+import {NotFound} from 'components/NotFound/NotFound';
+import {urls} from 'config';
+import {IUser, PbUser} from './interfaces';
 
 
-export const LoggedInUserContext = React.createContext<IUser>({} as IUser);
+export const LoggedInUserContext = React.createContext<IUser | null>({} as IUser);
 
 
 export const App = () => {
 
   const [loaded, setLoaded] = useState(false);
-  const [user, setUser] = useState<IUser>(false as unknown as IUser);
+  const [user, setUser] = useState<IUser | null>(false as unknown as IUser);
 
-  authService.authState((user: IUser) => {
-    console.info(`User is ${ user ? '' : 'NOT ' }logged in`);
-    setUser(user);
-    setLoaded(true);
-  });
+  useEffect(() => {
+    authService.authState((user: PbUser | null) => {
+      console.log("THE USER", user);
+      setUser(user as unknown as IUser);
+      setLoaded(true);
+    })
+  }, []);
 
   return (
     <>
