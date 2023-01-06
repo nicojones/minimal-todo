@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { authService } from "services/auth.service";
-import { Link, Redirect, useHistory } from "react-router-dom";
-import { showToast } from "services/toast";
-import { LoggedInUserContext } from "App";
-import { text, urls } from "config";
+import React, {useState} from "react";
+import {AuthService} from "services/auth.service";
+import {Link, Redirect, useHistory} from "react-router-dom";
+import {showToast} from "services/toast";
+import {LoggedInUserContext} from "App";
+import {text, urls} from "config";
 import {LoginBox} from "components/Login/LoginBox";
-import { ISignupForm, ISignupFormError, PDefault } from "interfaces";
+import {CaughtPromise, ISignupForm, ISignupFormError, LoginUser, PDefault} from "interfaces";
 
 export const Signup = () => {
   const history = useHistory();
@@ -16,7 +16,7 @@ export const Signup = () => {
   const [signupError, setSignupError] = useState<ISignupFormError>({});
 
   // If the user is logged in already, redirect to the app!
-  if (React.useContext(LoggedInUserContext)) {
+  if (React.useContext(LoggedInUserContext).user) {
     history.push(urls.app);
     return null;
   }
@@ -24,27 +24,28 @@ export const Signup = () => {
   async function onSubmit(e: PDefault) {
     e.preventDefault();
 
-    const _signupError = authService.validateSignup(signup);
+    const _signupError = AuthService.validateSignup(signup);
     const errors = Object.values(_signupError);
     if (!errors.length) {
       setLoading(true);
-      authService
+      AuthService
         .signup(signup)
-        .then((responseData) => {
+        .then((responseData: LoginUser) => {
           setLoading(false);
-          if (responseData.user) {
+          if (responseData.id) {
             showToast("success", text.login.signupSuccess);
             setSignup({} as ISignupForm);
             setLoggingIn(true);
           }
         })
-        .catch(({ response }) => {
-          if (response.data && response.data.code) {
-            authService.loginCatch(response.data);
-          } else {
+        .catch(({ response }: CaughtPromise) => {
+          if (response.data) {
             setSignupError(response.data);
             const errors = Object.values(response.data);
             errors.length && showToast("error", errors[0] as string);
+          }
+          else if (response.status) {
+            AuthService.loginCatch(response.status);
           }
           setLoading(false);
         });

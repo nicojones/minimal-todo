@@ -1,142 +1,93 @@
-import { auth, db } from './firebase';
-import axios from 'axios';
-import { environment } from './environment';
-import { handleError } from './handle-error';
+import { AxiosResponse } from 'axios';
 import { showToast } from './toast';
-import { IProject } from '../interfaces';
+import { CaughtPromise, IProject, IUser, UserSearchResults } from '../interfaces';
+import { AuthService } from "./auth.service";
+import { text } from "../config";
+import { projectToDto } from "../functions/project-to-dto.function";
+import { minimalAxios } from './axios.service';
 
 
-export const projectService = {
+export class ProjectService {
 
-  db: db(),
-
-  headers: () => {
-    return { authorization: localStorage.getItem('AuthToken') };
-  },
-
-  getListOfProjects: (done: (projects: IProject[]) => any) => {
-    try {
-      return projectService.db
-        .collection(`/projects`)
-        .where('_uids', 'array-contains', (auth().currentUser as any).uid)
-        // .orderBy('timestamp', 'desc')
-        .onSnapshot((projectsDoc) => {
-
-          const projects: IProject[] = [];
-          projectsDoc.forEach((doc) => {
-            const projectData = doc.data();
-            projects.push({
-              id: doc.id,
-              name: projectData.name,
-              shared: projectData.shared,
-              sort: projectData.sort,
-              showCompleted: projectData.showCompleted,
-              color: projectData.color
-            } as IProject);
-          });
-
-          // done([...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects, ...projects]);
-          done(projects);
-
-          console.info(`${ projects.length } projects loaded`);
-        });
-    } catch (e) {
-      handleError(e.response.data.message, e);
-    }
-  },
-
-  updateProject: async (project: IProject) => {
-
-    try {
-      return await axios({
-        url: environment.url + `/project/${ project.id }`,
-        method: 'PUT',
-        data: project,
-        headers: projectService.headers()
-      }).then((result) => {
-        // showToast('success', result.data.message);
-        // console.info('result from Edit Project PUT', result);
+  public static getListOfProjects = (): Promise<IProject[]> => {
+    return minimalAxios.get("/api/projects")
+      .then((response: AxiosResponse<IProject[]>) => {
+        return response.data
+      })
+      .catch((e: CaughtPromise) => {
+        AuthService.handleError(e, e.response.message);
+        return [];
       });
-    } catch (e) {
-      handleError(e.response.data.message, e);
-    }
-  },
+  }
 
-  newProject: async (project: IProject) => {
-    try {
-      return await axios({
-        url: environment.url + `/project`,
-        method: 'POST',
-        data: project,
-        headers: projectService.headers()
-      }).then((result) => {
-        console.log(result);
-        showToast('success', result.data.message);
-        return result.data.project;
+  public static updateProject = (project: IProject): Promise<IProject | void> => {
+    return minimalAxios.put(
+      `/api/projects`,
+      project
+    )
+      .then((response: AxiosResponse<IProject>) => response.data)
+      .catch((e: CaughtPromise) => {
+        AuthService.handleError(e, 'Error adding project');
       });
-    } catch (e) {
-      handleError(e.response.data.message, e);
-    }
-  },
+  }
 
-  deleteProject: async (project: IProject) => {
-    try {
-      return await axios({
-        url: environment.url + `/project/${ project.id }`,
-        method: 'DELETE',
-        headers: projectService.headers()
-      }).then((result) => {
-        showToast('success', result.data.message);
-        console.info('result from project DELETE', result);
+  public static newProject = (project: IProject): Promise<IProject | void> => {
+    return minimalAxios.post(
+      '/api/projects',
+      projectToDto(project)
+    )
+      .then((response: AxiosResponse<IProject>) => response.data)
+      .catch((e: CaughtPromise) => {
+        AuthService.handleError(e, 'Error adding project');
       });
-    } catch (e) {
-      handleError(e.response.data.message, e);
-    }
-  },
+  }
 
-  deleteProjectTasks: async (project: IProject) => {
-    try {
-      return await axios({
-        url: environment.url + `/project/${ project.id }/only-tasks`,
-        method: 'DELETE',
-        headers: projectService.headers()
-      }).then((result) => {
+  public static deleteProject = (project: IProject): Promise<void> => {
+    return minimalAxios.delete(
+      `/api/projects/${project.id}`
+    )
+      .then((response: AxiosResponse<void>) => response.data)
+      .catch((e: CaughtPromise) => {
+        AuthService.handleError(e, 'Error deleting project')
+      })
+  }
+
+  public static deleteProjectTasks = (project: IProject): Promise<void> => {
+    return minimalAxios({
+      url: `/api/tasks/for-project/${project.id}`,
+      method: 'DELETE',
+    })
+      .then((result) => {
         showToast('success', result.data.message);
         console.info('result from project task DELETE', result);
-      });
-    } catch (e) {
-      handleError(e.response.data.message, e);
-    }
-  },
+      })
+      .catch((e: CaughtPromise) => {
+        AuthService.handleError(e);
+      })
+  }
 
-  getUserByEmail: async (userEmail: string) => {
-    try {
-      return await axios({
-        url: environment.url + `/user/search/`,
-        method: 'POST',
-        data: { email: userEmail },
-        headers: projectService.headers(),
-      }).then((result) => {
-        return result.data.user;
-      });
-    } catch (e) {
-      handleError(e.response.data.message, e);
-    }
-  },
+  public static getUsersByEmail = (userEmail: string): Promise<UserSearchResults[]> => {
+    return minimalAxios.get(
+      `/api/users/search?q=${userEmail}`,
+    )
+      .then((result: AxiosResponse<UserSearchResults[]>) => {
+        return result.data;
+      })
+      .catch((e: CaughtPromise) => {
+        AuthService.handleError(e);
+        return [];
+      })
+  }
 
-  addUserToProject: async (project: IProject, username: string) => {
-    try {
-      return await axios({
-        url: environment.url + `/project/${ project.id }/join`,
-        method: 'POST',
-        headers: projectService.headers(),
-        data: { username: username }
-      }).then((result) => {
-        showToast('success', result.data.message);
-        console.info('result from joining Project', result);
-      });
-    } catch (e) {
-      handleError(e.response.data.message, e);
-    }
+  public static addUserToProject = (project: IProject, userEmail: string): Promise<void> => {
+    return minimalAxios.post(
+      `/api/projects/${project.id}/join?user=${userEmail}`,
+    )
+      .then((result: AxiosResponse<void>) => {
+        showToast('success', text.project.add.u);
+      })
+      .catch((e: CaughtPromise) => {
+        AuthService.handleError(e);
+      })
   }
 };

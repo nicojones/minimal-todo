@@ -1,0 +1,27 @@
+2023.01.06 08:22:12 INFO  tracing is disabled for protocol LSP, to enable tracing of incoming and outgoing JSON messages create an empty file at /Users/nico/Documents/Projects/todolist-react/.metals/lsp.trace.json or /Users/nico/Library/Caches/org.scalameta.metals/lsp.trace.json
+2023.01.06 08:22:13 INFO  logging to file /Users/nico/Documents/Projects/todolist-react/.metals/metals.log
+2023.01.06 08:22:13 INFO  Started: Metals version 0.11.10 in workspace '/Users/nico/Documents/Projects/todolist-react' for client Visual Studio Code 1.74.2.
+2023.01.06 08:22:13 WARN  Can't instantiate JavaInteractiveSemanticdb (version: JdkVersion(8), jdkHome: /Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home, javac exists: false)
+SLF4J: No SLF4J providers were found.
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See https://www.slf4j.org/codes.html#noProviders for further details.
+SLF4J: Class path contains SLF4J bindings targeting slf4j-api versions 1.7.x or earlier.
+SLF4J: Ignoring binding found at [jar:file:/Users/nico/Library/Caches/Coursier/v1/https/repo1.maven.org/maven2/com/outr/scribe-slf4j_2.13/3.10.5/scribe-slf4j_2.13-3.10.5.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See https://www.slf4j.org/codes.html#ignoredBindings for an explanation.
+2023.01.06 08:22:14 INFO  time: initialize in 1.41s
+2023.01.06 08:22:15 WARN  Build server is not auto-connectable.
+2023.01.06 08:22:15 WARN  no build tool detected in workspace '/Users/nico/Documents/Projects/todolist-react'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. 
+2023.01.06 08:22:16 WARN  no build target for: /Users/nico/Documents/Projects/todolist-react/java/src/main/java/com/minimaltodo/list/user/User.java
+2023.01.06 08:22:16 WARN  no build target for: /Users/nico/Documents/Projects/todolist-react/java/src/main/java/com/minimaltodo/list/project/ProjectService.java
+2023.01.06 08:22:16 WARN  no build target for: /Users/nico/Documents/Projects/todolist-react/java/src/main/java/com/minimaltodo/list/user/UserController.java
+2023.01.06 08:22:16 WARN  no build target for: /Users/nico/Documents/Projects/todolist-react/java/src/main/java/com/minimaltodo/list/user/UserRepository.java
+2023.01.06 08:22:16 WARN  no build target for: /Users/nico/Documents/Projects/todolist-react/java/src/main/java/com/minimaltodo/list/FixturesConfig.java
+2023.01.06 08:22:16 WARN  no build target for: /Users/nico/Documents/Projects/todolist-react/java/src/main/java/com/minimaltodo/auth/AuthenticationController.java
+2023.01.06 08:22:16 WARN  no build target for: /Users/nico/Documents/Projects/todolist-react/java/src/main/java/com/minimaltodo/list/task/TaskController.java
+2023.01.06 08:22:16 WARN  no build target for: /Users/nico/Documents/Projects/todolist-react/java/src/main/java/com/minimaltodo/list/task/TaskRepository.java
+2023.01.06 08:22:16 WARN  no build target for: /Users/nico/Documents/Projects/todolist-react/java/src/main/java/com/minimaltodo/list/project/Project.java
+2023.01.06 08:22:16 WARN  no build target for: /Users/nico/Documents/Projects/todolist-react/java/src/main/java/com/minimaltodo/list/project/ProjectRepository.java
+2023.01.06 08:22:16 WARN  no build target for: /Users/nico/Documents/Projects/todolist-react/java/src/main/java/com/minimaltodo/list/user/UserService.java
+2023.01.06 08:22:16 WARN  no build target for: /Users/nico/Documents/Projects/todolist-react/java/src/main/java/com/minimaltodo/list/project/ProjectController.java
+2023.01.06 08:22:16 WARN  no build target for: /Users/nico/Documents/Projects/todolist-react/java/src/main/java/com/minimaltodo/list/task/TaskService.java
+2023.01.06 08:23:05 INFO  shutting down Metals

@@ -1,79 +1,60 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useState } from "react";
 
-import "./_project-list.scss";
-import { text } from "config";
 import { ProjectContext } from "TodoApp";
 import { ColorPicker } from "components/ColorPicker/ColorPicker";
-import { projectService } from "services/project.service";
-import { drawerArray } from "config/drawer-config";
 import { ProjectListDropdown } from "components/Project/ProjectList/ProjectListDropdown";
+import { text } from "config";
+import { drawerArray } from "config/drawer-config";
 import { createProjectObject } from "functions/create-project-object";
-import { IProject, PDefault } from "../../../interfaces";
+import { ProjectService } from "services/project.service";
+import { IProject, IProjectContext, PDefault, PbItem } from "../../../interfaces";
+import "./_project-list.scss";
+import { reservedKey } from "functions/reserved-key";
 
-function validProject(projectId: IProject["id"], projects: IProject[]) {
-  const proj = projects.find((p: IProject) => p.id === projectId);
-  // If there's a project set in the URL and it's valid (it exists)
-  return proj || null; // otherwise don't set any project.
-}
+
 
 interface ProjectListAttrs {
   projectId: IProject["id"];
-  changeToProject: (project: IProject) => any;
+  projects: IProject[];
 }
-export const ProjectList = ({
-  projectId,
-  changeToProject,
-}: ProjectListAttrs) => {
-  const project = useContext(ProjectContext);
+
+export const ProjectList = (
+  { projectId, projects }: ProjectListAttrs
+) => {
+  const { project, changeToProject, reloadProjects, reloadProjectTasks } = useContext<IProjectContext>(ProjectContext);
 
   const [isLoading, setIsLoading] = useState("");
-  const [projects, setProjects] = useState<IProject[]>([]);
 
   const [newProjectName, setNewProjectName] = useState("");
 
-  const onFirstLoad = useRef(true);
-
-  useEffect(() => {
-    const unsubscribeProjects = projectService.getListOfProjects(
-      (_projects: IProject[]) => {
-        const _project = validProject(project.id || projectId, _projects);
-        if (onFirstLoad.current) {
-          _project && changeToProject(_project);
-          onFirstLoad.current = false;
-        }
-        setProjects(_projects);
-      }
-    );
-
-    return () => {
-      unsubscribeProjects && unsubscribeProjects();
-    };
-  }, []);
-
-  function addNewProject(e: PDefault) {
+  const addNewProject = (e: PDefault): void => {
     e.preventDefault();
 
     setIsLoading("new");
 
-    projectService
+    ProjectService
       .newProject(createProjectObject(newProjectName))
-      .then((snap) => {
+      .then((project: IProject | void) => {
         setNewProjectName("");
         setIsLoading("");
-        changeToProject(snap);
+        changeToProject(project as unknown as IProject);
+        reloadProjects();
       });
   }
 
-  async function deleteProject(_project: IProject) {
+  const deleteProject = (_project: IProject): Promise<void> | void => {
     if (window.confirm(text.project.delete.long)) {
       setIsLoading(_project.id);
-      await projectService.deleteProject(_project);
-      changeToProject(null as unknown as IProject);
-      setIsLoading("");
+      return ProjectService.deleteProject(_project)
+        .then(() => {
+          changeToProject(null);
+          setIsLoading("");
+          reloadProjects();
+        });
     }
   }
 
-  function setProject(_project: IProject) {
+  const setProject = (_project: IProject): void => {
     if (_project.id === project.id) {
       changeToProject({ unselected: true } as unknown as IProject); // can't change to itself... it also causes a re-render problem in the `useEffect`
     }
@@ -81,10 +62,16 @@ export const ProjectList = ({
     changeToProject(_project);
   }
 
-  async function changeColor(_project: IProject, hexColor: string) {
-    return await projectService.updateProject({
+  const changeColor = (_project: IProject, hexColor: string): Promise<IProject | void> => {
+    return ProjectService.updateProject({
       ..._project,
       color: hexColor,
+    })
+    .then(() => {
+      reloadProjects();
+      if (reservedKey(project.id)) {
+        reloadProjectTasks();
+      }
     });
   }
 
@@ -93,7 +80,7 @@ export const ProjectList = ({
       {drawerArray.map((p) => (
         <li
           key={p.url}
-          data-tip={p.text.tooltip}
+          title={p.text.tooltip}
           className={
             "proj-li mb-5 parent-hover flex-row" +
             (projectId === p.url ? " selected" : "")

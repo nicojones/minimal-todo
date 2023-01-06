@@ -1,16 +1,11 @@
-import React, {
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
-import { text } from "config";
-import { taskService } from "services";
-import { createTaskObject } from "functions/create-task-object";
-import { Modal } from "components/Modal/Modal";
 import { ProjectContext } from "TodoApp";
-import { ITask, PDefault } from "interfaces";
+import { Modal } from "components/Modal/Modal";
+import { Task } from "components/Project/Task/Task";
+import { text } from "config";
+import { createTaskObject } from "functions/create-task-object";
+import { IProjectContext, ITask, PDefault } from "interfaces";
+import { Dispatch, SetStateAction, useContext, useEffect, useState, } from "react";
+import { TaskService } from "services";
 
 interface TaskModalAttrs {
   trigger?: {
@@ -21,12 +16,10 @@ interface TaskModalAttrs {
   modalOpen: boolean;
   setModalOpen: Dispatch<SetStateAction<boolean>>;
 }
-export const TaskModal = ({
-  trigger,
-  task,
-  modalOpen,
-  setModalOpen,
-}: TaskModalAttrs) => {
+
+export const TaskModal = (
+  { trigger, task, modalOpen, setModalOpen }: TaskModalAttrs
+) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [loadingST, setLoadingST] = useState<boolean>(false);
   const [subtaskName, setSubtaskName] = useState<string>("");
@@ -39,7 +32,7 @@ export const TaskModal = ({
     task.priority || 0
   );
 
-  const project = useContext(ProjectContext);
+  const { project, reloadProjectTasks } = useContext<IProjectContext>(ProjectContext);
 
   useEffect(() => {
     setTaskName(task.name || "");
@@ -48,42 +41,44 @@ export const TaskModal = ({
     setPriority(task.priority || 0);
   }, [task]);
 
-  async function saveTask(e: PDefault) {
+  const saveTask = (e: PDefault): Promise<any> => {
     e.preventDefault();
 
     setLoading(true);
 
-    await taskService.updateTask({
-      ...task,
-      name: taskName,
-      priority: priority,
-      description: taskDesc,
+    console.log("task porject", task.projectId);
+
+    return TaskService.updateTask(
+      {
+        ...task,
+        name: taskName,
+        priority: priority,
+        description: taskDesc
+      }
+    ).then((task: ITask | void) => {
+      setLoading(false);
+      setModalOpen(false);
+      return reloadProjectTasks();
     });
-
-    setLoading(false);
-
-    setModalOpen(false);
   }
 
-  async function toggleSubtask(subtask: ITask) {
-    subtask.checked = !subtask.checked;
-    await taskService.toggleTask(subtask);
-  }
-
-  async function saveSubtask(e: PDefault) {
+  const saveSubtask = (e: PDefault): Promise<void> => {
     e.preventDefault();
     setLoadingST(true);
-    await taskService.addTask(
+
+    return TaskService.addTask(
       createTaskObject({
         name: subtaskName,
         parentId: task.id,
         level: task.level + 1,
         projectId: project.id,
       })
-    );
-
-    setLoadingST(false);
-    setSubtaskName("");
+    )
+      .then((task: ITask | void) => {
+        reloadProjectTasks();
+        setLoadingST(false);
+        setSubtaskName("");
+      });
   }
 
   return (
@@ -180,26 +175,27 @@ export const TaskModal = ({
                 minLength={3}
               />
               {subtaskName ? (
-                <button className="material-icons btn right">save</button>
+                <button className="btn right"><i className="material-icons">add</i></button>
               ) : (
                 ""
               )}
             </form>
           </li>
-          {(subtasks || []).map((sub) => (
-            <li key={sub.id} data-tip={sub.timestamp} className="block">
-              <label className="left">
-                <input
-                  type="checkbox"
-                  checked={sub.checked}
-                  id={sub.id}
-                  className="material-cb"
-                  onChange={() => toggleSubtask(sub)}
-                />
-                <div />
-              </label>
-              <span className="left">{sub.name}</span>
-            </li>
+          {(subtasks || []).map((subtask) => (
+            // <li key={subtask.id} data-tip={subtask.created} className="block">
+            //   <label className="left">
+            //     <input
+            //       type="checkbox"
+            //       checked={subtask.done}
+            //       id={subtask.id}
+            //       className="material-cb"
+            //       onChange={() => toggleSubtask(subtask)}
+            //     />
+            //     <div />
+            //   </label>
+            //   <span className="left">{subtask.name}</span>
+            // </li>
+            <Task task={subtask} level={subtask.level + 1} key={subtask.id}/>
           ))}
         </ul>
       </Modal>
