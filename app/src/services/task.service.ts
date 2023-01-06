@@ -1,143 +1,76 @@
-import { auth, db } from './firebase';
-import axios from 'axios';
-import { environment } from './environment';
-import { handleError } from './handle-error';
-import { time } from 'functions/time';
-import { showToast } from './toast';
-import { IProject, ITask, SortDirection } from '../interfaces';
+import {CaughtPromise, IProject, ITask} from '../interfaces';
+import {AuthService} from "./auth.service";
+import { minimalAxios } from './axios.service';
+import { AxiosResponse } from 'axios';
 
 
-export const taskService = {
+export class TaskService {
 
-  db: db(),
+  public static updateTask = (task: ITask): Promise<ITask | void> => {
+    return minimalAxios.put(
+      `/api/tasks`,
+      task
+    )
+    .then((response: AxiosResponse<ITask>) => response.data)
+    .catch((e: CaughtPromise) => {
+      AuthService.handleError(e, 'Error on update task');
+    })
+  };
 
-  headers: () => {
-    return { authorization: localStorage.getItem('AuthToken') };
-  },
+  public static addTask = (task: ITask): Promise<ITask | void> => {
+    return minimalAxios.post(
+      `/api/tasks`,
+      task
+    )
+    .then((response: AxiosResponse<ITask>) => response.data)
+    .catch((e: CaughtPromise) => {
+      AuthService.handleError(e, 'Error on save task');
+    })
+  }
 
-  updateTask: async (task: ITask) => {
-    console.info('Updating task ', task.name);
+  public static deleteTask = (task: ITask): Promise<void> => {
+    return minimalAxios.delete(
+      `/api/tasks/${task.id}`
+    )
+    .then((response: AxiosResponse<void>) => response.data)
+    .catch((e: CaughtPromise) => {
+      AuthService.handleError(e, 'Error on save task');
+    })
+  }
 
-    // @ts-ignore -> When deleting "subtasks", subtasks is not a required property anymore since it can be undefined...
-    delete task.subtasks; // we don't send this to the server!!
+  public static getTasksForProject = (
+    projectKey: IProject['id'],
+    sort: IProject['sort'],
+  ): Promise<ITask[]> => {
+    return minimalAxios.get(
+      `/api/tasks/?projectId=${projectKey}&sort=${sort}`
+    )
+    .then((response: AxiosResponse<ITask[]>) => response.data)
+    .catch ((e: CaughtPromise) => {
+      AuthService.handleError(e, 'Error on fetching tasks');
+      return [];
+    });
+  };
 
-    try {
-      return await axios({
-        url: environment.url + `/project/${ task.projectId }/task/${ task.id }`,
-        method: 'PUT',
-        data: task,
-        headers: taskService.headers()
-      }).then((response) => {
-        console.info('result from PUT', response);
-        showToast('success', response.data.message);
-      });
-    } catch (e) {
-      handleError('Error on update task: ' + e.response.data.message, e);
-    }
-  },
+  public static toggleTask = (task: ITask, toggleSubtasks: boolean): Promise<ITask> => {
+    return minimalAxios.patch(
+      `/api/tasks/toggle/${task.id}?toggleSubtasks=1&a=${toggleSubtasks ? 1 : 0}`
+    )
+    .then((response: AxiosResponse<ITask>) => response.data)
+    .catch((e: CaughtPromise) => {
+      AuthService.handleError(e, 'Error on save task');
+      return task;
+    });
+  };
 
-  addTask: async (task: ITask) => {
-    console.info('Adding task ', task.name);
-
-    try {
-      return await axios({
-        url: environment.url + `/project/${ task.projectId }/task`,
-        method: 'POST',
-        data: task,
-        headers: taskService.headers()
-      }).then((response) => {
-        console.info('result from POST', response);
-        showToast('success', response.data.message);
-        return response.data.taskId;
-      });
-    } catch (e) {
-      handleError('Error on save task: ' + e.response.data.message, e);
-    }
-  },
-
-  deleteTask: async (task: ITask) => {
-    try {
-      return await axios({
-        url: environment.url + `/project/${ task.projectId }/task/${ task.id }`,
-        method: 'DELETE',
-        headers: taskService.headers()
-      }).then((response) => {
-        console.info('result from DELETE', response);
-        showToast('success', response.data.message);
-      });
-    } catch (e) {
-      handleError('Error on delete task: ' + e.response.data.message, e);
-    }
-  },
-
-  getTasksForProject: (projectKey: IProject['id'], sort: IProject['sort'], done: (tasks: ITask[]) => any) => {
-    const [sortField, sortDirection] = sort.split(',');
-    try {
-      return taskService.db
-        .collection(`/projects/${ projectKey }/tasks`)
-        .orderBy('level', 'desc')
-        .orderBy(sortField, sortDirection as SortDirection)
-        .onSnapshot((tasksDoc) => {
-          const tasks: any = {};
-          tasksDoc.forEach((taskDoc) => {
-            const id = taskDoc.id;
-            const task: any = taskDoc.data();
-            const parentId = task.parentId || 'root_task';
-
-            tasks[parentId] = tasks[parentId] || [];
-            tasks[parentId].push({
-              id,
-              ...task,
-              projectId: projectKey,
-              timestamp: time(task.timestamp.seconds * 1000),
-              subtasks: tasks[id] || []
-            });
-            delete tasks[id];
-          });
-          done(tasks['root_task'] || []);
-        });
-    } catch (e) {
-      handleError('Error on fetching tasks: ', e);
-    }
-  },
-
-  toggleTask: (task: ITask) => {
-    try {
-      return taskService.db
-        .doc(`/projects/${ task.projectId }/tasks/${ task.id }`)
-        .update({
-          checked: task.checked,
-          expanded: task.expanded
-        });
-    } catch (e) {
-      handleError('Error on updating "checked" task: ', e);
-    }
-  },
-
-  searchTask: (searchTerm: string) => {
-    try {
-      return taskService.db
-        .collectionGroup('tasks')
-        // @ts-ignore
-        .where('_uids', 'array-contains', auth().currentUser.uid)
-        .where('_name_lower', '>=', searchTerm.toLowerCase())
-        .where('_name_lower', '<=', searchTerm.toLowerCase() + 'zzz')
-        .orderBy('_name_lower', 'asc')
-        .get()
-        .then((doc) => {
-          const results: ITask[] = [];
-          doc.forEach((d) => {
-            results.push({
-              ...d.data(),
-              id: d.id
-            } as ITask);
-          });
-          console.log(results);
-          return results;
-        });
-    } catch (e) {
-      handleError('Error on searching tasks: ', e);
-    }
+  public static searchTask = (searchTerm: string): Promise<ITask | void> => {
+    return minimalAxios.get(
+      `/api/tasks/search/?q=${searchTerm}`
+    )
+    .then((response: AxiosResponse<ITask>) => response.data)
+    .catch((e: CaughtPromise) => {
+      AuthService.handleError(e, 'Error on save task');
+    });
   }
 
 };

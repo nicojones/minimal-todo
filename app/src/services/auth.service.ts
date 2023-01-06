@@ -1,92 +1,85 @@
-import axios from 'axios';
-import { environment } from './environment';
-import { auth } from './firebase';
+import { AxiosResponse } from 'axios';
 import { text } from 'config/text';
-import { showToast } from './toast';
+import jwt_decode from "jwt-decode";
+import { constants, urls } from "../config";
+import { ILoginForm, LoginResponse, LoginUser } from '../interfaces';
 import { ISignupForm, ISignupFormError } from '../interfaces/signup-form.interface';
-import { ILoginForm, IUser, PDefault } from '../interfaces';
-import firebase from 'firebase/app';
+import { minimalAxios } from './axios.service';
+import { showToast } from './toast';
 
 
-const sha1 = require('sha1');
+export class AuthService {
 
-let debounceAuth: any;
+  public static setToken = (token: string | null) => {
+    if (token) {
+      localStorage.setItem(constants.storageKey.AUTH_TOKEN, "Bearer " + token);
+      minimalAxios.defaults.headers.common.Authorization = "Bearer " + token;
+    } else {
+      localStorage.removeItem(constants.storageKey.AUTH_TOKEN);
+      delete minimalAxios.defaults.headers.common.Authorization;
+    }
+  }
 
-export const authService = {
+  public static handleError = (e: { response?: { status: number}}, error: string = "ERROR") => {
+    (window as any).PB_ERROR = error;
 
-  setToken: (token: string) => {
-    localStorage.setItem('AuthToken', token);
-  },
+    const status: number = e.response?.status || 0;
 
-  authState: (done: (user: IUser) => any) => {
-    auth().onIdTokenChanged((user) => {
-      // auth().onAuthStateChanged((user) => {
-      clearTimeout(debounceAuth);
-      debounceAuth = setTimeout(() => {
-        user && user.getIdToken(true).then((token: string) => {
-          authService.setToken(token);
-        });
+    showToast('error', error);
+    console.log("there's an error", status);
 
-        done(user as IUser);
-      }, 300);
-    });
-  },
+    if ([401, 403].includes(status)) {
+      AuthService.logout(urls.login);
+    }
+  }
 
-  signup: (signupData: ISignupForm) => {
-    return axios({
-      url: `${ environment.url }/signup`,
-      method: 'POST',
-      data: {
-        ...signupData,
-        password: sha1(signupData.password)
-      }
-    })
-      .then((response) => {
-        return authService.login({
-          email: signupData.email,
-          password: signupData.password
-        });
-      });
-  },
-
-  login: (loginData: ILoginForm) => {
-    let userCredential: firebase.auth.UserCredential;
-
-    return auth()
-      .signInWithEmailAndPassword(loginData.email, sha1(loginData.password))
-      .then((response: firebase.auth.UserCredential) => {
-        // @ts-ignore
-        localStorage.setItem('uid', JSON.stringify(response.user.uid));
-        userCredential = response;
-        // @ts-ignore
-        return auth().currentUser.getIdToken();
+  public static signup = (signupData: ISignupForm): Promise<LoginUser> => {
+    return minimalAxios.post(
+      "/api/auth/signup",
+      {
+        email: signupData.email,
+        password: signupData.password,
+        name: signupData.name
       })
-      .then((authToken) => {
-        authService.setToken(authToken);
-        return userCredential;
-      });
-  },
+      .then((response: AxiosResponse<LoginResponse>) => {
+        AuthService.setToken(response.data.token);
+        return jwt_decode<LoginUser>(response.data.token);
+      })
+  }
 
-  loginCatch: (reason: { code: string; message: string }) => {
-    console.error(reason, reason.code, reason.code === 'auth/user-not-found');
-    if (reason.code === 'auth/wrong-password') {
+  public static login = (loginData: ILoginForm): Promise<LoginUser> => {
+    return minimalAxios.post(
+      "/api/auth",
+      {
+        email: loginData.email,
+        password: loginData.password,
+      })
+      .then((response: AxiosResponse<LoginResponse>) => {
+        AuthService.setToken(response.data.token);
+        return jwt_decode<LoginUser>(response.data.token);
+      })
+  }
+
+  public static loginCatch = (status: number) => {
+    if (status === 403) {
       showToast('error', text.login.invalidPass);
-    } else if (reason.code === 'auth/user-not-found') {
+    } else if (status === 404) {
       showToast('error', text.login.invalidUser);
     } else {
-      showToast('error', reason.message);
+      showToast('error', text.login.internalError);
     }
-  },
+  }
 
-  logout: (e: PDefault) => {
-    e.preventDefault();
+  public static logout = (url: string = urls.home) => {
 
-    return auth().signOut().then(() => {
-      showToast('success', 'You\'ve been signed out of the app');
-    });
-  },
+    AuthService.setToken(null);
+    window.location.href = url;
 
-  validateSignup: (signupData: ISignupForm): ISignupFormError => {
+    showToast('success', 'You\'ve been signed out of the app');
+
+  }
+
+  public static validateSignup = (signupData: ISignupForm): ISignupFormError => {
     // if (!signupData.username) {
     //   return { username: 'Must enter a valid username' };
     // }

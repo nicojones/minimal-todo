@@ -4,14 +4,15 @@ import { text, urls } from "config";
 import { NavbarSearch } from "components/Navbar/NavbarSearch";
 import { UserSettingsDropdown } from "components/Dropdown/UserSettingsDropdown";
 import { Tooltip } from "components/Tooltip/Tooltip";
-import { ProjectDispatch } from "TodoApp";
+import { ProjectContext } from "TodoApp";
+import { IProjectContext } from "interfaces";
 
 interface NavbarAttrs {
   setShowSidebar: Dispatch<SetStateAction<boolean>>;
   showSidebar: boolean;
 }
 export const Navbar = ({ setShowSidebar, showSidebar }: NavbarAttrs) => {
-  const projectDispatch = useContext(ProjectDispatch);
+  const {changeToProject} = useContext<IProjectContext>(ProjectContext);
 
   return (
     <>
@@ -28,14 +29,14 @@ export const Navbar = ({ setShowSidebar, showSidebar }: NavbarAttrs) => {
           <div className="nav-wrapper">
             <button
               className="navbar-btn btn left"
-              data-tip={text.menu.menu}
+              title={text.menu.menu}
               onClick={() => setShowSidebar(!showSidebar)}
-            >
+              >
               <i className="material-icons">menu</i>
             </button>
             <button
               className="navbar-btn btn left"
-              onClick={() => projectDispatch({ id: urls.inboxUrl })}
+              onClick={() => changeToProject({ id: urls.inboxUrl })}
             >
               <i className="material-icons">home</i>
             </button>
@@ -54,7 +55,6 @@ export const Navbar = ({ setShowSidebar, showSidebar }: NavbarAttrs) => {
           </div>
         </nav>
       </div>
-      <Tooltip />
     </>
   );
 };

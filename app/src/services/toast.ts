@@ -1,8 +1,9 @@
-import cogoToast, { CToast } from 'cogo-toast';
-import { constants } from 'config/constants';
+// import cogoToast, { CToast } from 'cogo-toast';
+
+import { toast } from "react-hot-toast";
 
 
-export const showToast = (type: keyof CToast, message: string) => {
-  const toast = cogoToast[type](message, constants.toast);
-  (window as any).hideCogoToast = toast.hide;
+export const showToast = (type: "error" | "success", message: string) => {
+  console.log("showing toast", message);
+  toast[type](message);
 };
