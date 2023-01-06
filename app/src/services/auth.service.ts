@@ -2,13 +2,21 @@ import { AxiosResponse } from 'axios';
 import { text } from 'config/text';
 import jwt_decode from "jwt-decode";
 import { constants, urls } from "../config";
-import { ILoginForm, LoginResponse, LoginUser } from '../interfaces';
+import { ILoginForm, IUser, LoginResponse, LoginUser } from '../interfaces';
 import { ISignupForm, ISignupFormError } from '../interfaces/signup-form.interface';
 import { minimalAxios } from './axios.service';
 import { showToast } from './toast';
 
 
 export class AuthService {
+
+  public static currentUser = (): LoginUser | null => {
+    const token: string | null = localStorage.getItem(constants.storageKey.AUTH_TOKEN);
+      if (token) {
+        return jwt_decode<LoginUser>(token);
+      }
+      return null;
+  }
 
   public static setToken = (token: string | null) => {
     if (token) {
@@ -43,7 +51,7 @@ export class AuthService {
       })
       .then((response: AxiosResponse<LoginResponse>) => {
         AuthService.setToken(response.data.token);
-        return jwt_decode<LoginUser>(response.data.token);
+        return AuthService.currentUser() as LoginUser;
       })
   }
 
@@ -72,8 +80,8 @@ export class AuthService {
 
   public static logout = (url: string = urls.home) => {
 
-    AuthService.setToken(null);
-    window.location.href = url;
+    // AuthService.setToken(null);
+    // window.location.href = url;
 
     showToast('success', 'You\'ve been signed out of the app');
 

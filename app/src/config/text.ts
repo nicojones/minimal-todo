@@ -1,4 +1,6 @@
 import { randArray } from '../functions/rand-array';
+import { drawerConfig } from './drawer-config';
+import { urls } from './urls';
 
 
 export const text = {
@@ -11,7 +13,8 @@ export const text = {
     projectDot: (name: string) => 'Belongs to ' + name,
     delete: {
       _: 'Delete Task',
-      all: 'Delete task and its subtasks? Can\'t be undone'
+      all: 'Delete task and its subtasks? Can\'t be undone',
+      allDeleted: 'Tasks deleted'
     },
     addTaskPh: () => {
       const phs = [
@@ -53,7 +56,17 @@ export const text = {
   },
   // addSubtaskBtn: 'Add a subtask',
   // subtasks: 'Subtasks',
-  sharedProject: 'This project is shared',
+  sharedProject: {
+    _: 'This project is shared',
+    header: 'Manage users',
+    results: 'Search results',
+    users: 'Project users',
+    admin: 'This user is admin',
+    remove: (email: string, project: string) => `Remove ${email} from ${project}`,
+    removeYourself: (project: string) => `You will remove YOURSELF from ${project}. This can't be undone`,
+    belongs: 'This user already belongs to the project, so it can\'t be added again',
+    addByEmail: 'Add a user by entering their full email'
+  },
   subtaskStatus: '( Pending / Completed )',
   // btn: 'Add task',
   // title: 'MyTodo List',
@@ -70,6 +83,10 @@ export const text = {
       'I am Finnish with all tasks.'
     ];
     return randArray(incomplete);
+  },
+  drawerTasksCompleted: {
+    [urls.inboxUrl]: 'You have no open tasks',
+    [urls.priorityUrl]: 'You have no high priority tasks'
   },
   completed: 'Completed',
   completedNo: 'No completed tasks',
@@ -90,7 +107,10 @@ export const text = {
     add: {
       // _: 'Add a new project',
       ph: 'Create new project',
-      u: 'User added to project'
+      u: (email: string) => `User ${email} added to project`
+    },
+    remove: {
+      u: (email: string) => `User ${email} removed from project`
     },
     title: {
       _: 'Click to edit title'
@@ -150,7 +170,7 @@ export const text = {
       results: "Results"
     },
     email: {
-      enter: "enter an email"
+      // enter: "enter an email"
     }
   },
 

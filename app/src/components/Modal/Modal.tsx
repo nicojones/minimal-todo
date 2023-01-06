@@ -4,8 +4,8 @@ import { PDefault } from "../../interfaces";
 interface ModalAttrs {
   children: any;
   modalOpen: boolean;
-  okButton: string;
-  cancelButton: string;
+  okButton?: string;
+  cancelButton?: string;
   onAccept: (event: PDefault) => any;
   onCancel: (event: PDefault) => any;
   loading: boolean;

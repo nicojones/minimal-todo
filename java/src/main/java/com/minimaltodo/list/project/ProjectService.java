@@ -1,6 +1,7 @@
 package com.minimaltodo.list.project;
 
 import java.nio.file.AccessDeniedException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +30,8 @@ public class ProjectService {
 		this.taskRepository = taskRepository;
 	}
 
-	public List<Project> getAllProjects() {
-		return repository.findAll();
+	public List<Project> getAllProjectsForUser(User user) {
+		return repository.findAllForUser(user.getId());
 	}
 
 	public Project saveProject(User user, Project project) {
@@ -43,6 +44,15 @@ public class ProjectService {
 		userRepository.save(user);
 
 		return savedProject;
+	}
+
+	public List<User> getUsersForProject(User user, Long projectId) throws AccessDeniedException {
+		
+		if (!isProjectOwner(user, projectId)) {
+			throw new AccessDeniedException("current user does not own the project you want to update");
+		}
+
+		return repository.getUsersForProject(projectId);
 	}
 
 	public Project updateProject(User user, Project project) throws AccessDeniedException {
@@ -61,7 +71,9 @@ public class ProjectService {
 		}
 
 		Project project = repository.findById(projectId).orElseThrow();
-		project.getTasks().stream().forEach(task -> taskRepository.delete(task));
+		taskRepository.deleteAll(project.getTasks());
+
+		project.setTasks(new ArrayList<>());
 
 		user.removeProject(project);
 		userRepository.save(user);
@@ -81,6 +93,34 @@ public class ProjectService {
 		newUser.addProject(project);
 
 		userRepository.save(newUser);
+	}
+
+	public void removeUserFromProject(User user, Long projectId, String userToRemoveEmail) throws AccessDeniedException {
+		
+		if (!isProjectOwner(user, projectId)) {
+			throw new AccessDeniedException("current user does not have rights to remove other users from project");
+		}
+
+		Project project = repository.findById(projectId).orElseThrow();
+
+		User userToRemove = userRepository.findUserByEmail(userToRemoveEmail).orElseThrow();
+		userToRemove.removeProject(project);
+
+		userRepository.save(userToRemove);
+	}
+
+	public void deleteAllTasks(User user, Long projectId) throws AccessDeniedException {
+		if (!isProjectOwner(user, projectId)) {
+			throw new AccessDeniedException("current user does not have rights to remove other users from project");
+		}
+
+		Project project = repository.findById(projectId).orElseThrow();
+
+		taskRepository.deleteAll(project.getTasks());
+		
+		project.setTasks(new ArrayList<>());
+		repository.save(project);
+
 	}
 
 	public boolean isProjectOwner(User loggedInUser, Long projectId) {

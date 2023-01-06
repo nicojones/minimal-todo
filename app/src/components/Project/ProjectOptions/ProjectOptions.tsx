@@ -5,8 +5,8 @@ import { constants, text } from "config";
 import { IProject } from "interfaces";
 
 interface ProjectOptionsAttrs {
-  sort: string;
-  setSort: (sort: string) => any; // Promise<IProject | void>; // Dispatch<SetStateAction<string>>;
+  sort?: string;
+  setSort?: (sort: string) => any; // Promise<IProject | void>; // Dispatch<SetStateAction<string>>;
   children?: any;
   moreDropdown: boolean;
   showMoreDropdown?: Dispatch<SetStateAction<boolean>>;
@@ -39,7 +39,7 @@ export const ProjectOptions = ({
           <ul className="dropdown dd-left dd-20 dd-high">
             {constants.sortOptions.map((d) => (
               <li key={d.sort} className={"dropdown-item"}>
-                <button className="ib" onClick={() => setSort(d.sort)}>
+                <button className="ib" onClick={() => setSort && setSort(d.sort)}>
                   {d.icon && (
                     <i className="material-icons tiny left btn-p">{d.icon}</i>
                   )}

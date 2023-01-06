@@ -1,7 +1,6 @@
 package com.minimaltodo.list.task;
 
 import java.nio.file.AccessDeniedException;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,4 +87,5 @@ public class TaskController {
 
         return ResponseEntity.ok(1L);
     }
+
 }
