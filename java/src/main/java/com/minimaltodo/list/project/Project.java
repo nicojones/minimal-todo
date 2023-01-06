@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -42,6 +43,12 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "project_sequence")
     private Long id;
 
+    // @NotNull
+    // @Id
+    // @GeneratedValue(generator = "uuid")
+    // @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    // private String id;
+
     @NotNull
     @Enumerated(EnumType.STRING)
     private ProjectSort sort;
@@ -65,6 +72,13 @@ public class Project {
     @ManyToMany(mappedBy = "projects", fetch = FetchType.EAGER)
     @JsonIgnore
     private List<User> users;
+
+    public String getAdminEmail() {
+        if (users == null) {
+            return null;
+        }
+        return users.get(0).getEmail();
+    };
 
     public boolean getEmpty() {
         return tasks.size() == 0;
