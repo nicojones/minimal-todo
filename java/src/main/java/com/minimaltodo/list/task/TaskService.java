@@ -1,24 +1,17 @@
 package com.minimaltodo.list.task;
 
 import java.nio.file.AccessDeniedException;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.minimaltodo.list.project.Project;
 import com.minimaltodo.list.project.ProjectRepository;
 import com.minimaltodo.list.project.ProjectSort;
 import com.minimaltodo.list.user.User;
-import com.minimaltodo.list.user.UserRepository;
-
-import org.springframework.data.domain.Sort;
 
 @Service
 public class TaskService {
