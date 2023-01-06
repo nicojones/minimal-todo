@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import com.minimaltodo.config.JwtService;
 import com.minimaltodo.list.user.Role;
 import com.minimaltodo.list.user.User;
-import com.minimaltodo.list.user.UserRepository;
 import com.minimaltodo.list.user.UserService;
 
 import lombok.RequiredArgsConstructor;

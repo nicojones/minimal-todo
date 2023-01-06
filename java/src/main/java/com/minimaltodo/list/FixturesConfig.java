@@ -1,7 +1,5 @@
 package com.minimaltodo.list;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.boot.CommandLineRunner;
@@ -11,12 +9,11 @@ import org.springframework.context.annotation.Configuration;
 import com.minimaltodo.list.project.Project;
 import com.minimaltodo.list.project.ProjectRepository;
 import com.minimaltodo.list.project.ProjectSort;
+import com.minimaltodo.list.task.Task;
+import com.minimaltodo.list.task.TaskRepository;
 import com.minimaltodo.list.user.Role;
 import com.minimaltodo.list.user.User;
 import com.minimaltodo.list.user.UserRepository;
-
-import com.minimaltodo.list.task.TaskRepository;
-import com.minimaltodo.list.task.Task;
 
 import lombok.AllArgsConstructor;
 
