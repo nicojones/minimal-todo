@@ -1,15 +1,20 @@
 import React, {useContext, useState} from 'react';
-import {authService} from 'services/auth.service';
+import {AuthService} from 'services/auth.service';
 import {LoggedInUserContext} from 'App';
 import {text} from 'config';
-import {IUser} from '../../interfaces';
+import {ILoggedInUserContext, IUser, PDefault} from '../../interfaces';
 
 
 export function UserSettingsDropdown () {
 
   const [dropdownShown, setDropdownShown] = useState<boolean>(false);
 
-  const user = useContext<IUser | null>(LoggedInUserContext);
+  const { user, setUser } = useContext<ILoggedInUserContext>(LoggedInUserContext);
+
+  const logout = (e: PDefault) => {
+    setUser(null);
+    AuthService.logout();
+  }
 
   return (
     <>
@@ -21,7 +26,7 @@ export function UserSettingsDropdown () {
         <>
           <ul className="dropdown dd-left dd-big dd-high" onClick={ () => setDropdownShown(false) }>
             <li className="dropdown-item">
-              <button className="ib left left-align w-100" onClick={ authService.logout }>
+              <button className="ib left left-align w-100" onClick={ e => logout(e) }>
                 {/*<i className="material-icons subtle left">exit_to_app</i>*/}
                 {/*<span className="left">{ text.Login.logout }</span>*/}
                 { text.login.logout }

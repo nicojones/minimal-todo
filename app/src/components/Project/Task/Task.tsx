@@ -1,24 +1,26 @@
-import React, {useContext, useEffect, useState} from "react";
+import { ProjectContext } from "TodoApp";
+import { TaskModal } from "components/Modal/TaskModal";
+import { constants, text } from "config";
+import { IProjectContext, ITask } from "interfaces";
+import { useContext, useEffect, useState } from "react";
+import { TaskService } from "services";
+import { format } from 'timeago.js';
 import "./_task.scss";
-import {Tooltip} from "components/Tooltip/Tooltip";
-import {TaskModal} from "components/Modal/TaskModal";
-import {taskService} from "services";
-import {constants, text} from "config";
-import {ProjectContext} from "TodoApp";
-import {IProject, ITask} from "interfaces";
+
 
 interface TaskAttrs {
   task: ITask;
   level?: number;
+  onTaskToggle?: (task: ITask) => void;
 }
-export const Task = ({ task, level }: TaskAttrs) => {
+export const Task = ({ task, level, onTaskToggle }: TaskAttrs) => {
   const [subtasks, setSubtasks] = useState<ITask[]>(task.subtasks || []);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [expandedTask, setExpandedTask] = useState<boolean>(
     task.expanded || false
   );
 
-  const project = useContext<IProject>(ProjectContext);
+  const { project, showDot, reloadProjectTasks } = useContext<IProjectContext>(ProjectContext);
 
   const openLength = subtasks.filter((s: ITask) => !s.done).length || 0;
 
@@ -26,7 +28,8 @@ export const Task = ({ task, level }: TaskAttrs) => {
   // const doneClass = (task.checked ? (project.showCompleted ? 'done' : '') : '');
 
   const showExpanderClass = (
-    project.showCompleted ? subtasks.length : openLength
+    subtasks.length > 0
+    // project.showCompleted ? subtasks.length : openLength
   )
     ? ""
     : " v-hidden";
@@ -35,36 +38,55 @@ export const Task = ({ task, level }: TaskAttrs) => {
     setSubtasks(task.subtasks || []);
   }, [task.subtasks]);
 
-  async function toggleCompleted(task: ITask) {
-    task.done = !task.done;
+  const toggleCompleted = (
+    taskToUpdate: ITask,
+    toggleSubtasks: boolean = false
+  ): void => {
+    taskToUpdate.done = !taskToUpdate.done;
     // after changing the state...
-    if (task.done) {
-      // set all subtasks as checked, since the main task was marked as checked.
-      // (task.subtasks || []).forEach((_task) => _task.checked = true);
-      task.expanded = false;
-    }
-    await taskService.toggleTask(project, task);
+    TaskService.toggleTask(task, toggleSubtasks).then((updatedTask: ITask) => {
+      if (updatedTask.done) {
+        // set all subtasks as checked, since the main task was marked as checked.
+        // (task.subtasks || []).forEach((_task) => _task.checked = true);
+        updatedTask.expanded = false;
+      }
+
+      setSubtasks(updatedTask.subtasks);
+
+      onTaskToggle && onTaskToggle(updatedTask);
+
+    });
+  }
+
+  const subtaskUpdated = (updatedSubtask: ITask): void => {
+    setSubtasks(subtasks.map((t: ITask) => {
+      return t.id === updatedSubtask.id
+        ? updatedSubtask
+        : t
+    }))
   }
 
   /**
    * If you want to say the toggle state, just update this function
    */
-  async function toggleExpanded(isExpanded: boolean) {
-    // task.expanded = isExpanded;
-    // await taskService.updateTask(task);
+  const toggleExpanded = (isExpanded: boolean): Promise<ITask | void> => {
+    task.expanded = isExpanded;
+    console.log("task to extpand", task);
     setExpandedTask(isExpanded);
+    return TaskService.updateTask({ ...task });
   }
 
-  async function onDelete(task: ITask) {
+  const onDelete = (task: ITask): void => {
     if (window.confirm(text.task.delete.all)) {
-      await taskService.deleteTask(task);
+      TaskService.deleteTask(task)
+        .then(() => reloadProjectTasks())
     }
   }
 
+
   return (
-    <li className={doneClass + " task"}>
-      <Tooltip />
-      <div className="task__content parent-hover" data-tip={task.timestamp}>
+    <li className={doneClass + " task parent-hover"} key={task.id}>
+      <div className="task__content" title={format(task.created)}>
         <button
           className={
             "toggle-expand subtle ib material-icons tiny left btn-pr" +
@@ -75,6 +97,14 @@ export const Task = ({ task, level }: TaskAttrs) => {
         >
           chevron_right
         </button>
+        {showDot ?
+          <span
+            className="project-dot"
+            style={{ backgroundColor: task.dotColor }}
+            title={text.task.projectDot(task.projectName)}
+          ></span>
+          : null
+        }
 
         <label className={"left prio-" + task.priority}>
           <input
@@ -95,7 +125,7 @@ export const Task = ({ task, level }: TaskAttrs) => {
               className="subtle child-hover ml-5 ib"
               data-tip={text.subtaskStatus}
             >
-              ({openLength} / {subtasks.length - openLength})
+              {subtasks.length - openLength}/{subtasks.length}
             </small>
           ) : null}
           {task.description && (
@@ -103,16 +133,16 @@ export const Task = ({ task, level }: TaskAttrs) => {
           )}
         </button>
 
-        <span className="child-hover ml-auto flex-row">
+        <span className="ml-auto flex-row">
           <button
-            className="material-icons ib task__action-button"
+            className="material-icons ib task__action-button child-hover"
             data-tip={text.task.delete._}
             onClick={() => onDelete(task)}
           >
             delete
           </button>
           <button
-            className="material-icons ib task__action-button"
+            className="material-icons ib task__action-button child-hover"
             data-tip={text.task.edit}
             onClick={() => setModalOpen(true)}
           >
@@ -132,7 +162,7 @@ export const Task = ({ task, level }: TaskAttrs) => {
           aria-details={(level || 0) as unknown as string}
         >
           {subtasks.map((t) => (
-            <Task key={t.id} task={t} level={(level || 0) + 1} />
+            <Task key={t.id} task={t} level={(level || 0) + 1} onTaskToggle={subtaskUpdated} />
           ))}
         </ul>
       )}

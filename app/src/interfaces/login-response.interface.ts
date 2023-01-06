@@ -1,6 +1,6 @@
-import {PbUser} from "./pb-user.interface";
+import {LoginUser} from "./login-user.interface";
 
 export interface LoginResponse {
   token: string;
-  user: PbUser;
+  user: LoginUser;
 }

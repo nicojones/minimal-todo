@@ -1,13 +1,13 @@
-import React, { useContext, useState } from "react";
+import { LoggedInUserContext } from "App";
+import { HeaderLinks } from "components/HomePage/HeaderLinks";
+import { Logo } from "components/Logo/Logo";
+import { text, urls } from "config";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import "./_header.scss";
-import { HeaderLinks } from "components/HomePage/HeaderLinks";
-import { text, urls } from "config";
-import { LoggedInUserContext } from "App";
-import { Logo } from "components/Logo/Logo";
 
 export const Header = () => {
-  const user = useContext(LoggedInUserContext);
+  const {user} = useContext(LoggedInUserContext);
 
   const [showMenu, setShowMenu] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);

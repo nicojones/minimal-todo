@@ -1,14 +1,13 @@
-import React, { Dispatch, SetStateAction, useContext } from "react";
-import { projectService } from "services/project.service";
-import { showToast } from "services/toast";
-import { text } from "config";
-import { ProjectOptions } from "components/Project/ProjectOptions/ProjectOptions";
 import { ProjectContext } from "TodoApp";
-import { IProject, LoadingStates, PDefault } from "interfaces";
+import { ProjectOptions } from "components/Project/ProjectOptions/ProjectOptions";
+import { text } from "config";
+import { IProject, IProjectContext, ITask, IUser, LoadingStates, PDefault } from "interfaces";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
+import { ProjectService } from "services/project.service";
+import { showToast } from "services/toast";
 
 interface ProjectHeaderAttrs {
   projectFunctions: {
-    changeToProject: (project: IProject) => any;
     projectName: IProject["name"];
     setProjectName: Dispatch<SetStateAction<IProject["name"]>>;
     saveListName: (event: PDefault) => any;
@@ -17,7 +16,7 @@ interface ProjectHeaderAttrs {
     showCompleted: boolean;
     setShowCompleted: Dispatch<SetStateAction<boolean>>;
     sort: string;
-    setSort: Dispatch<SetStateAction<string>>;
+    setSort: (sort: string) => any; // Promise<IProject | void> // Dispatch<SetStateAction<string>>;
   };
   isLoading: LoadingStates;
 }
@@ -26,44 +25,41 @@ export const ProjectHeader = ({
   projectFunctions,
   isLoading,
 }: ProjectHeaderAttrs) => {
-  const project = useContext(ProjectContext);
+  const { project, reloadProjects, changeToProject, openAddUserModal } = useContext<IProjectContext>(ProjectContext);
+  const [moreDropdown, showMoreDropdown] = useState<boolean>(false);
+
   const psc = projectFunctions.showCompleted;
 
-  async function deleteProject() {
-    console.log("THIS SHOULD NOT WORK!!!");
+  const deleteProject = (): Promise<void> | void => {
     if (window.confirm(text.project.delete._)) {
-      await projectService.deleteProject(project);
-      // @ts-ignore;
-      projectFunctions.setProject({ deleted: true });
+      return ProjectService.deleteProject(project)
+        .then(() => {
+          changeToProject(null);
+          reloadProjects();
+        })
     }
   }
 
-  async function deleteTasks() {
+  const deleteTasks = (): Promise<void> | void => {
     if (window.confirm(text.project.delete.tasks)) {
-      await projectService.deleteProjectTasks(project);
+      return ProjectService.deleteProjectTasks(project);
     }
   }
 
-  async function share() {
-    const userEmail: string | null = prompt("User Email to join?");
-    if (userEmail) {
-      const user = await projectService.getUserByEmail(userEmail);
-      if (!user) {
-        showToast("error", text.genericError);
-        console.error("error: ", user);
-        return;
-      }
-      await projectService.addUserToProject(project, user.username);
-    }
+  const share = (): Promise<void> | void => {
+    showMoreDropdown(false);
+    openAddUserModal(project);
   }
 
-  async function toggleShowCompleted(showCompleted: boolean) {
-    console.log(showCompleted);
+  const toggleShowCompleted = (showCompleted: boolean): Promise<IProject | void> => {
     projectFunctions.setShowCompleted(showCompleted);
-    // await projectService.updateProject({
-    //   ...project,
-    //   showCompleted
-    // });
+    return ProjectService.updateProject({
+      ...project,
+      showCompleted
+    })
+      .then(() => {
+        reloadProjects();
+      });
   }
 
   return projectFunctions.editListName ? (
@@ -99,6 +95,8 @@ export const ProjectHeader = ({
       <ProjectOptions
         sort={projectFunctions.sort}
         setSort={projectFunctions.setSort}
+        moreDropdown={moreDropdown}
+        showMoreDropdown={showMoreDropdown}
       >
         <li className="dropdown-item" key="completed">
           <button

@@ -18,11 +18,21 @@ $font-family: "Maven Pro", "Roboto", sans-serif;
 html {
   box-sizing: border-box;
 }
-*, *:before, *:after {
+
+*,
+*:before,
+*:after {
   box-sizing: inherit;
 }
 
-.z-depth-0, .z-depth-1, .z-depth-1-half, .z-depth-2, .z-depth-3, .z-depth-4, .z-depth-5, .no-select {
+.z-depth-0,
+.z-depth-1,
+.z-depth-1-half,
+.z-depth-2,
+.z-depth-3,
+.z-depth-4,
+.z-depth-5,
+.no-select {
   abc: none;
 }
 
@@ -39,12 +49,14 @@ html {
   background: transparent;
   -webkit-tap-highlight-color: transparent; // Gets rid of tap active state
 }
+
 // Shared icon styles
 .btn,
 .btn-large,
 .btn-small {
   font-size: $button-font-size;
   outline: 0;
+
   i {
     font-size: $button-icon-font-size;
     line-height: inherit;
@@ -57,9 +69,11 @@ i.material-icons {
   &.tiny {
     font-size: 1rem;
   }
+
   &.medium {
     font-size: 2rem;
   }
+
   &.large {
     font-size: 4rem;
   }
@@ -90,9 +104,12 @@ ul {
 
 a {
   text-decoration: none;
+
   &.btn {
-    color: inherit;;
+    color: inherit;
+    ;
   }
+
   &.u {
     &:hover {
       text-decoration: underline;
@@ -100,14 +117,22 @@ a {
   }
 }
 
-html{
+html {
   line-height: 1.5;
   font-weight: normal;
   color: $off-black;
   font-family: $font-family;
 }
-h1, h2, h3, h4, h5, h6 {
-  &, & a {
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+
+  &,
+  & a {
     font-weight: 400;
     line-height: 1.3;
   }
@@ -120,13 +145,43 @@ select,
 textarea {
   font-family: $font-family;
 }
+
 // Header Styles
-h1 { font-size: $h1-fontsize; line-height: 110%; margin: ($h1-fontsize / 1.5) 0 ($h1-fontsize / 2.5) 0;}
-h2 { font-size: $h2-fontsize; line-height: 110%; margin: ($h2-fontsize / 1.5) 0 ($h2-fontsize / 2.5) 0;}
-h3 { font-size: $h3-fontsize; line-height: 110%; margin: ($h3-fontsize / 1.5) 0 ($h3-fontsize / 2.5) 0;}
-h4 { font-size: $h4-fontsize; line-height: 110%; margin: ($h4-fontsize / 1.5) 0 ($h4-fontsize / 2.5) 0;}
-h5 { font-size: $h5-fontsize; line-height: 110%; margin: ($h5-fontsize / 1.5) 0 ($h5-fontsize / 2.5) 0;}
-h6 { font-size: $h6-fontsize; line-height: 110%; margin: ($h6-fontsize / 1.5) 0 ($h6-fontsize / 2.5) 0;}
+h1 {
+  font-size: $h1-fontsize;
+  line-height: 110%;
+  margin: ($h1-fontsize / 1.5) 0 ($h1-fontsize / 2.5) 0;
+}
+
+h2 {
+  font-size: $h2-fontsize;
+  line-height: 110%;
+  margin: ($h2-fontsize / 1.5) 0 ($h2-fontsize / 2.5) 0;
+}
+
+h3 {
+  font-size: $h3-fontsize;
+  line-height: 110%;
+  margin: ($h3-fontsize / 1.5) 0 ($h3-fontsize / 2.5) 0;
+}
+
+h4 {
+  font-size: $h4-fontsize;
+  line-height: 110%;
+  margin: ($h4-fontsize / 1.5) 0 ($h4-fontsize / 2.5) 0;
+}
+
+h5 {
+  font-size: $h5-fontsize;
+  line-height: 110%;
+  margin: ($h5-fontsize / 1.5) 0 ($h5-fontsize / 2.5) 0;
+}
+
+h6 {
+  font-size: $h6-fontsize;
+  line-height: 110%;
+  margin: ($h6-fontsize / 1.5) 0 ($h6-fontsize / 2.5) 0;
+}
 
 
 
@@ -178,13 +233,13 @@ input.invisible {
 
 .material-cb {
 
-  & + div {
+  &+div {
     cursor: pointer;
     margin-right: 10px;
     display: inline-block;
   }
 
-  & + div:after {
+  &+div:after {
     content: "check_box_outline_blank";
     font-family: "Material Icons", sans-serif;
     font-size: 1.3rem;
@@ -199,7 +254,7 @@ input.invisible {
     //top: 2px;
   }
 
-  &:checked + div:after {
+  &:checked+div:after {
     content: "check_box";
     //content: "";
     // background-image: url('../assets/check/full.svg');
@@ -216,6 +271,7 @@ input.invisible {
   &.expanded {
     transform: rotate(90deg);
   }
+
   margin: 0 !important; // just like a button
 
   &.btn {
@@ -227,4 +283,12 @@ input.invisible {
 .material-icons {
   text-rendering: optimizeLegibility;
   font-feature-settings: 'liga';
+}
+
+.modal {
+
+  .modal-header {
+    padding: 1.5rem 1.5rem 0.5rem 1.5rem;
+    font-size: 1.5rem;
+  }
 }

@@ -1,13 +1,22 @@
-import React from "react";
-import ReactTooltip from "react-tooltip";
+import {Tooltip as ReactTooltip} from "react-tooltip";
 
-export const Tooltip = () =>
+import "/node_modules/react-tooltip/dist/react-tooltip.css";
+
+interface ITooltipProps {
+  anchorId: string;
+  html?: string;
+}
+
+export const Tooltip = ({ anchorId, html }: ITooltipProps) =>
   (window as any).isSmallScreen ? null : (
     <ReactTooltip
-      place="bottom"
-      type="dark"
-      effect="solid"
+      anchorId={anchorId}
+      place={'bottom'}
       delayShow={1000}
-      html={true}
+      positionStrategy={'absolute'}
+      delayHide={100}
+      noArrow={false}
+      style={ { transform: "scale(0.8)"}}
+      html={html}
     />
   );

@@ -2,7 +2,7 @@ import {IProject} from './project.interface';
 import {Identifiable} from "./identifiable.interface";
 
 
-export interface ITask<DateType = number> extends Identifiable<DateType> {
+export interface ITask<DateType = string> extends Identifiable<DateType> {
   name: string;
   description: string;
   done: boolean;
@@ -11,6 +11,9 @@ export interface ITask<DateType = number> extends Identifiable<DateType> {
   level: number;
   priority: number;
   parentId: ITask['id'];
-  timestamp: DateType;
-  project: IProject['id'];
+  created: DateType;
+  updated: DateType;
+  projectId: IProject['id'];
+  projectName: string;
+  dotColor: string;
 }

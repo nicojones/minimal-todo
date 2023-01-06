@@ -1,11 +1,11 @@
-import React, {useState} from "react";
-import {authService} from "services/auth.service";
-import {Link, Redirect, useHistory} from "react-router-dom";
-import {showToast} from "services/toast";
-import {text, urls} from "config";
-import {LoginBox} from "components/Login/LoginBox";
-import {LoggedInUserContext} from "App";
-import {ILoginForm, LoginResponse, PDefault} from "../../interfaces";
+import { LoggedInUserContext } from "App";
+import { LoginBox } from "components/Login/LoginBox";
+import { text, urls } from "config";
+import React, { useContext, useState } from "react";
+import { Link, Redirect, useHistory } from "react-router-dom";
+import { AuthService } from "services/auth.service";
+import { showToast } from "services/toast";
+import { CaughtPromise, ILoginForm, LoginUser, PDefault } from "../../interfaces";
 
 export const Login = () => {
   const history = useHistory();
@@ -14,10 +14,10 @@ export const Login = () => {
   const [loginFormData, setLoginFormData] = useState<ILoginForm>(
     {} as ILoginForm
   );
-  const [loggedIn, setLoggedIn] = useState(false);
+  const { user, setUser } = useContext(LoggedInUserContext);
 
   // If the user is logged in already, redirect to the app!
-  if (React.useContext(LoggedInUserContext)) {
+  if (React.useContext(LoggedInUserContext).user) {
     history.push(urls.app);
     return null;
   }
@@ -27,32 +27,32 @@ export const Login = () => {
 
     setLoading(true);
 
-    authService
+    AuthService
       .login(loginFormData)
       .then(
-        (responseData: LoginResponse) => {
+        (_user: LoginUser | null) => {
           setLoading(false);
 
-          if (responseData.user) {
+          console.log("user has?", _user);
+
+          if (_user) {
+            console.log("setting logged in???", true)
             setLoginFormData({} as ILoginForm);
-            setLoggedIn(true);
+            setUser(_user);
             showToast("success", text.login.success);
           } else {
-            if ((responseData as any).error.code === 400) {
-              showToast("error", text.login.error);
-            }
-            console.info(responseData);
+            showToast("error", text.login.error);
           }
         }
       )
-      .catch((reason) => {
+      .catch(({response}: CaughtPromise) => {
         setLoading(false);
-        authService.loginCatch(reason);
+        AuthService.loginCatch(response.status);
       });
   }
 
-  return loggedIn ? (
-    <Redirect to={urls.app}/>
+  return user ? (
+    <Redirect to={urls.app} />
   ) : (
     <LoginBox data-tip={text.login.login} loading={loading}>
       <form onSubmit={onSubmit} className="flex-center-self">
@@ -88,12 +88,12 @@ export const Login = () => {
             required
           />
         </div>
-        <br/>
+        <br />
         <div className="flex-column">
           <button type="submit" className="btn btn-block main-btn">
             {text.login.login}
           </button>
-          <hr/>
+          <hr />
           <Link to={urls.signup} className="no-color u">
             {text.login.noAccount} {text.login.signup}
           </Link>

@@ -8,6 +8,7 @@ export const text = {
 
   task: {
     name: 'Name of the task',
+    projectDot: (name: string) => 'Belongs to ' + name,
     delete: {
       _: 'Delete Task',
       all: 'Delete task and its subtasks? Can\'t be undone'
@@ -88,7 +89,8 @@ export const text = {
     },
     add: {
       // _: 'Add a new project',
-      ph: 'Create new project'
+      ph: 'Create new project',
+      u: 'User added to project'
     },
     title: {
       _: 'Click to edit title'
@@ -111,6 +113,7 @@ export const text = {
     signupSuccess: 'Account created! Logging you in...',
     invalidPass: 'Invalid Login credentials',
     invalidUser: 'No user exists for this email',
+    internalError: 'Some other error happened',
     f: {
       email: {
         _: 'Email',
@@ -141,8 +144,18 @@ export const text = {
     pr: 'Priority'
   },
 
+  user: {
+    search: {
+      _:  "Search user",
+      results: "Results"
+    },
+    email: {
+      enter: "enter an email"
+    }
+  },
+
   menu: {
-    menu: 'Enter <i>Focus Mode</i>',
+    menu: 'Enter FOCUS MODE',
     settings: {
       _: 'Settings'
     }

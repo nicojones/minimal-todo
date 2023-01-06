@@ -1,11 +1,11 @@
 import {text} from "../../config/text";
 import React, {useContext, useState} from "react";
-import {ProjectDispatch} from "../../TodoApp";
-import {ITask, PDefault} from "../../interfaces";
-import {taskService} from "../../services";
+import {ProjectContext} from "../../TodoApp";
+import {IProjectContext, ITask, PDefault} from "../../interfaces";
+import {TaskService} from "../../services";
 
 export const NavbarSearch = () => {
-  const projectDispatch = useContext(ProjectDispatch);
+  const {changeToProject} = useContext<IProjectContext>(ProjectContext);
 
   const [search, setSearch] = useState("");
   const [results, setResults] = useState<ITask[]>([]);
@@ -14,7 +14,7 @@ export const NavbarSearch = () => {
     e.preventDefault();
 
     // @ts-ignore
-    taskService.searchTask(search).then((results: ITask[]) => {
+    TaskService.searchTask(search).then((results: ITask[]) => {
       if (results.length) {
         setResults(results);
       } else {
@@ -27,7 +27,7 @@ export const NavbarSearch = () => {
   function goToResult(result: ITask) {
     console.log(result);
     setResults([]);
-    projectDispatch({ id: result.project });
+    changeToProject({ id: result.projectId });
   }
 
   return (
@@ -50,7 +50,7 @@ export const NavbarSearch = () => {
               <li
                 key={r.id}
                 className="dropdown-item pointer"
-                onClick={() => r.project && goToResult(r)}
+                onClick={() => r.projectId && goToResult(r)}
               >
                 <i className="material-icons left subtle btn-pr ">
                   {r.done ? "check_box" : "check_box_outline_blank"}

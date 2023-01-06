@@ -1,0 +1,40 @@
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/minimaltodo
+    username: minimaltodo
+    password: minimaltodo@0258!
+    platform: mysql
+    validationQuery: SELECT 1
+  devtools:
+    add-properties: false
+  data.jdbc.repositories.enabled: false
+  thymeleaf:
+    check-template-location: false
+  jpa:
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        # dialect: org.hibernate.dialect.MySQL8InnoDBDialect
+        # dialect: org.hibernate.dialect.SQLServerDialect
+        initialize: true
+        format_sql: true
+        
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8083/auth/realms/baeldung
+          jwk-set-uri: http://localhost:8083/auth/realms/baeldung/protocol/openid-connect/certs
+
+logging:
+  level:
+    web: DEBUG
+
+jwt:
+  secret: nsh123nt4sh5sn3d54
+

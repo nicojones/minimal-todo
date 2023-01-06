@@ -3,7 +3,7 @@ import {ITask} from '../interfaces';
 
 
 export function createTaskObject(task: Partial<ITask<string>>): ITask {
-  if (!task.project) {
+  if (!task.projectId) {
     showToast('error', 'No project id!');
     console.error(task);
   }
@@ -12,16 +12,17 @@ export function createTaskObject(task: Partial<ITask<string>>): ITask {
     name: task.name || '',
     done: task.done || false,
     id: (task.id || null) as unknown as ITask['id'], // set it to null or a valid value. Else it will fail
-    timestamp: +new Date(task.timestamp as string),
-    level: task.level || 0,
+    level: task.level || 1,
     parentId: (task.parentId || null) as unknown as ITask['parentId'],
     description: task.description || '',
-    project: task.project as ITask['project'],
+    projectId: task.projectId as ITask['projectId'],
     priority: task.priority || 0,
     expanded: false,
     subtasks: [],
-    created: +new Date(),
-    updated: null
+    created: null as unknown as string,
+    updated: null as unknown as string,
+    dotColor: null as unknown as string,
+    projectName: null as unknown as string
   };
 }
 

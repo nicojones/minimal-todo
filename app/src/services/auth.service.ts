@@ -1,117 +1,96 @@
-import {auth, pbClient} from './firebase';
-import {text} from 'config/text';
-import {showToast} from './toast';
-import {ISignupForm, ISignupFormError} from '../interfaces/signup-form.interface';
-import {ILoginForm, LoginResponse, PbUser, PDefault} from '../interfaces';
-import {constants, urls} from "../config";
-import {PbError} from "../interfaces/pb-error.interface";
+import { AxiosResponse } from 'axios';
+import { text } from 'config/text';
+import jwt_decode from "jwt-decode";
+import { constants, urls } from "../config";
+import { ILoginForm, LoginResponse, LoginUser } from '../interfaces';
+import { ISignupForm, ISignupFormError } from '../interfaces/signup-form.interface';
+import { minimalAxios } from './axios.service';
+import { showToast } from './toast';
 
 
-const sha1 = require('sha1');
+export class AuthService {
 
-let debounceAuth: any;
-
-export const authService = {
-
-  setToken: (token: string) => {
-    localStorage.setItem(constants.storageKey.AUTH_TOKEN, token);
-  },
-
-  getToken: (): string | null => {
-    return localStorage.getItem(constants.storageKey.AUTH_TOKEN);
-  },
-
-  setUser: (user: PbUser) => {
-    localStorage.setItem(constants.storageKey.PB_USER, JSON.stringify(user || null));
-  },
-
-  getUser: (): PbUser | null => {
-    const userString: string | null = localStorage.getItem(constants.storageKey.PB_USER);
-    if (userString) {
-      return JSON.parse(userString)
+  public static setToken = (token: string | null) => {
+    if (token) {
+      localStorage.setItem(constants.storageKey.AUTH_TOKEN, "Bearer " + token);
+      minimalAxios.defaults.headers.common.Authorization = "Bearer " + token;
+    } else {
+      localStorage.removeItem(constants.storageKey.AUTH_TOKEN);
+      delete minimalAxios.defaults.headers.common.Authorization;
     }
-    return null;
-  },
+  }
 
-  handleError: (label: string, error: PbError) => {
+  public static handleError = (e: { response?: { status: number}}, error: string = "ERROR") => {
     (window as any).PB_ERROR = error;
 
-    showToast('error', label + ' -- ' + error.message)
+    const status: number = e.response?.status || 0;
 
-    if ([401, 403].includes(error.code)) {
-      localStorage.removeItem(constants.storageKey.AUTH_TOKEN);
-      localStorage.removeItem(constants.storageKey.PB_USER);
-      window.location.hash = urls.login;
+    showToast('error', error);
+    console.log("there's an error", status);
+
+    if ([401, 403].includes(status)) {
+      AuthService.logout(urls.login);
     }
-  },
+  }
 
-  authState: (done: (user: PbUser | null) => any) => {
-    done(authService.getUser());
-  },
+  public static signup = (signupData: ISignupForm): Promise<LoginUser> => {
+    return minimalAxios.post(
+      "/api/auth/signup",
+      {
+        email: signupData.email,
+        password: signupData.password,
+        name: signupData.name
+      })
+      .then((response: AxiosResponse<LoginResponse>) => {
+        AuthService.setToken(response.data.token);
+        return jwt_decode<LoginUser>(response.data.token);
+      })
+  }
 
-  signup: (signupData: ISignupForm): Promise<PbUser> => {
-    let user: PbUser;
-    return (pbClient.users.create({
-      email: signupData.email,
-      password: signupData.password,
-      passwordConfirm: signupData.password,
-    }) as Promise<unknown> as Promise<PbUser>)
-      .then(() => {
-        return authService.login({email: signupData.email, password: signupData.password})
+  public static login = (loginData: ILoginForm): Promise<LoginUser> => {
+    return minimalAxios.post(
+      "/api/auth",
+      {
+        email: loginData.email,
+        password: loginData.password,
       })
-      .then((response: LoginResponse) => {
-        user = response.user;
-        return pbClient.records.update('profiles', response.user.profile.id, {
-          name: signupData.name,
-        });
+      .then((response: AxiosResponse<LoginResponse>) => {
+        AuthService.setToken(response.data.token);
+        return jwt_decode<LoginUser>(response.data.token);
       })
-      .then((a) => {
-        return pbClient.users.requestVerification(signupData.email)
-      })
-      .then(() => user)
-  },
+  }
 
-  login: (loginData: ILoginForm): Promise<LoginResponse> => {
-    return (pbClient.users
-      .authViaEmail(loginData.email, loginData.password) as Promise<unknown> as Promise<LoginResponse>)
-      .then((response: LoginResponse) => {
-        authService.setToken(response.token);
-        authService.setUser(response.user);
-        return response;
-      })
-  },
-
-  loginCatch: (reason: { code: string; message: string }) => {
-    console.error(reason, reason.code, reason.code === 'auth/user-not-found');
-    if (reason.code === 'auth/wrong-password') {
+  public static loginCatch = (status: number) => {
+    if (status === 403) {
       showToast('error', text.login.invalidPass);
-    } else if (reason.code === 'auth/user-not-found') {
+    } else if (status === 404) {
       showToast('error', text.login.invalidUser);
     } else {
-      showToast('error', reason.message);
+      showToast('error', text.login.internalError);
     }
-  },
+  }
 
-  logout: (e: PDefault) => {
-    e.preventDefault();
+  public static logout = (url: string = urls.home) => {
 
-    return auth().signOut().then(() => {
-      showToast('success', 'You\'ve been signed out of the app');
-    });
-  },
+    AuthService.setToken(null);
+    window.location.href = url;
 
-  validateSignup: (signupData: ISignupForm): ISignupFormError => {
+    showToast('success', 'You\'ve been signed out of the app');
+
+  }
+
+  public static validateSignup = (signupData: ISignupForm): ISignupFormError => {
     // if (!signupData.username) {
     //   return { username: 'Must enter a valid username' };
     // }
     if (!signupData.name || signupData.name.length <= 2) {
-      return {name: 'Must enter a longer name'};
+      return { name: 'Must enter a longer name' };
     }
     if (!signupData.email || signupData.email.length <= 5) {
-      return {email: 'Invalid email'};
+      return { email: 'Invalid email' };
     }
     if (!signupData.password) {
-      return {password: 'Password can\'t be empty'};
+      return { password: 'Password can\'t be empty' };
     }
     return {};
   }

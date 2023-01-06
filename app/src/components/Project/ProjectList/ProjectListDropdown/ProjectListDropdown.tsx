@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { projectService } from 'services/project.service';
+import { ProjectContext } from 'TodoApp';
 import { text } from 'config';
-import { IProject } from 'interfaces';
+import { IProject, IProjectContext } from 'interfaces';
+import { useContext, useState } from 'react';
 
 
 interface ProjectListDropdownAttrs {
@@ -10,33 +10,10 @@ interface ProjectListDropdownAttrs {
 }
 export function ProjectListDropdown ({ project, onDelete }: ProjectListDropdownAttrs) {
 
-  /**
-   * @deprecated PLEASE REMOVE
-   * @param actionName
-   * @param _project
-   * @returns {Promise<void>}
-   */
-  async function onAction (actionName: 'delete' | 'share', _project: IProject) {
-    switch (actionName) {
-      case 'delete':
-        await onDelete(_project);
-        break;
-      case 'share':
-        const userEmail = prompt('User Email to join?');
-        if (userEmail) {
-          const user = await projectService.getUserByEmail(userEmail);
-          if (!user) {
-            return;
-          }
-          await projectService.addUserToProject(_project, user.username);
-        }
-        break;
-      default:
-        break;
-    }
-  }
-
   const [dropdownShown, setDropdownShown] = useState(false);
+
+  const { openAddUserModal } = useContext<IProjectContext>(ProjectContext);
+
 
   return (
     <>
@@ -48,12 +25,12 @@ export function ProjectListDropdown ({ project, onDelete }: ProjectListDropdownA
         <>
           <ul className="dropdown dd-left" onClick={ () => setDropdownShown(false) }>
             <li className="dropdown-item">
-              <button className="ib left left-align w-100 p-10" onClick={ () => onAction('delete', project) }>
+              <button className="ib left left-align w-100 p-10" onClick={ () => onDelete(project) }>
                 <i className="tiny material-icons subtle">delete</i> {text.project.delete._}
               </button>
             </li>
             <li className="dropdown-item">
-              <button className="ib left left-align w-100 p-10" onClick={ () => onAction('share', project) }>
+              <button className="ib left left-align w-100 p-10" onClick={ () => openAddUserModal(project) }>
                 <i className="tiny material-icons subtle">person_add</i> {text.project.share}
               </button>
             </li>
