@@ -1,7 +1,14 @@
 import { ProjectContext } from "TodoApp";
 import { ProjectOptions } from "components/Project/ProjectOptions/ProjectOptions";
 import { text } from "config";
-import { IProject, IProjectContext, ITask, IUser, LoadingStates, PDefault } from "interfaces";
+import {
+  IProject,
+  IProjectContext,
+  ITask,
+  IUser,
+  LoadingStates,
+  PDefault,
+} from "interfaces";
 import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { ProjectService } from "services/project.service";
 import { showToast } from "services/toast";
@@ -25,42 +32,50 @@ export const ProjectHeader = ({
   projectFunctions,
   isLoading,
 }: ProjectHeaderAttrs) => {
-  const { project, reloadProjects, changeToProject, openAddUserModal } = useContext<IProjectContext>(ProjectContext);
+  const {
+    project,
+    reloadProjects,
+    changeToProject,
+    openAddUserModal,
+    reloadProjectTasks,
+  } = useContext<IProjectContext>(ProjectContext);
   const [moreDropdown, showMoreDropdown] = useState<boolean>(false);
 
   const psc = projectFunctions.showCompleted;
 
   const deleteProject = (): Promise<void> | void => {
     if (window.confirm(text.project.delete._)) {
-      return ProjectService.deleteProject(project)
-        .then(() => {
-          changeToProject(null);
-          reloadProjects();
-        })
+      return ProjectService.deleteProject(project).then(() => {
+        changeToProject(null);
+        reloadProjects();
+      });
     }
-  }
+  };
 
-  const deleteTasks = (): Promise<void> | void => {
+  const deleteTasks = (): Promise<ITask[]> | void => {
     if (window.confirm(text.project.delete.tasks)) {
-      return ProjectService.deleteProjectTasks(project);
+      return ProjectService.deleteProjectTasks(project).then(() =>
+        reloadProjectTasks()
+      );
     }
-  }
+  };
 
   const share = (): Promise<void> | void => {
     showMoreDropdown(false);
     openAddUserModal(project);
-  }
+  };
 
-  const toggleShowCompleted = (showCompleted: boolean): Promise<IProject | void> => {
+  const toggleShowCompleted = (
+    showCompleted: boolean
+  ): Promise<IProject | void> => {
     projectFunctions.setShowCompleted(showCompleted);
     return ProjectService.updateProject({
       ...project,
-      showCompleted
-    })
-      .then(() => {
-        reloadProjects();
-      });
-  }
+      showCompleted,
+    }).then(() => {
+      reloadProjects();
+    });
+  };
 
   return projectFunctions.editListName ? (
     <form
@@ -121,15 +136,17 @@ export const ProjectHeader = ({
             {text.project.delete.tasks}
           </button>
         </li>
-        <li className="dropdown-item" key="delete">
-          <button
-            className="ib w-100 left-align"
-            onClick={() => deleteProject()}
-          >
-            <i className="material-icons tiny left btn-pr">delete</i>
-            {text.project.delete._}
-          </button>
-        </li>
+        {!project.shared ? (
+          <li className="dropdown-item" key="delete">
+            <button
+              className="ib w-100 left-align"
+              onClick={() => deleteProject()}
+            >
+              <i className="material-icons tiny left btn-pr">delete</i>
+              {text.project.delete._}
+            </button>
+          </li>
+        ) : null}
       </ProjectOptions>
     </div>
   );

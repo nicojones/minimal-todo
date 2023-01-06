@@ -7,6 +7,7 @@ export interface IProject<DateType = number> extends Identifiable<DateType> {
   showCompleted: boolean;
   name: string;
   color: string;
+  adminEmail: string;
   shared: boolean;
   tasks: ITask['id'][];
 }

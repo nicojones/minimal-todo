@@ -5,11 +5,13 @@ interface ColorPickerAttrs {
   onChangeComplete: (hexColor: string) => any;
   color: string;
   icon: string;
+  title: string;
 }
 export function ColorPicker({
   onChangeComplete,
   color,
   icon,
+  title
 }: ColorPickerAttrs) {
   const [showColorPicker, setShowColorPicker] = useState(false);
 
@@ -20,7 +22,10 @@ export function ColorPicker({
 
   return (
     <span className="relative">
-      <button className="ib h-100" onClick={() => setShowColorPicker(true)}>
+      <button className="ib h-100"
+       onClick={() => setShowColorPicker(true)}
+       title={title}
+       >
         <i className="material-icons tiny left m0" style={{ color: color }}>
           {icon}
         </i>

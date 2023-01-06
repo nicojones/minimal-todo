@@ -1,9 +1,4 @@
-import React, {
-  useContext,
-  useEffect,
-  useRef,
-  useState
-} from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 
 import { LoggedInUserContext } from "App";
@@ -18,7 +13,10 @@ import { IProject, IProjectContext, ITask } from "interfaces";
 import { ProjectService, TaskService } from "services";
 import { AddUserModal } from "components/Modal/AddUserModal";
 
-const validProject = (projectId: IProject["id"], projects: IProject[]): IProject | null => {
+const validProject = (
+  projectId: IProject["id"],
+  projects: IProject[]
+): IProject | null => {
   // @ts-ignore ID must be a string...
   const proj = projects.find((p: IProject) => p.id === +projectId);
   // If there's a project set in the URL and it's valid (it exists)
@@ -26,27 +24,24 @@ const validProject = (projectId: IProject["id"], projects: IProject[]): IProject
   if (proj) {
     return proj;
   } else if (reservedKey(projectId)) {
-    return { id: projectId } as IProject
+    return { id: projectId } as IProject;
   }
   return null;
-}
-
+};
 
 export const ProjectContext = React.createContext<IProjectContext>({
   project: {} as IProject,
   changeToProject: () => null,
   setProject: () => null,
   showDot: false,
-  reloadProjectTasks: null as unknown as (() => Promise<ITask[]>),
+  reloadProjectTasks: null as unknown as () => Promise<ITask[]>,
   reloadProjects: () => null as unknown as Promise<IProject[]>,
-  openAddUserModal: () => null
+  openAddUserModal: () => null,
 });
-
 
 export const TodoApp = () => {
   const history = useHistory();
   const urlParams = useRef(useParams<{ projectId: string }>());
-
 
   const [project, setProject] = useState<IProject>({ empty: true } as IProject);
   const [projectList, setProjectList] = useState<IProject[]>([]);
@@ -60,11 +55,10 @@ export const TodoApp = () => {
   const onFirstLoad = useRef(true);
 
   useEffect(() => {
-
     console.log(urlParams.current.projectId, project.id, tasks);
 
     // urlParams.current.projectId
-    const id =  project.id;
+    const id = project.id;
 
     if (!id) {
       // There's some URL?
@@ -89,14 +83,16 @@ export const TodoApp = () => {
       return;
     }
     // setComponent(<></>); // either the project hasn't loaded, or isn't valid. we must wait
-
   }, [project.id, tasks]);
 
   useEffect(() => {
     reloadProjects();
   }, []);
 
-  const changeToProject = (value: Partial<IProject> | null, forceProject: Partial<IProject> | null = null): void => {
+  const changeToProject = (
+    value: Partial<IProject> | null,
+    forceProject: Partial<IProject> | null = null
+  ): void => {
     if (value && value?.id !== project.id) {
       setProject(value as IProject);
       history.push(urls.project(value.id || ""));
@@ -107,38 +103,39 @@ export const TodoApp = () => {
       history.push(urls.app);
       setProject({ id: null } as unknown as IProject);
     }
-  }
+  };
 
   const reloadProjects = (): Promise<IProject[]> => {
+    return ProjectService.getListOfProjects().then((_projects: IProject[]) => {
+      const _project = validProject(
+        project.id || urlParams.current.projectId,
+        _projects
+      );
 
-    return ProjectService.getListOfProjects()
-      .then((_projects: IProject[]) => {
-        const _project = validProject(project.id || urlParams.current.projectId, _projects);
-        
-        if (onFirstLoad.current) {
-          _project && changeToProject(_project);
-          onFirstLoad.current = false;
-        }
-        setProjectList(_projects || []);
+      if (onFirstLoad.current) {
+        _project && changeToProject(_project);
+        onFirstLoad.current = false;
+      }
+      setProjectList(_projects || []);
 
-        return _projects;
-      });
-  }
+      return _projects;
+    });
+  };
 
-  const reloadProjectTasks = (sort: string = project.sort): Promise<ITask[]> => {
+  const reloadProjectTasks = (
+    sort: string = project.sort
+  ): Promise<ITask[]> => {
     if (!project.id) {
       return Promise.resolve([]);
     }
 
-    return TaskService.getTasksForProject(
-      project.id,
-      sort,
-    )
-      .then((tasks: ITask[]) => {
+    return TaskService.getTasksForProject(project.id, sort).then(
+      (tasks: ITask[]) => {
         setTasks(tasks);
         return tasks;
-      })
-  }
+      }
+    );
+  };
 
   if (!useContext(LoggedInUserContext)) {
     history.push(urls.login); // and in some cases go to the login
@@ -147,15 +144,17 @@ export const TodoApp = () => {
 
   return (
     <>
-      <ProjectContext.Provider value={{
-        changeToProject,
-        project,
-        reloadProjects,
-        showDot: reservedKey(project.id),
-        reloadProjectTasks,
-        setProject,
-        openAddUserModal: setModalOpen
-      }}>
+      <ProjectContext.Provider
+        value={{
+          changeToProject,
+          project,
+          reloadProjects,
+          showDot: reservedKey(project.id),
+          reloadProjectTasks,
+          setProject,
+          openAddUserModal: setModalOpen,
+        }}
+      >
         <Navbar setShowSidebar={setShowSidebar} showSidebar={showSidebar} />
         <div id="todo-app" className={showSidebar ? "" : " hidden-bar"}>
           <div className={"projects-list-box"}>
@@ -168,20 +167,19 @@ export const TodoApp = () => {
               ""
             )}
             <div className={"projects-list-box-inner"}>
-              <ProjectList
-                projects={projectList}
-                projectId={project?.id}
-              />
+              <ProjectList projects={projectList} projectId={project?.id} />
             </div>
           </div>
           <div className="tasks-list-box flex-column">{component}</div>
         </div>
-        <AddUserModal
-          project={project}
-          modalProject={modalOpen}
-          setModalProject={setModalOpen}
-        />
+        {modalOpen ? (
+          <AddUserModal
+            project={project}
+            modalProject={modalOpen}
+            setModalProject={setModalOpen}
+          />
+        ) : null}
       </ProjectContext.Provider>
     </>
   );
-}
+};

@@ -115,6 +115,7 @@ export const ProjectList = (
           <ColorPicker
             color={proj.color}
             onChangeComplete={(e) => changeColor(proj, e)}
+            title={proj.shared ? text.sharedProject._ : ""}
             icon={proj.shared ? "person" : "lens"}
           />
           <button

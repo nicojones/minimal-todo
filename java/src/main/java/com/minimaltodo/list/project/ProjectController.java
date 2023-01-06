@@ -27,8 +27,10 @@ public class ProjectController {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "")
-    public ResponseEntity<List<Project>> getAllProjects() {
-        return ResponseEntity.ok(service.getAllProjects());
+    public ResponseEntity<List<Project>> getAllProjects(
+        @AuthenticationPrincipal User user
+    ) {
+        return ResponseEntity.ok(service.getAllProjectsForUser(user));
     }
 
     @RequestMapping(method = RequestMethod.POST, path = "")
@@ -61,12 +63,48 @@ public class ProjectController {
     }   
 
     @RequestMapping(method = RequestMethod.POST, path = "/{projectId}/join")
-    public ResponseEntity<Long> joinProject(
+    public ResponseEntity<Long> addUserToProject(
             @PathVariable("projectId") Long projectId,
-            @RequestParam("user") String newUserEmail,
+            @RequestParam("email") String newUserEmail,
             @AuthenticationPrincipal User user) throws AccessDeniedException {
 
         service.addUserToProject(user, projectId, newUserEmail);
+
+        return ResponseEntity.ok(1L);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/{projectId}/users")
+    public ResponseEntity<List<String>> getUsersForProject(
+            @PathVariable("projectId") Long projectId,
+            @AuthenticationPrincipal User user
+        ) throws AccessDeniedException {
+
+        List<String> usersInProject = service.getUsersForProject(user, projectId)
+            .stream()
+            .map(u -> u.getEmail())
+            .toList();
+
+        return ResponseEntity.ok(usersInProject);
+    }
+    
+    @RequestMapping(method = RequestMethod.DELETE, path = "/{projectId}/users")
+    public ResponseEntity<Long> removeUserFromProject(
+            @PathVariable("projectId") Long projectId,
+            @RequestParam("email") String newUserEmail,
+            @AuthenticationPrincipal User user) throws AccessDeniedException {
+
+        service.removeUserFromProject(user, projectId, newUserEmail);
+
+        return ResponseEntity.ok(1L);
+    }
+
+
+    @RequestMapping(method = RequestMethod.DELETE, path = "/{projectId}/all-tasks")
+    public ResponseEntity<Long> deleteAllTasks(
+            @PathVariable("projectId") Long projectId,
+            @AuthenticationPrincipal User user) throws java.nio.file.AccessDeniedException {
+
+        service.deleteAllTasks(user, projectId);
 
         return ResponseEntity.ok(1L);
     }

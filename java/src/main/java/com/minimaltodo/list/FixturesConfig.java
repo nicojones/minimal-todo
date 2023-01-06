@@ -37,8 +37,8 @@ public class FixturesConfig {
                     true,
                     Role.USER);
             User user2 = new User(
-                    "Johanna Smith",
-                    "johanna@example.com",
+                    "Petra Enbuske",
+                    "petra@example.com",
                     "$2a$10$XHPH5eONT0XdrDTdYqlt0uTtcp68MA.TTd.4f4Fd7oKBk7XUzcLLy",
                     true,
                     Role.USER);
@@ -61,13 +61,13 @@ public class FixturesConfig {
             Project project3 = new Project(
                     ProjectSort.Z_TO_A,
                     false,
-                    "Second project",
+                    "Stuff to do",
                     "#3a3a3a",
                     false);
 
             project1.setUsers(List.of(allUsers.get(0), allUsers.get(1)));
             project2.setUsers(List.of(allUsers.get(0)));
-            project3.setUsers(List.of(allUsers.get(0)));
+            project3.setUsers(List.of(allUsers.get(0))); 
 
             pr.saveAll(List.of(project1, project2, project3));
             List<Project> allProjects = pr.findAll();
@@ -78,9 +78,12 @@ public class FixturesConfig {
             Task task4 = new Task("Important","Important thing to do",false,false,allProjects.get(0),1,2);
             Task task5 = new Task("More Task","More tasks",false,false,allProjects.get(0),1,0);
             Task task6 = new Task("Last Task","Last task",false,false,allProjects.get(0),1,0);
+            
+            Task task7 = new Task("Single item","Another project",false,false,allProjects.get(1),1,0);
+            Task task8 = new Task("Another single child","Some text",false,false,allProjects.get(2),1,0);
 
 
-            tr.saveAll(List.of(task1, task2, task3, task4, task5, task6));
+            tr.saveAll(List.of(task1, task2, task3, task4, task5, task6, task7, task8));
 
             List<Task> allTasks = tr.findAll();
             allTasks.get(0).setSubtasks(List.of(allTasks.get(1)));
@@ -93,6 +96,11 @@ public class FixturesConfig {
             User mainUser = ur.findById(1L).orElseThrow();
             mainUser.setProjects(allProjects);
             ur.save(mainUser);
+
+            User petraUser = ur.findById(2L).orElseThrow();
+            petraUser.addProject(allProjects.get(0));
+            ur.save(petraUser);
+            allProjects.get(0).addUserToProject(petraUser);
 
             for (Project project : allProjects) {
                 project.setUsers(List.of(mainUser));

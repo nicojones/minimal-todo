@@ -1,0 +1,23 @@
+@import "src/sass/colors";
+
+.project-user {
+    display: flex;
+    flex-direction: column;
+    margin-left: 1rem;
+
+    .subtext {
+        color: $subtle-color;
+    }
+}
+
+.results-list {
+    .result {
+        cursor: default;
+        &:hover {
+            background-color: $very-subtle-color;
+        }
+        &.result-disabled {
+            color: $subtle-color;
+        }
+    }
+}
