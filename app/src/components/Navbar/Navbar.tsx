@@ -1,11 +1,10 @@
-import React, { Dispatch, SetStateAction, useContext } from "react";
-import "./_navbar.scss";
-import { text, urls } from "config";
-import { NavbarSearch } from "components/Navbar/NavbarSearch";
-import { UserSettingsDropdown } from "components/Dropdown/UserSettingsDropdown";
-import { Tooltip } from "components/Tooltip/Tooltip";
 import { ProjectContext } from "TodoApp";
+import { UserSettingsDropdown } from "components/Dropdown/UserSettingsDropdown";
+import { NavbarSearch } from "components/Navbar/NavbarSearch";
+import { text, urls } from "config";
 import { IProjectContext } from "interfaces";
+import { Dispatch, SetStateAction, useContext } from "react";
+import "./_navbar.scss";
 
 interface NavbarAttrs {
   setShowSidebar: Dispatch<SetStateAction<boolean>>;
@@ -36,7 +35,7 @@ export const Navbar = ({ setShowSidebar, showSidebar }: NavbarAttrs) => {
             </button>
             <button
               className="navbar-btn btn left"
-              onClick={() => changeToProject({ id: urls.inboxUrl })}
+              onClick={() => changeToProject({ secret: urls.inboxUrl })}
             >
               <i className="material-icons">home</i>
             </button>

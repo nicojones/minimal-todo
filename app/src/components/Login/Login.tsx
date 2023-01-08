@@ -33,10 +33,7 @@ export const Login = () => {
         (_user: LoginUser | null) => {
           setLoading(false);
 
-          console.log("user has?", _user);
-
           if (_user) {
-            console.log("setting logged in???", true)
             setLoginFormData({} as ILoginForm);
             setUser(_user);
             showToast("success", text.login.success);

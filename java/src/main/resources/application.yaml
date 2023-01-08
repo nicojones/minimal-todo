@@ -36,5 +36,5 @@ logging:
     web: DEBUG
 
 jwt:
-  secret: nsh123nt4sh5sn3d54
+  secret: potatoSalad
 

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.minimaltodo.config.SecretGenerator;
 import com.minimaltodo.list.project.Project;
 import com.minimaltodo.list.project.ProjectRepository;
 import com.minimaltodo.list.project.ProjectSort;
@@ -41,13 +42,11 @@ public class TaskService {
 		return tasks;
 	}
 
-	public List<Task> getAllTasksForProject(User user, Long projectId) throws AccessDeniedException {
+	public List<Task> getAllTasksForProject(User user, String projectSecret) throws AccessDeniedException {
 
-		if (!isProjectOwner(user, projectId)) {
-			throw new AccessDeniedException("user does not own the Project");
-		}
+		Project project = projectRepository.findProjectBySecret(projectSecret);
 
-		Project project = projectRepository.findById(projectId).orElseThrow();
+		validateUserIsProjectOwner(user, project.getId(), "user does not own the Project");
 
 		List<Task> tasks = repository.findTaskByProject(project, getSort(project.getSort()));
 
@@ -56,14 +55,19 @@ public class TaskService {
 
 	public Task saveTask(Task task, User user, Long projectId) throws AccessDeniedException {
 
-		if (!isProjectOwner(user, projectId)) {
-			throw new AccessDeniedException("user does not own the Project");
-		}
+		validateUserIsProjectOwner(user, projectId, "user does not own the Project");
 
 		Project project = projectRepository.findById(projectId).orElseThrow();
 		Long taskParentId = task.getParentId();
 		task.setProject(project);
 
+		String unusedSecret;
+		do {
+			unusedSecret = new SecretGenerator().generate();
+		} while (repository.findTaskBySecret(unusedSecret) != null);
+
+		task.setSecret(unusedSecret);
+		
 		repository.save(task);
 		Task savedTask = repository.findById(task.getId()).orElseThrow();
 
@@ -79,9 +83,7 @@ public class TaskService {
 
 	public Task updateTask(Task task, User user, Long projectId) throws AccessDeniedException {
 
-		if (!isProjectOwner(user, projectId)) {
-			throw new AccessDeniedException("user does not own the Project");
-		}
+		validateUserIsProjectOwner(user, projectId, "user does not own the Project");
 
 		Task savedTask = repository.findById(task.getId()).orElseThrow();
 		Project project = projectRepository.findById(projectId).orElseThrow();
@@ -94,9 +96,8 @@ public class TaskService {
 
 	public Task getTaskById(Long taskId, User user) throws AccessDeniedException {
 		Task task = repository.findById(taskId).orElseThrow();
-		if (!isProjectOwner(user, task.getProject().getId())) {
-			throw new AccessDeniedException("user does not own the task");
-		}
+
+		validateUserIsProjectOwner(user, task.getProject().getId(), "user does not own the task");
 		return task;
 	}
 
@@ -118,12 +119,16 @@ public class TaskService {
 		repository.delete(task);
 	}
 
-	public boolean isProjectOwner(User loggedInUser, Long projectId) {
+	public void validateUserIsProjectOwner(User loggedInUser, Long projectId, String error) throws AccessDeniedException {
 
-		return loggedInUser
+		boolean isOwner = loggedInUser
 				.getProjects()
 				.stream()
 				.anyMatch(it -> it.getId().equals(projectId));
+
+		if (isOwner == false) {
+			throw new AccessDeniedException(error);
+		}
 	}
 
 	public void populateSubtasks(List<Task> tasks, Project project) {

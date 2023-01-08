@@ -39,11 +39,10 @@ export class TaskService {
   }
 
   public static getTasksForProject = (
-    projectKey: IProject['id'],
-    sort: IProject['sort'],
+    projectSecret: IProject['secret'],
   ): Promise<ITask[]> => {
     return minimalAxios.get(
-      `/api/tasks/?projectId=${projectKey}&sort=${sort}`
+      `/api/tasks/?projectSecret=${projectSecret}`
     )
     .then((response: AxiosResponse<ITask[]>) => response.data)
     .catch ((e: CaughtPromise) => {

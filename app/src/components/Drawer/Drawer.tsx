@@ -32,6 +32,7 @@ export const Drawer = ({ drawerUrl, tasks }: DrawerAttrs) => {
     <div className={loading ? "loader-input cover" : ""}>
       <div className="project-title-bar">
         <h5 className="project-title" data-tip={drawer.text.tooltip}>
+          <i className="material-icons mr-5">{drawer.icon}</i>
           {drawer.text._}
         </h5>
         <ProjectOptions moreDropdown={false} />

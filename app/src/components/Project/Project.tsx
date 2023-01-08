@@ -4,10 +4,16 @@ import { ProjectHeader } from "components/Project/ProjectHeader/ProjectHeader";
 import { Task } from "components/Project/Task/Task";
 import { text } from "config";
 import { createTaskObject } from "functions/create-task-object";
-import { ChangeEvent, useContext, useEffect, useMemo, useState, } from "react";
+import { ChangeEvent, useContext, useEffect, useMemo, useState } from "react";
 import { ProjectService } from "services/project.service";
 import { TaskService } from "services/task.service";
-import { IProject, IProjectContext, ITask, LoadingStates, PDefault } from "../../interfaces";
+import {
+  IProject,
+  IProjectContext,
+  ITask,
+  LoadingStates,
+  PDefault,
+} from "../../interfaces";
 import "./_project.scss";
 
 interface ProjectAttrs {
@@ -15,15 +21,16 @@ interface ProjectAttrs {
 }
 
 export const Project = ({ tasks }: ProjectAttrs) => {
-  const { project, reloadProjects, reloadProjectTasks, setProject } = useContext<IProjectContext>(ProjectContext);
+  const { project, reloadProjects, reloadProjectTasks, setProject } =
+    useContext<IProjectContext>(ProjectContext);
 
   const [sort, setSort] = useState(project.sort);
   const [taskName, setTaskName] = useState("");
   const [isLoading, setIsLoading] = useState<LoadingStates>("yes");
   const [showCompleted, setShowCompleted] = useState(project.showCompleted);
-  const [projectName, setProjectName] = useState(
-    project.name || text.project.noName
-  );
+  // const [projectName, setProjectName] = useState(
+  //   project.name || text.project.noName
+  // );
   const [editListName, setEditListName] = useState(false);
 
   const open = tasks.filter((task: ITask) => !task.done);
@@ -42,37 +49,33 @@ export const Project = ({ tasks }: ProjectAttrs) => {
 
   const addTaskPh = useMemo(() => {
     return text.task.addTaskPh();
-  }, [project.id]);
+  }, [project.secret]);
 
   useEffect(() => {
-    setProjectName(project.name);
+    // setProjectName(project.name);
     setShowCompleted(project.showCompleted);
     setIsLoading("p");
 
     reloadTasks();
-
-  }, [project.id]);
+  }, [project.secret]);
 
   const reloadTasks = (): Promise<ITask[]> => {
-    return reloadProjectTasks(project.sort)
-      .then((tasks: ITask[]) => {
-        setIsLoading("");
-        setTaskName("");
-        return tasks;
-      })
-  }
+    return reloadProjectTasks().then((tasks: ITask[]) => {
+      setIsLoading("");
+      setTaskName("");
+      return tasks;
+    });
+  };
 
   const changedSort = (newSort: string): Promise<any> => {
     setSort(newSort);
 
-    console.log("new sort", newSort);
+    setProject({ ...project, sort: newSort });
 
-    setProject({...project, sort: newSort});
-
-    return ProjectService
-      .updateProject({ ...project, sort: newSort })
-      .then(() => reloadProjectTasks());
-  }
+    return ProjectService.updateProject({ ...project, sort: newSort }).then(
+      () => reloadProjectTasks()
+    );
+  };
 
   const addTask = (e: PDefault): Promise<ITask[]> => {
     e.preventDefault();
@@ -83,42 +86,35 @@ export const Project = ({ tasks }: ProjectAttrs) => {
         name: taskName,
         projectId: project.id,
       })
-    )
-      .then((task: ITask | void) => {
-        return reloadTasks()
-      });
-  }
+    ).then((task: ITask | void) => {
+      return reloadTasks();
+    });
+  };
 
-  function taskNameChange(e: ChangeEvent<HTMLInputElement>) {
+  const taskNameChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setTaskName(e.target.value);
   }
 
-  async function saveListName(e: PDefault) {
-    e.preventDefault();
+  const updateProject = (partialProject: Partial<IProject>): Promise<void> => {
 
     setIsLoading("n");
-    await update({ name: projectName });
-    setEditListName(false);
-    setIsLoading("");
-  }
-
-  async function update(projectPartial: Partial<IProject>) {
-    return await ProjectService.updateProject({
+    return ProjectService.updateProject({
       ...project,
-      ...projectPartial,
-    })
-      .then(() => {
-        reloadProjects();
-      });
-  }
+      ...partialProject,
+    }).then((p: IProject | void) => {
+      reloadProjects();
+      setEditListName(false);
+      setIsLoading("");
+      setProject(p as IProject);
+    });
+  };
+
 
   return (
     <div className={isLoading === "p" ? "loader-input cover" : ""}>
       <ProjectHeader
         projectFunctions={{
-          projectName,
-          setProjectName,
-          saveListName,
+          updateProject,
           editListName,
           setEditListName,
           showCompleted,
@@ -166,7 +162,7 @@ export const Project = ({ tasks }: ProjectAttrs) => {
                   id="add-project-task" // used also in NoProject
                   disabled={isLoading === "t"}
                   autoComplete="off"
-                /* ref={ inputElement } */
+                  /* ref={ inputElement } */
                 />
               </div>
             </div>

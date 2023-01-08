@@ -25,4 +25,9 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     @Query(value = "SELECT t FROM Task t WHERE project.id in ?1 AND t.level = 1 AND t.done = 0 AND t.priority != 0 ORDER BY t.priority DESC")
     public List<Task> findPriorityTasks(List<Long> projectIds);
 
+    public Task findTaskBySecret(String taskSecret);
+
+    // @Query("SELECT t FROM Task t JOIN FETCH t.project p JOIN FETCH t.subtasks s") 
+    // List<Task> findAlls();
+
 }

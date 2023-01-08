@@ -6,7 +6,6 @@ const defaultHeaders = (): Record<string, string> => {
     const headers: Record<string, string> = {};
     
     // headers.Accept = "application/json";
-    console.log("hey", localStorage.getItem(constants.storageKey.AUTH_TOKEN))
     if (localStorage.getItem(constants.storageKey.AUTH_TOKEN)) {
         headers.Authorization = localStorage.getItem(constants.storageKey.AUTH_TOKEN) as string;
     }

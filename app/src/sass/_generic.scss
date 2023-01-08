@@ -1,7 +1,7 @@
 @import 'colors';
 
 .ml-5 {
-  margin-left: 5px;
+  margin-left: 5px !important;
 }
 .mr-5 {
   margin-right: 5px !important;
@@ -234,4 +234,8 @@ $max-fff: 100 - $fff;
 
 button:focus {
   background: transparent !important; // set by FORMS!!!;
+}
+
+.material-icons.small-icon {
+  font-size: .7rem;
 }

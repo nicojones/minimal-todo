@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useMemo, useState } from "react";
+import { Dispatch, SetStateAction, useMemo } from "react";
 import "./_no-project.scss";
 
 import balloonIcon from "assets/task-bg/balloon.svg";
@@ -9,7 +9,6 @@ import musicIcon from "assets/task-bg/music.svg";
 import puzzleIcon from "assets/task-bg/puzzle.svg";
 import scienceIcon from "assets/task-bg/science.svg";
 import { randArray } from "functions/rand-array";
-import { AddUserModal } from "components/Modal/AddUserModal";
 
 const icons = [
   balloonIcon,

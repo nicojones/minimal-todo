@@ -28,16 +28,16 @@ public class TaskController {
 
     @RequestMapping(method = RequestMethod.GET, path = "/")
     public ResponseEntity<List<Task>> getAllTasksForProject(
-            @RequestParam("projectId") String projectId,
+            @RequestParam("projectSecret") String projectSecret,
             @AuthenticationPrincipal User user) throws AccessDeniedException {
 
-        switch (projectId) {
+        switch (projectSecret) {
             case "inbox":
                 return ResponseEntity.ok(service.getIncompleteTasks(user));
             case "priority":
                 return ResponseEntity.ok(service.getPriorityTasks(user));
             default:
-                return ResponseEntity.ok(service.getAllTasksForProject(user, Long.parseLong(projectId)));
+                return ResponseEntity.ok(service.getAllTasksForProject(user, projectSecret));
         }
     }
 
@@ -46,6 +46,7 @@ public class TaskController {
             @RequestBody Task task,
             @AuthenticationPrincipal User user)
             throws java.nio.file.AccessDeniedException {
+
         Task newTask = service.saveTask(task, user, task.getProjectId());
         return ResponseEntity.ok(newTask);
     }

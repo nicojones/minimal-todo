@@ -46,7 +46,7 @@ public class Project {
     // @Id
     // @GeneratedValue(generator = "uuid")
     // @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    // private String id;
+    private String secret;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -64,13 +64,15 @@ public class Project {
     @UpdateTimestamp
     private Date updatedAt;
 
-    @OneToMany(mappedBy="project", fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "project", fetch = FetchType.EAGER, orphanRemoval = true)
     @JsonIgnore
     private List<Task> tasks;
-    
+
     @ManyToMany(mappedBy = "projects", fetch = FetchType.EAGER)
     @JsonIgnore
     private List<User> users;
+
+    private String icon;
 
     public String getAdminEmail() {
         if (users == null) {
@@ -96,15 +98,18 @@ public class Project {
     }
 
     public Project(
+            String secret,
             ProjectSort sort,
             boolean showCompleted,
             String name,
             String color,
-            boolean shared
-            ) {
+            boolean shared,
+            String icon) {
         this.sort = sort;
+        this.secret = secret;
         this.showCompleted = showCompleted;
         this.name = name;
+        this.icon = icon;
         this.color = color;
         this.tasks = new ArrayList<>();
         this.users = new ArrayList<>();

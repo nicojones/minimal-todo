@@ -1,8 +1,7 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
-import "./_project-options.scss";
 import { Tooltip } from "components/Tooltip/Tooltip";
 import { constants, text } from "config";
-import { IProject } from "interfaces";
+import { Dispatch, SetStateAction, useState } from "react";
+import "./_project-options.scss";
 
 interface ProjectOptionsAttrs {
   sort?: string;

@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.minimaltodo.config.SecretGenerator;
 import com.minimaltodo.list.task.TaskRepository;
 import com.minimaltodo.list.user.User;
 import com.minimaltodo.list.user.UserRepository;
@@ -39,6 +40,12 @@ public class ProjectService {
         project.setSort(ProjectSort.Z_TO_A);
         project.setTasks(List.of());
 
+		String unusedSecret;
+		do {
+			unusedSecret = new SecretGenerator().generate();
+		} while (repository.findProjectBySecret(unusedSecret) != null);
+
+		project.setSecret(unusedSecret);
 		Project savedProject = repository.save(project);
 		user.addProject(savedProject);
 		userRepository.save(user);

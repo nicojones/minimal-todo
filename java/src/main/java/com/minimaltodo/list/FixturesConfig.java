@@ -6,6 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.minimaltodo.config.SecretGenerator;
 import com.minimaltodo.list.project.Project;
 import com.minimaltodo.list.project.ProjectRepository;
 import com.minimaltodo.list.project.ProjectSort;
@@ -27,6 +28,7 @@ public class FixturesConfig {
             ProjectRepository pr,
             TaskRepository tr) {
         return args -> {
+                SecretGenerator secret = new SecretGenerator();
             User user1 = new User(
                     "Nico Kupfer",
                     "nico@kupfer.es",
@@ -44,23 +46,32 @@ public class FixturesConfig {
             List<User> allUsers = ur.findAll();
 
             Project project1 = new Project(
+                    secret.generate(),
                     ProjectSort.A_TO_Z,
                     false,
                     "First project",
                     "#abcdef",
-                    false);
-            Project project2 = new Project(
+                    false,
+                    "favorite"
+                    );
+                    Project project2 = new Project(
+                    secret.generate(),
                     ProjectSort.PRIORITY,
                     false,
                     "Second project",
-                    "#3a3a3a",
-                    false);
-            Project project3 = new Project(
+                    "#113Acc",
+                    false,
+                    "home"
+                    );
+                    Project project3 = new Project(
+                    secret.generate(),
                     ProjectSort.Z_TO_A,
                     false,
                     "Stuff to do",
-                    "#3a3a3a",
-                    false);
+                    "#7a3ebf",
+                    false,
+                    "grade"
+                    );
 
             project1.setUsers(List.of(allUsers.get(0), allUsers.get(1)));
             project2.setUsers(List.of(allUsers.get(0)));
@@ -69,15 +80,15 @@ public class FixturesConfig {
             pr.saveAll(List.of(project1, project2, project3));
             List<Project> allProjects = pr.findAll();
 
-            Task task2 = new Task("Subtask","Some description",false,false,allProjects.get(0),2,1);
-            Task task1 = new Task("Create list","Subtask description",false,true,allProjects.get(0),1,1);
-            Task task3 = new Task("Second Task","Some other description",false,false,allProjects.get(0),1,1);
-            Task task4 = new Task("Important","Important thing to do",false,false,allProjects.get(0),1,2);
-            Task task5 = new Task("More Task","More tasks",false,false,allProjects.get(0),1,0);
-            Task task6 = new Task("Last Task","Last task",false,false,allProjects.get(0),1,0);
+            Task task2 = new Task(secret.generate(), "Subtask","Some description",false,false,allProjects.get(0),2,1);
+            Task task1 = new Task(secret.generate(), "Create list","Subtask description",false,true,allProjects.get(0),1,1);
+            Task task3 = new Task(secret.generate(), "Second Task","Some other description",false,false,allProjects.get(0),1,1);
+            Task task4 = new Task(secret.generate(), "Important","Important thing to do",false,false,allProjects.get(0),1,2);
+            Task task5 = new Task(secret.generate(), "More Task","More tasks",false,false,allProjects.get(0),1,0);
+            Task task6 = new Task(secret.generate(), "Last Task","Last task",false,false,allProjects.get(0),1,0);
             
-            Task task7 = new Task("Single item","Another project",false,false,allProjects.get(1),1,0);
-            Task task8 = new Task("Another single child","Some text",false,false,allProjects.get(2),1,0);
+            Task task7 = new Task(secret.generate(), "Single item","Another project",false,false,allProjects.get(1),1,0);
+            Task task8 = new Task(secret.generate(), "Another single child","Some text",false,false,allProjects.get(2),1,0);
 
 
             tr.saveAll(List.of(task1, task2, task3, task4, task5, task6, task7, task8));

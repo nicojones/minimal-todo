@@ -1,15 +1,14 @@
 import { AxiosResponse } from "axios";
-import { showToast } from "./toast";
+import { text } from "../config";
+import { projectToDto } from "../functions/project-to-dto.function";
 import {
   CaughtPromise,
   IProject,
-  IUser,
-  UserSearchResults as UserSearchResult,
+  UserSearchResults as UserSearchResult
 } from "../interfaces";
 import { AuthService } from "./auth.service";
-import { text } from "../config";
-import { projectToDto } from "../functions/project-to-dto.function";
 import { minimalAxios } from "./axios.service";
+import { showToast } from "./toast";
 
 export class ProjectService {
   public static getListOfProjects = (): Promise<IProject[]> => {

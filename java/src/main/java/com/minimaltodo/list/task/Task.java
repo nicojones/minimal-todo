@@ -43,6 +43,8 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "task_sequence")
     private Long id;
 
+    private String secret;
+
     @Nullable
     @ManyToOne(cascade = { CascadeType.PERSIST })
     @JoinColumn(name = "task_id")
@@ -88,6 +90,16 @@ public class Task {
         return project.getId();
     }
 
+    @JsonProperty("projectSecret")
+    public String getFrontendProjectSecret() {
+        return project.getSecret();
+    }
+
+    @JsonProperty("projectIcon")
+    public String getFrontendProjectIcon() {
+        return project.getIcon();
+    }
+
     @JsonProperty("dotColor")
     public String getFrontendDotColor() {
         return project.getColor();
@@ -98,7 +110,7 @@ public class Task {
         return project.getName();
     }
 
-    public Task(String name, String description, boolean done, boolean expanded, Project project,
+    public Task(String secret, String name, String description, boolean done, boolean expanded, Project project,
             int level, int priority) {
         this.name = name;
         this.description = description;
@@ -108,6 +120,7 @@ public class Task {
         this.project = project;
         this.level = level;
         this.priority = priority;
+        this.secret = secret;
     }
 
     @Override

@@ -15,14 +15,17 @@ export function createTaskObject(task: Partial<ITask<string>>): ITask {
     level: task.level || 1,
     parentId: (task.parentId || null) as unknown as ITask['parentId'],
     description: task.description || '',
-    projectId: task.projectId as ITask['projectId'],
     priority: task.priority || 0,
     expanded: false,
     subtasks: [],
+    secret: null as unknown as string,
     created: null as unknown as string,
     updated: null as unknown as string,
     dotColor: null as unknown as string,
-    projectName: null as unknown as string
+    projectId: task.projectId as ITask['projectId'],
+    projectName: null as unknown as string,
+    projectIcon: null as unknown as string,
+    projectSecret: null as unknown as string
   };
 }
 

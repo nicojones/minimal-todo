@@ -1,27 +1,24 @@
 import { useContext, useState } from "react";
 
 import { ProjectContext } from "TodoApp";
-import { ColorPicker } from "components/ColorPicker/ColorPicker";
+import { ColorAndIconPicker } from "components/ColorAndIconPicker/ColorAndIconPicker";
 import { ProjectListDropdown } from "components/Project/ProjectList/ProjectListDropdown";
 import { text } from "config";
 import { drawerArray } from "config/drawer-config";
 import { createProjectObject } from "functions/create-project-object";
-import { ProjectService } from "services/project.service";
-import { IProject, IProjectContext, PDefault, PbItem } from "../../../interfaces";
-import "./_project-list.scss";
 import { reservedKey } from "functions/reserved-key";
-
-
+import { ProjectService } from "services/project.service";
+import { IProject, IProjectContext, PDefault } from "../../../interfaces";
+import "./_project-list.scss";
 
 interface ProjectListAttrs {
   projectId: IProject["id"];
   projects: IProject[];
 }
 
-export const ProjectList = (
-  { projectId, projects }: ProjectListAttrs
-) => {
-  const { project, changeToProject, reloadProjects, reloadProjectTasks } = useContext<IProjectContext>(ProjectContext);
+export const ProjectList = ({ projectId, projects }: ProjectListAttrs) => {
+  const { project, changeToProject, reloadProjects, reloadProjectTasks } =
+    useContext<IProjectContext>(ProjectContext);
 
   const [isLoading, setIsLoading] = useState("");
 
@@ -32,48 +29,55 @@ export const ProjectList = (
 
     setIsLoading("new");
 
-    ProjectService
-      .newProject(createProjectObject(newProjectName))
-      .then((project: IProject | void) => {
+    ProjectService.newProject(createProjectObject(newProjectName)).then(
+      (project: IProject | void) => {
         setNewProjectName("");
         setIsLoading("");
         changeToProject(project as unknown as IProject);
         reloadProjects();
-      });
-  }
+      }
+    );
+  };
 
   const deleteProject = (_project: IProject): Promise<void> | void => {
     if (window.confirm(text.project.delete.long)) {
-      setIsLoading(_project.id);
-      return ProjectService.deleteProject(_project)
-        .then(() => {
-          changeToProject(null);
-          setIsLoading("");
-          reloadProjects();
-        });
+      setIsLoading(_project.secret);
+      return ProjectService.deleteProject(_project).then(() => {
+        changeToProject(null);
+        setIsLoading("");
+        reloadProjects();
+      });
     }
-  }
+  };
 
   const setProject = (_project: IProject): void => {
-    if (_project.id === project.id) {
+    if (_project.secret === project.secret) {
       changeToProject({ unselected: true } as unknown as IProject); // can't change to itself... it also causes a re-render problem in the `useEffect`
     }
-    console.info("Changing project from", project.id, "to", _project.id);
+    console.info(
+      "Changing project from",
+      project.secret,
+      "to",
+      _project.secret
+    );
     changeToProject(_project);
-  }
+  };
 
-  const changeColor = (_project: IProject, hexColor: string): Promise<IProject | void> => {
+  const changeColorAndIcon = (
+    _project: IProject,
+    iconAndColor: Partial<Pick<IProject, "icon" | "color">>
+  ): Promise<IProject | void> => {
     return ProjectService.updateProject({
       ..._project,
-      color: hexColor,
-    })
-    .then(() => {
+      ...iconAndColor,
+    }).then((p: IProject | void) => {
+      // setProject(p as IProject);
       reloadProjects();
-      if (reservedKey(project.id)) {
+      if (reservedKey(project.secret)) {
         reloadProjectTasks();
       }
     });
-  }
+  };
 
   return (
     <ul className="projects-list flex-column">
@@ -88,7 +92,7 @@ export const ProjectList = (
         >
           <button
             className="ib left left-align w-100"
-            onClick={() => setProject({ id: p.url } as IProject)}
+            onClick={() => setProject({ secret: p.url } as IProject)}
           >
             <i className="material-icons tiny left btn-pr">{p.icon}</i>
             <span className="btn-pl">{p.text._}</span>
@@ -105,24 +109,29 @@ export const ProjectList = (
       )}
       {projects.map((proj) => (
         <li
-          key={proj.id}
+          key={proj.secret}
           className={
             "proj-li mb-5 parent-hover flex-row" +
-            (project.id === proj.id ? " selected" : "") +
-            (isLoading === proj.id ? " loader-input" : "")
+            (project.secret === proj.secret ? " selected" : "") +
+            (isLoading === proj.secret ? " loader-input" : "")
           }
         >
-          <ColorPicker
+          <ColorAndIconPicker
             color={proj.color}
-            onChangeComplete={(e) => changeColor(proj, e)}
-            title={proj.shared ? text.sharedProject._ : ""}
-            icon={proj.shared ? "person" : "lens"}
-          />
+            icon={proj.icon}
+            onChangeComplete={(
+              colorAndIcon: Partial<Pick<IProject, "icon" | "color">>
+            ) => changeColorAndIcon(proj, colorAndIcon)}
+          ></ColorAndIconPicker>
           <button
             className="ib left left-align btn-p w-100"
             onClick={() => setProject(proj)}
           >
-            {proj.name}
+            <span className="d-flex align-center" title={proj.shared ? text.sharedProject._ : ""}>
+              {proj.name}
+              {proj.shared ? <i className="material-icons small-icon ml-5">person</i> : ""}
+            </span>
+
             {/*( { proj.openTasks } <span className="subtle">/ { proj.completedTasks }</span> )*/}
           </button>
           <ProjectListDropdown project={proj} onDelete={deleteProject} />

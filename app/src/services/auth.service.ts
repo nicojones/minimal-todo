@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 import { text } from 'config/text';
 import jwt_decode from "jwt-decode";
 import { constants, urls } from "../config";
-import { ILoginForm, IUser, LoginResponse, LoginUser } from '../interfaces';
+import { ILoginForm, LoginResponse, LoginUser } from '../interfaces';
 import { ISignupForm, ISignupFormError } from '../interfaces/signup-form.interface';
 import { minimalAxios } from './axios.service';
 import { showToast } from './toast';
@@ -34,7 +34,6 @@ export class AuthService {
     const status: number = e.response?.status || 0;
 
     showToast('error', error);
-    console.log("there's an error", status);
 
     if ([401, 403].includes(status)) {
       AuthService.logout(urls.login);

@@ -1,25 +1,21 @@
-import React, {useState} from "react";
-import {AuthService} from "services/auth.service";
-import {Link, Redirect, useHistory} from "react-router-dom";
-import {showToast} from "services/toast";
-import {LoggedInUserContext} from "App";
-import {text, urls} from "config";
-import {LoginBox} from "components/Login/LoginBox";
-import {CaughtPromise, ISignupForm, ISignupFormError, LoginUser, PDefault} from "interfaces";
+import { LoggedInUserContext } from "App";
+import { LoginBox } from "components/Login/LoginBox";
+import { text, urls } from "config";
+import { CaughtPromise, ILoggedInUserContext, ISignupForm, ISignupFormError, LoginUser, PDefault } from "interfaces";
+import { useContext, useState } from "react";
+import { Link, Redirect } from "react-router-dom";
+import { AuthService } from "services/auth.service";
+import { showToast } from "services/toast";
 
 export const Signup = () => {
-  const history = useHistory();
 
   const [loggingIn, setLoggingIn] = useState<boolean>(false);
   const [signup, setSignup] = useState<ISignupForm>({} as ISignupForm);
   const [loading, setLoading] = useState<boolean>(false);
   const [signupError, setSignupError] = useState<ISignupFormError>({});
 
-  // If the user is logged in already, redirect to the app!
-  if (React.useContext(LoggedInUserContext).user) {
-    history.push(urls.app);
-    return null;
-  }
+  const {setUser} = useContext<ILoggedInUserContext>(LoggedInUserContext);
+
 
   async function onSubmit(e: PDefault) {
     e.preventDefault();
@@ -36,6 +32,7 @@ export const Signup = () => {
             showToast("success", text.login.signupSuccess);
             setSignup({} as ISignupForm);
             setLoggingIn(true);
+            setUser(responseData);
           }
         })
         .catch(({ response }: CaughtPromise) => {
