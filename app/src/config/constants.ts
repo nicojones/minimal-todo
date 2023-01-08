@@ -1,4 +1,4 @@
-import { urls } from "./urls";
+import { SpecialProjectUrl } from "interfaces";
 import { text } from "./text";
 // import {CTOptions} from 'cogo-toast';
 
@@ -53,8 +53,8 @@ export const constants = {
     { icon: "flag", name: text.sort.pr, sort: projectSort.PRIORITY },
   ],
   drawerSort: {
-    [urls.inboxUrl]: projectSort.OLDEST_FIRST,
-    [urls.priorityUrl]: projectSort.PRIORITY,
+    [SpecialProjectUrl.INBOX]: projectSort.OLDEST_FIRST,
+    [SpecialProjectUrl.PRIORITY]: projectSort.PRIORITY,
   },
   storageKey: {
     PB_USER: "PB_USER",

@@ -1,11 +1,12 @@
-import {text} from "../../config/text";
-import React, {useContext, useState} from "react";
-import {ProjectContext} from "../../TodoApp";
-import {IProjectContext, ITask, PDefault} from "../../interfaces";
-import {TaskService} from "../../services";
+import { text } from "../../config/text";
+import React, { useContext, useState } from "react";
+import { ProjectContext } from "../../TodoApp";
+import { IProjectContext, ITask, PDefault } from "../../interfaces";
+import { TaskService } from "../../services";
+import { Task } from "components/Project/Task/Task";
 
 export const NavbarSearch = () => {
-  const {changeToProject} = useContext<IProjectContext>(ProjectContext);
+  const { changeToProject, reloadProjectTasks } = useContext<IProjectContext>(ProjectContext);
 
   const [search, setSearch] = useState("");
   const [results, setResults] = useState<ITask[]>([]);
@@ -13,7 +14,6 @@ export const NavbarSearch = () => {
   function searchResults(e: PDefault) {
     e.preventDefault();
 
-    // @ts-ignore
     TaskService.searchTask(search).then((results: ITask[]) => {
       if (results.length) {
         setResults(results);
@@ -44,17 +44,17 @@ export const NavbarSearch = () => {
         <>
           <div className="backdrop dark" onClick={() => setResults([])} />
           <ul className="search-results dropdown">
-            {results.map((r) => (
-              <li
-                key={r.id}
-                className="dropdown-item pointer"
-                onClick={() => r.projectId && goToResult(r)}
-              >
-                <i className="material-icons left subtle btn-pr ">
-                  {r.done ? "check_box" : "check_box_outline_blank"}
-                </i>
-                {r.name}
-              </li>
+            {results.map((r: ITask) => (
+              <Task
+                task={r}
+                level={0}
+                key={r.secret}
+                showDot={true}
+                showActions={true}
+                onTaskToggle={reloadProjectTasks}
+                showGoToProject={false}
+                singleLevel={true}
+              />
             ))}
           </ul>
         </>
@@ -63,4 +63,4 @@ export const NavbarSearch = () => {
       )}
     </form>
   );
-}
+};

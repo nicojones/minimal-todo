@@ -29,5 +29,8 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
     // @Query("SELECT t FROM Task t JOIN FETCH t.project p JOIN FETCH t.subtasks s") 
     // List<Task> findAlls();
-
+    
+    // @Query("SELECT t FROM Task t JOIN t.project p WHERE t.project IN (SELECT u.projects FROM User u WHERE u.id = ?1)") 
+    @Query("SELECT t, 1 as level FROM Task t JOIN t.project p WHERE t.project IN (SELECT u.projects FROM User u WHERE u.id = ?1) AND (t.name LIKE %?2% OR t.description LIKE %?2%)") 
+    List<Task> searchAllTasks(Long userId, String query);
 }

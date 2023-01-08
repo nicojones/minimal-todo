@@ -10,7 +10,7 @@ import puzzleIcon from "assets/task-bg/puzzle.svg";
 import scienceIcon from "assets/task-bg/science.svg";
 import { randArray } from "functions/rand-array";
 
-const icons = [
+const icons: string[] = [
   balloonIcon,
   boardIcon,
   bookIcon,

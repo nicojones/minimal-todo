@@ -10,6 +10,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.minimaltodo.list.project.Project;
+import com.minimaltodo.list.project.ProjectIcon;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.CascadeType;
@@ -95,8 +96,8 @@ public class Task {
         return project.getSecret();
     }
 
-    @JsonProperty("projectIcon")
-    public String getFrontendProjectIcon() {
+    @JsonProperty("icon")
+    public ProjectIcon getFrontendProjectIcon() {
         return project.getIcon();
     }
 

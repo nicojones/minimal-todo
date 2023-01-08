@@ -115,6 +115,10 @@ public class TaskService {
 		return repository.saveAll(tasks);
 	}
 
+	public List<Task> searchTasks(User u, String query) {
+		return repository.searchAllTasks(u.getId(), query);
+	}
+
 	public void deleteTask(Task task) {
 		repository.delete(task);
 	}

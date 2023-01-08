@@ -3,29 +3,29 @@ import { NoProject } from "components/NoProject/NoProject";
 import { ProjectHeader } from "components/Project/ProjectHeader/ProjectHeader";
 import { Task } from "components/Project/Task/Task";
 import { text } from "config";
-import { createTaskObject } from "functions/create-task-object";
-import { ChangeEvent, useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { ProjectService } from "services/project.service";
-import { TaskService } from "services/task.service";
 import {
   IProject,
   IProjectContext,
   ITask,
   LoadingStates,
-  PDefault,
+  SpecialProjectUrl
 } from "../../interfaces";
+import { NewTask } from "./Task/NewTask";
 import "./_project.scss";
+import { reservedKey } from "functions/reserved-key";
 
 interface ProjectAttrs {
   tasks: ITask[];
+  specialUrl?: SpecialProjectUrl;
 }
 
-export const Project = ({ tasks }: ProjectAttrs) => {
+export const Project = ({ tasks, specialUrl }: ProjectAttrs) => {
   const { project, reloadProjects, reloadProjectTasks, setProject } =
     useContext<IProjectContext>(ProjectContext);
 
   const [sort, setSort] = useState(project.sort);
-  const [taskName, setTaskName] = useState("");
   const [isLoading, setIsLoading] = useState<LoadingStates>("yes");
   const [showCompleted, setShowCompleted] = useState(project.showCompleted);
   // const [projectName, setProjectName] = useState(
@@ -36,8 +36,10 @@ export const Project = ({ tasks }: ProjectAttrs) => {
   const open = tasks.filter((task: ITask) => !task.done);
   const completed = tasks.filter((task: ITask) => !!task.done);
 
+  console.log(completed.length, open.length, showCompleted)
+
   const allCompleted = useMemo(() => {
-    if (completed.length && !open.length && !showCompleted) {
+    if (!open.length && ((completed.length && !showCompleted) || !!specialUrl)) {
       return (
         <li>
           <NoProject className="o-1" inspireText={text.allTasksCompleted()} />
@@ -46,10 +48,6 @@ export const Project = ({ tasks }: ProjectAttrs) => {
     }
     return "";
   }, [tasks, showCompleted]);
-
-  const addTaskPh = useMemo(() => {
-    return text.task.addTaskPh();
-  }, [project.secret]);
 
   useEffect(() => {
     // setProjectName(project.name);
@@ -62,7 +60,6 @@ export const Project = ({ tasks }: ProjectAttrs) => {
   const reloadTasks = (): Promise<ITask[]> => {
     return reloadProjectTasks().then((tasks: ITask[]) => {
       setIsLoading("");
-      setTaskName("");
       return tasks;
     });
   };
@@ -77,26 +74,7 @@ export const Project = ({ tasks }: ProjectAttrs) => {
     );
   };
 
-  const addTask = (e: PDefault): Promise<ITask[]> => {
-    e.preventDefault();
-    setIsLoading("t");
-
-    return TaskService.addTask(
-      createTaskObject({
-        name: taskName,
-        projectId: project.id,
-      })
-    ).then((task: ITask | void) => {
-      return reloadTasks();
-    });
-  };
-
-  const taskNameChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    setTaskName(e.target.value);
-  }
-
   const updateProject = (partialProject: Partial<IProject>): Promise<void> => {
-
     setIsLoading("n");
     return ProjectService.updateProject({
       ...project,
@@ -109,11 +87,10 @@ export const Project = ({ tasks }: ProjectAttrs) => {
     });
   };
 
-
   return (
     <div className={isLoading === "p" ? "loader-input cover" : ""}>
       <ProjectHeader
-        projectFunctions={{
+        pf={{
           updateProject,
           editListName,
           setEditListName,
@@ -121,53 +98,28 @@ export const Project = ({ tasks }: ProjectAttrs) => {
           setShowCompleted,
           sort,
           setSort: changedSort,
+          canEdit: !specialUrl,
+          isLoading
         }}
-        isLoading={isLoading}
       />
 
       <ul>
         {open.map((task) => (
-          <Task key={task.id} task={task} level={0} />
+          <Task key={task.id} task={task} level={0} showDot={reservedKey(project.secret)} />
         ))}
-        {showCompleted &&
-          completed.map((task) => <Task key={task.id} task={task} />)}
+        {specialUrl ? null : (
+          <>
+            {showCompleted &&
+              completed.map((task) => <Task key={task.id} task={task} />)}
 
-        <li className="task">
-          <form
-            onSubmit={addTask}
-            className={
-              "flex-row task__content form-inline" +
-              (isLoading === "t" ? " loader-input" : "")
-            }
-          >
-            {/*className={ 'flex-row task__content form-inline' + (isLoading === 't' ? ' loader-input' : '') }>*/}
-            <i
-              /* Just to give the right padding */ className="material-icons left v-hidden btn-p"
-            >
-              add
-            </i>
-            <button className="btn p0">
-              <i className="material-icons left subtle btn-pr">
-                {taskName ? "save" : "add"}
-              </i>
-            </button>
-            <div className="flex-center-start w-100">
-              <div className="input-group mb-2">
-                <input
-                  onChange={taskNameChange}
-                  className="invisible f-100 btn-pl"
-                  placeholder={addTaskPh}
-                  required
-                  value={taskName}
-                  id="add-project-task" // used also in NoProject
-                  disabled={isLoading === "t"}
-                  autoComplete="off"
-                  /* ref={ inputElement } */
-                />
-              </div>
-            </div>
-          </form>
-        </li>
+            <NewTask
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
+              reloadTasks={reloadTasks}
+            />
+
+          </>
+        )}
         {allCompleted}
       </ul>
     </div>

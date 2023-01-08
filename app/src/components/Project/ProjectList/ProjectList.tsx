@@ -1,14 +1,17 @@
 import { useContext, useState } from "react";
 
 import { ProjectContext } from "TodoApp";
-import { ColorAndIconPicker } from "components/ColorAndIconPicker/ColorAndIconPicker";
-import { ProjectListDropdown } from "components/Project/ProjectList/ProjectListDropdown";
 import { text } from "config";
 import { drawerArray } from "config/drawer-config";
 import { createProjectObject } from "functions/create-project-object";
-import { reservedKey } from "functions/reserved-key";
 import { ProjectService } from "services/project.service";
-import { IProject, IProjectContext, PDefault } from "../../../interfaces";
+import {
+  IProject,
+  IProjectContext,
+  MinimalProject,
+  PDefault,
+} from "../../../interfaces";
+import { ProjectListItem } from "./ProjectListItem";
 import "./_project-list.scss";
 
 interface ProjectListAttrs {
@@ -20,7 +23,9 @@ export const ProjectList = ({ projectId, projects }: ProjectListAttrs) => {
   const { project, changeToProject, reloadProjects, reloadProjectTasks } =
     useContext<IProjectContext>(ProjectContext);
 
-  const [isLoading, setIsLoading] = useState("");
+  const [isLoading, setIsLoading] = useState<"" | "new" | IProject["secret"]>(
+    ""
+  );
 
   const [newProjectName, setNewProjectName] = useState("");
 
@@ -63,41 +68,17 @@ export const ProjectList = ({ projectId, projects }: ProjectListAttrs) => {
     changeToProject(_project);
   };
 
-  const changeColorAndIcon = (
-    _project: IProject,
-    iconAndColor: Partial<Pick<IProject, "icon" | "color">>
-  ): Promise<IProject | void> => {
-    return ProjectService.updateProject({
-      ..._project,
-      ...iconAndColor,
-    }).then((p: IProject | void) => {
-      // setProject(p as IProject);
-      reloadProjects();
-      if (reservedKey(project.secret)) {
-        reloadProjectTasks();
-      }
-    });
-  };
-
   return (
     <ul className="projects-list flex-column">
-      {drawerArray.map((p) => (
-        <li
-          key={p.url}
-          title={p.text.tooltip}
-          className={
-            "proj-li mb-5 parent-hover flex-row" +
-            (projectId === p.url ? " selected" : "")
-          }
-        >
-          <button
-            className="ib left left-align w-100"
-            onClick={() => setProject({ secret: p.url } as IProject)}
-          >
-            <i className="material-icons tiny left btn-pr">{p.icon}</i>
-            <span className="btn-pl">{p.text._}</span>
-          </button>
-        </li>
+      {drawerArray.map((p: MinimalProject) => (
+        <ProjectListItem
+          key={p.secret}
+          isLoading={""}
+          deleteProject={() => null}
+          project={p}
+          setProject={setProject}
+          isSpecialProject={true}
+        />
       ))}
       {projects.length ? (
         <li key="title" className="proj-li bt-subtle">
@@ -107,35 +88,15 @@ export const ProjectList = ({ projectId, projects }: ProjectListAttrs) => {
       ) : (
         ""
       )}
-      {projects.map((proj) => (
-        <li
+      {projects.map((proj: MinimalProject) => (
+        <ProjectListItem
           key={proj.secret}
-          className={
-            "proj-li mb-5 parent-hover flex-row" +
-            (project.secret === proj.secret ? " selected" : "") +
-            (isLoading === proj.secret ? " loader-input" : "")
-          }
-        >
-          <ColorAndIconPicker
-            color={proj.color}
-            icon={proj.icon}
-            onChangeComplete={(
-              colorAndIcon: Partial<Pick<IProject, "icon" | "color">>
-            ) => changeColorAndIcon(proj, colorAndIcon)}
-          ></ColorAndIconPicker>
-          <button
-            className="ib left left-align btn-p w-100"
-            onClick={() => setProject(proj)}
-          >
-            <span className="d-flex align-center" title={proj.shared ? text.sharedProject._ : ""}>
-              {proj.name}
-              {proj.shared ? <i className="material-icons small-icon ml-5">person</i> : ""}
-            </span>
-
-            {/*( { proj.openTasks } <span className="subtle">/ { proj.completedTasks }</span> )*/}
-          </button>
-          <ProjectListDropdown project={proj} onDelete={deleteProject} />
-        </li>
+          project={proj}
+          setProject={setProject}
+          isLoading={isLoading}
+          deleteProject={deleteProject}
+          isSpecialProject={false}
+        />
       ))}
       <li key="new-project" className="proj-li mb-5 parent-hover flex-row">
         <form

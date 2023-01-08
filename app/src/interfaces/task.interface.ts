@@ -15,7 +15,7 @@ export interface ITask<DateType = string> extends Identifiable<DateType> {
   updated: DateType;
   projectId: IProject['id'];
   projectName: string;
-  projectIcon: string;
+  icon: string;
   projectSecret: string;
   dotColor: string;
 }

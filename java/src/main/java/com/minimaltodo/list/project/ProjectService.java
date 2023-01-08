@@ -12,7 +12,6 @@ import com.minimaltodo.list.task.TaskRepository;
 import com.minimaltodo.list.user.User;
 import com.minimaltodo.list.user.UserRepository;
 
-
 @Service
 public class ProjectService {
 
@@ -22,10 +21,9 @@ public class ProjectService {
 
 	@Autowired
 	public ProjectService(
-		ProjectRepository repository, 
-		UserRepository userRepository,
-		TaskRepository taskRepository
-		) {
+			ProjectRepository repository,
+			UserRepository userRepository,
+			TaskRepository taskRepository) {
 		this.repository = repository;
 		this.userRepository = userRepository;
 		this.taskRepository = taskRepository;
@@ -37,8 +35,8 @@ public class ProjectService {
 
 	public Project saveProject(User user, Project project) {
 		project.addUserToProject(user);
-        project.setSort(ProjectSort.Z_TO_A);
-        project.setTasks(List.of());
+		project.setSort(ProjectSort.Z_TO_A);
+		project.setTasks(List.of());
 
 		String unusedSecret;
 		do {
@@ -46,6 +44,7 @@ public class ProjectService {
 		} while (repository.findProjectBySecret(unusedSecret) != null);
 
 		project.setSecret(unusedSecret);
+		project.setIcon(ProjectIcon.CIRCLE);
 		Project savedProject = repository.save(project);
 		user.addProject(savedProject);
 		userRepository.save(user);
@@ -54,7 +53,7 @@ public class ProjectService {
 	}
 
 	public List<User> getUsersForProject(User user, Long projectId) throws AccessDeniedException {
-		
+
 		if (!isProjectOwner(user, projectId)) {
 			throw new AccessDeniedException("current user does not own the project you want to update");
 		}
@@ -63,16 +62,25 @@ public class ProjectService {
 	}
 
 	public Project updateProject(User user, Project project) throws AccessDeniedException {
-		
+
 		if (!isProjectOwner(user, project.getId())) {
 			throw new AccessDeniedException("current user does not own the project you want to update");
 		}
+
+		project.setUsers(List.of(user));
+
+		Project repositoryProject = repository.findById(project.getId()).orElseThrow();
+		project.setTasks(repositoryProject.getTasks());
+
+		System.out.println("potato");
+		System.out.println(project.getIcon());
+		// project.setIcon(ProjectIcon.getEnumByString(project.getIcon().label));
 
 		return repository.save(project);
 	}
 
 	public void deleteProject(User user, Long projectId) throws AccessDeniedException {
-		
+
 		if (!isProjectOwner(user, projectId)) {
 			throw new AccessDeniedException("current user does not own the project you want to delete");
 		}
@@ -89,7 +97,7 @@ public class ProjectService {
 	}
 
 	public void addUserToProject(User user, Long projectId, String newUserEmail) throws AccessDeniedException {
-		
+
 		if (!isProjectOwner(user, projectId)) {
 			throw new AccessDeniedException("current user does not own the project you want to share");
 		}
@@ -103,7 +111,7 @@ public class ProjectService {
 	}
 
 	public void removeUserFromProject(User user, Long projectId, String userToRemoveEmail) throws AccessDeniedException {
-		
+
 		if (!isProjectOwner(user, projectId)) {
 			throw new AccessDeniedException("current user does not have rights to remove other users from project");
 		}
@@ -124,7 +132,7 @@ public class ProjectService {
 		Project project = repository.findById(projectId).orElseThrow();
 
 		taskRepository.deleteAll(project.getTasks());
-		
+
 		project.setTasks(new ArrayList<>());
 		repository.save(project);
 

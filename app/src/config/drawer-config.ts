@@ -1,17 +1,26 @@
+import { MinimalProject, SpecialProjectUrl } from 'interfaces';
 import { text } from './text';
 import { urls } from './urls';
 
 
-export const drawerConfig = {
-  [urls.inboxUrl]: {
-    url: urls.inboxUrl,
-    text: text.drawer.inbox,
-    icon: 'inbox'
+export const drawerConfig: Record<SpecialProjectUrl, MinimalProject> = {
+  [SpecialProjectUrl.INBOX]: {
+    secret: urls.inboxUrl,
+    name: text.drawer.inbox._,
+    icon: 'inbox',
+    created: 0,
+    updated: 0,
+    color: "#000000",
+    id: 0
   },
-  [urls.priorityUrl]: {
-    url: urls.priorityUrl,
-    text: text.drawer.priority,
-    icon: 'flag'
+  [SpecialProjectUrl.PRIORITY]: {
+    secret: urls.priorityUrl,
+    name: text.drawer.priority._,
+    icon: 'flag',
+    color: "#000000",
+    created: 0,
+    updated: 0,
+    id: 0
   }
 };
 

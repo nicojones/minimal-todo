@@ -1,6 +1,11 @@
-import { urls } from 'config/urls';
+import { SpecialProjectUrl } from "interfaces";
 
-
-export function reservedKey (projectKey: string) {
-  return [urls.inboxUrl, urls.priorityUrl].indexOf(projectKey) >= 0;
-}
+export const reservedKey = (
+  projectKey: string
+): projectKey is SpecialProjectUrl => {
+  return (
+    [SpecialProjectUrl.INBOX, SpecialProjectUrl.PRIORITY].indexOf(
+      projectKey as unknown as SpecialProjectUrl
+    ) >= 0
+  );
+};

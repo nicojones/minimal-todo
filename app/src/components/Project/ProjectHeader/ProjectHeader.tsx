@@ -2,14 +2,20 @@ import { ProjectContext } from "TodoApp";
 import { ColorAndIconPicker } from "components/ColorAndIconPicker/ColorAndIconPicker";
 import { ProjectOptions } from "components/Project/ProjectOptions/ProjectOptions";
 import { text } from "config";
-import { IProject, IProjectContext, ITask, LoadingStates } from "interfaces";
+import {
+  ColorIconChoice,
+  IProject,
+  IProjectContext,
+  ITask,
+  LoadingStates,
+} from "interfaces";
 import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { ProjectService } from "services/project.service";
 
 import "./project-header.scss";
 
 interface ProjectHeaderAttrs {
-  projectFunctions: {
+  pf: {
     updateProject: (partialProject: Partial<IProject>) => any;
     editListName: boolean;
     setEditListName: Dispatch<SetStateAction<boolean>>;
@@ -17,14 +23,12 @@ interface ProjectHeaderAttrs {
     setShowCompleted: Dispatch<SetStateAction<boolean>>;
     sort: string;
     setSort: (sort: string) => any; // Promise<IProject | void> // Dispatch<SetStateAction<string>>;
+    canEdit: boolean;
+    isLoading: LoadingStates;
   };
-  isLoading: LoadingStates;
 }
 
-export const ProjectHeader = ({
-  projectFunctions,
-  isLoading,
-}: ProjectHeaderAttrs) => {
+export const ProjectHeader = ({ pf }: ProjectHeaderAttrs) => {
   const {
     project,
     reloadProjects,
@@ -37,7 +41,7 @@ export const ProjectHeader = ({
     project.name
   );
 
-  const psc = projectFunctions.showCompleted;
+  const psc = pf.showCompleted;
 
   const deleteProject = (): Promise<void> | void => {
     if (window.confirm(text.project.delete._)) {
@@ -64,7 +68,7 @@ export const ProjectHeader = ({
   const toggleShowCompleted = (
     showCompleted: boolean
   ): Promise<IProject | void> => {
-    projectFunctions.setShowCompleted(showCompleted);
+    pf.setShowCompleted(showCompleted);
     return ProjectService.updateProject({
       ...project,
       showCompleted,
@@ -73,25 +77,24 @@ export const ProjectHeader = ({
     });
   };
 
-  const updateColorAndIcon = (
-    colorAndIcon: Partial<Pick<IProject, "color" | "icon">>
-  ): void => {
-    projectFunctions.updateProject(colorAndIcon);
+  const updateColorAndIcon = (colorAndIcon: ColorIconChoice): void => {
+    pf.updateProject(colorAndIcon);
   };
 
-  return projectFunctions.editListName ? (
+
+  return pf.editListName ? (
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        projectFunctions.updateProject(project);
+        pf.updateProject(project);
       }}
-      className={"flex-row " + (isLoading === "n" ? " loader-input" : "")}
+      className={"flex-row " + (pf.isLoading === "n" ? " loader-input" : "")}
     >
       <input
         className="as-title h5 project-title"
         autoFocus /*onBlur={ project.saveListName }*/
         value={projectName}
-        disabled={isLoading === "n"}
+        disabled={pf.isLoading === "n"}
         onChange={(e) => setProjectName(e.target.value)}
       />
       <button className="ib material-icons" type="submit">
@@ -99,7 +102,7 @@ export const ProjectHeader = ({
       </button>
       <button
         className="ib material-icons"
-        onClick={() => projectFunctions.setEditListName(false)}
+        onClick={() => pf.setEditListName(false)}
       >
         close
       </button>
@@ -111,55 +114,61 @@ export const ProjectHeader = ({
           icon={project.icon}
           color={project.color}
           onChangeComplete={updateColorAndIcon}
+          canEdit={pf.canEdit}
         />
         <h5
           className="project-header"
-          onClick={() => projectFunctions.setEditListName(true)}
+          onClick={() => (pf.canEdit ? pf.setEditListName(true) : null)}
         >
-          {projectName}
+          {project.name}
         </h5>
       </div>
-      <ProjectOptions
-        sort={projectFunctions.sort}
-        setSort={projectFunctions.setSort}
-        moreDropdown={moreDropdown}
-        showMoreDropdown={showMoreDropdown}
-      >
-        <li className="dropdown-item" key="completed">
-          <button
-            className="ib w-100 left-align"
-            onClick={() => toggleShowCompleted(!psc)}
-          >
-            <i className="material-icons tiny left btn-pr">
-              {psc ? "check_box_outline_blank" : "check_box"}
-            </i>
-            {psc ? text.hideCompleted : text.showCompleted}
-          </button>
-        </li>
-        <li className="dropdown-item" key="share">
-          <button className="ib w-100 left-align" onClick={() => share()}>
-            <i className="material-icons tiny left btn-pr">person_add</i>
-            {text.project.share}
-          </button>
-        </li>
-        <li className="dropdown-item" key="tasks">
-          <button className="ib w-100 left-align" onClick={() => deleteTasks()}>
-            <i className="material-icons tiny left btn-pr">delete_forever</i>
-            {text.project.delete.tasks}
-          </button>
-        </li>
-        {!project.shared ? (
-          <li className="dropdown-item" key="delete">
+      {pf.canEdit ? (
+        <ProjectOptions
+          sort={pf.sort}
+          setSort={pf.setSort}
+          moreDropdown={moreDropdown}
+          showMoreDropdown={showMoreDropdown}
+        >
+          <li className="dropdown-item" key="completed">
             <button
               className="ib w-100 left-align"
-              onClick={() => deleteProject()}
+              onClick={() => toggleShowCompleted(!psc)}
             >
-              <i className="material-icons tiny left btn-pr">delete</i>
-              {text.project.delete._}
+              <i className="material-icons tiny left btn-pr">
+                {psc ? "check_box_outline_blank" : "check_box"}
+              </i>
+              {psc ? text.hideCompleted : text.showCompleted}
             </button>
           </li>
-        ) : null}
-      </ProjectOptions>
+          <li className="dropdown-item" key="share">
+            <button className="ib w-100 left-align" onClick={() => share()}>
+              <i className="material-icons tiny left btn-pr">person_add</i>
+              {text.project.share}
+            </button>
+          </li>
+          <li className="dropdown-item" key="tasks">
+            <button
+              className="ib w-100 left-align"
+              onClick={() => deleteTasks()}
+            >
+              <i className="material-icons tiny left btn-pr">delete_forever</i>
+              {text.project.delete.tasks}
+            </button>
+          </li>
+          {!project.shared ? (
+            <li className="dropdown-item" key="delete">
+              <button
+                className="ib w-100 left-align"
+                onClick={() => deleteProject()}
+              >
+                <i className="material-icons tiny left btn-pr">delete</i>
+                {text.project.delete._}
+              </button>
+            </li>
+          ) : null}
+        </ProjectOptions>
+      ) : null}
     </div>
   );
 };
