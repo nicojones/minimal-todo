@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 import com.minimaltodo.config.SecretGenerator;
 import com.minimaltodo.list.project.Project;
+import com.minimaltodo.list.project.ProjectIcon;
 import com.minimaltodo.list.project.ProjectRepository;
 import com.minimaltodo.list.project.ProjectSort;
 import com.minimaltodo.list.task.Task;
@@ -52,7 +53,7 @@ public class FixturesConfig {
                     "First project",
                     "#abcdef",
                     false,
-                    "favorite"
+                    ProjectIcon.FAVORITE
                     );
                     Project project2 = new Project(
                     secret.generate(),
@@ -61,7 +62,7 @@ public class FixturesConfig {
                     "Second project",
                     "#113Acc",
                     false,
-                    "home"
+                    ProjectIcon.HOME
                     );
                     Project project3 = new Project(
                     secret.generate(),
@@ -70,8 +71,9 @@ public class FixturesConfig {
                     "Stuff to do",
                     "#7a3ebf",
                     false,
-                    "grade"
+                    ProjectIcon.GRADE
                     );
+
 
             project1.setUsers(List.of(allUsers.get(0), allUsers.get(1)));
             project2.setUsers(List.of(allUsers.get(0)));

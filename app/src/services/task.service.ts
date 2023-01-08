@@ -62,13 +62,14 @@ export class TaskService {
     });
   };
 
-  public static searchTask = (searchTerm: string): Promise<ITask | void> => {
+  public static searchTask = (searchTerm: string): Promise<ITask[]> => {
     return minimalAxios.get(
       `/api/tasks/search/?q=${searchTerm}`
     )
-    .then((response: AxiosResponse<ITask>) => response.data)
+    .then((response: AxiosResponse<ITask[]>) => response.data)
     .catch((e: CaughtPromise) => {
-      AuthService.handleError(e, 'Error on save task');
+      AuthService.handleError(e, 'Error on searching tasks');
+      return [];
     });
   }
 

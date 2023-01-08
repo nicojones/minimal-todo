@@ -9,10 +9,10 @@ interface IconPickerProps {
 
 export const IconPicker = ({ icon, onIconChange }: IconPickerProps) => {
 
-  const setIcon = (e: PDefault, icon: IProject["icon"]): void => {
-    console.log(icon + " selected");
+  const setIcon = (e: PDefault, newIcon: IProject["icon"]): void => {
     e.preventDefault();
-    onIconChange(icon);
+    console.log("icon/?", icon, newIcon)
+    onIconChange(icon == newIcon ? "circle" : newIcon);
   };
 
   return (

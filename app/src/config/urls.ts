@@ -1,3 +1,5 @@
+import { SpecialProjectUrl } from "interfaces";
+
 export const urls = {
   home: '/',
   app: '/app',
@@ -5,6 +7,6 @@ export const urls = {
   login: '/secure/login',
   signup: '/secure/signup',
 
-  inboxUrl: 'inbox',
-  priorityUrl: 'priority',
+  inboxUrl: SpecialProjectUrl.INBOX,
+  priorityUrl: SpecialProjectUrl.PRIORITY,
 }

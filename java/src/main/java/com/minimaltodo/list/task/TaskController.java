@@ -41,6 +41,14 @@ public class TaskController {
         }
     }
 
+    @RequestMapping(method = RequestMethod.GET, path = "/search/")
+    public ResponseEntity<List<Task>> searchTasks(
+            @RequestParam("q") String searchQuery,
+            @AuthenticationPrincipal User user) throws AccessDeniedException {
+
+        return ResponseEntity.ok(service.searchTasks(user, searchQuery));
+    }
+
     @RequestMapping(method = RequestMethod.POST, path = "")
     public ResponseEntity<Task> addTask(
             @RequestBody Task task,

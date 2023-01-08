@@ -1,5 +1,5 @@
+import { SpecialProjectUrl } from 'interfaces';
 import { randArray } from '../functions/rand-array';
-import { urls } from './urls';
 
 
 export const text = {
@@ -84,8 +84,8 @@ export const text = {
     return randArray(incomplete);
   },
   drawerTasksCompleted: {
-    [urls.inboxUrl]: 'You have no open tasks',
-    [urls.priorityUrl]: 'You have no high priority tasks'
+    [SpecialProjectUrl.INBOX]: 'You have no open tasks',
+    [SpecialProjectUrl.PRIORITY]: 'You have no high priority tasks'
   },
   completed: 'Completed',
   completedNo: 'No completed tasks',

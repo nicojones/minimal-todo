@@ -5,6 +5,7 @@
   .todo-navbar {
     position: fixed;
     width: 100%;
+    z-index: 2;
 
     > .navbar-hide {
       background-color: $navbar-color;

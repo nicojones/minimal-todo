@@ -1,14 +1,17 @@
 import {Identifiable} from "./identifiable.interface";
 import {ITask} from "./task.interface";
 
-export interface IProject<DateType = number> extends Identifiable<DateType, string | number> {
+export interface MinimalProject<DateType = number> extends Identifiable<DateType, string | number> {
+  name: string;
+  color: string;
+  icon: string;
+}
+
+export interface IProject<DateType = number> extends MinimalProject<DateType> {
   empty: boolean;
   sort: string;
   showCompleted: boolean;
-  name: string;
-  color: string;
   adminEmail: string;
   shared: boolean;
-  icon: string;
   tasks: ITask['id'][];
 }

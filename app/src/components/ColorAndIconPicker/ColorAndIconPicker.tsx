@@ -1,43 +1,45 @@
 import React, { ReactChild, ReactNode, useState } from "react";
 import TwitterPicker from "react-color/lib/components/twitter/Twitter";
 
-import { IProject } from "interfaces";
+import { ColorIconChoice, IProject } from "interfaces";
 import { IconPicker } from "components/IconPicker/IconPicker";
 
 import "./color-and-icon-picker.scss";
 
 interface ColorAndIconPickerAttrs {
   onChangeComplete: (
-    colorAndIcon: Partial<Pick<IProject, "color" | "icon">>
+    colorAndIcon: ColorIconChoice
   ) => any;
   color: string;
   icon: string;
+  canEdit: boolean;
 }
 export const ColorAndIconPicker = ({
   onChangeComplete,
   color,
   icon,
+  canEdit
 }: ColorAndIconPickerAttrs) => {
   const [showColorPicker, setShowColorPicker] = useState(false);
 
   function setColorAndIcon(
-    colorChoice: Partial<Pick<IProject, "color" | "icon">>
+    colorAndIconChoice: ColorIconChoice
   ) {
     setShowColorPicker(false);
-    onChangeComplete(colorChoice);
+    onChangeComplete(colorAndIconChoice);
   }
 
   return (
     <span className="relative">
       <button
         className="ib h-100"
-        onClick={() => setShowColorPicker(true)}
+        onClick={() => canEdit ? setShowColorPicker(true) : null}
       >
         <i className="material-icons tiny left m0" style={{ color: color }}>
           {icon}
         </i>
       </button>
-      {showColorPicker ? (
+      {(showColorPicker) ? (
         <>
           <div className="color-picker">
             <TwitterPicker

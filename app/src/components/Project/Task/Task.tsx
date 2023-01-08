@@ -1,25 +1,31 @@
 import { ProjectContext } from "TodoApp";
 import { TaskModal } from "components/Modal/TaskModal";
-import { constants, text } from "config";
+import { constants, text, urls } from "config";
 import { IProjectContext, ITask } from "interfaces";
 import { useContext, useEffect, useState } from "react";
 import { TaskService } from "services";
 import { format } from "timeago.js";
 import "./_task.scss";
+import { useHistory } from "react-router-dom";
 
 interface TaskAttrs {
   task: ITask;
   level?: number;
   onTaskToggle?: (task: ITask) => void;
+  showDot?: boolean;
+  showActions?: boolean;
+  showGoToProject?: boolean;
+  singleLevel?: boolean;
 }
-export const Task = ({ task, level, onTaskToggle }: TaskAttrs) => {
+export const Task = ({ task, level, onTaskToggle, showDot, showActions, showGoToProject, singleLevel }: TaskAttrs) => {
+  const history = useHistory();
   const [subtasks, setSubtasks] = useState<ITask[]>(task.subtasks || []);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [expandedTask, setExpandedTask] = useState<boolean>(
     task.expanded || false
   );
 
-  const { project, showDot, reloadProjectTasks } =
+  const { project, reloadProjectTasks } =
     useContext<IProjectContext>(ProjectContext);
 
   const openLength = subtasks.filter((s: ITask) => !s.done).length || 0;
@@ -28,7 +34,7 @@ export const Task = ({ task, level, onTaskToggle }: TaskAttrs) => {
   // const doneClass = (task.checked ? (project.showCompleted ? 'done' : '') : '');
 
   const showExpanderClass =
-    subtasks.length > 0
+    (subtasks.length > 0 && !singleLevel)
       ? // project.showCompleted ? subtasks.length : openLength
         ""
       : " v-hidden";
@@ -80,7 +86,7 @@ export const Task = ({ task, level, onTaskToggle }: TaskAttrs) => {
   };
 
   return (
-    <li className={doneClass + " task parent-hover"} key={task.id}>
+    <li className={doneClass + " task parent-hover " + (showActions ? ' show-actions' : '')} key={task.id}>
       <div className="task__content" title={format(task.created)}>
         <button
           className={
@@ -92,13 +98,18 @@ export const Task = ({ task, level, onTaskToggle }: TaskAttrs) => {
         >
           chevron_right
         </button>
+        { showGoToProject 
+        ? <button className="btn p-0" onClick={() => history.push(urls.project(task.projectSecret)) }>
+          <i className="material-icons small-icon mr-11">login</i>
+        </button>
+         : null}
         {showDot ? (
           <i
             className="project-dot material-icons"
             style={{ color: task.dotColor }}
             title={text.task.projectDot(task.projectName)}
           >
-            {task.projectIcon}
+            {task.icon}
           </i>
         ) : null}
 

@@ -72,7 +72,10 @@ public class Project {
     @JsonIgnore
     private List<User> users;
 
-    private String icon;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    // @JsonIgnore
+    private ProjectIcon icon;
 
     public String getAdminEmail() {
         if (users == null) {
@@ -90,6 +93,11 @@ public class Project {
         return users != null ? users.size() > 1 : false;
     }
 
+    // @JsonProperty("icon")
+    // public String getFrontendIcon() {
+    //     return icon.label;
+    // }
+
     public void addUserToProject(User user) {
         if (users == null) {
             users = new ArrayList<>();
@@ -104,7 +112,7 @@ public class Project {
             String name,
             String color,
             boolean shared,
-            String icon) {
+            ProjectIcon icon) {
         this.sort = sort;
         this.secret = secret;
         this.showCompleted = showCompleted;

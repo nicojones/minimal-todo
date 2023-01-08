@@ -46,9 +46,6 @@ public class ProjectController {
             @RequestBody Project project,
             @AuthenticationPrincipal User user) throws AccessDeniedException {
 
-        project.setUsers(List.of(user));
-        project.setTasks(List.of());
-
         return ResponseEntity.ok(service.updateProject(user, project));
     }
     

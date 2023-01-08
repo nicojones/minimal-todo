@@ -24,7 +24,7 @@ export function createTaskObject(task: Partial<ITask<string>>): ITask {
     dotColor: null as unknown as string,
     projectId: task.projectId as ITask['projectId'],
     projectName: null as unknown as string,
-    projectIcon: null as unknown as string,
+    icon: null as unknown as string,
     projectSecret: null as unknown as string
   };
 }

@@ -55,7 +55,7 @@
     }
   }
 
-  &:hover {
+  &:hover, &.show-actions {
     .task__action-button {
       display: inline-block;
     }

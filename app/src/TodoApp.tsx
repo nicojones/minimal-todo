@@ -2,21 +2,20 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 
 import { LoggedInUserContext } from "App";
-import { Drawer } from "components/Drawer/Drawer";
+import { AddUserModal } from "components/Modal/AddUserModal";
 import { Navbar } from "components/Navbar/Navbar";
 import { NoProject } from "components/NoProject/NoProject";
 import { Project } from "components/Project/Project";
 import { ProjectList } from "components/Project/ProjectList";
-import { text, urls } from "config";
+import { drawerConfig, text, urls } from "config";
 import { reservedKey } from "functions/reserved-key";
-import { IProject, IProjectContext, ITask } from "interfaces";
+import { IProject, IProjectContext, ITask, MinimalProject } from "interfaces";
 import { ProjectService, TaskService } from "services";
-import { AddUserModal } from "components/Modal/AddUserModal";
 
 const validProject = (
   projectSecret: IProject["secret"],
   projects: IProject[]
-): IProject | null => {
+): MinimalProject | null => {
   // @ts-ignore ID must be a string...
   const proj = projects.find((p: IProject) => p.secret === projectSecret);
   // If there's a project set in the URL and it's valid (it exists)
@@ -24,7 +23,7 @@ const validProject = (
   if (proj) {
     return proj;
   } else if (reservedKey(projectSecret)) {
-    return { secret: projectSecret } as IProject;
+    return drawerConfig[projectSecret];
   }
   return null;
 };
@@ -33,7 +32,6 @@ export const ProjectContext = React.createContext<IProjectContext>({
   project: {} as IProject,
   changeToProject: () => null,
   setProject: () => null,
-  showDot: false,
   reloadProjectTasks: null as unknown as () => Promise<ITask[]>,
   reloadProjects: () => null as unknown as Promise<IProject[]>,
   openAddUserModal: () => null,
@@ -73,7 +71,8 @@ export const TodoApp = () => {
     }
     if (reservedKey(secret)) {
       // It's a reserved URL, so we show the Drawer
-      setComponent(<Drawer drawerUrl={secret} tasks={tasks} />);
+      setComponent(<Project specialUrl={secret} tasks={tasks} />);
+      // setComponent(<Drawer drawerUrl={secret} tasks={tasks} />);
       return;
     }
     if (secret) {
@@ -147,7 +146,6 @@ export const TodoApp = () => {
           changeToProject,
           project,
           reloadProjects,
-          showDot: reservedKey(project.secret),
           reloadProjectTasks,
           setProject,
           openAddUserModal: setModalOpen,
