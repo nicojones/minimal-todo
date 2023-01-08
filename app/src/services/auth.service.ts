@@ -79,10 +79,8 @@ export class AuthService {
 
   public static logout = (url: string = urls.home) => {
 
-    // AuthService.setToken(null);
-    // window.location.href = url;
-
-    showToast('success', 'You\'ve been signed out of the app');
+    AuthService.setToken(null);
+    window.location.href = url;
 
   }
 

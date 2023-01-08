@@ -3,6 +3,7 @@ import { text } from 'config';
 import { useContext, useState } from 'react';
 import { AuthService } from 'services/auth.service';
 import { ILoggedInUserContext, PDefault } from '../../interfaces';
+import { showToast } from 'services';
 
 
 export function UserSettingsDropdown () {
@@ -14,6 +15,7 @@ export function UserSettingsDropdown () {
   const logout = (e: PDefault) => {
     setUser(null);
     AuthService.logout();
+    showToast('success', 'You\'ve been signed out of the app');
   }
 
   return (

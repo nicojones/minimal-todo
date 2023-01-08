@@ -40,7 +40,7 @@ export const Header = () => {
             </Link>
           ) : (
             <>
-              <span className="relative">
+              <span className="relative ml-auto">
                 <button
                   className="btn main-btn goto-app"
                   onClick={() => setShowDropdown(true)}

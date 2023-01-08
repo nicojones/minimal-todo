@@ -19,7 +19,8 @@ $header-btn-m: 10px;
 .navbar {
   display: flex;
   flex-direction: row;
-  margin: 0 auto;
+  // margin: 0 auto;
+  margin: 0 1rem;
   max-width: $landing-width;
   height: $header-height;
   background: $app-background-color;
