@@ -1,5 +1,4 @@
 import { randArray } from '../functions/rand-array';
-import { drawerConfig } from './drawer-config';
 import { urls } from './urls';
 
 

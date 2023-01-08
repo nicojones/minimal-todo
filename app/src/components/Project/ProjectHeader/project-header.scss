@@ -1,0 +1,11 @@
+.project-title-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .project-title {
+    //min-width: max-content;
+    margin: 0 0 0 2rem !important;
+    align-items: baseline;
+    display: flex;
+  }

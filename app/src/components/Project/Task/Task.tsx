@@ -4,9 +4,8 @@ import { constants, text } from "config";
 import { IProjectContext, ITask } from "interfaces";
 import { useContext, useEffect, useState } from "react";
 import { TaskService } from "services";
-import { format } from 'timeago.js';
+import { format } from "timeago.js";
 import "./_task.scss";
-
 
 interface TaskAttrs {
   task: ITask;
@@ -20,19 +19,19 @@ export const Task = ({ task, level, onTaskToggle }: TaskAttrs) => {
     task.expanded || false
   );
 
-  const { project, showDot, reloadProjectTasks } = useContext<IProjectContext>(ProjectContext);
+  const { project, showDot, reloadProjectTasks } =
+    useContext<IProjectContext>(ProjectContext);
 
   const openLength = subtasks.filter((s: ITask) => !s.done).length || 0;
 
   const doneClass = (task.done && project.showCompleted && "done") || "";
   // const doneClass = (task.checked ? (project.showCompleted ? 'done' : '') : '');
 
-  const showExpanderClass = (
+  const showExpanderClass =
     subtasks.length > 0
-    // project.showCompleted ? subtasks.length : openLength
-  )
-    ? ""
-    : " v-hidden";
+      ? // project.showCompleted ? subtasks.length : openLength
+        ""
+      : " v-hidden";
 
   useEffect(() => {
     setSubtasks(task.subtasks || []);
@@ -54,35 +53,31 @@ export const Task = ({ task, level, onTaskToggle }: TaskAttrs) => {
       setSubtasks(updatedTask.subtasks);
 
       onTaskToggle && onTaskToggle(updatedTask);
-
     });
-  }
+  };
 
   const subtaskUpdated = (updatedSubtask: ITask): void => {
-    setSubtasks(subtasks.map((t: ITask) => {
-      return t.id === updatedSubtask.id
-        ? updatedSubtask
-        : t
-    }))
-  }
+    setSubtasks(
+      subtasks.map((t: ITask) => {
+        return t.id === updatedSubtask.id ? updatedSubtask : t;
+      })
+    );
+  };
 
   /**
    * If you want to say the toggle state, just update this function
    */
   const toggleExpanded = (isExpanded: boolean): Promise<ITask | void> => {
     task.expanded = isExpanded;
-    console.log("task to extpand", task);
     setExpandedTask(isExpanded);
     return TaskService.updateTask({ ...task });
-  }
+  };
 
   const onDelete = (task: ITask): void => {
     if (window.confirm(text.task.delete.all)) {
-      TaskService.deleteTask(task)
-        .then(() => reloadProjectTasks())
+      TaskService.deleteTask(task).then(() => reloadProjectTasks());
     }
-  }
-
+  };
 
   return (
     <li className={doneClass + " task parent-hover"} key={task.id}>
@@ -97,14 +92,15 @@ export const Task = ({ task, level, onTaskToggle }: TaskAttrs) => {
         >
           chevron_right
         </button>
-        {showDot ?
-          <span
-            className="project-dot"
-            style={{ backgroundColor: task.dotColor }}
+        {showDot ? (
+          <i
+            className="project-dot material-icons"
+            style={{ color: task.dotColor }}
             title={text.task.projectDot(task.projectName)}
-          ></span>
-          : null
-        }
+          >
+            {task.projectIcon}
+          </i>
+        ) : null}
 
         <label className={"left prio-" + task.priority}>
           <input
@@ -162,7 +158,12 @@ export const Task = ({ task, level, onTaskToggle }: TaskAttrs) => {
           aria-details={(level || 0) as unknown as string}
         >
           {subtasks.map((t) => (
-            <Task key={t.id} task={t} level={(level || 0) + 1} onTaskToggle={subtaskUpdated} />
+            <Task
+              key={t.id}
+              task={t}
+              level={(level || 0) + 1}
+              onTaskToggle={subtaskUpdated}
+            />
           ))}
         </ul>
       )}

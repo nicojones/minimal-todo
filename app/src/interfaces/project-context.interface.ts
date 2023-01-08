@@ -7,7 +7,7 @@ export interface IProjectContext {
     project: IProject;
     showDot: boolean;
     setProject: (project: IProject) => any;
-    reloadProjectTasks: (sort?: string) => Promise<ITask[]>;
+    reloadProjectTasks: () => Promise<ITask[]>;
     changeToProject: (value: Partial<IProject> | null, forceProject?: Partial<IProject> | null) => void;
     openAddUserModal: Dispatch<SetStateAction<IProject | null>>;
 }

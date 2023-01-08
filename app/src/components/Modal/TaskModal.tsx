@@ -46,8 +46,6 @@ export const TaskModal = (
 
     setLoading(true);
 
-    console.log("task porject", task.projectId);
-
     return TaskService.updateTask(
       {
         ...task,

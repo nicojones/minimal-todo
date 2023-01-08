@@ -1,0 +1,19 @@
+@import "src/sass/colors";
+
+.inline {
+    > li {
+        // border: 1px solid blue;
+        position: relative;
+        // width: 20px;
+        // height: 20px;
+        display: inline-block;
+        width: 14.2857%;
+
+        .material-icons {
+            color: $subtle-color;
+            &.selected {
+                color: $primary-color;
+            }
+        }
+    }
+}

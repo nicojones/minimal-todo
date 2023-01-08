@@ -1,8 +1,8 @@
-import React, {useContext, useState} from 'react';
-import {AuthService} from 'services/auth.service';
-import {LoggedInUserContext} from 'App';
-import {text} from 'config';
-import {ILoggedInUserContext, IUser, PDefault} from '../../interfaces';
+import { LoggedInUserContext } from 'App';
+import { text } from 'config';
+import { useContext, useState } from 'react';
+import { AuthService } from 'services/auth.service';
+import { ILoggedInUserContext, PDefault } from '../../interfaces';
 
 
 export function UserSettingsDropdown () {

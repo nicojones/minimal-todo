@@ -20,14 +20,12 @@ export const NavbarSearch = () => {
       } else {
         setResults([{ name: text.task.noResults } as ITask]);
       }
-      console.log("set the results", results);
     });
   }
 
   function goToResult(result: ITask) {
-    console.log(result);
     setResults([]);
-    changeToProject({ id: result.projectId });
+    changeToProject({ secret: result.projectSecret });
   }
 
   return (

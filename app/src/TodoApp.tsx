@@ -14,17 +14,17 @@ import { ProjectService, TaskService } from "services";
 import { AddUserModal } from "components/Modal/AddUserModal";
 
 const validProject = (
-  projectId: IProject["id"],
+  projectSecret: IProject["secret"],
   projects: IProject[]
 ): IProject | null => {
   // @ts-ignore ID must be a string...
-  const proj = projects.find((p: IProject) => p.id === +projectId);
+  const proj = projects.find((p: IProject) => p.secret === projectSecret);
   // If there's a project set in the URL and it's valid (it exists)
 
   if (proj) {
     return proj;
-  } else if (reservedKey(projectId)) {
-    return { id: projectId } as IProject;
+  } else if (reservedKey(projectSecret)) {
+    return { secret: projectSecret } as IProject;
   }
   return null;
 };
@@ -41,7 +41,7 @@ export const ProjectContext = React.createContext<IProjectContext>({
 
 export const TodoApp = () => {
   const history = useHistory();
-  const urlParams = useRef(useParams<{ projectId: string }>());
+  const urlParams = useRef(useParams<{ projectSecret: IProject["secret"] }>());
 
   const [project, setProject] = useState<IProject>({ empty: true } as IProject);
   const [projectList, setProjectList] = useState<IProject[]>([]);
@@ -55,12 +55,11 @@ export const TodoApp = () => {
   const onFirstLoad = useRef(true);
 
   useEffect(() => {
-    console.log(urlParams.current.projectId, project.id, tasks);
 
     // urlParams.current.projectId
-    const id = project.id;
+    const secret = project.secret;
 
-    if (!id) {
+    if (!secret) {
       // There's some URL?
       setComponent(
         <NoProject
@@ -72,18 +71,18 @@ export const TodoApp = () => {
       ); // no URL -> show this component
       return;
     }
-    if (reservedKey(id)) {
+    if (reservedKey(secret)) {
       // It's a reserved URL, so we show the Drawer
-      setComponent(<Drawer drawerUrl={project.id} tasks={tasks} />);
+      setComponent(<Drawer drawerUrl={secret} tasks={tasks} />);
       return;
     }
-    if (id) {
+    if (secret) {
       // We have a project and it has an ID, so it's a user project
       setComponent(<Project tasks={tasks} />);
       return;
     }
     // setComponent(<></>); // either the project hasn't loaded, or isn't valid. we must wait
-  }, [project.id, tasks]);
+  }, [project.secret, tasks]);
 
   useEffect(() => {
     reloadProjects();
@@ -93,22 +92,22 @@ export const TodoApp = () => {
     value: Partial<IProject> | null,
     forceProject: Partial<IProject> | null = null
   ): void => {
-    if (value && value?.id !== project.id) {
+    if (value && value?.secret !== project.secret) {
       setProject(value as IProject);
-      history.push(urls.project(value.id || ""));
+      history.push(urls.project(value?.secret || ""));
       return;
     } else if (forceProject) {
       setProject(forceProject as unknown as IProject);
     } else {
       history.push(urls.app);
-      setProject({ id: null } as unknown as IProject);
+      setProject({ secret: null } as unknown as IProject);
     }
   };
 
   const reloadProjects = (): Promise<IProject[]> => {
     return ProjectService.getListOfProjects().then((_projects: IProject[]) => {
       const _project = validProject(
-        project.id || urlParams.current.projectId,
+        project.secret || urlParams.current.projectSecret,
         _projects
       );
 
@@ -123,13 +122,12 @@ export const TodoApp = () => {
   };
 
   const reloadProjectTasks = (
-    sort: string = project.sort
   ): Promise<ITask[]> => {
-    if (!project.id) {
+    if (!project.secret) {
       return Promise.resolve([]);
     }
 
-    return TaskService.getTasksForProject(project.id, sort).then(
+    return TaskService.getTasksForProject(project.secret).then(
       (tasks: ITask[]) => {
         setTasks(tasks);
         return tasks;
@@ -137,7 +135,7 @@ export const TodoApp = () => {
     );
   };
 
-  if (!useContext(LoggedInUserContext)) {
+  if (!useContext(LoggedInUserContext).user) {
     history.push(urls.login); // and in some cases go to the login
     return null;
   }
@@ -149,7 +147,7 @@ export const TodoApp = () => {
           changeToProject,
           project,
           reloadProjects,
-          showDot: reservedKey(project.id),
+          showDot: reservedKey(project.secret),
           reloadProjectTasks,
           setProject,
           openAddUserModal: setModalOpen,

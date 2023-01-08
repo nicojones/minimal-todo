@@ -1,23 +1,16 @@
 import { ProjectContext } from "TodoApp";
+import { ColorAndIconPicker } from "components/ColorAndIconPicker/ColorAndIconPicker";
 import { ProjectOptions } from "components/Project/ProjectOptions/ProjectOptions";
 import { text } from "config";
-import {
-  IProject,
-  IProjectContext,
-  ITask,
-  IUser,
-  LoadingStates,
-  PDefault,
-} from "interfaces";
+import { IProject, IProjectContext, ITask, LoadingStates } from "interfaces";
 import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { ProjectService } from "services/project.service";
-import { showToast } from "services/toast";
+
+import "./project-header.scss";
 
 interface ProjectHeaderAttrs {
   projectFunctions: {
-    projectName: IProject["name"];
-    setProjectName: Dispatch<SetStateAction<IProject["name"]>>;
-    saveListName: (event: PDefault) => any;
+    updateProject: (partialProject: Partial<IProject>) => any;
     editListName: boolean;
     setEditListName: Dispatch<SetStateAction<boolean>>;
     showCompleted: boolean;
@@ -40,6 +33,9 @@ export const ProjectHeader = ({
     reloadProjectTasks,
   } = useContext<IProjectContext>(ProjectContext);
   const [moreDropdown, showMoreDropdown] = useState<boolean>(false);
+  const [projectName, setProjectName] = useState<IProject["name"]>(
+    project.name
+  );
 
   const psc = projectFunctions.showCompleted;
 
@@ -77,17 +73,26 @@ export const ProjectHeader = ({
     });
   };
 
+  const updateColorAndIcon = (
+    colorAndIcon: Partial<Pick<IProject, "color" | "icon">>
+  ): void => {
+    projectFunctions.updateProject(colorAndIcon);
+  };
+
   return projectFunctions.editListName ? (
     <form
-      onSubmit={projectFunctions.saveListName}
+      onSubmit={(e) => {
+        e.preventDefault();
+        projectFunctions.updateProject(project);
+      }}
       className={"flex-row " + (isLoading === "n" ? " loader-input" : "")}
     >
       <input
         className="as-title h5 project-title"
         autoFocus /*onBlur={ project.saveListName }*/
-        value={projectFunctions.projectName}
+        value={projectName}
         disabled={isLoading === "n"}
-        onChange={(e) => projectFunctions.setProjectName(e.target.value)}
+        onChange={(e) => setProjectName(e.target.value)}
       />
       <button className="ib material-icons" type="submit">
         save
@@ -101,12 +106,19 @@ export const ProjectHeader = ({
     </form>
   ) : (
     <div className="project-title-bar" data-tip={text.project.title._}>
-      <h5
-        className="project-title"
-        onClick={() => projectFunctions.setEditListName(true)}
-      >
-        {projectFunctions.projectName}
-      </h5>
+      <div className="project-title">
+        <ColorAndIconPicker
+          icon={project.icon}
+          color={project.color}
+          onChangeComplete={updateColorAndIcon}
+        />
+        <h5
+          className="project-header"
+          onClick={() => projectFunctions.setEditListName(true)}
+        >
+          {projectName}
+        </h5>
+      </div>
       <ProjectOptions
         sort={projectFunctions.sort}
         setSort={projectFunctions.setSort}

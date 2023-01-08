@@ -1,6 +1,5 @@
-import { urls } from './urls';
 import { text } from './text';
-import { projectSort } from './constants';
+import { urls } from './urls';
 
 
 export const drawerConfig = {
