@@ -1,13 +1,15 @@
 import { ProjectContext } from "TodoApp";
 import { TaskModal } from "components/Modal/TaskModal";
 import { constants, text, urls } from "config";
-import { IProjectContext, ITask } from "interfaces";
+import { IProject, IProjectContext, ITask } from "interfaces";
 import { useContext, useEffect, useState } from "react";
 import { TaskService } from "services";
 import { format } from "timeago.js";
 import "./_task.scss";
 import { useHistory } from "react-router-dom";
 import { Observable, of, switchMap, tap } from "rxjs";
+import { useAtom } from "jotai";
+import { projectAtom } from "store";
 
 interface TaskAttrs {
   task: ITask;
@@ -34,12 +36,13 @@ export const Task = ({
     task.expanded || false
   );
 
-  const { project, reloadProjectTasks } =
-    useContext<IProjectContext>(ProjectContext);
+  const { reloadProjectTasks } = useContext<IProjectContext>(ProjectContext);
+
+  const [project] = useAtom<IProject | null>(projectAtom);
 
   const openLength = subtasks.filter((s: ITask) => !s.done).length || 0;
 
-  const doneClass = (task.done && project.showCompleted && "done") || "";
+  const doneClass = (task.done && project?.showCompleted && "done") || "";
   // const doneClass = (task.checked ? (project.showCompleted ? 'done' : '') : '');
 
   const showExpanderClass =
@@ -93,7 +96,8 @@ export const Task = ({
   const onDelete = (task: ITask): Observable<ITask[]> => {
     if (window.confirm(text.task.delete.all)) {
       return TaskService.deleteTask(task).pipe(
-        switchMap(() => reloadProjectTasks()));
+        switchMap(() => reloadProjectTasks())
+      );
     }
     return of<ITask[]>([]);
   };

@@ -1,7 +1,7 @@
 import { SpecialProjectUrl } from "interfaces";
 
 export const reservedKey = (
-  projectKey: string
+  projectKey: string | undefined
 ): projectKey is SpecialProjectUrl => {
   return (
     [SpecialProjectUrl.INBOX, SpecialProjectUrl.PRIORITY].indexOf(

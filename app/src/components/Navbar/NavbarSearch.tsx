@@ -27,10 +27,10 @@ export const NavbarSearch = () => {
     );
   }
 
-  function goToResult(result: ITask) {
-    setResults([]);
-    changeToProject({ secret: result.projectSecret } as unknown as MinimalProject);
-  }
+  // function goToResult(result: ITask) {
+  //   setResults([]);
+  //   changeToProject({ secret: result.projectSecret } as unknown as MinimalProject);
+  // }
 
   return (
     <form className="left" id="search-tasks" onSubmit={(e) => searchResults(e).subscribe()}>

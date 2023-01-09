@@ -14,57 +14,45 @@ import {
 import { ProjectListItem } from "./ProjectListItem";
 import "./_project-list.scss";
 import { Observable, of, switchMap, tap } from "rxjs";
+import { useAtom } from "jotai";
+import { projectAtom, projectsAtom } from "store";
+import { NewProject } from "./NewProject";
 
 interface ProjectListAttrs {
-  projectId: IProject["id"];
-  projects: IProject[];
 }
 
-export const ProjectList = ({ projectId, projects }: ProjectListAttrs) => {
-  const { project, changeToProject, reloadProjects, reloadProjectTasks } =
+export const ProjectList = ({  }: ProjectListAttrs) => {
+  const { changeToProject, reloadProjects } =
     useContext<IProjectContext>(ProjectContext);
 
+  const [project] = useAtom<IProject | null>(projectAtom);
+  const [projects] = useAtom<IProject[]>(projectsAtom);
   const [isLoading, setIsLoading] = useState<"" | "new" | IProject["secret"]>(
     ""
   );
 
-  const [newProjectName, setNewProjectName] = useState("");
-
-  const addNewProject = (e: PDefault): Observable<IProject[]> => {
-    e.preventDefault();
-
-    setIsLoading("new");
-
-    return ProjectService.newProject(createProjectObject(newProjectName)).pipe(
-      switchMap((project: IProject | void) => {
-        setNewProjectName("");
-        setIsLoading("");
-        changeToProject(project as unknown as IProject);
-        return reloadProjects();
-      })
-    );
-  };
-
   const deleteProject = (_project: IProject): void => {
     if (window.confirm(text.project.delete.long)) {
       setIsLoading(_project.secret);
-      ProjectService.deleteProject(_project).pipe(
-        switchMap(() => {
-          changeToProject(null);
-          setIsLoading("");
-          return reloadProjects();
-        })
-      ).subscribe();
+      ProjectService.deleteProject(_project)
+        .pipe(
+          switchMap(() => {
+            changeToProject(null);
+            setIsLoading("");
+            return reloadProjects();
+          })
+        )
+        .subscribe();
     }
   };
 
   const setProject = (_project: IProject): void => {
-    if (_project.secret === project.secret) {
-      changeToProject({ unselected: true } as unknown as IProject); // can't change to itself... it also causes a re-render problem in the `useEffect`
+    if (_project.secret === project?.secret) {
+      changeToProject(null); // can't change to itself... it also causes a re-render problem in the `useEffect`
     }
     console.info(
       "Changing project from",
-      project.secret,
+      project?.secret,
       "to",
       _project.secret
     );
@@ -101,34 +89,7 @@ export const ProjectList = ({ projectId, projects }: ProjectListAttrs) => {
           isSpecialProject={false}
         />
       ))}
-      <li key="new-project" className="proj-li mb-5 parent-hover flex-row">
-        <form
-          onSubmit={(e: PDefault) => addNewProject(e).subscribe()}
-          className={
-            "add-project flex-row " +
-            (isLoading === "new" ? " loader-input" : "")
-          }
-        >
-          <button className="ib child-hover left">
-            <label htmlFor="new-project-input" className="pointer">
-              <i className="tiny material-icons subtle">
-                {newProjectName ? "save" : "add"}
-              </i>
-            </label>
-          </button>
-          <input
-            className="invisible add-project__input btn-pl"
-            onChange={(e) => setNewProjectName(e.target.value)}
-            required
-            minLength={3}
-            disabled={isLoading === "new"}
-            autoComplete="off"
-            value={newProjectName}
-            id="new-project-input"
-            placeholder={text.project.add.ph}
-          />
-        </form>
-      </li>
+      <NewProject isLoading={isLoading} setIsLoading={setIsLoading}/>
     </ul>
   );
 };

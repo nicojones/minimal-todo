@@ -2,13 +2,15 @@ import { SpecialProjectUrl } from "interfaces";
 import { text } from "./text";
 // import {CTOptions} from 'cogo-toast';
 
-export const projectSort: Record<string, string> = {
+export const projectSort = {
   OLDEST_FIRST: "OLDEST_FIRST",
   Z_TO_A: "Z_TO_A",
   A_TO_Z: "A_TO_Z",
   NEWEST_FIRST: "NEWEST_FIRST",
   PRIORITY: "PRIORITY",
 };
+
+export const priorityIcons: string[] = ["person", "flag", "flag", "flag"];
 
 export const projectIcons: string[] = [
   "grade",

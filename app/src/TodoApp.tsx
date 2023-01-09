@@ -12,8 +12,8 @@ import { reservedKey } from "functions/reserved-key";
 import { IProject, IProjectContext, ITask, MinimalProject } from "interfaces";
 import { ProjectService, TaskService } from "services";
 import { Observable, of, tap } from "rxjs";
-import { projectStore, projectsStore, tasksStore } from "store";
-import { setEntities } from "@ngneat/elf-entities";
+import { useAtom } from "jotai";
+import { projectAtom, projectsAtom, tasksAtom } from "store";
 
 const validProject = (
   projectSecret: IProject["secret"],
@@ -32,9 +32,9 @@ const validProject = (
 };
 
 export const ProjectContext = React.createContext<IProjectContext>({
-  project: {} as IProject,
+  // project: {} as IProject,
   changeToProject: () => null,
-  setProject: () => null,
+  // setProject: () => null,
   reloadProjectTasks: () => of<ITask[]>([]),
   reloadProjects: () => of<IProject[]>([]),
   openAddUserModal: () => null,
@@ -44,9 +44,9 @@ export const TodoApp = () => {
   const history = useHistory();
   const urlParams = useRef(useParams<{ projectSecret: IProject["secret"] }>());
 
-  const [project, setProject] = useState<IProject>({ empty: true } as IProject);
-  const [projectList, setProjectList] = useState<IProject[]>([]);
-  const [tasks, setTasks] = useState<ITask[]>([]);
+  const [project, setProject] = useAtom<IProject | null, IProject | null, void>(projectAtom);
+  const [, setProjectList] = useAtom<IProject[], IProject[], void>(projectsAtom);
+  const [, setTasks] = useAtom<ITask[], ITask[], void>(tasksAtom);
   const [modalOpen, setModalOpen] = useState<IProject | null>(null);
 
   const [showSidebar, setShowSidebar] = useState(
@@ -57,10 +57,9 @@ export const TodoApp = () => {
 
   useEffect(() => {
     // urlParams.current.projectId
-    const secret = project.secret;
+    const secret = project?.secret;
 
     if (!secret) {
-      // There's some URL?
       setComponent(
         <NoProject
           className=""
@@ -73,37 +72,32 @@ export const TodoApp = () => {
     }
     if (reservedKey(secret)) {
       // It's a reserved URL, so we show the Drawer
-      setComponent(<Project specialUrl={secret} tasks={tasks} />);
-      // setComponent(<Drawer drawerUrl={secret} tasks={tasks} />);
+      setComponent(<Project specialUrl={secret} />);
       return;
     }
     if (secret) {
       // We have a project and it has an ID, so it's a user project
-      setComponent(<Project tasks={tasks} />);
+      setComponent(<Project />);
       return;
     }
-    // setComponent(<></>); // either the project hasn't loaded, or isn't valid. we must wait
-  }, [project.secret, tasks]);
+  }, [project?.secret]);
 
   useEffect(() => {
+    // load projects when page loads.
     reloadProjects().subscribe();
   }, []);
 
   const changeToProject = (
     value: MinimalProject | null,
   ): void => {
-    if (value && value?.secret !== project.secret) {
+    console.log("setting value", value)
+    if (value && value?.secret !== project?.secret) {
       setProject(value as IProject);
-      projectStore.update(setEntities([value]));
       history.push(urls.project(value?.secret || ""));
       return;
-    // } else if (forceProject) {
-    //   setProject(forceProject as unknown as IProject);
-    //   projectStore.update(setEntities([forceProject]));
     } else {
       history.push(urls.app);
-      setProject({ secret: null } as unknown as IProject);
-      projectStore.update(setEntities([{secret: null} as unknown as MinimalProject]));
+      setProject(null);
     }
   };
 
@@ -111,7 +105,7 @@ export const TodoApp = () => {
     return ProjectService.getListOfProjects().pipe(
       tap((_projects: IProject[]) => {
         const _project = validProject(
-          project.secret || urlParams.current.projectSecret,
+          project?.secret || urlParams.current.projectSecret,
           _projects
         );
 
@@ -120,20 +114,18 @@ export const TodoApp = () => {
           onFirstLoad.current = false;
         }
         setProjectList(_projects || []);
-        projectsStore.update(setEntities(_projects || []));
       })
     );
   };
 
   const reloadProjectTasks = (): Observable<ITask[]> => {
-    if (!project.secret) {
+    if (!project?.secret) {
       return of<ITask[]>([]);
     }
 
     return TaskService.getTasksForProject(project.secret).pipe(
       tap((tasks: ITask[]) => {
         setTasks(tasks);
-        tasksStore.update(setEntities(tasks));
         return tasks;
       })
     );
@@ -149,10 +141,10 @@ export const TodoApp = () => {
       <ProjectContext.Provider
         value={{
           changeToProject,
-          project,
+          // project,
           reloadProjects,
           reloadProjectTasks,
-          setProject,
+          // setProject,
           openAddUserModal: setModalOpen,
         }}
       >
@@ -168,7 +160,7 @@ export const TodoApp = () => {
               ""
             )}
             <div className={"projects-list-box-inner"}>
-              <ProjectList projects={projectList} projectId={project?.id} />
+              <ProjectList />
             </div>
           </div>
           <div className="tasks-list-box flex-column">{component}</div>

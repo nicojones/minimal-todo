@@ -1,7 +1,9 @@
-import { createStore } from "@ngneat/elf";
-import { selectAllEntities, withEntities } from "@ngneat/elf-entities";
-import { ITask, Stores } from "interfaces";
+import { ITask } from "interfaces";
+import { atom } from "jotai";
 
-export const tasksStore = createStore({ name: Stores.TASKS }, withEntities<ITask>());
+const _tasksAtom = atom<ITask[]>([]);
 
-export const tasks$ = tasksStore.pipe(selectAllEntities());
+export const tasksAtom = atom<ITask[], ITask[]>(
+  (get) => get(_tasksAtom),
+  (get, set, payload) => set(_tasksAtom, payload)
+);

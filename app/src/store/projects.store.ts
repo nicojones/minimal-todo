@@ -1,10 +1,9 @@
-import { createStore } from "@ngneat/elf";
-import { selectAllEntities, withEntities } from "@ngneat/elf-entities";
-import { IProject, Stores } from "interfaces";
+import { IProject } from "interfaces";
+import { atom } from "jotai";
 
-export const projectsStore = createStore(
-  { name: Stores.PROJECTS },
-  withEntities<IProject>()
+const _projectsAtom = atom<IProject[]>([]);
+
+export const projectsAtom = atom<IProject[], IProject[]>(
+  (get) => get(_projectsAtom),
+  (get, set, payload) => set(_projectsAtom, payload)
 );
-
-export const projects$ = projectsStore.pipe(selectAllEntities());
