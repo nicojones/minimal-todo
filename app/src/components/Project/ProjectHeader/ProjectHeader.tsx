@@ -13,16 +13,20 @@ import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { ProjectService } from "services/project.service";
 
 import "./project-header.scss";
+import { Observable, of, switchMap, tap } from "rxjs";
+import { showToast } from "services";
 
 interface ProjectHeaderAttrs {
   pf: {
-    updateProject: (partialProject: Partial<IProject>) => any;
+    updateProject: (
+      partialProject: Partial<IProject>
+    ) => Observable<IProject[]>;
     editListName: boolean;
     setEditListName: Dispatch<SetStateAction<boolean>>;
     showCompleted: boolean;
     setShowCompleted: Dispatch<SetStateAction<boolean>>;
     sort: string;
-    setSort: (sort: string) => any; // Promise<IProject | void> // Dispatch<SetStateAction<string>>;
+    setSort: (sort: string) => Observable<ITask[]>;
     canEdit: boolean;
     isLoading: LoadingStates;
   };
@@ -43,21 +47,26 @@ export const ProjectHeader = ({ pf }: ProjectHeaderAttrs) => {
 
   const psc = pf.showCompleted;
 
-  const deleteProject = (): Promise<void> | void => {
+  const deleteProject = (): Observable<IProject[]> => {
     if (window.confirm(text.project.delete._)) {
-      return ProjectService.deleteProject(project).then(() => {
-        changeToProject(null);
-        reloadProjects();
-      });
-    }
-  };
-
-  const deleteTasks = (): Promise<ITask[]> | void => {
-    if (window.confirm(text.project.delete.tasks)) {
-      return ProjectService.deleteProjectTasks(project).then(() =>
-        reloadProjectTasks()
+      return ProjectService.deleteProject(project).pipe(
+        switchMap(() => {
+          changeToProject(null);
+          return reloadProjects();
+        })
       );
     }
+    return of([]);
+  };
+
+  const deleteTasks = (): Observable<ITask[]> => {
+    if (window.confirm(text.project.delete.tasks)) {
+      return ProjectService.deleteProjectTasks(project).pipe(
+        tap(() => showToast("success", text.task.delete.allDeleted)),
+        switchMap(() => reloadProjectTasks())
+      );
+    }
+    return of([]);
   };
 
   const share = (): Promise<void> | void => {
@@ -67,20 +76,21 @@ export const ProjectHeader = ({ pf }: ProjectHeaderAttrs) => {
 
   const toggleShowCompleted = (
     showCompleted: boolean
-  ): Promise<IProject | void> => {
+  ): Observable<IProject[]> => {
     pf.setShowCompleted(showCompleted);
     return ProjectService.updateProject({
       ...project,
       showCompleted,
-    }).then(() => {
-      reloadProjects();
-    });
+    }).pipe(
+      switchMap(() => {
+        return reloadProjects();
+      })
+    );
   };
 
   const updateColorAndIcon = (colorAndIcon: ColorIconChoice): void => {
     pf.updateProject(colorAndIcon);
   };
-
 
   return pf.editListName ? (
     <form
@@ -122,6 +132,11 @@ export const ProjectHeader = ({ pf }: ProjectHeaderAttrs) => {
         >
           {project.name}
         </h5>
+        {project.shared ? (
+          <button className="ib p-0 right-align" title={text.sharedProject._} onClick={() => share()}>
+            <i className="material-icons tiny left btn-pr ml-5">person</i>
+          </button>
+        ) : null}
       </div>
       {pf.canEdit ? (
         <ProjectOptions
@@ -133,7 +148,7 @@ export const ProjectHeader = ({ pf }: ProjectHeaderAttrs) => {
           <li className="dropdown-item" key="completed">
             <button
               className="ib w-100 left-align"
-              onClick={() => toggleShowCompleted(!psc)}
+              onClick={() => toggleShowCompleted(!psc).subscribe()}
             >
               <i className="material-icons tiny left btn-pr">
                 {psc ? "check_box_outline_blank" : "check_box"}
@@ -150,7 +165,7 @@ export const ProjectHeader = ({ pf }: ProjectHeaderAttrs) => {
           <li className="dropdown-item" key="tasks">
             <button
               className="ib w-100 left-align"
-              onClick={() => deleteTasks()}
+              onClick={() => deleteTasks().subscribe()}
             >
               <i className="material-icons tiny left btn-pr">delete_forever</i>
               {text.project.delete.tasks}
@@ -160,7 +175,7 @@ export const ProjectHeader = ({ pf }: ProjectHeaderAttrs) => {
             <li className="dropdown-item" key="delete">
               <button
                 className="ib w-100 left-align"
-                onClick={() => deleteProject()}
+                onClick={() => deleteProject().subscribe()}
               >
                 <i className="material-icons tiny left btn-pr">delete</i>
                 {text.project.delete._}

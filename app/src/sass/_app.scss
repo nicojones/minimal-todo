@@ -61,6 +61,10 @@
   width: $tasks-box-width;
   min-width: $tasks-box-min-width;
   margin: $navbar-height auto 0;
+
+  @media (max-width: 400px) {
+    padding-left: 0 !important;
+  }
 }
 
 .loader-input {

@@ -5,7 +5,13 @@ import React, { useContext, useState } from "react";
 import { Link, Redirect, useHistory } from "react-router-dom";
 import { AuthService } from "services/auth.service";
 import { showToast } from "services/toast";
-import { CaughtPromise, ILoginForm, LoginUser, PDefault } from "../../interfaces";
+import {
+  CaughtPromise,
+  ILoginForm,
+  LoginUser,
+  PDefault,
+} from "../../interfaces";
+import { Observable, catchError, of, tap } from "rxjs";
 
 export const Login = () => {
   const history = useHistory();
@@ -22,37 +28,36 @@ export const Login = () => {
     return null;
   }
 
-  function onSubmit(e: PDefault) {
+  const onSubmit = (e: PDefault): Observable<LoginUser | null> => {
     e.preventDefault();
 
     setLoading(true);
 
-    AuthService
-      .login(loginFormData)
-      .then(
-        (_user: LoginUser | null) => {
-          setLoading(false);
+    return AuthService.login(loginFormData).pipe(
+      tap((_user: LoginUser | null) => {
+        setLoading(false);
 
-          if (_user) {
-            setLoginFormData({} as ILoginForm);
-            setUser(_user);
-            showToast("success", text.login.success);
-          } else {
-            showToast("error", text.login.error);
-          }
+        if (_user) {
+          setLoginFormData({} as ILoginForm);
+          setUser(_user);
+          showToast("success", text.login.success);
+        } else {
+          showToast("error", text.login.error);
         }
-      )
-      .catch(({response}: CaughtPromise) => {
+      }),
+      catchError((response: any) => {
         setLoading(false);
         AuthService.loginCatch(response.status);
-      });
-  }
+        return of();
+      })
+    );
+  };
 
   return user ? (
     <Redirect to={urls.app} />
   ) : (
     <LoginBox data-tip={text.login.login} loading={loading}>
-      <form onSubmit={onSubmit} className="flex-center-self">
+      <form onSubmit={(e: PDefault) => onSubmit(e).subscribe()} className="flex-center-self">
         <div className="form-group">
           <label>{text.login.f.email._}</label>
           <input

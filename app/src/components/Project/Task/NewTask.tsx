@@ -10,12 +10,13 @@ import {
   SetStateAction,
   useMemo,
 } from "react";
+import { Observable, switchMap, tap } from "rxjs";
 import { TaskService } from "services";
 
 interface NewTaskProps {
   isLoading: LoadingStates;
   setIsLoading: Dispatch<SetStateAction<LoadingStates>>;
-  reloadTasks: () => any;
+  reloadTasks: () => Observable<ITask[]>;
 }
 
 export const NewTask = ({
@@ -35,7 +36,7 @@ export const NewTask = ({
     return text.task.addTaskPh();
   }, [project.secret]);
 
-  const addTask = (e: PDefault): Promise<ITask[]> => {
+  const addTask = (e: PDefault): Observable<ITask[]> => {
     e.preventDefault();
     setIsLoading("t");
 
@@ -44,15 +45,18 @@ export const NewTask = ({
         name: taskName,
         projectId: project.id,
       })
-    ).then((task: ITask | void) => {
-      return reloadTasks();
-    });
+    ).pipe(
+      switchMap<ITask | void, Observable<ITask[]>>((task: ITask | void) => {
+        setTaskName("");
+        return reloadTasks();
+      })
+    );
   };
 
   return (
     <li className="task">
       <form
-        onSubmit={addTask}
+        onSubmit={(e: PDefault) => addTask(e).subscribe()}
         className={
           "flex-row task__content form-inline" +
           (isLoading === "t" ? " loader-input" : "")

@@ -4,7 +4,14 @@ import { Task } from "components/Project/Task/Task";
 import { text } from "config";
 import { createTaskObject } from "functions/create-task-object";
 import { IProjectContext, ITask, PDefault } from "interfaces";
-import { Dispatch, SetStateAction, useContext, useEffect, useState, } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { Observable, switchMap } from "rxjs";
 import { TaskService } from "services";
 
 interface TaskModalAttrs {
@@ -17,9 +24,12 @@ interface TaskModalAttrs {
   setModalOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-export const TaskModal = (
-  { trigger, task, modalOpen, setModalOpen }: TaskModalAttrs
-) => {
+export const TaskModal = ({
+  trigger,
+  task,
+  modalOpen,
+  setModalOpen,
+}: TaskModalAttrs) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [loadingST, setLoadingST] = useState<boolean>(false);
   const [subtaskName, setSubtaskName] = useState<string>("");
@@ -32,7 +42,8 @@ export const TaskModal = (
     task.priority || 0
   );
 
-  const { project, reloadProjectTasks } = useContext<IProjectContext>(ProjectContext);
+  const { project, reloadProjectTasks } =
+    useContext<IProjectContext>(ProjectContext);
 
   useEffect(() => {
     setTaskName(task.name || "");
@@ -41,26 +52,26 @@ export const TaskModal = (
     setPriority(task.priority || 0);
   }, [task]);
 
-  const saveTask = (e: PDefault): Promise<any> => {
+  const saveTask = (e: PDefault): Observable<ITask[]> => {
     e.preventDefault();
 
     setLoading(true);
 
-    return TaskService.updateTask(
-      {
-        ...task,
-        name: taskName,
-        priority: priority,
-        description: taskDesc
-      }
-    ).then((task: ITask | void) => {
-      setLoading(false);
-      setModalOpen(false);
-      return reloadProjectTasks();
-    });
-  }
+    return TaskService.updateTask({
+      ...task,
+      name: taskName,
+      priority: priority,
+      description: taskDesc,
+    }).pipe(
+      switchMap<ITask | void, Observable<ITask[]>>((task: ITask | void) => {
+        setLoading(false);
+        setModalOpen(false);
+        return reloadProjectTasks();
+      })
+    );
+  };
 
-  const saveSubtask = (e: PDefault): Promise<void> => {
+  const saveSubtask = (e: PDefault): Observable<ITask[]> => {
     e.preventDefault();
     setLoadingST(true);
 
@@ -71,13 +82,14 @@ export const TaskModal = (
         level: task.level + 1,
         projectId: project.id,
       })
-    )
-      .then((task: ITask | void) => {
-        reloadProjectTasks();
+    ).pipe(
+      switchMap<ITask | void, Observable<ITask[]>>((task: ITask | void) => {
         setLoadingST(false);
         setSubtaskName("");
-      });
-  }
+        return reloadProjectTasks();
+      })
+    );
+  };
 
   return (
     <>
@@ -173,7 +185,9 @@ export const TaskModal = (
                 minLength={3}
               />
               {subtaskName ? (
-                <button className="btn right"><i className="material-icons">add</i></button>
+                <button className="btn right">
+                  <i className="material-icons">add</i>
+                </button>
               ) : (
                 ""
               )}
@@ -193,7 +207,7 @@ export const TaskModal = (
             //   </label>
             //   <span className="left">{subtask.name}</span>
             // </li>
-            <Task task={subtask} level={subtask.level + 1} key={subtask.id}/>
+            <Task task={subtask} level={subtask.level + 1} key={subtask.id} />
           ))}
         </ul>
       </Modal>

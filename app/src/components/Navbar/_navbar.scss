@@ -73,8 +73,8 @@
   }
 }
 
-.search-results {
-  position: absolute;
+.search-results.dropdown {
+  position: fixed;
   background: white;
   margin: 0;
   top: 50px;
@@ -87,4 +87,10 @@
   max-height: 70vh;
   overflow: auto;
   padding: 0;
+
+  @media (max-width: 600px) {
+    left: 1rem;
+    right: 1rem; 
+    min-width: calc(100vw - 2rem);
+  }
 }

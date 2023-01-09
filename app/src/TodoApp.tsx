@@ -11,6 +11,7 @@ import { drawerConfig, text, urls } from "config";
 import { reservedKey } from "functions/reserved-key";
 import { IProject, IProjectContext, ITask, MinimalProject } from "interfaces";
 import { ProjectService, TaskService } from "services";
+import { Observable, of, tap } from "rxjs";
 
 const validProject = (
   projectSecret: IProject["secret"],
@@ -32,8 +33,8 @@ export const ProjectContext = React.createContext<IProjectContext>({
   project: {} as IProject,
   changeToProject: () => null,
   setProject: () => null,
-  reloadProjectTasks: null as unknown as () => Promise<ITask[]>,
-  reloadProjects: () => null as unknown as Promise<IProject[]>,
+  reloadProjectTasks: () => of<ITask[]>([]),
+  reloadProjects: () => of<IProject[]>([]),
   openAddUserModal: () => null,
 });
 
@@ -53,7 +54,6 @@ export const TodoApp = () => {
   const onFirstLoad = useRef(true);
 
   useEffect(() => {
-
     // urlParams.current.projectId
     const secret = project.secret;
 
@@ -64,7 +64,7 @@ export const TodoApp = () => {
           className=""
           setShowSidebar={setShowSidebar}
           addText={text.project.noSelected}
-          inspireText={text.project.inspire}
+          inspireText={text.project.inspire()}
         />
       ); // no URL -> show this component
       return;
@@ -84,7 +84,7 @@ export const TodoApp = () => {
   }, [project.secret, tasks]);
 
   useEffect(() => {
-    reloadProjects();
+    reloadProjects().subscribe();
   }, []);
 
   const changeToProject = (
@@ -103,34 +103,33 @@ export const TodoApp = () => {
     }
   };
 
-  const reloadProjects = (): Promise<IProject[]> => {
-    return ProjectService.getListOfProjects().then((_projects: IProject[]) => {
-      const _project = validProject(
-        project.secret || urlParams.current.projectSecret,
-        _projects
-      );
+  const reloadProjects = (): Observable<IProject[]> => {
+    return ProjectService.getListOfProjects().pipe(
+      tap((_projects: IProject[]) => {
+        const _project = validProject(
+          project.secret || urlParams.current.projectSecret,
+          _projects
+        );
 
-      if (onFirstLoad.current) {
-        _project && changeToProject(_project);
-        onFirstLoad.current = false;
-      }
-      setProjectList(_projects || []);
-
-      return _projects;
-    });
+        if (onFirstLoad.current) {
+          _project && changeToProject(_project);
+          onFirstLoad.current = false;
+        }
+        setProjectList(_projects || []);
+      })
+    );
   };
 
-  const reloadProjectTasks = (
-  ): Promise<ITask[]> => {
+  const reloadProjectTasks = (): Observable<ITask[]> => {
     if (!project.secret) {
-      return Promise.resolve([]);
+      return of<ITask[]>([]);
     }
 
-    return TaskService.getTasksForProject(project.secret).then(
-      (tasks: ITask[]) => {
+    return TaskService.getTasksForProject(project.secret).pipe(
+      tap((tasks: ITask[]) => {
         setTasks(tasks);
         return tasks;
-      }
+      })
     );
   };
 

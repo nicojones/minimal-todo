@@ -4,23 +4,27 @@ import { ProjectContext } from "../../TodoApp";
 import { IProjectContext, ITask, PDefault } from "../../interfaces";
 import { TaskService } from "../../services";
 import { Task } from "components/Project/Task/Task";
+import { Observable, tap } from "rxjs";
 
 export const NavbarSearch = () => {
-  const { changeToProject, reloadProjectTasks } = useContext<IProjectContext>(ProjectContext);
+  const { changeToProject, reloadProjectTasks } =
+    useContext<IProjectContext>(ProjectContext);
 
   const [search, setSearch] = useState("");
   const [results, setResults] = useState<ITask[]>([]);
 
-  function searchResults(e: PDefault) {
+  const searchResults = (e: PDefault): Observable<ITask[]> => {
     e.preventDefault();
 
-    TaskService.searchTask(search).then((results: ITask[]) => {
-      if (results.length) {
-        setResults(results);
-      } else {
-        setResults([{ name: text.task.noResults } as ITask]);
-      }
-    });
+    return TaskService.searchTask(search).pipe(
+      tap((results: ITask[]) => {
+        if (results.length) {
+          setResults(results);
+        } else {
+          setResults([{ name: text.task.noResults } as ITask]);
+        }
+      })
+    );
   }
 
   function goToResult(result: ITask) {
@@ -29,7 +33,7 @@ export const NavbarSearch = () => {
   }
 
   return (
-    <form className="left" id="search-tasks" onSubmit={searchResults}>
+    <form className="left" id="search-tasks" onSubmit={(e) => searchResults(e).subscribe()}>
       {/*<i className="material-icons tiny">search</i>*/}
       <input
         type="text"
@@ -51,7 +55,7 @@ export const NavbarSearch = () => {
                 key={r.secret}
                 showDot={true}
                 showActions={true}
-                onTaskToggle={reloadProjectTasks}
+                onTaskToggle={() => reloadProjectTasks().subscribe()}
                 showGoToProject={false}
                 singleLevel={true}
               />

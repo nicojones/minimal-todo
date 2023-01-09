@@ -7,6 +7,7 @@ import { TaskService } from "services";
 import { format } from "timeago.js";
 import "./_task.scss";
 import { useHistory } from "react-router-dom";
+import { Observable, of, switchMap, tap } from "rxjs";
 
 interface TaskAttrs {
   task: ITask;
@@ -17,7 +18,15 @@ interface TaskAttrs {
   showGoToProject?: boolean;
   singleLevel?: boolean;
 }
-export const Task = ({ task, level, onTaskToggle, showDot, showActions, showGoToProject, singleLevel }: TaskAttrs) => {
+export const Task = ({
+  task,
+  level,
+  onTaskToggle,
+  showDot,
+  showActions,
+  showGoToProject,
+  singleLevel,
+}: TaskAttrs) => {
   const history = useHistory();
   const [subtasks, setSubtasks] = useState<ITask[]>(task.subtasks || []);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -34,7 +43,7 @@ export const Task = ({ task, level, onTaskToggle, showDot, showActions, showGoTo
   // const doneClass = (task.checked ? (project.showCompleted ? 'done' : '') : '');
 
   const showExpanderClass =
-    (subtasks.length > 0 && !singleLevel)
+    subtasks.length > 0 && !singleLevel
       ? // project.showCompleted ? subtasks.length : openLength
         ""
       : " v-hidden";
@@ -46,20 +55,22 @@ export const Task = ({ task, level, onTaskToggle, showDot, showActions, showGoTo
   const toggleCompleted = (
     taskToUpdate: ITask,
     toggleSubtasks: boolean = false
-  ): void => {
+  ): Observable<ITask> => {
     taskToUpdate.done = !taskToUpdate.done;
     // after changing the state...
-    TaskService.toggleTask(task, toggleSubtasks).then((updatedTask: ITask) => {
-      if (updatedTask.done) {
-        // set all subtasks as checked, since the main task was marked as checked.
-        // (task.subtasks || []).forEach((_task) => _task.checked = true);
-        updatedTask.expanded = false;
-      }
+    return TaskService.toggleTask(task, toggleSubtasks).pipe(
+      tap((updatedTask: ITask) => {
+        if (updatedTask.done) {
+          // set all subtasks as checked, since the main task was marked as checked.
+          // (task.subtasks || []).forEach((_task) => _task.checked = true);
+          updatedTask.expanded = false;
+        }
 
-      setSubtasks(updatedTask.subtasks);
+        setSubtasks(updatedTask.subtasks);
 
-      onTaskToggle && onTaskToggle(updatedTask);
-    });
+        onTaskToggle && onTaskToggle(updatedTask);
+      })
+    );
   };
 
   const subtaskUpdated = (updatedSubtask: ITask): void => {
@@ -73,20 +84,27 @@ export const Task = ({ task, level, onTaskToggle, showDot, showActions, showGoTo
   /**
    * If you want to say the toggle state, just update this function
    */
-  const toggleExpanded = (isExpanded: boolean): Promise<ITask | void> => {
+  const toggleExpanded = (isExpanded: boolean): Observable<ITask | void> => {
     task.expanded = isExpanded;
     setExpandedTask(isExpanded);
     return TaskService.updateTask({ ...task });
   };
 
-  const onDelete = (task: ITask): void => {
+  const onDelete = (task: ITask): Observable<ITask[]> => {
     if (window.confirm(text.task.delete.all)) {
-      TaskService.deleteTask(task).then(() => reloadProjectTasks());
+      return TaskService.deleteTask(task).pipe(
+        switchMap(() => reloadProjectTasks()));
     }
+    return of<ITask[]>([]);
   };
 
   return (
-    <li className={doneClass + " task parent-hover " + (showActions ? ' show-actions' : '')} key={task.id}>
+    <li
+      className={
+        doneClass + " task parent-hover " + (showActions ? " show-actions" : "")
+      }
+      key={task.id}
+    >
       <div className="task__content" title={format(task.created)}>
         <button
           className={
@@ -98,11 +116,14 @@ export const Task = ({ task, level, onTaskToggle, showDot, showActions, showGoTo
         >
           chevron_right
         </button>
-        { showGoToProject 
-        ? <button className="btn p-0" onClick={() => history.push(urls.project(task.projectSecret)) }>
-          <i className="material-icons small-icon mr-11">login</i>
-        </button>
-         : null}
+        {showGoToProject ? (
+          <button
+            className="btn p-0"
+            onClick={() => history.push(urls.project(task.projectSecret))}
+          >
+            <i className="material-icons small-icon mr-11">login</i>
+          </button>
+        ) : null}
         {showDot ? (
           <i
             className="project-dot material-icons"
@@ -118,7 +139,7 @@ export const Task = ({ task, level, onTaskToggle, showDot, showActions, showGoTo
             type="checkbox"
             className="material-cb"
             checked={task.done}
-            onChange={() => toggleCompleted(task)}
+            onChange={() => toggleCompleted(task).subscribe()}
           />
           <div />
         </label>
@@ -144,7 +165,7 @@ export const Task = ({ task, level, onTaskToggle, showDot, showActions, showGoTo
           <button
             className="material-icons ib task__action-button child-hover"
             data-tip={text.task.delete._}
-            onClick={() => onDelete(task)}
+            onClick={() => onDelete(task).subscribe()}
           >
             delete
           </button>
@@ -173,6 +194,7 @@ export const Task = ({ task, level, onTaskToggle, showDot, showActions, showGoTo
               key={t.id}
               task={t}
               level={(level || 0) + 1}
+              showDot={showDot}
               onTaskToggle={subtaskUpdated}
             />
           ))}
