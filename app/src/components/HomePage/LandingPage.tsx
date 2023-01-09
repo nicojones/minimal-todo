@@ -19,10 +19,9 @@ export const LandingPage = () => (
     <div className="landing-content">
       <div className="flex-row w-100 flex-wrap">
         <div className="half-flex flex-column">
-          <br />
           <h2 className="center-align">{text.landing.title}</h2>
           <h4 className="center-align">{text.landing.sub}</h4>
-          <h5 className="subtle center-align mb-15">(in construction!)</h5>
+          <h5 className="subtle center-align mb-15">(give it a go!)</h5>
         </div>
         <div className="half-flex place-center">
           <img
