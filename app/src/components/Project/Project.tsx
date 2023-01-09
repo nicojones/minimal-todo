@@ -10,11 +10,12 @@ import {
   IProjectContext,
   ITask,
   LoadingStates,
-  SpecialProjectUrl
+  SpecialProjectUrl,
 } from "../../interfaces";
 import { NewTask } from "./Task/NewTask";
 import "./_project.scss";
 import { reservedKey } from "functions/reserved-key";
+import { Observable, switchMap, tap } from "rxjs";
 
 interface ProjectAttrs {
   tasks: ITask[];
@@ -36,10 +37,13 @@ export const Project = ({ tasks, specialUrl }: ProjectAttrs) => {
   const open = tasks.filter((task: ITask) => !task.done);
   const completed = tasks.filter((task: ITask) => !!task.done);
 
-  console.log(completed.length, open.length, showCompleted)
+  console.log(completed.length, open.length, showCompleted);
 
   const allCompleted = useMemo(() => {
-    if (!open.length && ((completed.length && !showCompleted) || !!specialUrl)) {
+    if (
+      !open.length &&
+      ((completed.length && !showCompleted) || !!specialUrl)
+    ) {
       return (
         <li>
           <NoProject className="o-1" inspireText={text.allTasksCompleted()} />
@@ -54,37 +58,43 @@ export const Project = ({ tasks, specialUrl }: ProjectAttrs) => {
     setShowCompleted(project.showCompleted);
     setIsLoading("p");
 
-    reloadTasks();
+    reloadTasks().subscribe();
   }, [project.secret]);
 
-  const reloadTasks = (): Promise<ITask[]> => {
-    return reloadProjectTasks().then((tasks: ITask[]) => {
-      setIsLoading("");
-      return tasks;
-    });
+  const reloadTasks = (): Observable<ITask[]> => {
+    return reloadProjectTasks().pipe(
+      tap((tasks: ITask[]) => {
+        setIsLoading("");
+        return tasks;
+      })
+    );
   };
 
-  const changedSort = (newSort: string): Promise<any> => {
+  const changedSort = (newSort: string): Observable<ITask[]> => {
     setSort(newSort);
 
     setProject({ ...project, sort: newSort });
 
-    return ProjectService.updateProject({ ...project, sort: newSort }).then(
-      () => reloadProjectTasks()
+    return ProjectService.updateProject({ ...project, sort: newSort }).pipe(
+      switchMap(() => reloadProjectTasks())
     );
   };
 
-  const updateProject = (partialProject: Partial<IProject>): Promise<void> => {
+  const updateProject = (
+    partialProject: Partial<IProject>
+  ): Observable<IProject[]> => {
     setIsLoading("n");
     return ProjectService.updateProject({
       ...project,
       ...partialProject,
-    }).then((p: IProject | void) => {
-      reloadProjects();
-      setEditListName(false);
-      setIsLoading("");
-      setProject(p as IProject);
-    });
+    }).pipe(
+      switchMap((p: IProject | void) => {
+        setEditListName(false);
+        setIsLoading("");
+        setProject(p as IProject);
+        return reloadProjects();
+      })
+    );
   };
 
   return (
@@ -99,13 +109,18 @@ export const Project = ({ tasks, specialUrl }: ProjectAttrs) => {
           sort,
           setSort: changedSort,
           canEdit: !specialUrl,
-          isLoading
+          isLoading,
         }}
       />
 
       <ul>
         {open.map((task) => (
-          <Task key={task.id} task={task} level={0} showDot={reservedKey(project.secret)} />
+          <Task
+            key={task.id}
+            task={task}
+            level={0}
+            showDot={reservedKey(project.secret)}
+          />
         ))}
         {specialUrl ? null : (
           <>
@@ -117,7 +132,6 @@ export const Project = ({ tasks, specialUrl }: ProjectAttrs) => {
               setIsLoading={setIsLoading}
               reloadTasks={reloadTasks}
             />
-
           </>
         )}
         {allCompleted}

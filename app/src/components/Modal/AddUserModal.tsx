@@ -14,10 +14,11 @@ import {
   useEffect,
   useState,
 } from "react";
-import { AuthService, ProjectService } from "services";
+import { AuthService, ProjectService, showToast } from "services";
 
 import "./_add-user-modal.scss";
 import { ProjectContext } from "TodoApp";
+import { Observable, of, switchMap, tap } from "rxjs";
 
 interface AddUserModalAttrs {
   modalProject: IProject | null;
@@ -38,42 +39,45 @@ export const AddUserModal = ({
   const { reloadProjects } = useContext<IProjectContext>(ProjectContext);
 
   useEffect(() => {
-    getListUsers();
+    getListUsers().subscribe();
   }, []);
 
-  const searchUsers = (e: PDefault): Promise<void> => {
+  const searchUsers = (e: PDefault): void => {
     e.preventDefault();
 
     setLoading(true);
-    return ProjectService.getUsersByEmail(searchTerm).then(
-      (response: UserSearchResult[]) => {
+    ProjectService.getUsersByEmail(searchTerm).pipe(
+      tap((response: UserSearchResult[]) => {
         setLoading(false);
         setSearchResults(response);
-      }
-    );
+      })
+    ).subscribe();
   };
 
-  const getListUsers = (): Promise<void> => {
-    return ProjectService.getProjectUsers(modalProject as IProject).then(
-      (users: UserSearchResult[]) => {
+  const getListUsers = (): Observable<UserSearchResult[]> => {
+    return ProjectService.getProjectUsers(modalProject as IProject).pipe(
+      tap((users: UserSearchResult[]) => {
         setProjectUsers(users);
-      }
+      })
     );
   };
 
-  const addUserToProject = (result: UserSearchResult) => {
-    return ProjectService.addUserToProject(
+  const addUserToProject = (result: UserSearchResult): void => {
+    ProjectService.addUserToProject(
       modalProject as IProject,
       result
-    ).then(() => {
-      getListUsers();
-      reloadProjects();
-      setSearchResults([]);
-      setSearchTerm("");
-    });
+    ).pipe(
+      switchMap(() => {
+        showToast("success", text.project.add.u(result))
+        setSearchResults([]);
+        setSearchTerm("");
+        getListUsers().subscribe();
+        return reloadProjects();
+      })
+    ).subscribe();
   };
 
-  const removeUserFromProject = (user: UserSearchResult): Promise<void> => {
+  const removeUserFromProject = (user: UserSearchResult): Observable<void> => {
     const currentUser: LoginUser = AuthService.currentUser() as LoginUser;
     const removeYourself = currentUser.email == user;
     if (
@@ -86,16 +90,19 @@ export const AddUserModal = ({
       return ProjectService.removeUserFromProject(
         modalProject as IProject,
         user
-      ).then(() => {
-        if (removeYourself) {
-          window.location.reload();
-        } else {
-          getListUsers();
-          reloadProjects();
-        }
-      });
+      ).pipe(
+        tap(() => {
+          showToast("success", text.project.remove.u(user))
+          if (removeYourself) {
+            window.location.reload();
+          } else {
+            getListUsers().subscribe();
+            reloadProjects().subscribe();
+          }
+        })
+      );
     }
-    return Promise.resolve();
+    return of();
   };
 
   return (
@@ -173,7 +180,9 @@ export const AddUserModal = ({
                       <span>
                         <span className="result">{result}</span>
                         <button
-                          onClick={() => removeUserFromProject(result)}
+                          onClick={() =>
+                            removeUserFromProject(result).subscribe()
+                          }
                           type="button"
                           className="btn"
                         >

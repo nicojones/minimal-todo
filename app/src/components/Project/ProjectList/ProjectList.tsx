@@ -13,6 +13,7 @@ import {
 } from "../../../interfaces";
 import { ProjectListItem } from "./ProjectListItem";
 import "./_project-list.scss";
+import { Observable, of, switchMap, tap } from "rxjs";
 
 interface ProjectListAttrs {
   projectId: IProject["id"];
@@ -29,29 +30,31 @@ export const ProjectList = ({ projectId, projects }: ProjectListAttrs) => {
 
   const [newProjectName, setNewProjectName] = useState("");
 
-  const addNewProject = (e: PDefault): void => {
+  const addNewProject = (e: PDefault): Observable<IProject[]> => {
     e.preventDefault();
 
     setIsLoading("new");
 
-    ProjectService.newProject(createProjectObject(newProjectName)).then(
-      (project: IProject | void) => {
+    return ProjectService.newProject(createProjectObject(newProjectName)).pipe(
+      switchMap((project: IProject | void) => {
         setNewProjectName("");
         setIsLoading("");
         changeToProject(project as unknown as IProject);
-        reloadProjects();
-      }
+        return reloadProjects();
+      })
     );
   };
 
-  const deleteProject = (_project: IProject): Promise<void> | void => {
+  const deleteProject = (_project: IProject): void => {
     if (window.confirm(text.project.delete.long)) {
       setIsLoading(_project.secret);
-      return ProjectService.deleteProject(_project).then(() => {
-        changeToProject(null);
-        setIsLoading("");
-        reloadProjects();
-      });
+      ProjectService.deleteProject(_project).pipe(
+        switchMap(() => {
+          changeToProject(null);
+          setIsLoading("");
+          return reloadProjects();
+        })
+      ).subscribe();
     }
   };
 
@@ -74,7 +77,7 @@ export const ProjectList = ({ projectId, projects }: ProjectListAttrs) => {
         <ProjectListItem
           key={p.secret}
           isLoading={""}
-          deleteProject={() => null}
+          deleteProject={() => of()}
           project={p}
           setProject={setProject}
           isSpecialProject={true}
@@ -100,7 +103,7 @@ export const ProjectList = ({ projectId, projects }: ProjectListAttrs) => {
       ))}
       <li key="new-project" className="proj-li mb-5 parent-hover flex-row">
         <form
-          onSubmit={addNewProject}
+          onSubmit={(e: PDefault) => addNewProject(e).subscribe()}
           className={
             "add-project flex-row " +
             (isLoading === "new" ? " loader-input" : "")

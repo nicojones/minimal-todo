@@ -4,6 +4,7 @@ import { text, urls } from "config";
 import { CaughtPromise, ILoggedInUserContext, ISignupForm, ISignupFormError, LoginUser, PDefault } from "interfaces";
 import { useContext, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
+import { Observable, catchError, of, tap } from "rxjs";
 import { AuthService } from "services/auth.service";
 import { showToast } from "services/toast";
 
@@ -17,16 +18,17 @@ export const Signup = () => {
   const {setUser} = useContext<ILoggedInUserContext>(LoggedInUserContext);
 
 
-  async function onSubmit(e: PDefault) {
+  const onSubmit = (e: PDefault): Observable<LoginUser | null> => {
     e.preventDefault();
 
     const _signupError = AuthService.validateSignup(signup);
     const errors = Object.values(_signupError);
     if (!errors.length) {
       setLoading(true);
-      AuthService
+      return AuthService
         .signup(signup)
-        .then((responseData: LoginUser) => {
+        .pipe(
+        tap((responseData: LoginUser) => {
           setLoading(false);
           if (responseData.id) {
             showToast("success", text.login.signupSuccess);
@@ -34,8 +36,8 @@ export const Signup = () => {
             setLoggingIn(true);
             setUser(responseData);
           }
-        })
-        .catch(({ response }: CaughtPromise) => {
+        }),
+        catchError((response: any) => {
           if (response.data) {
             setSignupError(response.data);
             const errors = Object.values(response.data);
@@ -45,10 +47,13 @@ export const Signup = () => {
             AuthService.loginCatch(response.status);
           }
           setLoading(false);
-        });
+          return of();
+        })
+        )
     } else {
       setSignupError(_signupError);
       errors.length && showToast("error", errors[0] as string);
+      return of();
     }
   }
 
@@ -60,7 +65,7 @@ export const Signup = () => {
     <Redirect to="/app" />
   ) : (
     <LoginBox data-tip={text.login.signup} loading={loading}>
-      <form onSubmit={onSubmit} className="flex-center-self">
+      <form onSubmit={(e: PDefault) => onSubmit(e).subscribe} className="flex-center-self">
         <div className="form-group">
           <label>{text.login.f.name._}</label>
           <input
