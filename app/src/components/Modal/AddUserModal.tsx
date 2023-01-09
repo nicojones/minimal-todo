@@ -79,7 +79,7 @@ export const AddUserModal = ({
 
   const removeUserFromProject = (user: UserSearchResult): Observable<void> => {
     const currentUser: LoginUser = AuthService.currentUser() as LoginUser;
-    const removeYourself = currentUser.email == user;
+    const removeYourself = (currentUser.email === user);
     if (
       window.confirm(
         removeYourself
