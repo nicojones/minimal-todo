@@ -12,6 +12,8 @@ import { reservedKey } from "functions/reserved-key";
 import { IProject, IProjectContext, ITask, MinimalProject } from "interfaces";
 import { ProjectService, TaskService } from "services";
 import { Observable, of, tap } from "rxjs";
+import { projectStore, projectsStore, tasksStore } from "store";
+import { setEntities } from "@ngneat/elf-entities";
 
 const validProject = (
   projectSecret: IProject["secret"],
@@ -88,18 +90,20 @@ export const TodoApp = () => {
   }, []);
 
   const changeToProject = (
-    value: Partial<IProject> | null,
-    forceProject: Partial<IProject> | null = null
+    value: MinimalProject | null,
   ): void => {
     if (value && value?.secret !== project.secret) {
       setProject(value as IProject);
+      projectStore.update(setEntities([value]));
       history.push(urls.project(value?.secret || ""));
       return;
-    } else if (forceProject) {
-      setProject(forceProject as unknown as IProject);
+    // } else if (forceProject) {
+    //   setProject(forceProject as unknown as IProject);
+    //   projectStore.update(setEntities([forceProject]));
     } else {
       history.push(urls.app);
       setProject({ secret: null } as unknown as IProject);
+      projectStore.update(setEntities([{secret: null} as unknown as MinimalProject]));
     }
   };
 
@@ -116,6 +120,7 @@ export const TodoApp = () => {
           onFirstLoad.current = false;
         }
         setProjectList(_projects || []);
+        projectsStore.update(setEntities(_projects || []));
       })
     );
   };
@@ -128,6 +133,7 @@ export const TodoApp = () => {
     return TaskService.getTasksForProject(project.secret).pipe(
       tap((tasks: ITask[]) => {
         setTasks(tasks);
+        tasksStore.update(setEntities(tasks));
         return tasks;
       })
     );
