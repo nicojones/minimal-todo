@@ -22,12 +22,12 @@ export const ProjectOptions = ({
 
   return (
     <div className="buttons">
-      <Tooltip anchorId="show-sort-dropdown"/>
+      {/* <Tooltip anchorId="show-sort-dropdown"/> */}
       {sort && ( // Only if the `sort` is passed from the parent.
         <button
           className="btn"
-          id="show-sort-dropdown"
-          data-tooltip-content={text.sort._}
+          // id="show-sort-dropdown"
+          title={text.sort._}
           onClick={() => showSortDropdown(true)}
         >
           <i className="material-icons">swap_vert</i>

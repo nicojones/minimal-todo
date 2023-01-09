@@ -232,6 +232,10 @@ $max-fff: 100 - $fff;
   }
 }
 
+button, .material-icons {
+  color: inherit;
+}
+
 button:focus {
   background: transparent !important; // set by FORMS!!!;
 }

@@ -86,11 +86,11 @@ export const TaskModal = ({
     ).subscribe();
   };
 
-  const saveSubtask = (e: PDefault): Observable<ITask[]> => {
+  const saveSubtask = (e: PDefault): void => {
     e.preventDefault();
     setLoadingST(true);
 
-    return TaskService.addTask(
+    TaskService.addTask(
       createTaskObject({
         name: subtaskName,
         parentId: task.id,
@@ -103,7 +103,7 @@ export const TaskModal = ({
         setSubtaskName("");
         return reloadProjectTasks();
       })
-    );
+    ).subscribe();
   };
 
   return (

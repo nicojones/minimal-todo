@@ -32,9 +32,7 @@ const validProject = (
 };
 
 export const ProjectContext = React.createContext<IProjectContext>({
-  // project: {} as IProject,
   changeToProject: () => null,
-  // setProject: () => null,
   reloadProjectTasks: () => of<ITask[]>([]),
   reloadProjects: () => of<IProject[]>([]),
   openAddUserModal: () => null,
@@ -141,10 +139,8 @@ export const TodoApp = () => {
       <ProjectContext.Provider
         value={{
           changeToProject,
-          // project,
           reloadProjects,
           reloadProjectTasks,
-          // setProject,
           openAddUserModal: setModalOpen,
         }}
       >
