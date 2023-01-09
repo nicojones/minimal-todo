@@ -18,3 +18,4 @@ export * from "./project-context.interface";
 export * from "./user-search-results.interface";
 export * from "./special-project-url.enum";
 export * from "./color-icon-choice.type";
+export * from "./stores.enum";

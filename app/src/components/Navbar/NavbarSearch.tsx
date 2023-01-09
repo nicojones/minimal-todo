@@ -1,7 +1,7 @@
 import { text } from "../../config/text";
 import React, { useContext, useState } from "react";
 import { ProjectContext } from "../../TodoApp";
-import { IProjectContext, ITask, PDefault } from "../../interfaces";
+import { IProjectContext, ITask, MinimalProject, PDefault } from "../../interfaces";
 import { TaskService } from "../../services";
 import { Task } from "components/Project/Task/Task";
 import { Observable, tap } from "rxjs";
@@ -29,7 +29,7 @@ export const NavbarSearch = () => {
 
   function goToResult(result: ITask) {
     setResults([]);
-    changeToProject({ secret: result.projectSecret });
+    changeToProject({ secret: result.projectSecret } as unknown as MinimalProject);
   }
 
   return (
