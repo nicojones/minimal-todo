@@ -10,7 +10,7 @@ export const projectSort = {
   PRIORITY: "PRIORITY",
 };
 
-export const priorityIcons: string[] = ["person", "flag", "flag", "flag"];
+export const priorityIcons: string[] = ["flag", "flag", "flag", "flag"];
 
 export const projectIcons: string[] = [
   "grade",
