@@ -41,13 +41,16 @@
       font-size: 0.8rem;
       display: inline-block;
       left: -0.3rem;
+      top: 3px;
       position: relative;
+      align-self: flex-start;
       cursor: help;
     }
 
     .toggle-expand {
       // align-self: flex-start;
       padding: 0;
+      margin-right: .2rem !important;
     }
   }
 

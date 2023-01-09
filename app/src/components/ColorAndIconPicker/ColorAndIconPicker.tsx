@@ -32,7 +32,7 @@ export const ColorAndIconPicker = ({
   return (
     <span className="relative">
       <button
-        className="ib h-100"
+        className="ib h-100 color-picker-icon"
         onClick={() => canEdit ? setShowColorPicker(true) : null}
       >
         <i className="material-icons tiny left m0" style={{ color: color }}>

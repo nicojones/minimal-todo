@@ -19,11 +19,12 @@ $header-btn-m: 10px;
 .navbar {
   display: flex;
   flex-direction: row;
+  background-color: rgba($app-background-color, 0.8); 
   // margin: 0 auto;
-  margin: 0 1rem;
+  margin: 0;
+  padding: 0 1rem;
   max-width: $landing-width;
   height: $header-height;
-  background: $app-background-color;
   align-items: center;
 
   %navbar-start {
