@@ -13,4 +13,10 @@
     margin: 0 0 0 2rem !important;
     align-items: baseline;
     display: flex;
+
+    // will only be affected on the child component
+    .color-picker-icon {
+      padding: 0 1rem;
+    }
   }
+

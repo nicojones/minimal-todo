@@ -87,8 +87,8 @@ export class AuthService {
   };
 
   public static logout = (url: string = urls.home) => {
-    // AuthService.setToken(null);
-    // window.location.href = url;
+    AuthService.setToken(null);
+    window.location.href = url;
   };
 
   public static validateSignup = (

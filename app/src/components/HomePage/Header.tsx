@@ -9,21 +9,21 @@ import "./_header.scss";
 export const Header = () => {
   const {user} = useContext(LoggedInUserContext);
 
-  const [showMenu, setShowMenu] = useState(false);
+  // const [showMenu, setShowMenu] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
 
   return (
     <header className="header-area">
       <div className="navbar-area headroom">
         <nav className="navbar">
-          <button
+          {/* <button
             className="hide-lg navbar-toggler btn"
             type="button"
             aria-label="Toggle navigation"
             onClick={() => setShowMenu(!showMenu)}
           >
             <i className="material-icons medium">menu</i>
-          </button>
+          </button> */}
           <a className="navbar-brand" href={urls.home}>
             {/*<img src={ todoLogo } alt="Logo" width="100%"/>*/}
             {text.appName}

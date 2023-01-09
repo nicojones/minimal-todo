@@ -50,8 +50,8 @@ public class FixturesConfig {
                     secret.generate(),
                     ProjectSort.A_TO_Z,
                     false,
-                    "First project",
-                    "#abcdef",
+                    "My List",
+                    "#EB144C",
                     false,
                     ProjectIcon.FAVORITE
                     );
@@ -59,19 +59,19 @@ public class FixturesConfig {
                     secret.generate(),
                     ProjectSort.PRIORITY,
                     false,
-                    "Second project",
-                    "#113Acc",
+                    "Must Do Soon",
+                    "#0693E3",
                     false,
-                    ProjectIcon.HOME
+                    ProjectIcon.EXTENSION
                     );
                     Project project3 = new Project(
                     secret.generate(),
                     ProjectSort.Z_TO_A,
                     false,
-                    "Stuff to do",
-                    "#7a3ebf",
+                    "Movies",
+                    "#FCB900",
                     false,
-                    ProjectIcon.GRADE
+                    ProjectIcon.PHOTO
                     );
 
 

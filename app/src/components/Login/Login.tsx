@@ -24,7 +24,7 @@ export const Login = () => {
 
   // If the user is logged in already, redirect to the app!
   if (React.useContext(LoggedInUserContext).user) {
-    history.push(urls.app);
+    history.push(urls.project(urls.inboxUrl));
     return null;
   }
 
