@@ -1,9 +1,11 @@
 import { ProjectContext } from "TodoApp";
 import { Modal } from "components/Modal/Modal";
 import { Task } from "components/Project/Task/Task";
-import { text } from "config";
+import { priorityIcons, text } from "config";
 import { createTaskObject } from "functions/create-task-object";
-import { IProjectContext, ITask, PDefault } from "interfaces";
+import { validateTask } from "functions/validate-task.function";
+import { IProject, IProjectContext, ITask, PDefault } from "interfaces";
+import { WritableAtom, useAtom } from "jotai";
 import {
   Dispatch,
   SetStateAction,
@@ -13,6 +15,7 @@ import {
 } from "react";
 import { Observable, switchMap } from "rxjs";
 import { TaskService } from "services";
+import { projectAtom } from "store";
 
 interface TaskModalAttrs {
   trigger?: {
@@ -41,9 +44,13 @@ export const TaskModal = ({
   const [priority, setPriority] = useState<ITask["priority"]>(
     task.priority || 0
   );
+  const [taskErrors, setTaskErrors] = useState<Partial<Record<keyof ITask, string | boolean>>>({});
 
-  const { project, reloadProjectTasks } =
-    useContext<IProjectContext>(ProjectContext);
+  const { reloadProjectTasks } = useContext<IProjectContext>(ProjectContext);
+
+  const [project] = useAtom<IProject>(
+    projectAtom as WritableAtom<IProject, IProject>
+  );
 
   useEffect(() => {
     setTaskName(task.name || "");
@@ -52,23 +59,31 @@ export const TaskModal = ({
     setPriority(task.priority || 0);
   }, [task]);
 
-  const saveTask = (e: PDefault): Observable<ITask[]> => {
+  const saveTask = (e: PDefault): void => {
     e.preventDefault();
 
-    setLoading(true);
-
-    return TaskService.updateTask({
+    const taskToUpdate: ITask = {
       ...task,
       name: taskName,
       priority: priority,
       description: taskDesc,
-    }).pipe(
+    };
+
+    console.log(taskToUpdate);
+    
+    if (Object.values(validateTask(taskToUpdate)).length) {
+      setTaskErrors(validateTask(taskToUpdate));
+      return;
+    }
+    setLoading(true);
+
+    TaskService.updateTask(taskToUpdate).pipe(
       switchMap<ITask | void, Observable<ITask[]>>((task: ITask | void) => {
         setLoading(false);
         setModalOpen(false);
         return reloadProjectTasks();
       })
-    );
+    ).subscribe();
   };
 
   const saveSubtask = (e: PDefault): Observable<ITask[]> => {
@@ -115,11 +130,10 @@ export const TaskModal = ({
             {/*<label>{ text.task.name }</label>*/}
             <input
               value={taskName}
-              required
-              minLength={3}
               placeholder={text.task.name}
               onChange={(e) => setTaskName(e.target.value)}
             />
+            { taskErrors.name ? <small>{taskErrors.name}</small> : null }
           </div>
           <div>
             {/*<label>{ text.task.notes }</label>*/}
@@ -128,49 +142,28 @@ export const TaskModal = ({
               className="materialize-textarea"
               placeholder={text.task.notes}
               onChange={(e) => setTaskDesc(e.target.value)}
-            />
+              />
+              { taskErrors.description ? <small>{taskErrors.description}</small> : null }
           </div>
           <div>
             <label>{text.task.prio._}</label>
             <div className="flex-row">
-              <button
+              {priorityIcons.map((icon: string, priorityLevel: number) => 
+                <button
+                key={priorityLevel}
                 className={
-                  "btn priority prio-0 " + (priority === 0 && "active")
+                  `btn priority prio-${priorityLevel} ${priority === priorityLevel && "active"}`
                 }
-                onClick={() => setPriority(0)}
+                onClick={() => setPriority(priorityLevel)}
                 type="button"
-              >
-                <i className="material-icons">flag</i>
-              </button>
-              <button
-                className={
-                  "btn priority prio-1 " + (priority === 1 && "active")
-                }
-                onClick={() => setPriority(1)}
-                type="button"
-              >
-                <i className="material-icons">flag</i>
-              </button>
-              <button
-                className={
-                  "btn priority prio-2 " + (priority === 2 && "active")
-                }
-                onClick={() => setPriority(2)}
-                type="button"
-              >
-                <i className="material-icons">flag</i>
-              </button>
-              <button
-                className={
-                  "btn priority prio-3 " + (priority === 3 && "active")
-                }
-                onClick={() => setPriority(3)}
-                type="button"
-              >
-                <i className="material-icons">flag</i>
-              </button>
+                >
+                  <i className="material-icons">{icon}</i>
+                </button>
+              )}
+              { taskErrors.priority ? <small>{taskErrors.priority}</small> : null }
             </div>
           </div>
+          <button type="submit" className="far-away"/>
         </form>
 
         <ul className="list-unstyled flex-column">
@@ -194,19 +187,6 @@ export const TaskModal = ({
             </form>
           </li>
           {(subtasks || []).map((subtask) => (
-            // <li key={subtask.id} data-tip={subtask.created} className="block">
-            //   <label className="left">
-            //     <input
-            //       type="checkbox"
-            //       checked={subtask.done}
-            //       id={subtask.id}
-            //       className="material-cb"
-            //       onChange={() => toggleSubtask(subtask)}
-            //     />
-            //     <div />
-            //   </label>
-            //   <span className="left">{subtask.name}</span>
-            // </li>
             <Task task={subtask} level={subtask.level + 1} key={subtask.id} />
           ))}
         </ul>

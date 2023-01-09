@@ -1,10 +1,13 @@
-import { createStore } from "@ngneat/elf";
-import { selectAllEntities, withEntities } from "@ngneat/elf-entities";
-import { MinimalProject, Stores } from "interfaces";
+import { IProject } from "interfaces";
+import { atom } from "jotai";
 
-export const projectStore = createStore(
-  { name: Stores.SELECTED_PROJECT },
-  withEntities<MinimalProject>()
+const _projectAtom = atom<IProject | null>(null);
+
+export const projectAtom = atom<IProject | null, IProject | null>(
+  (get) => get(_projectAtom),
+  (get, set, payload) => {
+    console.log("????", get(_projectAtom))
+    return set(_projectAtom, payload)
+  }
+  // (get, set, payload) => set(_projectAtom, get(_projectAtom) ? payload : null)
 );
-
-export const project$ = projectStore.pipe(selectAllEntities());

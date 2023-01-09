@@ -23,7 +23,7 @@ import { Observable, of, switchMap, tap } from "rxjs";
 interface AddUserModalAttrs {
   modalProject: IProject | null;
   setModalProject: Dispatch<SetStateAction<IProject | null>>;
-  project: IProject;
+  project: IProject | null;
 }
 
 export const AddUserModal = ({

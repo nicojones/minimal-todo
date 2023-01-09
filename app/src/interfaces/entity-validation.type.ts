@@ -1,0 +1,1 @@
+export type EntityValidation<T> = Partial<Record<keyof T, string | false>>;

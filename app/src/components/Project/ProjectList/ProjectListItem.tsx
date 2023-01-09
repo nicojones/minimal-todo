@@ -14,6 +14,8 @@ import { ProjectListDropdown } from "./ProjectListDropdown";
 
 import "./_project-list-item.scss";
 import { Observable, map, switchMap } from "rxjs";
+import { useAtom } from "jotai";
+import { projectAtom } from "store";
 
 interface ProjectListItemAttrs {
   project: MinimalProject;
@@ -30,24 +32,33 @@ export const ProjectListItem = ({
   deleteProject,
   isSpecialProject,
 }: ProjectListItemAttrs) => {
-  const { project, changeToProject, reloadProjects, reloadProjectTasks } =
+  const { reloadProjects } =
     useContext<IProjectContext>(ProjectContext);
+
+  const [selectedProject, setSelectedProject] = useAtom<
+    IProject | null,
+    IProject | null,
+    void
+  >(projectAtom);
 
   const changeColorAndIcon = (
     _project: IProject,
     iconAndColor: ColorIconChoice
-  ): Observable<IProject[]> => {
-    return ProjectService.updateProject({
+  ): void => {
+    ProjectService.updateProject({
       ..._project,
       ...iconAndColor,
-    }).pipe(
-      switchMap((p: IProject | void) => {
-        if (reservedKey(project.secret)) {
-          reloadProjectTasks().subscribe();
-        }
-        return reloadProjects();
-      })
-    );
+    })
+      .pipe(
+        switchMap((p: IProject | void) => {
+          // if the project is open, update it.
+          if (p?.secret === selectedProject?.secret) {
+            setSelectedProject(p as IProject);
+          }
+          return reloadProjects();
+        })
+      )
+      .subscribe();
   };
 
   return (
@@ -55,7 +66,7 @@ export const ProjectListItem = ({
       key={proj.secret}
       className={
         "proj-li mb-5 parent-hover flex-row" +
-        (project.secret === proj.secret ? " selected" : "") +
+        (selectedProject?.secret === proj.secret ? " selected" : "") +
         (isLoading === proj.secret ? " loader-input" : "")
       }
     >
@@ -64,7 +75,7 @@ export const ProjectListItem = ({
         icon={proj.icon}
         canEdit={!isSpecialProject}
         onChangeComplete={(colorAndIcon: ColorIconChoice) =>
-          changeColorAndIcon(proj as IProject, colorAndIcon).subscribe()
+          changeColorAndIcon(proj as IProject, colorAndIcon)
         }
       ></ColorAndIconPicker>
       <button

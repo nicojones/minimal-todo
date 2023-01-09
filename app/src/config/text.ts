@@ -26,7 +26,7 @@ export const text = {
       ];
       return randArray(phs);
     },
-    subtasks: "Subtasks",
+    subtasks: "Add a subtask",
     save: "Save Task",
     edit: "Edit Task",
     discard: "Cancel changes",

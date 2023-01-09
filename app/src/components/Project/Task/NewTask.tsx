@@ -1,7 +1,8 @@
 import { ProjectContext } from "TodoApp";
 import { text } from "config";
 import { createTaskObject } from "functions/create-task-object";
-import { IProjectContext, PDefault, ITask, LoadingStates } from "interfaces";
+import { IProjectContext, PDefault, ITask, LoadingStates, IProject } from "interfaces";
+import { WritableAtom, useAtom } from "jotai";
 import {
   useState,
   ChangeEvent,
@@ -12,6 +13,7 @@ import {
 } from "react";
 import { Observable, switchMap, tap } from "rxjs";
 import { TaskService } from "services";
+import { projectAtom } from "store";
 
 interface NewTaskProps {
   isLoading: LoadingStates;
@@ -24,7 +26,8 @@ export const NewTask = ({
   reloadTasks,
   isLoading,
 }: NewTaskProps) => {
-  const { project } = useContext<IProjectContext>(ProjectContext);
+
+  const [project] = useAtom<IProject | null>(projectAtom);
 
   const [taskName, setTaskName] = useState("");
 
@@ -34,7 +37,7 @@ export const NewTask = ({
 
   const addTaskPh = useMemo(() => {
     return text.task.addTaskPh();
-  }, [project.secret]);
+  }, [project?.secret]);
 
   const addTask = (e: PDefault): Observable<ITask[]> => {
     e.preventDefault();
@@ -43,7 +46,7 @@ export const NewTask = ({
     return TaskService.addTask(
       createTaskObject({
         name: taskName,
-        projectId: project.id,
+        projectId: (project as IProject).id,
       })
     ).pipe(
       switchMap<ITask | void, Observable<ITask[]>>((task: ITask | void) => {

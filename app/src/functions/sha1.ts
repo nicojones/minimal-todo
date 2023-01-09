@@ -1,4 +1,4 @@
-export async function sha1_deprecated( str: string ) {
+export async function sha1( str: string ) {
   // @ts-ignore
   const buffer = new TextEncoder('utf-8').encode( str );
   const digest = await crypto.subtle.digest('SHA-1', buffer);

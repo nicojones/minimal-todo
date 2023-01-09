@@ -15,12 +15,14 @@ import { ProjectService } from "services/project.service";
 import "./project-header.scss";
 import { Observable, of, switchMap, tap } from "rxjs";
 import { showToast } from "services";
+import { WritableAtom, useAtom } from "jotai";
+import { projectAtom } from "store";
 
 interface ProjectHeaderAttrs {
   pf: {
     updateProject: (
       partialProject: Partial<IProject>
-    ) => Observable<IProject[]>;
+    ) => void;
     editListName: boolean;
     setEditListName: Dispatch<SetStateAction<boolean>>;
     showCompleted: boolean;
@@ -34,22 +36,22 @@ interface ProjectHeaderAttrs {
 
 export const ProjectHeader = ({ pf }: ProjectHeaderAttrs) => {
   const {
-    project,
     reloadProjects,
     changeToProject,
     openAddUserModal,
     reloadProjectTasks,
   } = useContext<IProjectContext>(ProjectContext);
+  const [project] = useAtom<IProject | null>(projectAtom);
   const [moreDropdown, showMoreDropdown] = useState<boolean>(false);
   const [projectName, setProjectName] = useState<IProject["name"]>(
-    project.name
+    project?.name || ""
   );
 
   const psc = pf.showCompleted;
 
   const deleteProject = (): Observable<IProject[]> => {
     if (window.confirm(text.project.delete._)) {
-      return ProjectService.deleteProject(project).pipe(
+      return ProjectService.deleteProject(project as IProject).pipe(
         switchMap(() => {
           changeToProject(null);
           return reloadProjects();
@@ -61,7 +63,7 @@ export const ProjectHeader = ({ pf }: ProjectHeaderAttrs) => {
 
   const deleteTasks = (): Observable<ITask[]> => {
     if (window.confirm(text.project.delete.tasks)) {
-      return ProjectService.deleteProjectTasks(project).pipe(
+      return ProjectService.deleteProjectTasks(project as IProject).pipe(
         tap(() => showToast("success", text.task.delete.allDeleted)),
         switchMap(() => reloadProjectTasks())
       );
@@ -79,7 +81,7 @@ export const ProjectHeader = ({ pf }: ProjectHeaderAttrs) => {
   ): Observable<IProject[]> => {
     pf.setShowCompleted(showCompleted);
     return ProjectService.updateProject({
-      ...project,
+      ...(project as IProject),
       showCompleted,
     }).pipe(
       switchMap(() => {
@@ -96,9 +98,9 @@ export const ProjectHeader = ({ pf }: ProjectHeaderAttrs) => {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        pf.updateProject(project);
+        pf.updateProject(project as IProject);
       }}
-      className={"flex-row " + (pf.isLoading === "n" ? " loader-input" : "")}
+      className={"project-name-form flex-row " + (pf.isLoading === "n" ? " loader-input" : "")}
     >
       <input
         className="as-title h5 project-title"
@@ -121,8 +123,8 @@ export const ProjectHeader = ({ pf }: ProjectHeaderAttrs) => {
     <div className="project-title-bar" data-tip={text.project.title._}>
       <div className="project-title">
         <ColorAndIconPicker
-          icon={project.icon}
-          color={project.color}
+          icon={project?.icon || ""}
+          color={project?.color || ""}
           onChangeComplete={updateColorAndIcon}
           canEdit={pf.canEdit}
         />
@@ -130,9 +132,9 @@ export const ProjectHeader = ({ pf }: ProjectHeaderAttrs) => {
           className="project-header"
           onClick={() => (pf.canEdit ? pf.setEditListName(true) : null)}
         >
-          {project.name}
+          {project?.name || ""}
         </h5>
-        {project.shared ? (
+        {!!project?.shared ? (
           <button className="ib p-0 right-align" title={text.sharedProject._} onClick={() => share()}>
             <i className="material-icons tiny left btn-pr ml-5">person</i>
           </button>
@@ -171,7 +173,7 @@ export const ProjectHeader = ({ pf }: ProjectHeaderAttrs) => {
               {text.project.delete.tasks}
             </button>
           </li>
-          {!project.shared ? (
+          {!project?.shared ? (
             <li className="dropdown-item" key="delete">
               <button
                 className="ib w-100 left-align"
