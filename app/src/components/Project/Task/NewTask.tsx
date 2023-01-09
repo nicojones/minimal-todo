@@ -1,7 +1,13 @@
 import { ProjectContext } from "TodoApp";
 import { text } from "config";
 import { createTaskObject } from "functions/create-task-object";
-import { IProjectContext, PDefault, ITask, LoadingStates, IProject } from "interfaces";
+import {
+  IProjectContext,
+  PDefault,
+  ITask,
+  LoadingStates,
+  IProject,
+} from "interfaces";
 import { WritableAtom, useAtom } from "jotai";
 import {
   useState,
@@ -26,7 +32,6 @@ export const NewTask = ({
   reloadTasks,
   isLoading,
 }: NewTaskProps) => {
-
   const [project] = useAtom<IProject | null>(projectAtom);
 
   const [taskName, setTaskName] = useState("");
@@ -66,11 +71,8 @@ export const NewTask = ({
         }
       >
         {/*className={ 'flex-row task__content form-inline' + (isLoading === 't' ? ' loader-input' : '') }>*/}
-        <i
-          /* Just to give the right padding */ className="material-icons left v-hidden btn-p"
-        >
-          add
-        </i>
+        {/* Just to give the right padding  */}
+        <i className="material-icons v-hidden mr-5"> add </i>
         <button className="btn p0">
           <i className="material-icons left subtle btn-pr">
             {taskName ? "save" : "add"}

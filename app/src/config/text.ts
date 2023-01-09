@@ -1,4 +1,4 @@
-import { SpecialProjectUrl } from "interfaces";
+import { ITask, SpecialProjectUrl } from "interfaces";
 import { randArray } from "../functions/rand-array";
 
 export const text = {
@@ -11,7 +11,12 @@ export const text = {
     projectDot: (name: string) => "Belongs to " + name,
     delete: {
       _: "Delete Task",
-      all: "Delete task and its subtasks? Can't be undone",
+      confirm: (subtasks: ITask[]) => {
+        if (!subtasks.length) {
+          return "Delete task?"
+        }
+        return "Delete task and its subtasks?\n\n" + subtasks.map(t => t.name).join("\n");
+      },
       allDeleted: "Tasks deleted",
     },
     addTaskPh: () => {

@@ -93,13 +93,16 @@ export const Task = ({
     return TaskService.updateTask({ ...task });
   };
 
-  const onDelete = (task: ITask): Observable<ITask[]> => {
-    if (window.confirm(text.task.delete.all)) {
-      return TaskService.deleteTask(task).pipe(
+  const onDelete = (task: ITask): void => {
+    if (
+      window.confirm(
+        text.task.delete.confirm(task.subtasks)
+      )
+    ) {
+      TaskService.deleteTask(task).pipe(
         switchMap(() => reloadProjectTasks())
-      );
+      ).subscribe();
     }
-    return of<ITask[]>([]);
   };
 
   return (
@@ -169,7 +172,7 @@ export const Task = ({
           <button
             className="material-icons ib task__action-button child-hover"
             data-tip={text.task.delete._}
-            onClick={() => onDelete(task).subscribe()}
+            onClick={() => onDelete(task)}
           >
             delete
           </button>
