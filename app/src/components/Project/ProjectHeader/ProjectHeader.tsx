@@ -98,14 +98,14 @@ export const ProjectHeader = ({ pf }: ProjectHeaderAttrs) => {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        pf.updateProject(project as IProject);
+        pf.updateProject({...project, name: projectName} as IProject);
       }}
       className={"project-name-form flex-row " + (pf.isLoading === "n" ? " loader-input" : "")}
     >
       <input
         className="as-title h5 project-title"
         autoFocus /*onBlur={ project.saveListName }*/
-        value={projectName}
+        value={project?.name || ""}
         disabled={pf.isLoading === "n"}
         onChange={(e) => setProjectName(e.target.value)}
       />
