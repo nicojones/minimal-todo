@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  url: 'https://minimaltodo.com/api'
+  // url: 'http://localhost:8080'
+  url: 'https://minimaltodo.com'
 };
