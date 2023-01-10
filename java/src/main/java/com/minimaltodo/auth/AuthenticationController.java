@@ -1,10 +1,13 @@
 package com.minimaltodo.auth;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.minimaltodo.list.user.UserService;
@@ -19,19 +22,23 @@ public class AuthenticationController {
 	public AuthenticationController(AuthenticationService service, UserService userService) {
 		this.service = service;
 	}
-    
-    @RequestMapping(method = RequestMethod.POST, path = "/signup")
-	public ResponseEntity<AuthenticationResponse> signup(
-		@RequestBody RegisterRequest request
-	) {
-		return ResponseEntity.ok(service.register(request));
-	}   
 
-    @RequestMapping(method = RequestMethod.POST, path = "")
+	@RequestMapping(method = RequestMethod.POST, path = "/signup")
+	public ResponseEntity<AuthenticationResponse> signup(
+			@RequestBody RegisterRequest request) {
+		return ResponseEntity.ok(service.register(request));
+	}
+
+	@RequestMapping(method = RequestMethod.POST, path = "")
 	public ResponseEntity<AuthenticationResponse> login(
-		@RequestBody AuthenticationRequest request
-	) {
+			@RequestBody AuthenticationRequest request) {
 		return ResponseEntity.ok(service.authenticate(request));
 	}
-    
+
+	@RequestMapping(method = RequestMethod.GET, path = "/test")
+	public ResponseEntity<String> testIfWorking(
+			@RequestParam("q") Optional<String> request) {
+		return ResponseEntity.ok(String.format("It works! %s", request.isPresent() ? request.get() : "[no param]"));
+	}
+
 }
