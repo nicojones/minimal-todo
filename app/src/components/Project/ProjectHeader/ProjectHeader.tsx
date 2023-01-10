@@ -105,7 +105,7 @@ export const ProjectHeader = ({ pf }: ProjectHeaderAttrs) => {
       <input
         className="as-title h5 project-title"
         autoFocus /*onBlur={ project.saveListName }*/
-        value={project?.name || ""}
+        value={projectName}
         disabled={pf.isLoading === "n"}
         onChange={(e) => setProjectName(e.target.value)}
       />
