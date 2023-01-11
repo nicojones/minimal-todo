@@ -1,4 +1,4 @@
-package com.minimaltodo.list;
+package com.minimaltodo;
 
 import java.util.List;
 

@@ -1,11 +1,21 @@
 spring:
+  profiles:
+    active: prod
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/minimaltodo
-    username: minimaltodo
-    password: minimaltodo@0258!
+    username: root
+    password: ElTesoro@0258
     platform: mysql
     validationQuery: SELECT 1
+    # hikari:
+    #   maximumPoolSize: 3
+    #   minimumIdle: 1
+    #   connectionTestQuery: select * from information_schema.tables limit 1
+    #   idleTimeout: 600000
+    #   maxLifetime: 1800000
+    #   poolName: PotatoPool
+    #   connectionTimeout: 30000
   devtools:
     add-properties: false
   data.jdbc.repositories.enabled: false
@@ -13,9 +23,10 @@ spring:
     check-template-location: false
   jpa:
     open-in-view: false
-    show-sql: true
+    show-sql: false
+    # show-sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
@@ -34,6 +45,7 @@ spring:
 logging:
   level:
     web: DEBUG
+    # com.zaxxer.hikari: DEBUG
 
 jwt:
   secret: potatoSalad
