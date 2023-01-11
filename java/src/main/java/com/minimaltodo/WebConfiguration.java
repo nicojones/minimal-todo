@@ -15,7 +15,8 @@ public class WebConfiguration {
     public CorsFilter corsFilter() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.setAllowCredentials(true);
-        corsConfiguration.setAllowedOrigins(Arrays.asList("http://192.168.0.2:3000", "http://localhost:3000", "https://minimaltodo.com"));
+        corsConfiguration.setAllowedOrigins(
+                Arrays.asList("http://192.168.0.2:3000", "http://localhost:3000", "https://minimaltodo.com"));
         corsConfiguration.setAllowedHeaders(Arrays.asList("Origin", "Access-Control-Allow-Origin", "Content-Type",
                 "Accept", "Authorization", "Origin, Accept", "X-Requested-With",
                 "Access-Control-Request-Method", "Access-Control-Request-Headers"));
@@ -29,8 +30,17 @@ public class WebConfiguration {
 
     // @Bean
     // public Jackson2ObjectMapperBuilder configureObjectMapper() {
-    //     return new Jackson2ObjectMapperBuilder()
-    //             .modulesToInstall(Hibernate4Module.class);
+    // return new Jackson2ObjectMapperBuilder()
+    // .modulesToInstall(Hibernate4Module.class);
+    // }
+
+    // @Bean
+    // public ConfigurableServletWebServerFactory webServerFactory() {
+    //     JettyServletWebServerFactory factory = new JettyServletWebServerFactory();
+    //     factory.setPort(8080);
+    //     factory.setContextPath("");
+    //     factory.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/404.html"));
+    //     return factory;
     // }
 
 }
