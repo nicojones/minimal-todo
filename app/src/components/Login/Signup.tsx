@@ -1,61 +1,63 @@
 import { LoggedInUserContext } from "App";
 import { LoginBox } from "components/Login/LoginBox";
 import { text, urls } from "config";
-import { CaughtPromise, ILoggedInUserContext, ISignupForm, ISignupFormError, LoginUser, PDefault } from "interfaces";
+import {
+  ILoggedInUserContext,
+  ISignupForm,
+  ISignupFormError,
+  LoginUser,
+  PDefault
+} from "interfaces";
 import { useContext, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
-import { Observable, catchError, of, tap } from "rxjs";
+import { catchError, of, tap } from "rxjs";
 import { AuthService } from "services/auth.service";
 import { showToast } from "services/toast";
 
 export const Signup = () => {
-
   const [loggingIn, setLoggingIn] = useState<boolean>(false);
   const [signup, setSignup] = useState<ISignupForm>({} as ISignupForm);
   const [loading, setLoading] = useState<boolean>(false);
   const [signupError, setSignupError] = useState<ISignupFormError>({});
 
-  const {setUser} = useContext<ILoggedInUserContext>(LoggedInUserContext);
+  const { setUser } = useContext<ILoggedInUserContext>(LoggedInUserContext);
 
-
-  const onSubmit = (e: PDefault): Observable<LoginUser | null> => {
+  const onSubmit = (e: PDefault): void => {
     e.preventDefault();
 
     const _signupError = AuthService.validateSignup(signup);
     const errors = Object.values(_signupError);
     if (!errors.length) {
       setLoading(true);
-      return AuthService
-        .signup(signup)
+      AuthService.signup(signup)
         .pipe(
-        tap((responseData: LoginUser) => {
-          setLoading(false);
-          if (responseData.id) {
-            showToast("success", text.login.signupSuccess);
-            setSignup({} as ISignupForm);
-            setLoggingIn(true);
-            setUser(responseData);
-          }
-        }),
-        catchError((response: any) => {
-          if (response.data) {
-            setSignupError(response.data);
-            const errors = Object.values(response.data);
-            errors.length && showToast("error", errors[0] as string);
-          }
-          else if (response.status) {
-            AuthService.loginCatch(response.status);
-          }
-          setLoading(false);
-          return of();
-        })
+          tap((responseData: LoginUser) => {
+            setLoading(false);
+            if (responseData.id) {
+              showToast("success", text.login.signupSuccess);
+              setSignup({} as ISignupForm);
+              setLoggingIn(true);
+              setUser(responseData);
+            }
+          }),
+          catchError((response: any) => {
+            if (response.data) {
+              setSignupError(response.data);
+              const errors = Object.values(response.data);
+              errors.length && showToast("error", errors[0] as string);
+            } else if (response.status) {
+              AuthService.loginCatch(response.status);
+            }
+            setLoading(false);
+            return of();
+          })
         )
+        .subscribe();
     } else {
       setSignupError(_signupError);
       errors.length && showToast("error", errors[0] as string);
-      return of();
     }
-  }
+  };
 
   function updateSignup(partial: Partial<ISignupForm>) {
     setSignup({ ...signup, ...partial });
@@ -65,7 +67,10 @@ export const Signup = () => {
     <Redirect to="/app" />
   ) : (
     <LoginBox data-tip={text.login.signup} loading={loading}>
-      <form onSubmit={(e: PDefault) => onSubmit(e).subscribe} className="flex-center-self">
+      <form
+        onSubmit={(e: PDefault) => onSubmit(e)}
+        className="flex-center-self"
+      >
         <div className="form-group">
           <label>{text.login.f.name._}</label>
           <input
