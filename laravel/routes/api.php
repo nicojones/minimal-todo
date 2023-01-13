@@ -20,17 +20,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::controller(AuthenticationController::class)->group(function () {
-    Route::post('/auth/login', 'doLogin');
-    Route::post('/auth/signup', 'doSignup');
-    Route::post('/auth/forgot', 'doForgot');
+    Route::post('/auth/login', 'login');
+    Route::post('/auth/signup', 'register');
+    Route::post('/auth/refresh', 'refresh');
+    Route::post('/auth/logout', 'logout');
+    // Route::post('/auth/forgot', 'doForgot');
 });
 
 Route::get('/hello', function () {
     return "hello!!!";
 });
-
-// Route::middleware(['cors'])->controller(AuthenticationController::class)->group(function () {
-//     Route::post('/auth/auth', 'doLogin');
-//     Route::post('/auth/signup', 'doSignup');
-//     Route::post('/auth/forgot', 'doForgot');
-// });
