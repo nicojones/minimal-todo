@@ -15,15 +15,15 @@ use App\Http\Controllers\AuthenticationController;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
 
-// Route::controller(AuthenticationController::class)->group(function () {
-//     Route::post('/auth/login', 'doLogin');
-//     Route::post('/auth/signup', 'doSignup');
-//     Route::post('/auth/forgot', 'doForgot');
-// });
+Route::controller(AuthenticationController::class)->group(function () {
+    Route::post('/auth/login', 'doLogin');
+    Route::post('/auth/signup', 'doSignup');
+    Route::post('/auth/forgot', 'doForgot');
+});
 
 Route::get('/hello', function () {
     return "hello!!!";
