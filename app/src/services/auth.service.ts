@@ -63,7 +63,7 @@ export class AuthService {
   };
 
   public static login = (loginData: ILoginForm): Observable<LoginUser> => {
-    return minimalAxios<LoginResponse, ILoginForm>("POST", "/api/auth", {
+    return minimalAxios<LoginResponse, ILoginForm>("POST", "/api/auth/login", {
       body: {
         email: loginData.email,
         password: loginData.password,

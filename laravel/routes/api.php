@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthenticationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +18,19 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::controller(AuthenticationController::class)->group(function () {
+    Route::post('/auth/login', 'doLogin');
+    Route::post('/auth/signup', 'doSignup');
+    Route::post('/auth/forgot', 'doForgot');
+});
+
+Route::get('/hello', function () {
+    return "hello!!!";
+});
+
+// Route::middleware(['cors'])->controller(AuthenticationController::class)->group(function () {
+//     Route::post('/auth/auth', 'doLogin');
+//     Route::post('/auth/signup', 'doSignup');
+//     Route::post('/auth/forgot', 'doForgot');
+// });

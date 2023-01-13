@@ -12,6 +12,7 @@ import {
   PDefault,
 } from "../../interfaces";
 import { Observable, catchError, of, tap } from "rxjs";
+import { minimalAxios } from "services/axios.service";
 
 export const Login = () => {
   const history = useHistory();
@@ -26,6 +27,12 @@ export const Login = () => {
   if (React.useContext(LoggedInUserContext).user) {
     history.push(urls.project(urls.inboxUrl));
     return null;
+  }
+
+  const testCORS = () => {
+    minimalAxios('GET', '/api/hello').subscribe((e) => {
+      console.log("eeee")
+    });
   }
 
   const onSubmit = (e: PDefault): Observable<LoginUser | null> => {
@@ -101,6 +108,8 @@ export const Login = () => {
           </Link>
         </div>
       </form>
+
+      <button onClick={() => testCORS()}>test cors</button>
     </LoginBox>
   );
 };
