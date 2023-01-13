@@ -1,7 +1,9 @@
 spring:
   datasource:
-    username: minimaltodo
-    password: minimaltodo@0258!
+    # username: minimaltodo
+    # password: minimaltodo@0258!
+    username: nico
+    password: password
   jpa:
     show-sql: true
     hibernate:

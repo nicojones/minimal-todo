@@ -19,10 +19,10 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     public List<Task> findTaskByProject(Project project, Sort sort);
     
     
-    @Query(value = "SELECT t FROM Task t WHERE project.id in ?1 AND t.level = 1 AND t.done = 0 ORDER BY t.priority DESC")
+    @Query(value = "SELECT t FROM Task t WHERE project.id in ?1 AND t.level = 1 AND t.done = false ORDER BY t.priority DESC")
     public List<Task> findIncompleteTasks(List<Long> projectIds);
 
-    @Query(value = "SELECT t FROM Task t WHERE project.id in ?1 AND t.level = 1 AND t.done = 0 AND t.priority != 0 ORDER BY t.priority DESC")
+    @Query(value = "SELECT t FROM Task t WHERE project.id in ?1 AND t.level = 1 AND t.done = false AND t.priority != 0 ORDER BY t.priority DESC")
     public List<Task> findPriorityTasks(List<Long> projectIds);
 
     public Task findTaskBySecret(String taskSecret);

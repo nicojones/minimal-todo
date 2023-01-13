@@ -34,7 +34,7 @@ import lombok.NoArgsConstructor;
 
 
 @Entity
-@Table
+@Table(name = "users")
 @Data
 @Builder
 @NoArgsConstructor

@@ -1,6 +1,7 @@
 package com.minimaltodo.config;
 
 import java.io.IOException;
+import java.util.Date;
 
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,14 +29,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(
-            @NonNull HttpServletRequest request,
-            @NonNull HttpServletResponse response,
-            @NonNull FilterChain filterChain)
+            // all three are @NonNull
+            HttpServletRequest request,
+            HttpServletResponse response,
+            FilterChain filterChain)
             throws ServletException, IOException {
 
-        System.out.println("POTATO-URL");
-        System.out.print(request.getRequestURL());
-        // System.out.print(request.getParts().toString());
+        System.out.println("REQUESTED URL: " + new Date(System.currentTimeMillis()).toString() + " -- " + request.getRequestURL());
         
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
