@@ -41,7 +41,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool) env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'http://minimaltodo.com'),
 
     'asset_url' => env('ASSET_URL'),
 
@@ -208,8 +208,8 @@ return [
     |
     */
 
-    'aliases' => Facade::defaultAliases()->merge([
+    // 'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
-    ])->toArray(),
+    // ])->toArray(),
 
 ];
