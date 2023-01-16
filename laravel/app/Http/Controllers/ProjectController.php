@@ -62,6 +62,7 @@ class ProjectController extends Controller
         $project->name = $request->name;
         $project->color = $request->color;
         $project->icon = $request->icon;
+        $project->description = $request->description ?? "";
         
         $project->users()->updateExistingPivot($user->id, [
             'sort' => $request->sort,
