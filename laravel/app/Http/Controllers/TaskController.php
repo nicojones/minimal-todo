@@ -97,7 +97,7 @@ class TaskController extends Controller
     {
         $task = Task::find($request->id);
         $task->name = $request->name;
-        $task->description = $request->description;
+        $task->description = $request->description ?? "";
         $task->priority = $request->priority;
         $task->expanded = $request->expanded;
 
