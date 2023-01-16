@@ -25,6 +25,9 @@ class ProjectController extends Controller
     {
         // return Project
         $user = Auth::user();
+        if (!$user) {
+            return response('', 401)->json([]);
+        }
         // return response()->json($user);
         $userProjects = $user->projects;
         return response()->json($userProjects);
