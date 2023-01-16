@@ -36,6 +36,7 @@ $header-btn-m: 10px;
     @extend %navbar-start;
     text-decoration: none;
     color: inherit;
+    margin-right: 1rem;
     //width: 1.2 * $navbar-height;
   }
   &-toggler {
@@ -49,7 +50,6 @@ $header-btn-m: 10px;
     }
 
     .desktop & {
-      margin-left: auto;
 
       > .navbar-links-ul {
         flex-direction: row;
@@ -64,6 +64,16 @@ $header-btn-m: 10px;
       > .navbar-links-ul {
         flex-direction: column;
       }
+    }
+  }
+
+  .desktop & {
+      
+    .right-links {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      flex-direction: row;
     }
   }
 

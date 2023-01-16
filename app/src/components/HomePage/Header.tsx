@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import "./_header.scss";
 
 export const Header = () => {
-  const {user} = useContext(LoggedInUserContext);
+  const { user } = useContext(LoggedInUserContext);
 
   // const [showMenu, setShowMenu] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -30,46 +30,48 @@ export const Header = () => {
           </a>
           <Logo />
 
-          <div className="navbar-links">
-            <HeaderLinks className="" />
-          </div>
+          <div className="right-links">
+            <div className="navbar-links">
+              <HeaderLinks className="" />
+            </div>
 
-          {user ? (
-            <Link className="btn main-btn goto-app" to={urls.app}>
-              {text.gotoApp}
-            </Link>
-          ) : (
-            <>
-              <span className="relative ml-auto">
-                <button
-                  className="btn main-btn goto-app"
-                  onClick={() => setShowDropdown(true)}
-                >
-                  {text.gotoApp}
-                </button>
-                {showDropdown && (
-                  <>
-                    <ul className="dropdown goto-app-dd">
-                      <li className="dropdown-item">
-                        <Link className="btn" to={urls.login}>
-                          {text.login.login}
-                        </Link>
-                      </li>
-                      <li className="dropdown-item">
-                        <Link className="btn" to={urls.signup}>
-                          {text.login.signup}
-                        </Link>
-                      </li>
-                    </ul>
-                    <div
-                      className="backdrop"
-                      onClick={() => setShowDropdown(false)}
-                    />
-                  </>
-                )}
-              </span>
-            </>
-          )}
+            {user ? (
+              <Link className="btn main-btn goto-app" to={urls.app}>
+                {text.gotoApp}
+              </Link>
+            ) : (
+              <>
+                <span className="relative ml-auto">
+                  <button
+                    className="btn main-btn goto-app"
+                    onClick={() => setShowDropdown(true)}
+                  >
+                    {text.gotoApp}
+                  </button>
+                  {showDropdown && (
+                    <>
+                      <ul className="dropdown goto-app-dd">
+                        <li className="dropdown-item">
+                          <Link className="btn" to={urls.login}>
+                            {text.login.login}
+                          </Link>
+                        </li>
+                        <li className="dropdown-item">
+                          <Link className="btn" to={urls.signup}>
+                            {text.login.signup}
+                          </Link>
+                        </li>
+                      </ul>
+                      <div
+                        className="backdrop"
+                        onClick={() => setShowDropdown(false)}
+                      />
+                    </>
+                  )}
+                </span>
+              </>
+            )}
+          </div>
         </nav>
       </div>
     </header>
