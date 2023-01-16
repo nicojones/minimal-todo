@@ -61,6 +61,11 @@ html {
     font-size: $button-icon-font-size;
     line-height: inherit;
   }
+
+  &.btn-disabled {
+    opacity: 0.2;
+    pointer-events: none;
+  }
 }
 
 i.material-icons {

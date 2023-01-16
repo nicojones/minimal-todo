@@ -55,9 +55,9 @@ export const TodoApp = () => {
 
   useEffect(() => {
     // urlParams.current.projectId
-    const secret = project?.id;
+    const projectId = project?.id;
 
-    if (!secret) {
+    if (!projectId) {
       setComponent(
         <NoProject
           className=""
@@ -68,12 +68,12 @@ export const TodoApp = () => {
       ); // no URL -> show this component
       return;
     }
-    if (reservedKey(secret)) {
+    if (reservedKey(projectId)) {
       // It's a reserved URL, so we show the Drawer
-      setComponent(<Project specialUrl={secret} />);
+      setComponent(<Project specialUrl={projectId} />);
       return;
     }
-    if (secret) {
+    if (projectId) {
       // We have a project and it has an ID, so it's a user project
       setComponent(<Project />);
       return;

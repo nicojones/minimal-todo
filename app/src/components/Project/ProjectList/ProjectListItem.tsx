@@ -65,7 +65,7 @@ export const ProjectListItem = ({
     <li
       key={proj.id}
       className={
-        "proj-li mb-5 parent-hover flex-row" +
+        "proj-li parent-hover" +
         (selectedProject?.id === proj.id ? " selected" : "") +
         (isLoading === proj.id ? " loader-input" : "")
       }
@@ -83,10 +83,10 @@ export const ProjectListItem = ({
         onClick={() => setProject(proj as IProject)}
       >
         <span
-          className="d-flex align-center project-name"
+          className="d-flex align-center project-name-box"
           title={(proj as IProject).shared ? text.sharedProject._ : ""}
         >
-          {proj.name}
+          <span className="project-name">{proj.name}</span>
           {(proj as IProject).shared ? (
             <i className="material-icons small-icon ml-5">person</i>
           ) : (

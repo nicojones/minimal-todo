@@ -35,7 +35,7 @@ export const Navbar = ({ setShowSidebar, showSidebar }: NavbarAttrs) => {
             </button>
             <button
               className="navbar-btn btn left"
-              onClick={() => changeToProject({ secret: SpecialProjectUrl.INBOX } as unknown as MinimalProject)}
+              onClick={() => changeToProject({ id: SpecialProjectUrl.INBOX } as unknown as MinimalProject)}
             >
               <i className="material-icons">home</i>
             </button>

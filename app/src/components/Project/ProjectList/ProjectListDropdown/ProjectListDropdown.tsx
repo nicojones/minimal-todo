@@ -18,7 +18,7 @@ export function ProjectListDropdown({
   return (
     <>
       <button
-        className="btn child-hover ml-auto"
+        className="btn child-hover dropdown-btn"
         onClick={() => setDropdownShown(true)}
       >
         <i className="tiny material-icons subtle">more_horiz</i>
@@ -29,6 +29,15 @@ export function ProjectListDropdown({
             className="dropdown dd-left"
             onClick={() => setDropdownShown(false)}
           >
+            <li className="dropdown-item">
+              <button
+                className="ib left left-align w-100 p-10"
+                onClick={() => openAddUserModal(project)}
+              >
+                <i className="tiny material-icons subtle">person_add</i>{" "}
+                {text.project.share}
+              </button>
+            </li>
             {!project.shared ? (
               <li className="dropdown-item">
                 <button
@@ -40,15 +49,6 @@ export function ProjectListDropdown({
                 </button>
               </li>
             ) : null}
-            <li className="dropdown-item">
-              <button
-                className="ib left left-align w-100 p-10"
-                onClick={() => openAddUserModal(project)}
-              >
-                <i className="tiny material-icons subtle">person_add</i>{" "}
-                {text.project.share}
-              </button>
-            </li>
           </ul>
           <div className="backdrop" onClick={() => setDropdownShown(false)} />
         </>

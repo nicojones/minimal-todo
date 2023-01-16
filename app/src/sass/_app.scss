@@ -146,6 +146,7 @@ nav {
     display: flex;
     padding: 0 4px;
     width: 100%;
+    background: $dropdown-color;
     &:hover {
       background: $very-subtle-color;
     }

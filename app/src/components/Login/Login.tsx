@@ -29,12 +29,6 @@ export const Login = () => {
     return null;
   }
 
-  const testCORS = () => {
-    minimalAxios('GET', '/api/hello').subscribe((e) => {
-      console.log("eeee")
-    });
-  }
-
   const onSubmit = (e: PDefault): Observable<LoginUser | null> => {
     e.preventDefault();
 
@@ -47,7 +41,7 @@ export const Login = () => {
         if (_user) {
           setLoginFormData({} as ILoginForm);
           setUser(_user);
-          showToast("success", text.login.success);
+          showToast("success", text.login.success(_user.name));
         } else {
           showToast("error", text.login.error);
         }
@@ -109,7 +103,6 @@ export const Login = () => {
         </div>
       </form>
 
-      <button onClick={() => testCORS()}>test cors</button>
     </LoginBox>
   );
 };

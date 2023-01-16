@@ -148,7 +148,7 @@ export const text = {
     noAccount: "Don't have an account?",
     yesAccount: "Already a user?",
     error: "Invalid credentials",
-    success: "Welcome Back!",
+    success: (name: string) => `Welcome Back, ${name}`,
     signupSuccess: "Account created! Logging you in...",
     invalidPass: "Invalid Login credentials",
     invalidUser: "No user exists for this email",

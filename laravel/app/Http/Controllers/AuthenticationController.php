@@ -70,7 +70,7 @@ class AuthenticationController extends Controller
         ]);
 
         $token = Auth::login($user);
-        var_dump($token);
+        
         return response()->json([
             'user' => $user,
             'authorisation' => [

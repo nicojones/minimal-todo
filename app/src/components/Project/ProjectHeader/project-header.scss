@@ -1,3 +1,5 @@
+@import "src/sass/colors";
+
 .project-name-form {
   margin: 1rem;
 }
@@ -18,5 +20,9 @@
     .color-picker-icon {
       padding: 0 0.3rem;
     }
+  }
+
+  .dropdown-item {
+    background-color: $dropdown-color;
   }
 

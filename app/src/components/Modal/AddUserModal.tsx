@@ -49,13 +49,15 @@ export const AddUserModal = ({
     setLoading(true);
     ProjectService.getUsersByEmail(
       searchTerm,
-      projectUsers.map((u: UserSearchResult) => u.id).join(',')
-      ).pipe(
-      tap((response: UserSearchResult[]) => {
-        setLoading(false);
-        setSearchResults(response);
-      })
-    ).subscribe();
+      projectUsers.map((u: UserSearchResult) => u.id).join(",")
+    )
+      .pipe(
+        tap((response: UserSearchResult[]) => {
+          setLoading(false);
+          setSearchResults(response);
+        })
+      )
+      .subscribe();
   };
 
   const getListUsers = (): Observable<UserSearchResult[]> => {
@@ -67,23 +69,22 @@ export const AddUserModal = ({
   };
 
   const addUserToProject = (result: UserSearchResult): void => {
-    ProjectService.addUserToProject(
-      modalProject as IProject,
-      result.id
-    ).pipe(
-      switchMap(() => {
-        showToast("success", text.project.add.u(result.email))
-        setSearchResults([]);
-        setSearchTerm("");
-        getListUsers().subscribe();
-        return reloadProjects();
-      })
-    ).subscribe();
+    ProjectService.addUserToProject(modalProject as IProject, result.id)
+      .pipe(
+        switchMap(() => {
+          showToast("success", text.project.add.u(result.email));
+          setSearchResults([]);
+          setSearchTerm("");
+          getListUsers().subscribe();
+          return reloadProjects();
+        })
+      )
+      .subscribe();
   };
 
   const removeUserFromProject = (user: UserSearchResult): void => {
     const currentUser: LoginUser = AuthService.currentUser() as LoginUser;
-    const removeYourself = (currentUser.id === user.id);
+    const removeYourself = currentUser.id === user.id;
     if (
       window.confirm(
         removeYourself
@@ -91,21 +92,19 @@ export const AddUserModal = ({
           : text.sharedProject.remove(user.email, modalProject?.name as string)
       )
     ) {
-      ProjectService.removeUserFromProject(
-        modalProject as IProject,
-        user.id
-      ).pipe(
-        tap(() => {
-          showToast("success", text.project.remove.u(user.email))
-          if (removeYourself) {
-            window.location.reload();
-          } else {
-            getListUsers().subscribe();
-            reloadProjects().subscribe();
-          }
-        })
-      )
-      .subscribe();
+      ProjectService.removeUserFromProject(modalProject as IProject, user.id)
+        .pipe(
+          tap(() => {
+            showToast("success", text.project.remove.u(user.email));
+            if (removeYourself) {
+              window.location.reload();
+            } else {
+              getListUsers().subscribe();
+              reloadProjects().subscribe();
+            }
+          })
+        )
+        .subscribe();
     }
   };
 
@@ -142,18 +141,20 @@ export const AddUserModal = ({
             <ul className="list-unstyled flex-column results-list">
               {searchResults.map((result: UserSearchResult) => {
                 return (
-                  <li
-                    key={result.id}
-                    className="result"
-                  >
-                    <button
-                      onClick={() => addUserToProject(result)}
-                      type="button"
-                      className="btn"
-                    >
-                      <i className="material-icons">add</i>
-                    </button>
-                    {result.email}
+                  <li key={result.id} className="result">
+                    <div className="project-user">
+                      <span className="d-flex align-center">
+                        <button
+                          onClick={() => addUserToProject(result)}
+                          type="button"
+                          className="btn"
+                        >
+                          <i className="material-icons">add</i>
+                        </button>
+                        {result.name}
+                        <small className="ml-5 subtext">{result.email}</small>
+                      </span>
+                    </div>
                   </li>
                 );
               })}
@@ -168,25 +169,34 @@ export const AddUserModal = ({
               {projectUsers.map((result: UserSearchResult, index: number) => (
                 <li key={result.id} className="result">
                   {result.is_admin ? (
-                    <div className="project-user">
-                      <span className="result">{result.email}</span>
-                      <small className="subtext">
-                        {text.sharedProject.admin}
-                      </small>
+                    <div className="project-user" title={text.sharedProject.admin}>
+                      <span className="d-flex align-center">
+                        <button
+                          type="button"
+                          className="btn btn-disabled"
+                        >
+                          <i className="material-icons">delete</i>
+                        </button>
+                        <span className="result">
+                          {result.name}
+                          <small className="ml-5 subtext">{result.email}</small>
+                        </span>
+                      </span>
                     </div>
                   ) : (
                     <div className="project-user">
-                      <span>
-                        <span className="result">{result.email}</span>
+                      <span className="d-flex align-center">
                         <button
-                          onClick={() =>
-                            removeUserFromProject(result)
-                          }
+                          onClick={() => removeUserFromProject(result)}
                           type="button"
                           className="btn"
                         >
                           <i className="material-icons">delete</i>
                         </button>
+                        <span className="result">
+                          {result.email}
+                          <small className="ml-5 subtext">{result.email}</small>
+                        </span>
                       </span>
                     </div>
                   )}

@@ -1,6 +1,48 @@
 @import 'src/sass/mixins';
 @import 'src/sass/colors';
 
-.project-name {
-  color: $primary-color;
+li.proj-li {
+  padding: 0 6px;
+  margin-bottom: 5px;
+  min-height: $list-item-height;
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  > .icon {
+    display: flex;
+    align-items: center;
+  }
+
+  &.selected > button {
+    font-weight: bold;
+  }
+
+  .project-name-box {
+    color: $primary-color;
+    justify-content: space-between;
+
+    > .project-name {
+      overflow-wrap: break-word;
+    }
+  }
+
+  .add-project {
+    flex: 1 0 90%;
+    width: 100%;
+    padding: 0;
+    align-items: center;
+  }
+  .add-project__input {
+    text-align: left;
+    height: $list-item-height;
+  }
+
+  .dropdown-btn {
+    margin-left: auto;
+    padding: .5rem;
+    display: flex;
+    align-items: center;
+  }
 }
