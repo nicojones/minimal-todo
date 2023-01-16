@@ -94,6 +94,10 @@ class User extends Authenticatable implements JWTSubject
             ->withTimestamps();
     }
 
+    public function projectUsers() {
+        return $this->hasMany(ProjectUser::class, 'user_id');
+    }
+
     
     public function getIsAdminAttribute() {
         return $this->pivot ? $this->pivot->is_admin : null;

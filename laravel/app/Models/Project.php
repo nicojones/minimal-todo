@@ -41,7 +41,8 @@ class Project extends Model
     ];
 
 
-    public function users() {
+    public function users()
+    {
         return $this
             ->belongsToMany(User::class, 'project_user', 'project_id', 'user_id')
             ->using(ProjectUser::class)
@@ -49,44 +50,39 @@ class Project extends Model
             ->withTimestamps();
     }
 
-    public function projectUsers() {
+    public function projectUsers()
+    {
         return $this->hasMany(ProjectUser::class, 'project_id');
     }
-    
-    public function tasks() {
+
+    public function tasks()
+    {
         return $this->hasMany(Task::class, 'project_id');
     }
 
-    public function getSharedAttribute() {
+    public function getSharedAttribute()
+    {
         return count($this->users) >= 2;
     }
 
-    public function getShowCompletedAttribute() {
-        return $this->pivot ? $this->pivot->show_completed : null;
+    public function getShowCompletedAttribute()
+    {
+        return $this->userPivotTable()->show_completed;
     }
 
-    public function getIconAttribute() {
-        return $this->pivot ? $this->pivot->icon : ProjectIconEnum::CIRCLE;
-    }
-    
-    public function getColorAttribute() {
-        return $this->pivot ? $this->pivot->color : null;
+    public function getIconAttribute()
+    {
+        return $this->userPivotTable()->icon;
     }
 
-    public function getSortAttribute() {
-        return $this->pivot ? $this->pivot->sort : null;
-        
-        // error_log($this->projectUsers);
-        // if ($this->pivot) {
-        //     return $this->pivot->sort;
-        // } else {
-        //     $user = Auth::user();
-        //     foreach ($this->projectUsers as $pivot) {
-        //         if ($pivot->user_id === $user->id) {
-        //             return $pivot->sort;
-        //         }
-        //     }
-        // }
+    public function getColorAttribute()
+    {
+        return $this->userPivotTable()->color;
+    }
+
+    public function getSortAttribute()
+    {
+        return $this->userPivotTable()->sort;
     }
 
     public function delete()
@@ -98,5 +94,14 @@ class Project extends Model
 
         // delete the user
         return parent::delete();
+    }
+
+    private function userPivotTable()
+    {
+        return $this
+            ->projectUsers()
+            ->where("project_id", $this->id)
+            ->where("user_id", Auth::id())
+            ->first();
     }
 }

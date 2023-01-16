@@ -70,16 +70,19 @@ class ProjectController extends Controller
         $project = Project::find($request->id);
         $project->name = $request->name;
 
-        $project->users()->updateExistingPivot($user->id, [
-            'sort' => $request->sort,
-            'show_completed' => $request->show_completed,
-            'color' => $request->color,
-            'icon' => $request->icon
-        ]);
-
         $project->save();
+        $project->users()->updateExistingPivot(
+            $user->id,
+            [
+                'sort' => $request->sort,
+                'show_completed' => $request->show_completed,
+                'color' => $request->color,
+                'icon' => $request->icon
+            ]
+        );
 
-        return response()->json($project);
+        $updatedProject = Project::find($request->id);
+        return response()->json($updatedProject);
     }
 
     public function getProjectUsers(string $projectId)
