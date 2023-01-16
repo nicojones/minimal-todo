@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Enums\ProjectIconEnum;
+use App\Enums\ProjectSortEnum;
 use App\Models\Scopes\UserProjectScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
-
+use Illuminate\Support\Facades\Auth;
 
 class Project extends Model
 {
@@ -23,24 +25,70 @@ class Project extends Model
         "user",
         "tasks",
         
-        "icon",
         "color",
-        // "secret"
     ];
 
+    protected $appends = [
+        'shared',
+        'sort',
+        'show_completed'
+    ];
+
+    protected $casts = [
+        'icon' => ProjectIconEnum::class
+    ];
+
+    protected $hidden = [
+        'projectUsers',
+        'pivot',
+        'users'
+    ];
+
+
     public function users() {
-        return $this->belongsToMany(User::class, 'user_project', 'project_id', 'user_id')->withTimestamps();
+        return $this
+            ->belongsToMany(User::class, 'project_user', 'project_id', 'user_id')
+            ->using(ProjectUser::class)
+            ->withPivot('sort', 'show_completed', 'is_admin')
+            ->withTimestamps();
+    }
+
+    public function projectUsers() {
+        return $this->hasMany(ProjectUser::class, 'project_id');
     }
     
     public function tasks() {
         return $this->hasMany(Task::class, 'project_id');
     }
 
+    public function getSharedAttribute() {
+        return count($this->users) >= 2;
+    }
+
+    public function getShowCompletedAttribute() {
+        return $this->pivot ? $this->pivot->show_completed : null;
+    }
+
+    public function getSortAttribute() {
+        return $this->pivot ? $this->pivot->sort : null;
+        
+        // error_log($this->projectUsers);
+        // if ($this->pivot) {
+        //     return $this->pivot->sort;
+        // } else {
+        //     $user = Auth::user();
+        //     foreach ($this->projectUsers as $pivot) {
+        //         if ($pivot->user_id === $user->id) {
+        //             return $pivot->sort;
+        //         }
+        //     }
+        // }
+    }
+
     public function delete()
     {
 
         $this->tasks()->each(function ($task) {
-            error_log($task->id);
             $task->delete();
         });
 

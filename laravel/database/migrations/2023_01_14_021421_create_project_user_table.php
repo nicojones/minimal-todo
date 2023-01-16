@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\ProjectSortEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,9 +14,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('user_project', function (Blueprint $table) {
+        Schema::create('project_user', function (Blueprint $table) {
 
             $table->timestamps();
+
+            $table->string('sort')->default(ProjectSortEnum::OLDEST_FIRST->value);
+
+            $table->boolean('show_completed')->default(false);
+
+            $table->boolean('is_admin')->default(false);
             
             $table->uuid('user_id');
             $table->foreign('user_id')
@@ -38,6 +45,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_project');
+        Schema::dropIfExists('project_user');
     }
 };

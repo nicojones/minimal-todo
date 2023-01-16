@@ -30,6 +30,11 @@ class Task extends Model
         "expanded"
     ];
 
+    protected $casts = [
+        'expanded' => 'boolean',
+        'done' => 'boolean'
+    ];
+
     public function project() {
         return $this->belongsTo(Project::class, 'project_id', 'id')->withDefault();
     }

@@ -19,11 +19,6 @@ return new class extends Migration
             $table->string('name');
             $table->string('color');
             $table->string('icon');
-
-            // $table->uuid('user_id');
-            // $table->foreign('user_id')
-            //       ->references('user_id')
-            //       ->on('user_project');
         });
     }
 

@@ -64,7 +64,7 @@ export const text = {
     header: "Manage users",
     results: "Search results",
     users: "Project users",
-    admin: "This user is admin",
+    admin: "This user is admin and cannot be deleted",
     remove: (email: string, project: string) =>
       `Remove ${email} from ${project}`,
     removeYourself: (project: string) =>
@@ -96,7 +96,7 @@ export const text = {
   },
   completed: "Completed",
   completedNo: "No completed tasks",
-  showCompleted: "Show completed tasks",
+  show_completed: "Show completed tasks",
   hideCompleted: "Hide completed tasks",
 
   project: {
@@ -113,8 +113,15 @@ export const text = {
     noName: "My List",
     delete: {
       _: "Delete Project",
-      tasks: "Delete all tasks",
-      long: "Delete this project and all the tasks? (cannot be undone)",
+      tasks: {
+        _: "Delete all tasks",
+        ask: "Delete all tasks? Type \"delete\" to continue:",
+        confirm: "delete"
+      },
+      long: {
+        _: "Delete this project and all the tasks? (cannot be undone). Type \"delete\" to continue:",
+        confirm: "delete"
+      },
     },
     add: {
       // _: 'Add a new project',

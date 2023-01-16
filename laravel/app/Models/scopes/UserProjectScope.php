@@ -24,7 +24,7 @@ class UserProjectScope implements Scope
     if ($user) {
       $projectIds = $user->projects->map(function ($project, $key) {
         return $project->id;
-      });;
+      });
       $builder->whereIn('project_id', $projectIds);
     }
   }

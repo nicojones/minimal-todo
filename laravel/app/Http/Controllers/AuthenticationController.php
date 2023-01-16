@@ -35,7 +35,7 @@ class AuthenticationController extends Controller
         error_log($request->email);
         error_log($request->password);
         $credentials = $request->only('email', 'password');
-        
+
         $token = Auth::attempt($credentials);
 
         if (!$token) {
@@ -78,6 +78,21 @@ class AuthenticationController extends Controller
                 'type' => 'bearer',
             ]
         ]);
+    }
+
+    public function searchUsers(Request $request)
+    {
+        $query = $request->input('q');
+        $exclude = [];
+        if ($request->input('exclude')) {
+            $exclude = explode(",", $request->input('exclude'));
+        }
+
+        $usersLikeQuery = User::where('email', 'like', "%{$query}%")
+            ->whereNotIn('id', $exclude)
+            ->get();
+
+        return response()->json($usersLikeQuery);
     }
 
     public function logout()

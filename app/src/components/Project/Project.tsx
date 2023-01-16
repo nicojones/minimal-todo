@@ -34,7 +34,9 @@ export const Project = ({ specialUrl }: ProjectAttrs) => {
 
   const [sort, setSort] = useState(project?.sort || projectSort.OLDEST_FIRST);
   const [isLoading, setIsLoading] = useState<LoadingStates>("yes");
-  const [showCompleted, setShowCompleted] = useState(!!project?.showCompleted);
+  const [show_completed, setshow_completed] = useState(
+    !!project?.show_completed
+  );
   const [editListName, setEditListName] = useState(false);
 
   const open = tasks.filter((task: ITask) => !task.done);
@@ -43,7 +45,7 @@ export const Project = ({ specialUrl }: ProjectAttrs) => {
   const allCompleted = useMemo(() => {
     if (
       !open.length &&
-      ((completed.length && !showCompleted) || !!specialUrl)
+      ((completed.length && !show_completed) || !!specialUrl)
     ) {
       return (
         <li>
@@ -52,10 +54,10 @@ export const Project = ({ specialUrl }: ProjectAttrs) => {
       );
     }
     return "";
-  }, [tasks, showCompleted]);
+  }, [tasks, show_completed]);
 
   useEffect(() => {
-    setShowCompleted(project?.showCompleted || false);
+    setshow_completed(project?.show_completed || false);
     setIsLoading("p");
     setEditListName(false);
 
@@ -71,32 +73,34 @@ export const Project = ({ specialUrl }: ProjectAttrs) => {
     );
   };
 
-  const changedSort = (newSort: string): Observable<ITask[]> => {
+  const changedSort = (newSort: string): void => {
     setSort(newSort);
 
     setProject({ ...(project as IProject), sort: newSort });
 
-    return ProjectService.updateProject({
+    ProjectService.updateProject({
       ...(project as IProject),
       sort: newSort,
-    }).pipe(switchMap(() => reloadProjectTasks()));
+    })
+      .pipe(switchMap(() => reloadProjectTasks()))
+      .subscribe();
   };
 
-  const updateProject = (
-    partialProject: Partial<IProject>
-  ): void => {
+  const updateProject = (partialProject: Partial<IProject>): void => {
     setIsLoading("n");
     ProjectService.updateProject({
       ...(project as IProject),
       ...partialProject,
-    }).pipe(
-      switchMap((p: IProject | void) => {
-        setEditListName(false);
-        setIsLoading("");
-        setProject(p as IProject);
-        return reloadProjects();
-      })
-    ).subscribe();
+    })
+      .pipe(
+        switchMap((p: IProject | void) => {
+          setEditListName(false);
+          setIsLoading("");
+          setProject(p as IProject);
+          return reloadProjects();
+        })
+      )
+      .subscribe();
   };
 
   return (
@@ -106,8 +110,8 @@ export const Project = ({ specialUrl }: ProjectAttrs) => {
           updateProject,
           editListName,
           setEditListName,
-          showCompleted,
-          setShowCompleted,
+          show_completed,
+          setshow_completed,
           sort,
           setSort: changedSort,
           canEdit: !specialUrl,
@@ -126,7 +130,7 @@ export const Project = ({ specialUrl }: ProjectAttrs) => {
         ))}
         {specialUrl ? null : (
           <>
-            {showCompleted &&
+            {show_completed &&
               completed.map((task) => <Task key={task.id} task={task} />)}
 
             <NewTask

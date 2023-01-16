@@ -42,12 +42,12 @@ export const Task = ({
 
   const openLength = subtasks.filter((s: ITask) => !s.done).length || 0;
 
-  const doneClass = (task.done && project?.showCompleted && "done") || "";
-  // const doneClass = (task.checked ? (project.showCompleted ? 'done' : '') : '');
+  const doneClass = (task.done && project?.show_completed && "done") || "";
+  // const doneClass = (task.checked ? (project.show_completed ? 'done' : '') : '');
 
   const showExpanderClass =
     subtasks.length > 0 && !singleLevel
-      ? // project.showCompleted ? subtasks.length : openLength
+      ? // project.show_completed ? subtasks.length : openLength
         ""
       : " v-hidden";
 

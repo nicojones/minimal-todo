@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\ProjectIconEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -21,7 +22,7 @@ class ProjectFactory extends Factory
         return [
             'name' => fake()->words(3, true),
             'color' => fake()->hexColor(),
-            'icon' => fake()->randomElement(['extension', 'rocket', 'public', 'circle'])
+            'icon' => fake()->randomElement(ProjectIconEnum::strings())
         ];
     }
 }

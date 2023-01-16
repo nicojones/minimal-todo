@@ -32,7 +32,7 @@ export const ProjectList = ({  }: ProjectListAttrs) => {
   );
 
   const deleteProject = (_project: IProject): void => {
-    if (window.confirm(text.project.delete.long)) {
+    if (window.prompt(text.project.delete.long._)?.toLowerCase() === text.project.delete.long.confirm) {
       setIsLoading(_project.id);
       ProjectService.deleteProject(_project)
         .pipe(

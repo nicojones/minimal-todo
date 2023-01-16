@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use \App\Models\Project;
 use \App\Models\Task;
 use \App\Models\User;
+use Illuminate\Support\Facades\App;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,7 +18,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        
+
         $this->call([
             UserSeeder::class,
             ProjectSeeder::class,
@@ -26,7 +27,7 @@ class DatabaseSeeder extends Seeder
             TaskSeeder::class, // level 2,3 maybe
             TaskSeeder::class, // level 2,3,4 maybe
             TaskSeeder::class, // level 2,3,4,5 maybe
-            UserProjectSeeder::class,
+            ProjectUserSeeder::class,
         ]);
     }
 }

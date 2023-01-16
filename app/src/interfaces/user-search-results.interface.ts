@@ -1,6 +1,9 @@
-export type UserSearchResults = string;
+import { Identifiable } from "./identifiable.interface";
+
+// export type UserSearchResults = string;
 
 
-// export interface UserSearchResults {
-//     email: string;
-// }
+export interface UserSearchResults extends Identifiable {
+    email: string;
+    is_admin: boolean;
+}

@@ -3,7 +3,8 @@ import { Observable } from "rxjs";
 import { projectToDto } from "../functions/project-to-dto.function";
 import {
   IProject,
-  UserSearchResults as UserSearchResult
+  IUser,
+  UserSearchResults
 } from "../interfaces";
 import { minimalAxios } from "./axios.service";
 
@@ -41,47 +42,48 @@ export class ProjectService {
   public static deleteProjectTasks = (project: IProject): Observable<void> => {
     return minimalAxios<void>(
       "DELETE",
-      `/api/projects/${project.id}/all-tasks`,
+      `/api/tasks/${project.id}/all-tasks`,
       { error: "Error deleting project tasks" }
     );
   };
 
   public static getUsersByEmail = (
-    userEmail: string
-  ): Observable<UserSearchResult[]> => {
-    return minimalAxios<UserSearchResult[]>(
+    userEmail: string,
+    exclude: string = ""
+  ): Observable<UserSearchResults[]> => {
+    return minimalAxios<UserSearchResults[]>(
       "GET",
-      `/api/users/search?q=${userEmail}`,
+      `/api/users/search?q=${userEmail}&exclude=${exclude}`,
       { error: "Error getting users by email", default: [] }
     );
   };
 
   public static addUserToProject = (
     project: IProject,
-    userEmail: string
+    userId: IUser["id"]
   ): Observable<void> => {
     return minimalAxios<void>(
       "POST",
-      `/api/projects/${project.id}/join?email=${userEmail}`,
+      `/api/projects/${project.id}/join?id=${userId}`,
       { error: `Error adding user to ${project.name}` }
     );
   };
 
   public static removeUserFromProject = (
     project: IProject,
-    userEmail: string
+    userId: IUser["id"]
   ): Observable<void> => {
     return minimalAxios<void>(
       "DELETE",
-      `/api/projects/${project.id}/users?email=${userEmail}`,
+      `/api/projects/${project.id}/users?id=${userId}`,
       {error: `Error removing user from ${project.name}`}
     );
   };
 
   public static getProjectUsers = (
     project: IProject
-  ): Observable<UserSearchResult[]> => {
-    return minimalAxios<UserSearchResult[]>(
+  ): Observable<UserSearchResults[]> => {
+    return minimalAxios<UserSearchResults[]>(
       "GET",
       `/api/projects/${project.id}/users`,
       {error: `Error getting users for ${project.name}`, default: []}

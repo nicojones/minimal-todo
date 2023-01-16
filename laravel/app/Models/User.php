@@ -39,7 +39,19 @@ class User extends Authenticatable implements JWTSubject
     protected $hidden = [
         'password',
         'remember_token',
-        'verified'
+        'verified',
+
+        'projectUsers',
+        'pivot',
+        'users',
+
+        'created_at',
+        'updated_at',
+        'email_verified_at'
+    ];
+
+    protected $appends = [
+        'is_admin'
     ];
 
     /**
@@ -74,8 +86,16 @@ class User extends Authenticatable implements JWTSubject
     }
 
     public function projects() {
-        // return $this->hasMany(Project::class, 'project_id', 'user_id');
-        return $this->belongsToMany(Project::class, 'user_project', 'user_id', 'project_id')->withTimestamps();
+        return $this
+            ->belongsToMany(Project::class, 'project_user', 'user_id', 'project_id')
+            ->using(ProjectUser::class)
+            ->withPivot('sort', 'show_completed', 'is_admin')
+            ->withTimestamps();
     }
+
     
+    public function getIsAdminAttribute() {
+        return $this->pivot ? $this->pivot->is_admin : null;
+    }
+
 }

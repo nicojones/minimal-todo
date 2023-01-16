@@ -5,7 +5,7 @@ import "./_project-options.scss";
 
 interface ProjectOptionsAttrs {
   sort?: string;
-  setSort?: (sort: string) => any; // Promise<IProject | void>; // Dispatch<SetStateAction<string>>;
+  setSort?: (sort: string) => void;
   children?: any;
   moreDropdown: boolean;
   showMoreDropdown?: Dispatch<SetStateAction<boolean>>;

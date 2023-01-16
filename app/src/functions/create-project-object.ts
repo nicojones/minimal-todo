@@ -7,7 +7,7 @@ export function createProjectObject (name: IProject['name']): IProject {
     name: name,
     color: constants.defaultProjectColor,
     sort: constants.defaultSort,
-    showCompleted: false
+    show_completed: false
   } as IProject;
 }
 

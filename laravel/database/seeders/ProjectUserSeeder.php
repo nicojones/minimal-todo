@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\ProjectSortEnum;
 use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
@@ -13,7 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 
-class UserProjectSeeder extends Seeder
+class ProjectUserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -26,12 +27,16 @@ class UserProjectSeeder extends Seeder
         $users = User::all();
 
         foreach ($projects as $project) {
+            $isAdmin = true;
             foreach ($users as $user) {
                 if (fake()->boolean()) {
-                    DB::table('user_project')->insert([
+                    DB::table('project_user')->insert([
                         'user_id' => $user->id,
-                        'project_id' => $project->id
+                        'project_id' => $project->id,
+                        'is_admin' => $isAdmin,
+                        'sort' => fake()->randomElement(ProjectSortEnum::strings())
                     ]);
+                    $isAdmin = false;
                 }
             }
         }

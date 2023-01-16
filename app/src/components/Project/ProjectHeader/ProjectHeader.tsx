@@ -20,15 +20,13 @@ import { projectAtom } from "store";
 
 interface ProjectHeaderAttrs {
   pf: {
-    updateProject: (
-      partialProject: Partial<IProject>
-    ) => void;
+    updateProject: (partialProject: Partial<IProject>) => void;
     editListName: boolean;
     setEditListName: Dispatch<SetStateAction<boolean>>;
-    showCompleted: boolean;
-    setShowCompleted: Dispatch<SetStateAction<boolean>>;
+    show_completed: boolean;
+    setshow_completed: Dispatch<SetStateAction<boolean>>;
     sort: string;
-    setSort: (sort: string) => Observable<ITask[]>;
+    setSort: (sort: string) => void;
     canEdit: boolean;
     isLoading: LoadingStates;
   };
@@ -47,7 +45,7 @@ export const ProjectHeader = ({ pf }: ProjectHeaderAttrs) => {
     project?.name || ""
   );
 
-  const psc = pf.showCompleted;
+  const psc = pf.show_completed;
 
   const deleteProject = (): Observable<IProject[]> => {
     if (window.confirm(text.project.delete._)) {
@@ -62,7 +60,10 @@ export const ProjectHeader = ({ pf }: ProjectHeaderAttrs) => {
   };
 
   const deleteTasks = (): Observable<ITask[]> => {
-    if (window.confirm(text.project.delete.tasks)) {
+    if (
+      window.prompt(text.project.delete.tasks.ask)?.toLowerCase() ===
+      text.project.delete.tasks.confirm
+    ) {
       return ProjectService.deleteProjectTasks(project as IProject).pipe(
         tap(() => showToast("success", text.task.delete.allDeleted)),
         switchMap(() => reloadProjectTasks())
@@ -76,13 +77,13 @@ export const ProjectHeader = ({ pf }: ProjectHeaderAttrs) => {
     openAddUserModal(project);
   };
 
-  const toggleShowCompleted = (
-    showCompleted: boolean
+  const toggleshow_completed = (
+    show_completed: boolean
   ): Observable<IProject[]> => {
-    pf.setShowCompleted(showCompleted);
+    pf.setshow_completed(show_completed);
     return ProjectService.updateProject({
       ...(project as IProject),
-      showCompleted,
+      show_completed,
     }).pipe(
       switchMap(() => {
         return reloadProjects();
@@ -98,9 +99,12 @@ export const ProjectHeader = ({ pf }: ProjectHeaderAttrs) => {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        pf.updateProject({...project, name: projectName} as IProject);
+        pf.updateProject({ ...project, name: projectName } as IProject);
       }}
-      className={"project-name-form flex-row " + (pf.isLoading === "n" ? " loader-input" : "")}
+      className={
+        "project-name-form flex-row " +
+        (pf.isLoading === "n" ? " loader-input" : "")
+      }
     >
       <input
         className="as-title h5 project-title"
@@ -135,7 +139,11 @@ export const ProjectHeader = ({ pf }: ProjectHeaderAttrs) => {
           {project?.name || ""}
         </h5>
         {!!project?.shared ? (
-          <button className="ib p-0 right-align" title={text.sharedProject._} onClick={() => share()}>
+          <button
+            className="ib p-0 right-align"
+            title={text.sharedProject._}
+            onClick={() => share()}
+          >
             <i className="material-icons tiny left btn-pr ml-5">person</i>
           </button>
         ) : null}
@@ -150,12 +158,12 @@ export const ProjectHeader = ({ pf }: ProjectHeaderAttrs) => {
           <li className="dropdown-item" key="completed">
             <button
               className="ib w-100 left-align"
-              onClick={() => toggleShowCompleted(!psc).subscribe()}
+              onClick={() => toggleshow_completed(!psc).subscribe()}
             >
               <i className="material-icons tiny left btn-pr">
                 {psc ? "check_box_outline_blank" : "check_box"}
               </i>
-              {psc ? text.hideCompleted : text.showCompleted}
+              {psc ? text.hideCompleted : text.show_completed}
             </button>
           </li>
           <li className="dropdown-item" key="share">
@@ -170,7 +178,7 @@ export const ProjectHeader = ({ pf }: ProjectHeaderAttrs) => {
               onClick={() => deleteTasks().subscribe()}
             >
               <i className="material-icons tiny left btn-pr">delete_forever</i>
-              {text.project.delete.tasks}
+              {text.project.delete.tasks._}
             </button>
           </li>
           {!project?.shared ? (

@@ -3,6 +3,7 @@ import { text } from "config";
 import {
   IProject,
   IProjectContext,
+  IUser,
   LoginUser,
   PDefault,
   UserSearchResults as UserSearchResult,
@@ -46,7 +47,10 @@ export const AddUserModal = ({
     e.preventDefault();
 
     setLoading(true);
-    ProjectService.getUsersByEmail(searchTerm).pipe(
+    ProjectService.getUsersByEmail(
+      searchTerm,
+      projectUsers.map((u: UserSearchResult) => u.id).join(',')
+      ).pipe(
       tap((response: UserSearchResult[]) => {
         setLoading(false);
         setSearchResults(response);
@@ -65,10 +69,10 @@ export const AddUserModal = ({
   const addUserToProject = (result: UserSearchResult): void => {
     ProjectService.addUserToProject(
       modalProject as IProject,
-      result
+      result.id
     ).pipe(
       switchMap(() => {
-        showToast("success", text.project.add.u(result))
+        showToast("success", text.project.add.u(result.email))
         setSearchResults([]);
         setSearchTerm("");
         getListUsers().subscribe();
@@ -77,22 +81,22 @@ export const AddUserModal = ({
     ).subscribe();
   };
 
-  const removeUserFromProject = (user: UserSearchResult): Observable<void> => {
+  const removeUserFromProject = (user: UserSearchResult): void => {
     const currentUser: LoginUser = AuthService.currentUser() as LoginUser;
-    const removeYourself = (currentUser.email === user);
+    const removeYourself = (currentUser.id === user.id);
     if (
       window.confirm(
         removeYourself
           ? text.sharedProject.removeYourself(modalProject?.name as string)
-          : text.sharedProject.remove(user, modalProject?.name as string)
+          : text.sharedProject.remove(user.email, modalProject?.name as string)
       )
     ) {
-      return ProjectService.removeUserFromProject(
+      ProjectService.removeUserFromProject(
         modalProject as IProject,
-        user
+        user.id
       ).pipe(
         tap(() => {
-          showToast("success", text.project.remove.u(user))
+          showToast("success", text.project.remove.u(user.email))
           if (removeYourself) {
             window.location.reload();
           } else {
@@ -100,9 +104,9 @@ export const AddUserModal = ({
             reloadProjects().subscribe();
           }
         })
-      );
+      )
+      .subscribe();
     }
-    return of();
   };
 
   return (
@@ -137,24 +141,19 @@ export const AddUserModal = ({
             <h6>{text.sharedProject.results}</h6>
             <ul className="list-unstyled flex-column results-list">
               {searchResults.map((result: UserSearchResult) => {
-                const belongsToProject = projectUsers.includes(result);
                 return (
                   <li
-                    key={result}
-                    className={`result ${
-                      belongsToProject ? "result-disabled" : ""
-                    }`}
-                    title={belongsToProject ? text.sharedProject.belongs : ""}
+                    key={result.id}
+                    className="result"
                   >
                     <button
                       onClick={() => addUserToProject(result)}
                       type="button"
                       className="btn"
-                      disabled={belongsToProject}
                     >
                       <i className="material-icons">add</i>
                     </button>
-                    {result}
+                    {result.email}
                   </li>
                 );
               })}
@@ -167,10 +166,10 @@ export const AddUserModal = ({
             <h6>{text.sharedProject.users}</h6>
             <ul className="list-unstyled flex-column results-list">
               {projectUsers.map((result: UserSearchResult, index: number) => (
-                <li key={result} className="result">
-                  {result === modalProject?.adminEmail ? (
+                <li key={result.id} className="result">
+                  {result.is_admin ? (
                     <div className="project-user">
-                      <span className="result">{result}</span>
+                      <span className="result">{result.email}</span>
                       <small className="subtext">
                         {text.sharedProject.admin}
                       </small>
@@ -178,10 +177,10 @@ export const AddUserModal = ({
                   ) : (
                     <div className="project-user">
                       <span>
-                        <span className="result">{result}</span>
+                        <span className="result">{result.email}</span>
                         <button
                           onClick={() =>
-                            removeUserFromProject(result).subscribe()
+                            removeUserFromProject(result)
                           }
                           type="button"
                           className="btn"

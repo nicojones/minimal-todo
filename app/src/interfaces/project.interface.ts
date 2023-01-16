@@ -10,7 +10,7 @@ export interface MinimalProject<DateType = number> extends Identifiable<DateType
 export interface IProject<DateType = number> extends MinimalProject<DateType> {
   empty: boolean;
   sort: string;
-  showCompleted: boolean;
+  show_completed: boolean;
   adminEmail: string;
   shared: boolean;
   tasks: ITask['id'][];
