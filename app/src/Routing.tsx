@@ -34,7 +34,7 @@ export const Routing = () => {
         <Route exact path={urls.login} component={Login} />
         <Route
           exact
-          path={`${urls.project(":projectSecret?")}`}
+          path={`${urls.project(":projectId?")}`}
           component={TodoApp}
         />
         <Route component={NotFound} />

@@ -1,15 +1,14 @@
-import { AxiosResponse } from "axios";
 import { text } from "config/text";
 import jwt_decode from "jwt-decode";
+import { Observable, map } from "rxjs";
 import { constants, urls } from "../config";
-import { ILoginForm, IUser, LoginResponse, LoginUser } from "../interfaces";
+import { ILoginForm, LoginResponse, LoginUser } from "../interfaces";
 import {
   ISignupForm,
   ISignupFormError,
 } from "../interfaces/signup-form.interface";
 import { minimalAxios } from "./axios.service";
 import { showToast } from "./toast";
-import { Observable, map, tap } from "rxjs";
 
 export class AuthService {
   public static currentUser = (): LoginUser | null => {
@@ -56,7 +55,7 @@ export class AuthService {
       }
     ).pipe(
       map((response: LoginResponse) => {
-        AuthService.setToken(response.token);
+        AuthService.setToken(response.authorisation.token);
         return AuthService.currentUser() as LoginUser;
       })
     );
@@ -70,7 +69,7 @@ export class AuthService {
       },
     }).pipe(
       map((response: LoginResponse) => {
-        AuthService.setToken(response.token);
+        AuthService.setToken(response.authorisation.token);
         return AuthService.currentUser() as LoginUser;
       })
     );

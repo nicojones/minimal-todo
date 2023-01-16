@@ -27,10 +27,6 @@ export const NavbarSearch = () => {
     );
   }
 
-  // function goToResult(result: ITask) {
-  //   setResults([]);
-  //   changeToProject({ secret: result.projectSecret } as unknown as MinimalProject);
-  // }
 
   return (
     <form className="left" id="search-tasks" onSubmit={(e) => searchResults(e).subscribe()}>
@@ -52,7 +48,7 @@ export const NavbarSearch = () => {
               <Task
                 task={r}
                 level={0}
-                key={r.secret}
+                key={r.id}
                 showDot={true}
                 showActions={true}
                 onTaskToggle={() => reloadProjectTasks().subscribe()}

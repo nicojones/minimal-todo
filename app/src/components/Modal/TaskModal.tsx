@@ -90,12 +90,13 @@ export const TaskModal = ({
     e.preventDefault();
     setLoadingST(true);
 
+    console.log(task);
     TaskService.addTask(
       createTaskObject({
         name: subtaskName,
-        parentId: task.id,
+        parent_id: task.id,
         level: task.level + 1,
-        projectId: project.id,
+        project_id: task.project_id,
       })
     ).pipe(
       switchMap<ITask | void, Observable<ITask[]>>((task: ITask | void) => {

@@ -1,6 +1,9 @@
-import {LoginUser} from "./login-user.interface";
+import { LoginUser } from "./login-user.interface";
 
 export interface LoginResponse {
-  token: string;
+  authorisation: {
+    token: string;
+    type: "bearer";
+  };
   user: LoginUser;
 }

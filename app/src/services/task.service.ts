@@ -27,11 +27,11 @@ export class TaskService {
   };
 
   public static getTasksForProject = (
-    projectSecret: IProject["secret"]
+    projectId: IProject["id"]
   ): Observable<ITask[]> => {
     return minimalAxios<ITask[]>(
       "GET",
-      `/api/tasks/?projectSecret=${projectSecret}`,
+      `/api/tasks/?project=${projectId}`,
       { error: `Error getting tasks for project`, default: [] }
     );
   };
@@ -42,7 +42,7 @@ export class TaskService {
   ): Observable<ITask> => {
     return minimalAxios<ITask>(
       "PATCH",
-      `/api/tasks/toggle/${task.id}?toggleSubtasks=1&a=${
+      `/api/tasks/toggle/${task.id}?toggleSubtasks=${
         toggleSubtasks ? 1 : 0
       }`,
       { error: "Couldn't toggle task", default: task }

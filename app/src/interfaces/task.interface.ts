@@ -10,12 +10,11 @@ export interface ITask<DateType = string> extends Identifiable<DateType> {
   subtasks: ITask<DateType>[];
   level: number;
   priority: number;
-  parentId: ITask['id'];
+  parent_id: ITask['id'];
   created: DateType;
   updated: DateType;
-  projectId: IProject['id'];
+  project_id: IProject['id'];
   projectName: string;
   icon: string;
-  projectSecret: string;
   dotColor: string;
 }

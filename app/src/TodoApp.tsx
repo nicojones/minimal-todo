@@ -16,17 +16,17 @@ import { useAtom } from "jotai";
 import { projectAtom, projectsAtom, tasksAtom } from "store";
 
 const validProject = (
-  projectSecret: IProject["secret"],
+  projectId: IProject["id"],
   projects: IProject[]
 ): MinimalProject | null => {
   // @ts-ignore ID must be a string...
-  const proj = projects.find((p: IProject) => p.secret === projectSecret);
+  const proj = projects.find((p: IProject) => p.id === projectId);
   // If there's a project set in the URL and it's valid (it exists)
 
   if (proj) {
     return proj;
-  } else if (reservedKey(projectSecret)) {
-    return drawerConfig[projectSecret];
+  } else if (reservedKey(projectId)) {
+    return drawerConfig[projectId];
   }
   return null;
 };
@@ -40,7 +40,7 @@ export const ProjectContext = React.createContext<IProjectContext>({
 
 export const TodoApp = () => {
   const history = useHistory();
-  const urlParams = useRef(useParams<{ projectSecret: IProject["secret"] }>());
+  const urlParams = useRef(useParams<{ projectId: IProject["id"] }>());
 
   const [project, setProject] = useAtom<IProject | null, IProject | null, void>(projectAtom);
   const [, setProjectList] = useAtom<IProject[], IProject[], void>(projectsAtom);
@@ -55,7 +55,7 @@ export const TodoApp = () => {
 
   useEffect(() => {
     // urlParams.current.projectId
-    const secret = project?.secret;
+    const secret = project?.id;
 
     if (!secret) {
       setComponent(
@@ -78,7 +78,7 @@ export const TodoApp = () => {
       setComponent(<Project />);
       return;
     }
-  }, [project?.secret]);
+  }, [project?.id]);
 
   useEffect(() => {
     // load projects when page loads.
@@ -89,9 +89,9 @@ export const TodoApp = () => {
     value: MinimalProject | null,
   ): void => {
     console.log("setting value", value)
-    if (value && value?.secret !== project?.secret) {
+    if (value && value?.id !== project?.id) {
       setProject(value as IProject);
-      history.push(urls.project(value?.secret || ""));
+      history.push(urls.project(value?.id || ""));
       return;
     } else {
       history.push(urls.app);
@@ -103,7 +103,7 @@ export const TodoApp = () => {
     return ProjectService.getListOfProjects().pipe(
       tap((_projects: IProject[]) => {
         const _project = validProject(
-          project?.secret || urlParams.current.projectSecret,
+          project?.id || urlParams.current.projectId,
           _projects
         );
 
@@ -117,11 +117,11 @@ export const TodoApp = () => {
   };
 
   const reloadProjectTasks = (): Observable<ITask[]> => {
-    if (!project?.secret) {
+    if (!project?.id) {
       return of<ITask[]>([]);
     }
 
-    return TaskService.getTasksForProject(project.secret).pipe(
+    return TaskService.getTasksForProject(project.id).pipe(
       tap((tasks: ITask[]) => {
         setTasks(tasks);
         return tasks;

@@ -42,7 +42,7 @@ export const NewTask = ({
 
   const addTaskPh = useMemo(() => {
     return text.task.addTaskPh();
-  }, [project?.secret]);
+  }, [project?.id]);
 
   const addTask = (e: PDefault): Observable<ITask[]> => {
     e.preventDefault();
@@ -51,7 +51,7 @@ export const NewTask = ({
     return TaskService.addTask(
       createTaskObject({
         name: taskName,
-        projectId: (project as IProject).id,
+        project_id: (project as IProject).id,
       })
     ).pipe(
       switchMap<ITask | void, Observable<ITask[]>>((task: ITask | void) => {

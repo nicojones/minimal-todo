@@ -27,13 +27,13 @@ export const ProjectList = ({  }: ProjectListAttrs) => {
 
   const [project] = useAtom<IProject | null>(projectAtom);
   const [projects] = useAtom<IProject[]>(projectsAtom);
-  const [isLoading, setIsLoading] = useState<"" | "new" | IProject["secret"]>(
+  const [isLoading, setIsLoading] = useState<"" | "new" | IProject["id"]>(
     ""
   );
 
   const deleteProject = (_project: IProject): void => {
     if (window.confirm(text.project.delete.long)) {
-      setIsLoading(_project.secret);
+      setIsLoading(_project.id);
       ProjectService.deleteProject(_project)
         .pipe(
           switchMap(() => {
@@ -47,14 +47,14 @@ export const ProjectList = ({  }: ProjectListAttrs) => {
   };
 
   const setProject = (_project: IProject): void => {
-    if (_project.secret === project?.secret) {
+    if (_project.id === project?.id) {
       changeToProject(null); // can't change to itself... it also causes a re-render problem in the `useEffect`
     }
     console.info(
       "Changing project from",
-      project?.secret,
+      project?.id,
       "to",
-      _project.secret
+      _project.id
     );
     changeToProject(_project);
   };
@@ -63,7 +63,7 @@ export const ProjectList = ({  }: ProjectListAttrs) => {
     <ul className="projects-list flex-column">
       {drawerArray.map((p: MinimalProject) => (
         <ProjectListItem
-          key={p.secret}
+          key={p.id}
           isLoading={""}
           deleteProject={() => of()}
           project={p}
@@ -81,7 +81,7 @@ export const ProjectList = ({  }: ProjectListAttrs) => {
       )}
       {projects.map((proj: MinimalProject) => (
         <ProjectListItem
-          key={proj.secret}
+          key={proj.id}
           project={proj}
           setProject={setProject}
           isLoading={isLoading}

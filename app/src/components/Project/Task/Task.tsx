@@ -57,7 +57,7 @@ export const Task = ({
 
   const toggleCompleted = (
     taskToUpdate: ITask,
-    toggleSubtasks: boolean = false
+    toggleSubtasks: boolean = true
   ): Observable<ITask> => {
     taskToUpdate.done = !taskToUpdate.done;
     // after changing the state...
@@ -126,7 +126,7 @@ export const Task = ({
         {showGoToProject ? (
           <button
             className="btn p-0"
-            onClick={() => history.push(urls.project(task.projectSecret))}
+            onClick={() => history.push(urls.project(task.project_id))}
           >
             <i className="material-icons small-icon mr-11">login</i>
           </button>

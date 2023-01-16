@@ -8,8 +8,8 @@ import { switchMap } from "rxjs";
 import { ProjectService } from "services";
 
 interface NewProjectAttrs {
-  isLoading: "" | "new" | IProject["secret"];
-  setIsLoading: Dispatch<SetStateAction<"" | "new" | IProject["secret"]>>;
+  isLoading: "" | "new" | IProject["id"];
+  setIsLoading: Dispatch<SetStateAction<"" | "new" | IProject["id"]>>;
 }
 
 export const NewProject = ({isLoading, setIsLoading}: NewProjectAttrs) => {

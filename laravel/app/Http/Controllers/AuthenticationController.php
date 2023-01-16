@@ -11,6 +11,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Exception;
+
+
 
 class AuthenticationController extends Controller
 {
@@ -28,9 +31,13 @@ class AuthenticationController extends Controller
             'email' => 'required|string|email',
             'password' => 'required|string',
         ]);
+        // var_dump($request);
+        error_log($request->email);
+        error_log($request->password);
         $credentials = $request->only('email', 'password');
-
+        
         $token = Auth::attempt($credentials);
+
         if (!$token) {
             return response()->json([
                 'status' => 'error',
@@ -40,7 +47,6 @@ class AuthenticationController extends Controller
 
         $user = Auth::user();
         return response()->json([
-            'status' => 'success',
             'user' => $user,
             'authorisation' => [
                 'token' => $token,
@@ -64,9 +70,8 @@ class AuthenticationController extends Controller
         ]);
 
         $token = Auth::login($user);
+        var_dump($token);
         return response()->json([
-            'status' => 'success',
-            'message' => 'User created successfully',
             'user' => $user,
             'authorisation' => [
                 'token' => $token,
@@ -79,7 +84,6 @@ class AuthenticationController extends Controller
     {
         Auth::logout();
         return response()->json([
-            'status' => 'success',
             'message' => 'Successfully logged out',
         ]);
     }

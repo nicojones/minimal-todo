@@ -60,7 +60,7 @@ export const Project = ({ specialUrl }: ProjectAttrs) => {
     setEditListName(false);
 
     reloadTasks().subscribe();
-  }, [project?.secret || ""]);
+  }, [project?.id || ""]);
 
   const reloadTasks = (): Observable<ITask[]> => {
     return reloadProjectTasks().pipe(
@@ -121,7 +121,7 @@ export const Project = ({ specialUrl }: ProjectAttrs) => {
             key={task.id}
             task={task}
             level={0}
-            showDot={reservedKey(project?.secret)}
+            showDot={reservedKey(project?.id)}
           />
         ))}
         {specialUrl ? null : (

@@ -19,7 +19,7 @@ import { projectAtom } from "store";
 
 interface ProjectListItemAttrs {
   project: MinimalProject;
-  isLoading: "" | "new" | IProject["secret"];
+  isLoading: "" | "new" | IProject["id"];
   setProject: (project: IProject) => void;
   deleteProject: (project: IProject) => void;
   isSpecialProject: boolean;
@@ -52,7 +52,7 @@ export const ProjectListItem = ({
       .pipe(
         switchMap((p: IProject | void) => {
           // if the project is open, update it.
-          if (p?.secret === selectedProject?.secret) {
+          if (p?.id === selectedProject?.id) {
             setSelectedProject(p as IProject);
           }
           return reloadProjects();
@@ -63,11 +63,11 @@ export const ProjectListItem = ({
 
   return (
     <li
-      key={proj.secret}
+      key={proj.id}
       className={
         "proj-li mb-5 parent-hover flex-row" +
-        (selectedProject?.secret === proj.secret ? " selected" : "") +
-        (isLoading === proj.secret ? " loader-input" : "")
+        (selectedProject?.id === proj.id ? " selected" : "") +
+        (isLoading === proj.id ? " loader-input" : "")
       }
     >
       <ColorAndIconPicker
