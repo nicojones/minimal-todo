@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Scopes\UserProjectScope;
+use App\Models\Scopings\UserProjectScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
