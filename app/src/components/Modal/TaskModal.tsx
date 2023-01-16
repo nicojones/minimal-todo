@@ -69,8 +69,6 @@ export const TaskModal = ({
       description: taskDesc,
     };
 
-    console.log(taskToUpdate);
-    
     if (Object.values(validateTask(taskToUpdate)).length) {
       setTaskErrors(validateTask(taskToUpdate));
       return;
@@ -90,7 +88,6 @@ export const TaskModal = ({
     e.preventDefault();
     setLoadingST(true);
 
-    console.log(task);
     TaskService.addTask(
       createTaskObject({
         name: subtaskName,

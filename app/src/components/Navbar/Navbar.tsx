@@ -1,7 +1,7 @@
 import { ProjectContext } from "TodoApp";
 import { UserSettingsDropdown } from "components/Dropdown/UserSettingsDropdown";
 import { NavbarSearch } from "components/Navbar/NavbarSearch";
-import { text, urls } from "config";
+import { drawerConfig, text, urls } from "config";
 import { IProjectContext, MinimalProject, SpecialProjectUrl } from "interfaces";
 import { Dispatch, SetStateAction, useContext } from "react";
 import "./_navbar.scss";
@@ -35,7 +35,7 @@ export const Navbar = ({ setShowSidebar, showSidebar }: NavbarAttrs) => {
             </button>
             <button
               className="navbar-btn btn left"
-              onClick={() => changeToProject({ id: SpecialProjectUrl.INBOX } as unknown as MinimalProject)}
+              onClick={() => changeToProject(drawerConfig[SpecialProjectUrl.INBOX])}
             >
               <i className="material-icons">home</i>
             </button>

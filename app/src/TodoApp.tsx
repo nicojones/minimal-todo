@@ -88,7 +88,6 @@ export const TodoApp = () => {
   const changeToProject = (
     value: MinimalProject | null,
   ): void => {
-    console.log("setting value", value)
     if (value && value?.id !== project?.id) {
       setProject(value as IProject);
       history.push(urls.project(value?.id || ""));

@@ -11,7 +11,6 @@ export const IconPicker = ({ icon, onIconChange }: IconPickerProps) => {
 
   const setIcon = (e: PDefault, newIcon: IProject["icon"]): void => {
     e.preventDefault();
-    console.log("icon/?", icon, newIcon)
     onIconChange(icon == newIcon ? "circle" : newIcon);
   };
 
