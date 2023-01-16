@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\ProjectIconEnum;
 use App\Enums\ProjectSortEnum;
 use App\Models\Project;
 use App\Models\Task;
@@ -34,7 +35,9 @@ class ProjectUserSeeder extends Seeder
                         'user_id' => $user->id,
                         'project_id' => $project->id,
                         'is_admin' => $isAdmin,
-                        'sort' => fake()->randomElement(ProjectSortEnum::strings())
+                        'sort' => fake()->randomElement(ProjectSortEnum::strings()),
+                        'color' => fake()->hexColor(),
+                        'icon' => fake()->randomElement(ProjectIconEnum::strings())
                     ]);
                     $isAdmin = false;
                 }

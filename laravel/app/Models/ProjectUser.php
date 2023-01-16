@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ProjectIconEnum;
 use App\Enums\ProjectSortEnum;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
@@ -12,7 +13,8 @@ class ProjectUser extends Pivot
 
     protected $keys = [
         'sort',
-        'is_admin'
+        'is_admin',
+        'color'
     ];
 
     protected $hidden = [
@@ -24,8 +26,7 @@ class ProjectUser extends Pivot
     protected $casts = [
         'sort' => ProjectSortEnum::class,
         'show_completed' => 'boolean',
-        'is_admin' => 'boolean'
+        'is_admin' => 'boolean',
+        'icon' => ProjectIconEnum::class
     ];
-
-
 }

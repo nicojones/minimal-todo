@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\ProjectIconEnum;
 use App\Enums\ProjectSortEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -23,6 +24,9 @@ return new class extends Migration
             $table->boolean('show_completed')->default(false);
 
             $table->boolean('is_admin')->default(false);
+
+            $table->string('color')->default("#000000");
+            $table->string('icon')->default(ProjectIconEnum::CIRCLE->value);
             
             $table->uuid('user_id');
             $table->foreign('user_id')

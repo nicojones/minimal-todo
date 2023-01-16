@@ -90,7 +90,7 @@ class User extends Authenticatable implements JWTSubject
         return $this
             ->belongsToMany(Project::class, 'project_user', 'user_id', 'project_id')
             ->using(ProjectUser::class)
-            ->withPivot('sort', 'show_completed', 'is_admin')
+            ->withPivot('sort', 'show_completed', 'is_admin', 'color', 'icon')
             ->withTimestamps();
     }
 

@@ -23,19 +23,15 @@ class Project extends Model
 
     protected $guarded = [
         "user",
-        "tasks",
-        
-        "color",
+        "tasks"
     ];
 
     protected $appends = [
         'shared',
         'sort',
-        'show_completed'
-    ];
-
-    protected $casts = [
-        'icon' => ProjectIconEnum::class
+        'show_completed',
+        'color',
+        'icon'
     ];
 
     protected $hidden = [
@@ -49,7 +45,7 @@ class Project extends Model
         return $this
             ->belongsToMany(User::class, 'project_user', 'project_id', 'user_id')
             ->using(ProjectUser::class)
-            ->withPivot('sort', 'show_completed', 'is_admin')
+            ->withPivot('sort', 'show_completed', 'is_admin', 'color', 'icon')
             ->withTimestamps();
     }
 
@@ -67,6 +63,14 @@ class Project extends Model
 
     public function getShowCompletedAttribute() {
         return $this->pivot ? $this->pivot->show_completed : null;
+    }
+
+    public function getIconAttribute() {
+        return $this->pivot ? $this->pivot->icon : ProjectIconEnum::CIRCLE;
+    }
+    
+    public function getColorAttribute() {
+        return $this->pivot ? $this->pivot->color : null;
     }
 
     public function getSortAttribute() {

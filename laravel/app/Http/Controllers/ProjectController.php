@@ -41,10 +41,16 @@ class ProjectController extends Controller
 
         $project = new Project();
         $project->name = $request->name;
-        $project->color = $this->randomHex();
-        $project->icon = ProjectIconEnum::CIRCLE;
+
         $project->save();
-        $project->users()->sync([Auth::user()->id], ['is_admin' => true]);
+        $project->users()->sync(
+            [Auth::user()->id],
+            [
+                'is_admin' => true,
+                'color' =>  $this->randomHex(),
+                'icon' => ProjectIconEnum::CIRCLE
+            ]
+        );
 
         return response()->json($project);
     }
@@ -60,19 +66,19 @@ class ProjectController extends Controller
         $user = Auth::user();
         $project = Project::find($request->id);
         $project->name = $request->name;
-        $project->color = $request->color;
-        $project->icon = $request->icon;
-        
+
         $project->users()->updateExistingPivot($user->id, [
             'sort' => $request->sort,
-            'show_completed' => $request->show_completed
+            'show_completed' => $request->show_completed,
+            'color' => $request->color,
+            'icon' => $request->icon
         ]);
 
         $project->save();
 
         return response()->json($project);
-    } 
-    
+    }
+
     public function getProjectUsers(string $projectId)
     {
         $users = Project::find($projectId)->users()->get();
