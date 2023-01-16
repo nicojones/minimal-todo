@@ -24,7 +24,7 @@ export const LoggedInUserContext = React.createContext<ILoggedInUserContext>({
 export const App = () => {
   const [user, setUser] = useState<IUser | null>(AuthService.currentUser());
 
-console.log("TTTT", AuthService.currentUser());
+
   return (
     <>
       <div>

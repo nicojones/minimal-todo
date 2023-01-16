@@ -33,7 +33,7 @@ export const Signup = () => {
         .pipe(
           tap((responseData: LoginUser) => {
             setLoading(false);
-            if (responseData.id) {
+            if (responseData.email) {
               showToast("success", text.login.signupSuccess);
               setSignup({} as ISignupForm);
               setLoggingIn(true);
