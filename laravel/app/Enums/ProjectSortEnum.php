@@ -11,6 +11,7 @@ enum ProjectSortEnum: string
   case PRIORITY = "PRIORITY";
   case OLDEST_FIRST = "OLDEST_FIRST";
   case NEWEST_FIRST = "NEWEST_FIRST";
+  case DEADLINE = "DEADLINE";
 
 
   public static function strings(): array

@@ -9,6 +9,7 @@ use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\DB;
 
 class TaskController extends Controller
 {
@@ -56,6 +57,7 @@ class TaskController extends Controller
                 break;
             default:
                 $tasks = Task::topLevelWithSubtasks()
+                    // ->select(['*', DB::raw('IF(`deadline` IS NOT NULL, `deadline`, 99999999999) `deadline`')])
                     ->where('project_id', '=', $projectId)
                     ->orderBy(...$this->projectSort($projectId))
                     ->get();
@@ -263,6 +265,8 @@ class TaskController extends Controller
                 return ['created_at', 'desc'];
             case ProjectSortEnum::OLDEST_FIRST:
                 return ['created_at', 'asc'];
+            case ProjectSortEnum::DEADLINE:
+                return [DB::raw('ISNULL(deadline), deadline'), 'asc'];
             default:
                 return ['id', 'asc'];
         }

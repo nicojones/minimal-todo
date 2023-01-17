@@ -200,6 +200,7 @@ export const text = {
     nf: "Newest first",
     of: "Oldest First",
     pr: "Priority",
+    dd: "Deadline"
   },
 
   user: {

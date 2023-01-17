@@ -8,6 +8,7 @@ export const projectSort = {
   A_TO_Z: "A_TO_Z",
   NEWEST_FIRST: "NEWEST_FIRST",
   PRIORITY: "PRIORITY",
+  DEADLINE: "DEADLINE",
 };
 
 export const priorityIcons: string[] = ["flag", "flag", "flag", "flag"];
@@ -54,6 +55,7 @@ export const constants = {
       name: text.sort.nf,
       sort: projectSort.NEWEST_FIRST,
     },
+    { icon: "calendar_month", name: text.sort.dd, sort: projectSort.DEADLINE },
     { icon: "flag", name: text.sort.pr, sort: projectSort.PRIORITY },
   ],
   drawerSort: {
