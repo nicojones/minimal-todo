@@ -155,7 +155,7 @@ export const Task = ({
           <div />
         </label>
         <button
-          className={"left-align ib " + (task.done ? "" : "")}
+          className={"left-align ib pt-4 d-flex " + (task.done ? "" : "")}
           onClick={() => setModalOpen(true)}
         >
           <TaskInfo task={task} subtasks={subtasks}/>
