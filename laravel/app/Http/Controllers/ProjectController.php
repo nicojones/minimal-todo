@@ -47,11 +47,12 @@ class ProjectController extends Controller
 
         $project->save();
         $project->users()->sync(
-            [Auth::user()->id],
             [
-                'is_admin' => true,
-                'color' =>  $this->randomHex(),
-                'icon' => ProjectIconEnum::CIRCLE
+                Auth::user()->id => [
+                    'is_admin' => true,
+                    'color' =>  $this->randomHex(),
+                    'icon' => ProjectIconEnum::CIRCLE
+                ]
             ]
         );
 

@@ -69,12 +69,7 @@ class Task extends Model
     public function subtasks()
     {
         // https://stackoverflow.com/a/27762080/2016686
-
-        $subtasks = $this->hasMany(Task::class, 'parent_id');
-        // foreach($subtasks as $subtask) {
-        //     $subtask->parentTask = $this;
-        // }
-        return  $subtasks;
+        return $this->hasMany(Task::class, 'parent_id');
     }
 
     public function notifications()
@@ -86,8 +81,6 @@ class Task extends Model
     {
         return $this
             ->belongsToMany(Tag::class, 'tag_task', 'task_id', 'tag_id')
-            // ->using(ProjectUser::class)
-            // ->withPivot('sort', 'show_completed', 'is_admin', 'color', 'icon')
             ->withTimestamps();
     }
 
