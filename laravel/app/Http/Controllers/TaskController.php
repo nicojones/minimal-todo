@@ -60,6 +60,7 @@ class TaskController extends Controller
                     // ->select(['*', DB::raw('IF(`deadline` IS NOT NULL, `deadline`, 99999999999) `deadline`')])
                     ->where('project_id', '=', $projectId)
                     ->orderBy(...$this->projectSort($projectId))
+                    ->orderBy('created_at', 'asc')
                     ->get();
                 break;
         }

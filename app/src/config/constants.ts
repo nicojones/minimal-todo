@@ -33,6 +33,15 @@ export const projectIcons = {
 };
 export const projectIconsArray = Object.values(projectIcons);
 
+export const sortOptionIcons = {
+  [projectSort.A_TO_Z]: "sort_by_alpha",
+  [projectSort.Z_TO_A]: "sort_by_alpha",
+  [projectSort.OLDEST_FIRST]: "arrow_downward",
+  [projectSort.NEWEST_FIRST]: "arrow_upward",
+  [projectSort.PRIORITY]: "flag",
+  [projectSort.DEADLINE]: "calendar_month",
+}
+
 export const constants = {
   defaultProjectColor: "#aaa",
   toast: {

@@ -103,8 +103,6 @@ export const Project = ({ specialUrl }: ProjectAttrs) => {
       .subscribe();
   };
 
-  console.log(specialUrl);
-
   return (
     <div className={isLoading === "p" ? "loader-input cover" : ""}>
       <ProjectHeader

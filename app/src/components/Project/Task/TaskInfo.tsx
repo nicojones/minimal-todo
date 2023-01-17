@@ -31,7 +31,7 @@ export const TaskInfo = ({ task, subtasks }: TaskInfoAttrs) => {
           {new Date(task.deadline).toLocaleDateString()}
         </span>
       )}
-      {task.tags.map((name: string) => <small className="chip ml-5">{name}</small>)}
+      {task.tags.map((name: string) => <small className="chip ml-5" key={name}>{name}</small>)}
       {task.url && (
         <small className="subtle ml-5">
           <a

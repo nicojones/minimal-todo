@@ -1,6 +1,6 @@
 import { Tooltip } from "components/Tooltip/Tooltip";
-import { constants, text } from "config";
-import { Dispatch, SetStateAction, useState } from "react";
+import { constants, sortOptionIcons, text } from "config";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import "./_project-options.scss";
 
 interface ProjectOptionsAttrs {
@@ -18,7 +18,6 @@ export const ProjectOptions = ({
   showMoreDropdown
 }: ProjectOptionsAttrs) => {
   const [sortDropdown, showSortDropdown] = useState(false);
-  
 
   return (
     <div className="buttons">
@@ -30,7 +29,8 @@ export const ProjectOptions = ({
           title={text.sort._}
           onClick={() => showSortDropdown(true)}
         >
-          <i className="material-icons">swap_vert</i>
+          <i className="material-icons">{sortOptionIcons[sort]}</i>
+          {/* <i className="material-icons">swap_vert</i> */}
         </button>
       )}
       {sortDropdown && (

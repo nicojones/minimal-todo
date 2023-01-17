@@ -155,7 +155,7 @@ export const ProjectHeader = ({ pf }: ProjectHeaderAttrs) => {
       </div>
       {pf.canEdit ? (
         <ProjectOptions
-          sort={pf.sort}
+          sort={project?.sort}
           setSort={pf.setSort}
           moreDropdown={moreDropdown}
           showMoreDropdown={showMoreDropdown}
