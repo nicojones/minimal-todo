@@ -130,7 +130,6 @@ class Task extends Model
     {
         $query
             ->with(
-                // 'tags',
                 'subtasks', // 1 level
                 'subtasks.subtasks', // 2 levels
                 'subtasks.subtasks.subtasks', // 3 levels

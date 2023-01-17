@@ -7,7 +7,7 @@ export interface ITask<DateType = string> extends Identifiable<DateType> {
   description: string;
   url: string;
   notes: string;
-  tags: string[];
+  tags: string[] | [];
   starred: boolean;
   backgroundColor: string | null;
   done: boolean;

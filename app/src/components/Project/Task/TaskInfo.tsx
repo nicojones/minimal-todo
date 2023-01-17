@@ -12,7 +12,7 @@ interface TaskInfoAttrs {
 export const TaskInfo = ({ task, subtasks }: TaskInfoAttrs) => {
 
   const openLength = useMemo(() => {
-    return subtasks.filter((s: ITask) => !s.done).length || 0;
+    return (subtasks || []).filter((s: ITask) => !s.done).length || 0;
   }, [subtasks]);
 
   return (

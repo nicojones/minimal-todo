@@ -93,7 +93,7 @@ export const TaskModal = ({
 
   const addTaskPh = useMemo(() => {
     return text.task.addTaskPh();
-  }, [task.subtasks.length]);
+  }, [task.subtasks?.length]);
 
   const saveTask = (e: PDefault): void => {
     e.preventDefault();
