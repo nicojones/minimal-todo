@@ -77,7 +77,7 @@ export const ProjectListItem = ({
         onChangeComplete={(colorAndIcon: ColorIconChoice) =>
           changeColorAndIcon(proj as IProject, colorAndIcon)
         }
-      ></ColorAndIconPicker>
+      />
       <button
         className="ib left left-align btn-p w-100"
         onClick={() => setProject(proj as IProject)}

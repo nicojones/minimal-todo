@@ -54,6 +54,7 @@ export const NewProject = ({isLoading, setIsLoading}: NewProjectAttrs) => {
           onChange={(e) => setNewProjectName(e.target.value)}
           required
           minLength={3}
+          autoCapitalize="none"
           disabled={isLoading === "new"}
           autoComplete="off"
           value={newProjectName}

@@ -36,6 +36,7 @@ export const NavbarSearch = () => {
         className="input"
         placeholder={text.task.search}
         value={search}
+        autoCapitalize="none"
         onChange={(e) => setSearch(e.target.value)}
         required={true}
         minLength={2}

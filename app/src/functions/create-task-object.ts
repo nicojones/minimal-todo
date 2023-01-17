@@ -23,7 +23,14 @@ export function createTaskObject(task: Partial<ITask<string>>): ITask {
     dotColor: null as unknown as string,
     project_id: task.project_id as ITask['project_id'],
     projectName: null as unknown as string,
-    icon: null as unknown as string
+    icon: null as unknown as string,
+    backgroundColor: task.backgroundColor || null,
+    notes: task.notes || "",
+    url: task.url || "",
+    tags: task.tags || [],
+    starred: task.starred || false,
+    deadline: task.deadline || 0,
+    alert: task.alert || 0
   };
 }
 

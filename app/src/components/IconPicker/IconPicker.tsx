@@ -1,6 +1,6 @@
 import { IProject, PDefault } from "interfaces";
 import "./icon-picker.scss";
-import { projectIcons } from "config";
+import { projectIcons, projectIconsArray } from "config";
 
 interface IconPickerProps {
   icon: IProject["icon"];
@@ -17,7 +17,7 @@ export const IconPicker = ({ icon, onIconChange }: IconPickerProps) => {
   return (
     <div>
       <ul className="inline">
-        {projectIcons.map((iconItem: string) => (
+        {projectIconsArray.map((iconItem: string) => (
           <li key={iconItem}>
             <button
               title={iconItem}

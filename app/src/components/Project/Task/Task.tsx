@@ -10,6 +10,7 @@ import { useHistory } from "react-router-dom";
 import { Observable, of, switchMap, tap } from "rxjs";
 import { useAtom } from "jotai";
 import { projectAtom } from "store";
+import { TaskInfo } from "./TaskInfo";
 
 interface TaskAttrs {
   task: ITask;
@@ -40,8 +41,6 @@ export const Task = ({
 
   const [project] = useAtom<IProject | null>(projectAtom);
 
-  const openLength = subtasks.filter((s: ITask) => !s.done).length || 0;
-
   const doneClass = (task.done && project?.show_completed && "done") || "";
   // const doneClass = (task.checked ? (project.show_completed ? 'done' : '') : '');
 
@@ -58,22 +57,24 @@ export const Task = ({
   const toggleCompleted = (
     taskToUpdate: ITask,
     toggleSubtasks: boolean = true
-  ): Observable<ITask> => {
+  ): void => {
     taskToUpdate.done = !taskToUpdate.done;
     // after changing the state...
-    return TaskService.toggleTask(task, toggleSubtasks).pipe(
-      tap((updatedTask: ITask) => {
-        if (updatedTask.done) {
-          // set all subtasks as checked, since the main task was marked as checked.
-          // (task.subtasks || []).forEach((_task) => _task.checked = true);
-          updatedTask.expanded = false;
-        }
+    TaskService.toggleTask(task, toggleSubtasks)
+      .pipe(
+        tap((updatedTask: ITask) => {
+          if (updatedTask.done) {
+            // set all subtasks as checked, since the main task was marked as checked.
+            // (task.subtasks || []).forEach((_task) => _task.checked = true);
+            updatedTask.expanded = false;
+          }
 
-        setSubtasks(updatedTask.subtasks);
+          setSubtasks(updatedTask.subtasks);
 
-        onTaskToggle && onTaskToggle(updatedTask);
-      })
-    );
+          onTaskToggle && onTaskToggle(updatedTask);
+        })
+      )
+      .subscribe();
   };
 
   const subtaskUpdated = (updatedSubtask: ITask): void => {
@@ -82,6 +83,10 @@ export const Task = ({
         return t.id === updatedSubtask.id ? updatedSubtask : t;
       })
     );
+
+    if(onTaskToggle) {
+      onTaskToggle(updatedSubtask);
+    }
   };
 
   /**
@@ -94,22 +99,21 @@ export const Task = ({
   };
 
   const onDelete = (task: ITask): void => {
-    if (
-      window.confirm(
-        text.task.delete.confirm(task.subtasks)
-      )
-    ) {
-      TaskService.deleteTask(task).pipe(
-        switchMap(() => reloadProjectTasks())
-      ).subscribe();
+    if (window.confirm(text.task.delete.confirm(task.subtasks))) {
+      TaskService.deleteTask(task)
+        .pipe(switchMap(() => reloadProjectTasks()))
+        .subscribe();
     }
   };
 
   return (
     <li
-      className={
-        doneClass + " task parent-hover " + (showActions ? " show-actions" : "")
-      }
+      className={[
+        doneClass,
+        "task parent-hover",
+        showActions ? "show-actions" : "",
+        task.starred ? "starred" : "",
+      ].join(" ")}
       key={task.id}
     >
       <div className="task__content" title={format(task.created)}>
@@ -146,7 +150,7 @@ export const Task = ({
             type="checkbox"
             className="material-cb"
             checked={task.done}
-            onChange={() => toggleCompleted(task).subscribe()}
+            onChange={() => toggleCompleted(task)}
           />
           <div />
         </label>
@@ -154,18 +158,7 @@ export const Task = ({
           className={"left-align ib " + (task.done ? "" : "")}
           onClick={() => setModalOpen(true)}
         >
-          <span className="task-name">{task.name}</span>
-          {subtasks.length > 0 ? (
-            <small
-              className="subtle child-hover ml-5 ib"
-              data-tip={text.subtaskStatus}
-            >
-              {subtasks.length - openLength}/{subtasks.length}
-            </small>
-          ) : null}
-          {task.description && (
-            <small className="subtle ml-5">{task.description}</small>
-          )}
+          <TaskInfo task={task} subtasks={subtasks}/>
         </button>
 
         <span className="ml-auto flex-row">

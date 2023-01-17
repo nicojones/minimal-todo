@@ -9,4 +9,6 @@ export const urls = {
 
   inboxUrl: SpecialProjectUrl.INBOX,
   priorityUrl: SpecialProjectUrl.PRIORITY,
+  deadlineUrl: SpecialProjectUrl.DEADLINE,
+  todayUrl: SpecialProjectUrl.TODAY,
 }

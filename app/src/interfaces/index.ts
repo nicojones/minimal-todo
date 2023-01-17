@@ -19,3 +19,4 @@ export * from "./special-project-url.enum";
 export * from "./color-icon-choice.type";
 export * from "./stores.enum";
 export * from "./entity-validation.type";
+export * from "./validation-response.interface";

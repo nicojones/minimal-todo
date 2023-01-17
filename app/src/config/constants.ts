@@ -12,23 +12,25 @@ export const projectSort = {
 
 export const priorityIcons: string[] = ["flag", "flag", "flag", "flag"];
 
-export const projectIcons: string[] = [
-  "grade",
-  "favorite",
-  "home",
-  "public",
-  "rocket",
-  "mood",
-  "navigation",
-  //"calendar today",
-  "extension",
-  "sunny",
-  "lightbulb",
-  "comment",
-  "landscape",
-  "building",
-  "photo",
-];
+export const projectIcons = {
+  star: "grade",
+  heart: "favorite",
+  home: "home",
+  public: "public",
+  rocket: "rocket",
+  smiley: "mood",
+  navigation: "navigation",
+  // calendarToday: "calendar_today",
+  // calendarMonth: "calendar_month",
+  puzzle: "extension",
+  sun: "sunny",
+  lightbulb: "lightbulb",
+  comment: "comment",
+  mountain: "landscape",
+  tool: "building",
+  photo: "photo",
+};
+export const projectIconsArray = Object.values(projectIcons);
 
 export const constants = {
   defaultProjectColor: "#aaa",

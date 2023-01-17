@@ -18,10 +18,6 @@ use App\Models\User;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::controller(AuthenticationController::class)->group(function () {
     Route::post('/auth/login', 'login');
     Route::post('/auth/signup', 'register');
@@ -53,7 +49,3 @@ Route::controller(TaskController::class)->group(function () {
     Route::delete('/tasks/{taskId}', 'delete');
     Route::delete('/tasks/{projectId}/all-tasks', 'deleteTasks');
 })->middleware('auth');
-
-Route::get('/hello', function () {
-    return User::all();
-});

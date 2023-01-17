@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Enums\ProjectSortEnum;
 use App\Models\Project;
+use App\Models\Tag;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Date;
 
 class TaskController extends Controller
 {
@@ -24,9 +26,23 @@ class TaskController extends Controller
 
         $tasks = [];
 
+        error_log($this->getTime(86400));
         switch ($projectId) {
+            case "today":
+                $tasks = Task::topLevelWithSubtasks()
+                    // ->whereDate('deadline', '>', $this->getTime())
+                    ->whereDate('deadline', '<', $this->getTime(86400))
+                    ->orderBy('deadline', 'asc')
+                    ->get();
+                break;
+            case "upcoming":
+                $tasks = Task::topLevelWithSubtasks()
+                    ->whereDate('deadline', '>', $this->getTime())
+                    ->orderBy('deadline', 'asc')
+                    ->get();
+                break;
             case "inbox":
-                $tasks = Task::withSubtasks()
+                $tasks = Task::topLevelWithSubtasks()
                     ->where('done', '=', false)
                     ->orderBy('created_at', 'asc')
                     ->get();
@@ -39,7 +55,7 @@ class TaskController extends Controller
                     ->get();
                 break;
             default:
-                $tasks = Task::withSubtasks()
+                $tasks = Task::topLevelWithSubtasks()
                     ->where('project_id', '=', $projectId)
                     ->orderBy(...$this->projectSort($projectId))
                     ->get();
@@ -95,11 +111,50 @@ class TaskController extends Controller
      */
     public function update(Request $request)
     {
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|max:255',
+            'url' => 'nullable|url',
+        ]);
+
         $task = Task::find($request->id);
-        $task->name = $request->name;
-        $task->description = $request->description ?? "";
         $task->priority = $request->priority;
         $task->expanded = $request->expanded;
+
+        $task->name = $request->name;
+        $task->description = $request->description ?? "";
+        $task->notes = $request->notes ?? "";
+        $task->url = $request->url ?? "";
+
+        $task->done = $request->done ?? false;
+        $task->starred = $request->starred ?? false;
+
+        $task->deadline = $request->deadline ? ($request->deadline / 1000) : null;
+        $task->alert = $request->alert ? ($request->alert / 1000) : null;
+
+        error_log($request->deadline);
+
+        $task->background_color = $request->backgroundColor ?? "";
+
+        error_log('tags: ' . implode(" ?? ", $request->tags));
+        // preg_match_all("/(\#[a-zA-Z0-9]+)/", strtolower($request->tags), $matches);
+        // $tags = $matches[0];
+        // error_log('imploded: ' . implode(" || ", $tags));
+
+        $tags = $request->tags;
+        $tagIds = [];
+        foreach ($tags as $tagName) {
+            error_log("tag name --> " . $tagName);
+            $tag = Tag::where('name', $tagName)->first();
+            if (empty($tag)) {
+                $tag = new Tag();
+                $tag->name = $tagName;
+                $tag->save();
+            }
+            $tagIds[] = $tag->id;
+        }
+        $task->tags()->sync($tagIds);
 
         $task->save();
 
@@ -134,6 +189,8 @@ class TaskController extends Controller
      */
     public function delete($taskId)
     {
+
+        error_log("delete task");
         Task::find($taskId)->delete();
 
         return response()->json(['success' => 'task deleted']);
@@ -184,7 +241,7 @@ class TaskController extends Controller
     private function projectSort(string $projectId)
     {
         $userId = Auth::id();
-        error_log(Project::find($projectId));
+        // error_log(Project::find($projectId));
         $sort = Project::find($projectId)
             ->users()
             ->newPivotStatement()
@@ -209,5 +266,10 @@ class TaskController extends Controller
             default:
                 return ['id', 'asc'];
         }
+    }
+
+    private function getTime(int $futureSeconds = 0)
+    {
+        return date('Y-m-d\TH:i:s.000000\Z', time() + $futureSeconds);
     }
 }

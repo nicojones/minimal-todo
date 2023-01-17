@@ -103,6 +103,9 @@
 .flex-wrap {
   flex-wrap: wrap;
 }
+.flex-between {
+  justify-content: space-between;
+}
 
 .place-center {
   align-items: center;
@@ -136,6 +139,13 @@ $max-fff: 100 - $fff;
 
 .subtle {
   color: $subtle-color !important;
+  > a {
+    color: $subtle-color !important;
+    text-decoration: underline;
+    &:hover {
+      text-decoration: none;
+    }
+  }
 }
 .subtle-bg {
   background: $subtle-color !important;
@@ -167,6 +177,10 @@ $max-fff: 100 - $fff;
 
 .hide {
   display: none !important;
+}
+
+label {
+  user-select: none;
 }
 
 // Text Align
@@ -247,4 +261,15 @@ button:focus {
 .far-away {
   position: fixed;
   left: -10000px;
+}
+
+.react-datetime-picker__wrapper {
+  border: none !important;
+}
+
+.chip {
+  border-radius: 1rem;
+  padding: .3rem;
+  background-color: $very-subtle-color;
+  font-size: .5rem;
 }

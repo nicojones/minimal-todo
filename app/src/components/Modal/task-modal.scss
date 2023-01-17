@@ -1,0 +1,16 @@
+@import "src/sass/colors";
+
+.btn {
+  &.starred {
+    opacity: 1;
+    color: $priority-med;
+    
+    &.not-starred {
+      opacity: 0.2;
+
+      &:hover {
+        opacity: 0.6
+      }
+    }
+  }
+}

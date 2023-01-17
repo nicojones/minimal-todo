@@ -2,7 +2,7 @@ import { ProjectContext } from "TodoApp";
 import { NoProject } from "components/NoProject/NoProject";
 import { ProjectHeader } from "components/Project/ProjectHeader/ProjectHeader";
 import { Task } from "components/Project/Task/Task";
-import { projectSort, text } from "config";
+import { drawerRequiresReload, projectSort, text } from "config";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { ProjectService } from "services/project.service";
 import {
@@ -103,6 +103,8 @@ export const Project = ({ specialUrl }: ProjectAttrs) => {
       .subscribe();
   };
 
+  console.log(specialUrl);
+
   return (
     <div className={isLoading === "p" ? "loader-input cover" : ""}>
       <ProjectHeader
@@ -125,6 +127,7 @@ export const Project = ({ specialUrl }: ProjectAttrs) => {
             key={task.id}
             task={task}
             level={0}
+            // onTaskToggle={({level}: ITask) => level > 1 ? reloadTasks().subscribe() : null}
             showDot={reservedKey(project?.id)}
           />
         ))}

@@ -31,10 +31,14 @@
     //}
   }
 
+  &.starred {
+    background-color: rgba($priority-med, 0.1);
+  }
+
   >.task__content {
     padding: $task-padding 0;
     display: flex;
-    align-items: t-start;
+    align-items: flex-start;
 
     .project-dot {
       border-radius: 100%;

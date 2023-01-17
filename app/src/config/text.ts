@@ -7,15 +7,22 @@ export const text = {
   gotoApp: "Open app",
 
   task: {
+    done: "Completed",
     name: "Name of the task",
+    tags: "#tags for this task",
+    url: "http://example.com",
+    deadline: "Deadline",
     projectDot: (name: string) => "Belongs to " + name,
     delete: {
       _: "Delete Task",
       confirm: (subtasks: ITask[]) => {
         if (!subtasks.length) {
-          return "Delete task?"
+          return "Delete task?";
         }
-        return "Delete task and its subtasks?\n\n" + subtasks.map(t => t.name).join("\n");
+        return (
+          "Delete task and its subtasks?\n\n" +
+          subtasks.map((t) => t.name).join("\n")
+        );
       },
       allDeleted: "Tasks deleted",
     },
@@ -28,6 +35,8 @@ export const text = {
         "Create a task ...",
         "e.g. Call family",
         "e.g. Schedule interview",
+        "e.g. Do sport",
+        "e.g. Cook something delicious",
       ];
       return randArray(phs);
     },
@@ -35,7 +44,9 @@ export const text = {
     save: "Save Task",
     edit: "Edit Task",
     discard: "Cancel changes",
-    notes: "Notes",
+    descr: "Notes",
+    notes: "More notes...",
+    starred: "Star",
     prio: {
       _: "Priority",
       low: "Low priority",
@@ -54,6 +65,14 @@ export const text = {
     priority: {
       _: "Priority",
       tooltip: "High priority stuff",
+    },
+    deadline: {
+      _: "Upcoming",
+      tooltip: "Upcoming tasks with deadline",
+    },
+    today: {
+      _: "Today",
+      tooltip: "This tasks have a deadline today",
     },
     invalidDrawer: "Invalid URL (not an actual project)",
   },
@@ -107,7 +126,7 @@ export const text = {
         "What will you accomplish?",
         "What's the next move?",
         "What shouldn't you forget?",
-        "I have to ..."
+        "I have to ...",
       ]),
     share: "Share Project",
     noName: "My List",
@@ -115,12 +134,12 @@ export const text = {
       _: "Delete Project",
       tasks: {
         _: "Delete all tasks",
-        ask: "Delete all tasks? Type \"delete\" to continue:",
-        confirm: "delete"
+        ask: 'Delete all tasks? Type "delete" to continue:',
+        confirm: "delete",
       },
       long: {
-        _: "Delete this project and all the tasks? (cannot be undone). Type \"delete\" to continue:",
-        confirm: "delete"
+        _: 'Delete this project and all the tasks? (cannot be undone). Type "delete" to continue:',
+        confirm: "delete",
       },
     },
     add: {

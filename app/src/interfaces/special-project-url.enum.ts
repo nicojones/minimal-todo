@@ -1,4 +1,6 @@
 export const enum SpecialProjectUrl {
     INBOX = 'inbox',
-    PRIORITY = 'priority'
+    PRIORITY = 'priority',
+    DEADLINE = 'upcoming',
+    TODAY = 'today'
   }

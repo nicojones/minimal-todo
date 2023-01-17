@@ -85,6 +85,7 @@ export const NewTask = ({
               className="invisible f-100 btn-pl"
               placeholder={addTaskPh}
               required
+              autoCapitalize="none"
               value={taskName}
               id="add-project-task" // used also in NoProject
               disabled={isLoading === "t"}

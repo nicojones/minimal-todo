@@ -9,7 +9,7 @@ import {
   ITask,
   LoadingStates,
 } from "interfaces";
-import { Dispatch, SetStateAction, useContext, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 import { ProjectService } from "services/project.service";
 
 import "./project-header.scss";
@@ -44,6 +44,10 @@ export const ProjectHeader = ({ pf }: ProjectHeaderAttrs) => {
   const [projectName, setProjectName] = useState<IProject["name"]>(
     project?.name || ""
   );
+
+  useEffect(() => {
+    setProjectName(project?.name || "");
+  }, [project]);
 
   const psc = pf.show_completed;
 
@@ -111,6 +115,7 @@ export const ProjectHeader = ({ pf }: ProjectHeaderAttrs) => {
         autoFocus /*onBlur={ project.saveListName }*/
         value={projectName}
         disabled={pf.isLoading === "n"}
+        autoCapitalize="none"
         onChange={(e) => setProjectName(e.target.value)}
       />
       <button className="ib material-icons" type="submit">

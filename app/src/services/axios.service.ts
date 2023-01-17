@@ -2,8 +2,9 @@ import axios, { AxiosResponse } from "axios";
 import { environment } from "./environment";
 import { constants } from "config";
 import { Observable, catchError, from, of } from "rxjs";
-import { CaughtPromise } from "interfaces";
+import { CaughtPromise, ValidationResponse } from "interfaces";
 import { AuthService } from "./auth.service";
+import { showToast } from "./toast";
 
 const defaultHeaders = (): Record<string, string> => {
   const headers: Record<string, string> = {};
@@ -33,9 +34,17 @@ export const minimalAxios = <T, BodyType = T>(
           return [401, 403, 404, 500].indexOf(status) === -1;
         },
       })({ method: method, url: url, data: extra?.body })
-      .then((response: AxiosResponse<T>) => response.data)
+      .then((response: AxiosResponse<T>) => {
+        if (response.status === 422) {
+          showToast("error", (response.data as ValidationResponse).message);
+          return Promise.reject(null);
+        }
+        return response.data
+      })
       .catch((e: CaughtPromise) => {
-        AuthService.handleError(e, extra?.error ? `${extra.error}: ${String(e).replace("Error: ", "")}` : String(e));
+        if (e) {
+          AuthService.handleError(e, extra?.error ? `${extra.error}: ${String(e).replace("Error: ", "")}` : String(e));
+        }
         console.error(String(e), e);
         return (extra?.default || null) as T;
       })
