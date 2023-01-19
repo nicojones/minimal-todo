@@ -24,8 +24,8 @@ return new class extends Migration
             $table->integer('level')->default(1);
             $table->integer('priority')->default(0);
 
-            $table->dateTime('deadline')->nullable();
-            $table->dateTime('alert')->nullable();
+            $table->timestamp('deadline')->nullable();
+            $table->boolean('alert')->default(1);
             $table->boolean('notify_me')->default(false);
             $table->boolean('email_me')->default(false);
             $table->boolean('starred')->default(false);

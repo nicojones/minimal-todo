@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\ProjectIconEnum;
 use App\Enums\ProjectIconEnumTypes;
+use App\Functions\Functions;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -50,7 +51,7 @@ class ProjectController extends Controller
             [
                 Auth::user()->id => [
                     'is_admin' => true,
-                    'color' =>  $this->randomHex(),
+                    'color' =>  Functions::randomHex(),
                     'icon' => ProjectIconEnum::CIRCLE
                 ]
             ]

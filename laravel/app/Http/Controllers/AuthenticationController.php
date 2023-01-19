@@ -31,9 +31,6 @@ class AuthenticationController extends Controller
             'email' => 'required|string|email',
             'password' => 'required|string',
         ]);
-        // var_dump($request);
-        error_log($request->email);
-        error_log($request->password);
         $credentials = $request->only('email', 'password');
 
         $token = Auth::attempt($credentials);

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Enums\ProjectSortEnum;
+use App\Functions\Functions;
+use App\Mail\TaskNotificationMail;
 use App\Models\Project;
 use App\Models\Tag;
 use App\Models\Task;
@@ -10,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class TaskController extends Controller
 {
@@ -27,18 +30,46 @@ class TaskController extends Controller
 
         $tasks = [];
 
-        error_log($this->getTime(86400));
+        $fromHoursInAdvance = 0;
+        $toHoursInAdvance = 24;
+        $tasksWithDeadline = Task::whereNotNull('deadline')
+            ->where('alert', true)
+            ->where('deadline', '<', Functions::getFutureTime($toHoursInAdvance * 60 * 60))
+            ->where('deadline', '>', Functions::getFutureTime($fromHoursInAdvance * 60 * 60))
+            ->with('project.users')
+            ->get();
+
+        error_log(count($tasksWithDeadline));
+
+        foreach ($tasksWithDeadline as $task) {
+            error_log('TASK: ' . $task->project->users);
+            foreach($task->project->users as $user) {
+                error_log('Task user: '. $user->email);
+
+                $data = [
+                    'task_message' => 'hello!'
+                    // 'Task name: ' . $task->name . ' has a deadline on ' . $task->deadline
+                ];
+                // error_log(view('emails.task_deadline', $data)->toString());
+                // new TaskNotificationMail($user->email, $data);
+                Mail::to($user->email)->send(new TaskNotificationMail($user->email, $data));
+
+                // $mail = new TaskNotificationMail($user->email, []);
+                // $mail->createAndSend();
+            }
+        }
+
+
         switch ($projectId) {
             case "today":
                 $tasks = Task::topLevelWithSubtasks()
-                    // ->whereDate('deadline', '>', $this->getTime())
-                    ->whereDate('deadline', '<', $this->getTime(86400))
+                    ->where('deadline', '<', Functions::getFutureTime(86400))
                     ->orderBy('deadline', 'asc')
                     ->get();
                 break;
             case "upcoming":
                 $tasks = Task::topLevelWithSubtasks()
-                    ->whereDate('deadline', '>', $this->getTime())
+                    ->where('deadline', '>', Functions::getFutureTime())
                     ->orderBy('deadline', 'asc')
                     ->get();
                 break;
@@ -121,6 +152,9 @@ class TaskController extends Controller
             'url' => 'nullable|url',
         ]);
 
+        error_log("deadline: " . $request->deadline);
+        error_log('get time: ' . Functions::getTime($request->deadline));
+
         $task = Task::find($request->id);
         $task->priority = $request->priority;
         $task->expanded = $request->expanded;
@@ -134,21 +168,13 @@ class TaskController extends Controller
         $task->starred = $request->starred ?? false;
 
         $task->deadline = $request->deadline ? ($request->deadline / 1000) : null;
-        $task->alert = $request->alert ? ($request->alert / 1000) : null;
-
-        error_log($request->deadline);
+        $task->alert = $request->alert ?? false;
 
         $task->background_color = $request->backgroundColor ?? "";
-
-        error_log('tags: ' . implode(" ?? ", $request->tags));
-        // preg_match_all("/(\#[a-zA-Z0-9]+)/", strtolower($request->tags), $matches);
-        // $tags = $matches[0];
-        // error_log('imploded: ' . implode(" || ", $tags));
 
         $tags = $request->tags;
         $tagIds = [];
         foreach ($tags as $tagName) {
-            error_log("tag name --> " . $tagName);
             $tag = Tag::where('name', $tagName)->first();
             if (empty($tag)) {
                 $tag = new Tag();
@@ -193,7 +219,6 @@ class TaskController extends Controller
     public function delete($taskId)
     {
 
-        error_log("delete task");
         Task::find($taskId)->delete();
 
         return response()->json(['success' => 'task deleted']);
@@ -207,7 +232,6 @@ class TaskController extends Controller
      */
     public function deleteTasks($projectId)
     {
-        error_log($projectId);
         Project::find($projectId)->tasks()->each(function ($task) {
             $task->delete();
         });
@@ -215,28 +239,11 @@ class TaskController extends Controller
         return response()->json(['success' => 'all tasks deleted']);
     }
 
-    // private function nestTasks($tasks, string $parentTaskId = null)
-    // {
-    //     $nestedTasks = [];
-    //     foreach ($tasks as $task) {
-    //         if ($task->parentTask->id === $parentTaskId) {
-    //             // error_log('task ID: ' . $task->id . ' // level: ' . $task->level);
-    //             // error_log('parent Task ID: ' . ($task->parentTask-> id ?? "NULL"));
-    //             // error_log('task name: ' . $task->name);
-    //             $task->subtasks = $this->nestTasks($tasks, $task->id);
-    //             $nestedTasks[] = $task;
-    //         }
-    //     }
-    //     return $nestedTasks;
-    // }
-
     private function toggleSubtasks($tasks, bool $nextDoneState)
     {
         foreach ($tasks as $task) {
             $this->toggleSubtasks($task->subtasks, $nextDoneState);
             $task->done = $nextDoneState;
-            error_log($task->done);
-            error_log($task->id);
             $task->save();
         }
     }
@@ -244,7 +251,6 @@ class TaskController extends Controller
     private function projectSort(string $projectId)
     {
         $userId = Auth::id();
-        // error_log(Project::find($projectId));
         $sort = Project::find($projectId)
             ->users()
             ->newPivotStatement()
@@ -271,10 +277,5 @@ class TaskController extends Controller
             default:
                 return ['id', 'asc'];
         }
-    }
-
-    private function getTime(int $futureSeconds = 0)
-    {
-        return date('Y-m-d\TH:i:s.000000\Z', time() + $futureSeconds);
     }
 }

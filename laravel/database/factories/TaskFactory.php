@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Functions\Functions;
 use App\Models\Project;
 use App\Models\Task;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -35,12 +36,14 @@ class TaskFactory extends Factory
                 // 'parentTask' => $randomTask,
                 'priority' => fake()->randomElement([0, 0, 0, 1, 2, 3]),
                 'parent_id' => $randomTask->id,
-                'project_id' => $randomTask->project->id
+                'project_id' => $randomTask->project->id,
+                'alert' => true,
             ];
         } else {
             
             return [
                 'name' => fake()->words(3, true),
+                'deadline' => fake()->boolean() ? Functions::getFutureTime(40000) : NULL,
                 'description' => fake()->words(rand(0, 10), true),
                 'priority' => fake()->randomElement([0, 0, 0, 1, 2, 3]),
                 // 'done' => fake()->boolean(),
