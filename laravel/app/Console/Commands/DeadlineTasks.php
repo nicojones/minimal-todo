@@ -34,7 +34,7 @@ class DeadlineTasks extends Command
      */
     public function handle()
     {
-        $fromHoursInAdvance = 0;
+        $fromHoursInAdvance = 23;
         $toHoursInAdvance = 24;
 
         $tasksWithDeadline = Task::whereNotNull('deadline')

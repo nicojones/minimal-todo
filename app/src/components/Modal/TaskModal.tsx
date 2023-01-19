@@ -114,8 +114,6 @@ export const TaskModal = ({
       deadline: +new Date(taskDeadline),
     };
 
-    console.log(taskToUpdate);
-
     if (Object.values(validateTask(taskToUpdate)).length) {
       setTaskErrors(validateTask(taskToUpdate));
       return;
