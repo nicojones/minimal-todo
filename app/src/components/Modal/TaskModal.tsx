@@ -110,7 +110,7 @@ export const TaskModal = ({
       starred: taskIsStarred,
       done: taskDone,
       tags: taskTags.split(/[,\s]+/).filter(Boolean),
-      alert: taskAlert,
+      alert: +new Date(taskAlert),
       deadline: +new Date(taskDeadline),
     };
 
