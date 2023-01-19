@@ -15,7 +15,7 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "php-open-source-saver/jwt-auth": "^2.0",
-        "swiftmailer/swiftmailer": "^5.4"
+        "symfony/mailer": "6.3.x-dev"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
