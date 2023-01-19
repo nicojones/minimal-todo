@@ -1604,6 +1604,11 @@
     "schema-utils" "^3.0.0"
     "source-map" "^0.7.3"
 
+"@primer/octicons-react@^17.10.2":
+  "integrity" "sha512-PjaIwdQ46UE2fgpwzAGUqxxqOJgsn+SBYKjeFbIwpkI8SEzIiSRebwk+LexFqOeWEdvbDfMTHptZMfXksacgxQ=="
+  "resolved" "https://registry.npmjs.org/@primer/octicons-react/-/octicons-react-17.10.2.tgz"
+  "version" "17.10.2"
+
 "@rollup/plugin-babel@^5.2.0":
   "integrity" "sha512-WFfdLWU/xVWKeRQnKmIAQULUI7Il0gZnBIH/ZFO069wYIfPu+8zrfp/KMW0atmELoRDq8FbiP3VCss9MhCut7Q=="
   "resolved" "https://registry.npmjs.org/@rollup/plugin-babel/-/plugin-babel-5.3.1.tgz"
@@ -6872,11 +6877,6 @@
   "integrity" "sha512-6qE4B9deFBIa9YSpOc9O0Sgc43zTeVYbgDT5veRKSlB2+ZuHNoVVxA1L/ckMUayV9Ay9y7Z/SZCLcGteW9i7bg=="
   "resolved" "https://registry.npmjs.org/material-colors/-/material-colors-1.2.6.tgz"
   "version" "1.2.6"
-
-"materialize-css@^1.0.0":
-  "integrity" "sha512-4/oecXl8y/1i8RDZvyvwAICyqwNoKU4or5uf8uoAd74k76KzZ0Llym4zhJ5lLNUskcqjO0AuMcvNyDkpz8Z6zw=="
-  "resolved" "https://registry.npmjs.org/materialize-css/-/materialize-css-1.0.0.tgz"
-  "version" "1.0.0"
 
 "mdn-data@2.0.14":
   "integrity" "sha512-dn6wd0uw5GsdswPFfsgMp5NSB0/aDe6fK94YJV/AJDYXL6HVLWBsxeq7js7Ad+mU2K9LAlwpk6kN2D5mwCPVow=="

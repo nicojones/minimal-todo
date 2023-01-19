@@ -1,6 +1,8 @@
 import React from "react";
 import { PDefault } from "../../interfaces";
 
+import styles from "./Modal.module.scss";
+
 interface ModalAttrs {
   children: any;
   modalOpen: boolean;
@@ -23,11 +25,11 @@ export const Modal = ({
 }: ModalAttrs) =>
   modalOpen ? (
     <>
-      <div className={"modal"}>
+      <div className={styles.modal}>
         <div className={loading ? " loader-input cover" : ""}>
-          {header ? <div className="modal-header">{header}</div> : null }
-          <div className="modal-content">{children}</div>
-          <div className="modal-footer">
+          {header ? <h2 className={styles.modalHeader}>{header}</h2> : null }
+          <div className={styles.modalContent}>{children}</div>
+          <div className={styles.modalFooter}>
             {okButton && (
               <button
                 onClick={onAccept}

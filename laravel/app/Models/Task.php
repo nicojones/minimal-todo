@@ -55,7 +55,7 @@ class Task extends Model
         'expanded' => 'boolean',
         'done' => 'boolean',
         'deadline' => 'datetime',
-        'alert' => 'boolean',
+        'alert' => 'datetime',
         'starred' => 'boolean',
         'notify_me' => 'boolean',
         'email_me' => 'boolean'

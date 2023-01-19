@@ -9,7 +9,7 @@ import { showToast } from "./toast";
 const defaultHeaders = (): Record<string, string> => {
   const headers: Record<string, string> = {};
 
-  // headers.Accept = "application/json";
+  headers.Timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   if (localStorage.getItem(constants.storageKey.AUTH_TOKEN)) {
     headers.Authorization = localStorage.getItem(
       constants.storageKey.AUTH_TOKEN
@@ -22,7 +22,7 @@ const defaultHeaders = (): Record<string, string> => {
 export const minimalAxios = <T, BodyType = T>(
   method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE",
   url: string,
-  extra?: { body?: BodyType, error?: string; default?: T | null }
+  extra?: { body?: BodyType; error?: string; default?: T | null }
 ): Observable<T> => {
   return from<Promise<T>>(
     axios
@@ -39,11 +39,16 @@ export const minimalAxios = <T, BodyType = T>(
           showToast("error", (response.data as ValidationResponse).message);
           return Promise.reject(null);
         }
-        return response.data
+        return response.data;
       })
       .catch((e: CaughtPromise) => {
         if (e) {
-          AuthService.handleError(e, extra?.error ? `${extra.error}: ${String(e).replace("Error: ", "")}` : String(e));
+          AuthService.handleError(
+            e,
+            extra?.error
+              ? `${extra.error}: ${String(e).replace("Error: ", "")}`
+              : String(e)
+          );
         }
         console.error(String(e), e);
         return (extra?.default || null) as T;

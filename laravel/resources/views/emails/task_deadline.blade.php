@@ -1,21 +1,59 @@
+@inject('functions', '\App\Functions\Functions')
+
 <!DOCTYPE html>
 <html lang="en-US">
-  <head>
-    <meta charset="utf-8" />
-  </head>
-  <body>
-    <h1>Hello John!</h1>
+<head>
+  <meta charset="utf-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Maven+Pro&family=Roboto:wght@300&display=swap" rel="stylesheet">
+</head>
+<body style="font-family: 'Maven Pro', 'Roboto', sans-serif !important; font-size: 16px;">
+  <h1><img src="{{ env('APP_URL') }}/logo.png" style="height: 40px;"> MinimalTodo</h1>
 
-    <h2>The deadline for "Clean Dishes" and other tasks is in 24 hours</h2>
+  <h2>Hello {{ $user->name }}!</h2>
+  <h2 style="font-family: 'Maven Pro', 'Roboto', sans-serif;">The deadline for <i>{{ $projects[0]['taskData'][0]['name'] }}</i>
+        @if ($taskCount > 1)
+          and {{ $taskCount - 1 }} other tasks are
+        @else 
+          is
+        @endif
+        in 24 hours or sooner.
+  </h2>
 
-    <p>You are receiving this email because you have alerts for several of your todo tasks</p>
+  @foreach ($projects as $project)
+  <h3>
+    Project: <span style="display:inline-block; width: 12px; height: 12px; border-radius: 100%; background-color: {{$project['project']['color']}}"></span>
+    <a href="{{env('APP_URL')}}/app/{{$project['project']['id']}}" target="_blank">{{ $project['project']['name'] }}</a>
+  </h3>
+  <small style="color: #aaa">
+    @if($project['hasOtherUsers'])
+      @foreach($project['users'] as $_user)
+        @if(!$loop->first && !$loop->last),@endif
+        @if(!$loop->first && $loop->last) and @endif
+        <b>{{ $_user['name'] }}</b>
+      @endforeach
     
-    <ul>
-      <li>Clean Dishes (from Household Tasks list) has a deadline for 19/01/2023 at 10AM</li>
-      <li>Buy Food (from Household Tasks list) has a deadline for 19/01/2023 at 2 PM</li>
-      <li>Meditate (from Personal Well-being list) has a deadline for 18/01/2023 at 10PM</li>
-    </ul>
+      @if(count($project['users']) == 1)
+      is also a member and has been notified.
+      @else 
+        are also members and have been notified.
+      @endif
+    @endif
+  </small>
+  <ul style="list-style-type: none">
+    @foreach ($project['taskData'] as $taskData)
+    <li style="margin-bottom: 15px;">
+      <span style="display:inline-block; width: 12px; height: 12px; border-radius: 1px; border: 2px solid {{ $functions::priorityColor($taskData['priority']) }}"></span>
+      <b>{{ $taskData['name'] }}</b> &rarr; deadline on @displayDate($taskData['deadline']).
+    </li>
+    @endforeach
+  </ul>
+  @endforeach
 
-    <p>You can disable this notification by setting "alerts = none" on each of the tasks, or by modifying your general preferences to not send any email alerts</p>
-  </body>
+  <p>
+    You are receiving this email because you have alerts for several of your todo tasks <br />
+    You can disable this notification by setting "alerts = none" on each of the tasks.
+  </p>
+</body>
 </html>

@@ -50,7 +50,7 @@ export const NewProject = ({isLoading, setIsLoading}: NewProjectAttrs) => {
           </label>
         </button>
         <input
-          className="invisible add-project__input btn-pl"
+          className="input transparent w-100 add-project__input btn-pl"
           onChange={(e) => setNewProjectName(e.target.value)}
           required
           minLength={3}

@@ -37,19 +37,23 @@ class TaskFactory extends Factory
                 'priority' => fake()->randomElement([0, 0, 0, 1, 2, 3]),
                 'parent_id' => $randomTask->id,
                 'project_id' => $randomTask->project->id,
-                'alert' => true,
+                // 'alert' => true,
             ];
         } else {
+
+            $deadline = fake()->boolean() ? Functions::getFutureTime(rand(40000, 200000)) : NULL;
+            $alert = ($deadline && fake()->boolean()) ? Functions::getFutureTime(fake()->randomElement([1000, 3000, 10000, 20000, 40000])) : null;
             
             return [
                 'name' => fake()->words(3, true),
-                'deadline' => fake()->boolean() ? Functions::getFutureTime(40000) : NULL,
                 'description' => fake()->words(rand(0, 10), true),
                 'priority' => fake()->randomElement([0, 0, 0, 1, 2, 3]),
                 // 'done' => fake()->boolean(),
                 // 'expanded' => fake()->boolean(),
                 // 'level' => 1,
                 // 'parent_task_id' => null,
+                'alert' => $alert,
+                'deadline' => $deadline,
                 'project_id' => $randomProject->id
             ];
         }

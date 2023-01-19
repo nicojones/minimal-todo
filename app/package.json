@@ -15,10 +15,10 @@
     "deploy": "gh-pages -d build"
   },
   "dependencies": {
+    "@primer/octicons-react": "^17.10.2",
     "axios": "^0.21.0",
     "jotai": "^1.12.1",
     "jwt-decode": "3.1.2",
-    "materialize-css": "^1.0.0",
     "react": "^18.2.0",
     "react-color": "^2.19.3",
     "react-datetime-picker": "^4.1.1",

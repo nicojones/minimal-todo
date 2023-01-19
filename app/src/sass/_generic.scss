@@ -9,6 +9,9 @@
 .mt-5 {
   margin-top: 5px;
 }
+.mt-10 {
+  margin-top: 10px;
+}
 
 .ml-27 {
   margin-left: 27px;
@@ -39,7 +42,7 @@
   padding: 0 !important;
 }
 .pt-4 {
-  padding: 4px !important;
+  padding-top: 4px !important;
 }
 .p-10 {
   padding: 10px !important;
@@ -70,10 +73,10 @@
 }
 
 .btn-pr {
-  padding-right: $todo-button-padding !important;
+  margin-right: $todo-button-padding !important;
 }
 .btn-pl {
-  padding-left: $todo-button-padding !important;
+  margin-left: $todo-button-padding !important;
 }
 .btn-p {
   @extend .btn-pr;
@@ -257,6 +260,10 @@ button:focus {
   background: transparent !important; // set by FORMS!!!;
 }
 
+button {
+  cursor: pointer;
+}
+
 .material-icons.small-icon {
   font-size: .9rem;
 }
@@ -268,6 +275,10 @@ button:focus {
 
 .react-datetime-picker__wrapper {
   border: none !important;
+
+  input {
+    height: 1.1rem !important;
+  }
 }
 
 .chip {
@@ -275,4 +286,8 @@ button:focus {
   padding: .3rem;
   background-color: $very-subtle-color;
   font-size: .5rem;
+}
+
+.react-calendar__month-view__days__day {
+  height: 2.5rem;
 }

@@ -1,11 +1,16 @@
 <?php
 
+use App\Functions\Functions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
+use App\Mail\TaskNotificationMail;
+use App\Models\Task;
 use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,3 +54,61 @@ Route::controller(TaskController::class)->group(function () {
     Route::delete('/tasks/{taskId}', 'delete');
     Route::delete('/tasks/{projectId}/all-tasks', 'deleteTasks');
 })->middleware('auth');
+
+Route::get("/email", function () {
+    $fromHoursInAdvance = 0;
+        $toHoursInAdvance = 24;
+        $tasksWithDeadline = Task::whereNotNull('deadline')
+            ->where('alert', true)
+            ->where('deadline', '<', Functions::getFutureTime($toHoursInAdvance * 60 * 60))
+            ->where('deadline', '>', Functions::getFutureTime($fromHoursInAdvance * 60 * 60))
+            ->with('project.users')
+            ->get();
+
+        error_log(count($tasksWithDeadline));
+
+        $taskDataByUser = [];
+        foreach ($tasksWithDeadline as $task) {
+            Log::info('TASK: ' . $task->project->users);
+            $taskUsers = $task->project->users;
+            foreach ($taskUsers as $user) {
+                error_log('Task user: ' . $user->email);
+                if (empty($taskDataByUser[$user->id])) {
+                    $taskDataByUser[$user->id] = [
+                        'user' => $user,
+                        'tasks' => []
+                    ];
+                }
+
+                error_log("unix " . $task->deadline->timestamp);
+                $taskDataForUser = [
+                    'task' => $task,
+                    'deadline' => $task->deadline,
+                    'project' => $task->project,
+                    'hasOtherUsers' => count($task->project->users) > 1,
+                    'users' => array_filter(
+                        $task->project->users->toArray(),
+                        function ($_user) use ($user) {
+                            // error_log(join(' // ', $_user));
+                            return $user->id 
+                            !== $_user['id'];
+                        }
+                    )
+                ];
+
+                $taskDataByUser[$user->id]['tasks'][] = $taskDataForUser;
+            }
+        }
+
+        error_log('potato');
+        error_log('here: ' . json_encode($taskDataByUser));
+        error_log('carrot');
+        
+        foreach ($taskDataByUser as $userId => $taskDataForUser) {
+            $user = $taskDataForUser['user'];
+            
+            error_log('data: ' . json_encode($taskDataForUser));
+            return new TaskNotificationMail($taskDataForUser);
+            // Mail::to($user->email)->send(new TaskNotificationMail($taskDataForUser));
+        }
+});

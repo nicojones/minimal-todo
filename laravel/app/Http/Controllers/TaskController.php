@@ -8,10 +8,12 @@ use App\Mail\TaskNotificationMail;
 use App\Models\Project;
 use App\Models\Tag;
 use App\Models\Task;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class TaskController extends Controller
@@ -29,36 +31,6 @@ class TaskController extends Controller
         }
 
         $tasks = [];
-
-        $fromHoursInAdvance = 0;
-        $toHoursInAdvance = 24;
-        $tasksWithDeadline = Task::whereNotNull('deadline')
-            ->where('alert', true)
-            ->where('deadline', '<', Functions::getFutureTime($toHoursInAdvance * 60 * 60))
-            ->where('deadline', '>', Functions::getFutureTime($fromHoursInAdvance * 60 * 60))
-            ->with('project.users')
-            ->get();
-
-        error_log(count($tasksWithDeadline));
-
-        foreach ($tasksWithDeadline as $task) {
-            error_log('TASK: ' . $task->project->users);
-            foreach($task->project->users as $user) {
-                error_log('Task user: '. $user->email);
-
-                $data = [
-                    'task_message' => 'hello!'
-                    // 'Task name: ' . $task->name . ' has a deadline on ' . $task->deadline
-                ];
-                // error_log(view('emails.task_deadline', $data)->toString());
-                // new TaskNotificationMail($user->email, $data);
-                Mail::to($user->email)->send(new TaskNotificationMail($user->email, $data));
-
-                // $mail = new TaskNotificationMail($user->email, []);
-                // $mail->createAndSend();
-            }
-        }
-
 
         switch ($projectId) {
             case "today":
@@ -152,8 +124,8 @@ class TaskController extends Controller
             'url' => 'nullable|url',
         ]);
 
-        error_log("deadline: " . $request->deadline);
-        error_log('get time: ' . Functions::getTime($request->deadline));
+        // error_log("deadline: " . $request->deadline);
+        // error_log('get time: ' . Functions::getTime($request->deadline));
 
         $task = Task::find($request->id);
         $task->priority = $request->priority;
@@ -168,7 +140,7 @@ class TaskController extends Controller
         $task->starred = $request->starred ?? false;
 
         $task->deadline = $request->deadline ? ($request->deadline / 1000) : null;
-        $task->alert = $request->alert ?? false;
+        $task->alert = $request->alert ? ($request->alert / 1000) : null;
 
         $task->background_color = $request->backgroundColor ?? "";
 

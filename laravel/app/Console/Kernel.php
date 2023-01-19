@@ -17,7 +17,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule
             ->command('email:deadline-tasks')
-            ->everyMinute()
+            ->hourly()
             ->sendOutputTo("/Users/nico/Documents/Projects/minimaltodo/laravel/dumps/schedule.txt");
     }
 

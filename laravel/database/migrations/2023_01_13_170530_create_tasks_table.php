@@ -25,7 +25,7 @@ return new class extends Migration
             $table->integer('priority')->default(0);
 
             $table->timestamp('deadline')->nullable();
-            $table->boolean('alert')->default(1);
+            $table->timestamp('alert')->nullable();
             $table->boolean('notify_me')->default(false);
             $table->boolean('email_me')->default(false);
             $table->boolean('starred')->default(false);

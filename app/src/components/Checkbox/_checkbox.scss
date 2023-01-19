@@ -1,0 +1,40 @@
+
+.custom-cb {
+
+  position: fixed;
+  left: -1000rem;
+
+  &+div {
+    cursor: pointer;
+    margin-right: 10px;
+    display: inline-block;
+    margin-top: -3px;
+  }
+
+  &+div:after {
+    content: "check_box_outline_blank";
+    font-family: "Material Icons", sans-serif;
+    font-size: 1.3rem;
+    //top: -.25rem;
+    position: relative;
+
+    //content: "";
+    //background-image: url('../assets/check/empty.svg');
+    //width: 20px;
+    //height: 20px;
+    //display: inline-block;
+    //top: 2px;
+  }
+
+  &:checked+div:after {
+    content: "check_box";
+    //content: "";
+    // background-image: url('../assets/check/full.svg');
+  }
+
+  //&:hover + div:after {
+  //  content: "";
+  //  background-image: url('../assets/check/half.svg');
+  //}
+
+}

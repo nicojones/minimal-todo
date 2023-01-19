@@ -128,6 +128,7 @@ export const AddUserModal = ({
             <input
               value={searchTerm}
               type="email"
+              className="input w-100"
               required
               placeholder={text.sharedProject.addByEmail}
               onChange={(e) => setSearchTerm(e.target.value)}

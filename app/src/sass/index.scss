@@ -1,19 +1,25 @@
-@import 'src/sass/material';
-
 @import 'src/sass/colors';
-@import 'src/sass/generic';
 
-@import 'src/sass/forms';
+* {
+  box-sizing: border-box;
+}
 
-
-@import 'src/sass/app';
+html {
+  font-size: 16px;
+}
 
 body {
   background: $app-background-color;
 
   //overflow: hidden; // !!!!! TODO - we should be able to solve this without the hidden!
   overflow-x: hidden;
+  margin: 0;
 }
+
+@import 'src/sass/material';
+@import 'src/sass/generic';
+@import 'src/sass/forms';
+@import 'src/sass/app';
 
 #root {
   display: flex;
@@ -33,7 +39,7 @@ body {
 //  color: $primary-color-bg-text !important;
 //}
 
-@media only screen and (min-width: 0) {
+@media (pointer: coarse) {
   html {
     font-size: 16px !important;
   }

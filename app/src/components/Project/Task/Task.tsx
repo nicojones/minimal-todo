@@ -11,6 +11,7 @@ import { Observable, of, switchMap, tap } from "rxjs";
 import { useAtom } from "jotai";
 import { projectAtom } from "store";
 import { TaskInfo } from "./TaskInfo";
+import { Checkbox } from "components/Checkbox/Checkbox";
 
 interface TaskAttrs {
   task: ITask;
@@ -146,13 +147,7 @@ export const Task = ({
         ) : null}
 
         <label className={"left prio-" + task.priority}>
-          <input
-            type="checkbox"
-            className="material-cb"
-            checked={task.done}
-            onChange={() => toggleCompleted(task)}
-          />
-          <div />
+          <Checkbox checked={task.done} onChange={() => toggleCompleted(task)} />
         </label>
         <button
           className={"left-align ib pt-4 d-flex " + (task.done ? "" : "")}

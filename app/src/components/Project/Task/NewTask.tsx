@@ -82,7 +82,7 @@ export const NewTask = ({
           <div className="input-group mb-2">
             <input
               onChange={taskNameChange}
-              className="invisible f-100 btn-pl"
+              className="w-100 transparent f-100 btn-pl"
               placeholder={addTaskPh}
               required
               autoCapitalize="none"

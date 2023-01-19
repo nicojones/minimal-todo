@@ -27,6 +27,7 @@ import { TaskService, showToast } from "services";
 import { projectAtom, tasksAtom } from "store";
 
 import "./task-modal.scss";
+import { Checkbox } from "components/Checkbox/Checkbox";
 
 interface TaskModalAttrs {
   trigger?: {
@@ -51,9 +52,9 @@ export const TaskModal = ({
   const [taskDeadline, setTaskDeadline] = useState<ITask["deadline"]>(
     task.deadline || 0
   );
-  const [taskAlert, setTaskAlert] = useState<ITask["alert"]>(task.alert || 0);
+  const [taskAlert, setTaskAlert] = useState<ITask["alert"]>(task.alert ?? 0);
   const [taskName, setTaskName] = useState<ITask["name"]>(task.name || "");
-  const [taskDone, setTaskDone] = useState<ITask["done"]>(task.done || false);
+  const [taskDone, setTaskDone] = useState<ITask["done"]>(task.done ?? false);
   const [taskTags, setTaskTags] = useState<string>((task.tags || []).join(" "));
   const [taskDesc, setTaskDesc] = useState<ITask["description"]>(
     task.description || ""
@@ -81,12 +82,12 @@ export const TaskModal = ({
     setSubtasks(task.subtasks || []);
     setTaskDesc(task.description || "");
     setTaskUrl(task.url || "");
-    setTaskDone(task.done || false);
+    setTaskDone(task.done ?? false);
     setTaskNotes(task.notes || "");
     setTaskTags((task.tags || []).join(" "));
     setTaskDeadline(task.deadline || 0);
     setTaskAlert(task.alert || 0);
-    setTaskStarred(task.starred || false);
+    setTaskStarred(task.starred ?? false);
     setBackgroundColor(task.backgroundColor || null);
     setPriority(task.priority || 0);
   }, [task]);
@@ -109,7 +110,7 @@ export const TaskModal = ({
       starred: taskIsStarred,
       done: taskDone,
       tags: taskTags.split(/[,\s]+/).filter(Boolean),
-      alert: +new Date(taskAlert),
+      alert: taskAlert,
       deadline: +new Date(taskDeadline),
     };
 
@@ -182,24 +183,19 @@ export const TaskModal = ({
           <div>
             <div className="flex-row flex-wrap flex-between">
               <span className="flex-row">
-                <label className="d-flex align-center">
-                  <label title={text.task.done} className="ml-5">
-                    <input
-                      type="checkbox"
-                      className="material-cb"
-                      checked={taskDone}
-                      onChange={() => setTaskDone(!taskDone)}
-                    />
-                    <div />
-                  </label>
+                <label
+                  className={"d-flex align-center pointer prio-" + priority}
+                  title={text.task.done}
+                >
+                  <Checkbox checked={taskDone} onChange={setTaskDone} />
                   <span>{text.task.done}</span>
                 </label>
-                <label className="d-flex align-center">
+                <label className={`d-flex ml-27 starred align-center pointer starred-yellow ${
+                      taskIsStarred ? "is-starred" : "not-starred"
+                    }`}>
                   <button
                     title={text.task.starred}
-                    className={`ml-5 p-0 btn starred ${
-                      taskIsStarred ? "is-starred" : "not-starred"
-                    }`}
+                    className={"ml-5 mr-5 p-0 btn"}
                     onClick={() => setTaskStarred(!taskIsStarred)}
                     type="button"
                   >
@@ -232,6 +228,7 @@ export const TaskModal = ({
             {/*<label>{ text.task.name }</label>*/}
             <input
               value={taskName}
+              className="input w-100 lg"
               autoCapitalize="none"
               placeholder={text.task.name}
               onChange={(e) => setTaskName(e.target.value)}
@@ -242,7 +239,7 @@ export const TaskModal = ({
             {/*<label>{ text.task.descr }</label>*/}
             <input
               value={taskDesc}
-              className="materialize-textarea"
+              className="input w-100 lg"
               placeholder={text.task.descr}
               onChange={(e) => setTaskDesc(e.target.value)}
             />
@@ -254,27 +251,68 @@ export const TaskModal = ({
             {/*<label>{ text.task.url }</label>*/}
             <input
               value={taskUrl}
-              className="materialize-textarea"
+              className="input w-100 lg"
               placeholder={text.task.url}
               onChange={(e) => setTaskUrl(e.target.value)}
             />
             {taskErrors.url ? <small>{taskErrors.url}</small> : null}
           </div>
-          <div>
-            <label className="mr-5">{text.task.deadline}</label>
-            <DateTimePicker
-              onChange={(date: Date) => setTaskDeadline(+date)}
-              required={false}
-              minDate={new Date()}
-              value={taskDeadline ? new Date(taskDeadline) : undefined}
-            />
+          <div className="flex-row align-center mt-10 pt-4">
+            <span className="flex-row align-baseline">
+              <label className="mr-5">{text.task.deadline}</label>
+              <DateTimePicker
+                onChange={(date: Date) => {
+                  setTaskDeadline(+date);
+                  setTaskAlert(+date);
+                }}
+                required={false}
+                value={taskDeadline ? new Date(taskDeadline) : undefined}
+              />
+            </span>
+          </div>
+          <div className="flex-row align-center mt-10 pt-4">
+            <span className="flex-row align-baseline">
+              <label className="mr-5">{text.task.alert._}</label>
+              <DateTimePicker
+                onChange={(date: Date) => {
+                  setTaskAlert(+date);
+                }}
+                required={false}
+                value={taskAlert ? new Date(taskAlert) : undefined}
+              />
+              {/* <span
+                title={text.task.alert.title}
+                className={`ml-5 p-0 flex-row align-center starred starred-green ${
+                  taskAlert ? "" : "not-starred"
+                }`}
+              >
+                <i className="material-icons mr-5">email</i>
+                {taskAlert ? text.task.alert.yes : text.task.alert.no}
+              </span> */}
+            </span>
+            {/* <label
+              title={text.task.alert.title}
+              className="ml-27 flex-row align-center"
+            >
+              <button
+                title={text.task.alert.title}
+                className={`ml-5 p-0 btn flex-row align-center starred starred-green ${
+                  taskAlert ? "" : "not-starred"
+                }`}
+                onClick={() => setTaskAlert(!taskAlert)}
+                type="button"
+              >
+                <i className="material-icons mr-5">email</i>
+              </button>
+              {taskAlert ? text.task.alert.yes : text.task.alert.no}
+            </label> */}
             {taskErrors.deadline ? <small>{taskErrors.deadline}</small> : null}
           </div>
           <div style={{ display: "NONE" }}>
             {/*<label>{ text.task.notes }</label>*/}
             <input
               value={taskNotes}
-              className="materialize-textarea"
+              className="input w-100 lg"
               placeholder={text.task.notes}
               onChange={(e) => setTaskNotes(e.target.value)}
             />
@@ -284,7 +322,7 @@ export const TaskModal = ({
             {/* <label>{ text.task.tags }</label> */}
             <input
               value={taskTags}
-              className="materialize-textarea"
+              className="input w-100 lg"
               placeholder={text.task.tags}
               onChange={(e) => setTaskTags(e.target.value)}
             />
@@ -305,14 +343,17 @@ export const TaskModal = ({
         </form>
 
         <ul className="list-unstyled flex-column">
-          <li key="new-subtask" className={loadingST ? " loader-input" : ""}>
+          <li
+            key="new-subtask"
+            className={"mb-15 " + (loadingST ? " loader-input" : "")}
+          >
             <form onSubmit={saveSubtask} className="flex-row">
               <input
                 onChange={(e) => setSubtaskName(e.target.value)}
                 placeholder={addTaskPh}
                 value={subtaskName}
                 autoCapitalize="none"
-                className="input-field"
+                className="input lg w-100"
                 required
                 minLength={3}
               />

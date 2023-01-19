@@ -10,12 +10,6 @@
   display: inline-block;
   width: 100%;
 
-  //@media (pointer: fine) {
-  //  &:hover {
-  //    @include box_shadow();
-  //  }
-  //}
-
   .taskName {
     color: $primary-color-text;
   }
@@ -25,10 +19,6 @@
       text-decoration: line-through;
       color: $subtle-color;
     }
-
-    //.task-name, .material-cb + div {
-    //  opacity: 0.4;
-    //}
   }
 
   &.starred {
@@ -54,7 +44,9 @@
     .toggle-expand {
       // align-self: flex-start;
       padding: 0;
-      margin-right: .2rem !important;
+      margin-right: 0;
+      top: -3px;
+      position: relative;
     }
   }
 

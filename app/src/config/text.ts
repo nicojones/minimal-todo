@@ -6,12 +6,21 @@ export const text = {
   appDesc: "A simple, clean and minimalist Todo App",
   gotoApp: "Open app",
 
+  yes: "Yes",
+  no: "No",
+
   task: {
     done: "Completed",
     name: "Name of the task",
     tags: "#tags for this task",
     url: "http://example.com",
     deadline: "Deadline",
+    alert: {
+      _: "Notify me",
+      title: "Notify me via email one day before the deadline",
+      yes: "Notify me",
+      no: "Do not notify"
+    },
     projectDot: (name: string) => "Belongs to " + name,
     delete: {
       _: "Delete Task",

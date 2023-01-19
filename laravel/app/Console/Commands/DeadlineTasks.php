@@ -35,30 +35,56 @@ class DeadlineTasks extends Command
     public function handle()
     {
         $fromHoursInAdvance = 0;
-        // $fromHoursInAdvance = 23;
         $toHoursInAdvance = 24;
 
         $tasksWithDeadline = Task::whereNotNull('deadline')
             ->where('alert', true)
             ->where('deadline', '<', Functions::getFutureTime($toHoursInAdvance * 60 * 60))
             ->where('deadline', '>', Functions::getFutureTime($fromHoursInAdvance * 60 * 60))
+            ->with('project.users')
             ->get();
 
-        $this->info("length? " . count($tasksWithDeadline));
 
+        $taskDataByUser = [];
         foreach ($tasksWithDeadline as $task) {
-            $this->info('TASK: ' . $task->project->users);
-            foreach ($task->project->users as $user) {
-                $this->info('TASK: ' . $task->name . " for user " . $user->email);
+            $taskUsers = $task->project->users;
+            foreach ($taskUsers as $user) {
+                if (empty($taskDataByUser[$user->id])) {
+                    $taskDataByUser[$user->id] = [
+                        'user' => $user,
+                        'taskCount' => 0,
+                        'projects' => []
+                    ];
+                }
+                if (empty($taskDataByUser[$user->id]['projects'][$task->project->id])) {
+                    $taskDataByUser[$user->id]['projects'][$task->project->id] = [
+                        'project' => $task->project,
+                        'hasOtherUsers' => count($task->project->users) > 1,
+                        'task' => [],
+                        'users' => array_filter(
+                            $task->project->users->toArray(),
+                            function ($_user) use ($user) {
+                                return $user->id !== $_user['id'];
+                            }
+                        )
+                    ];
+                }
 
-                
-                $data = [
-                    'task_message' => 'hello!'
-                    // 'Task name: ' . $task->name . ' has a deadline on ' . $task->deadline
-                ];
-                // $this->info(view('emails.task_deadline', $data));
-                Mail::to($user->email)->send(new TaskNotificationMail($user->email, $data));
+                ++$taskDataByUser[$user->id]['taskCount'];
+
+                $taskDataByUser[$user->id]['projects'][$task->project->id]['taskData'][] = $task;
             }
+        }
+
+        foreach ($taskDataByUser as $taskDataForUser) {
+            $user = $taskDataForUser['user'];
+
+            Mail::to($user->email)->send(new TaskNotificationMail([
+                'user' => $taskDataForUser['user'],
+                'taskCount' => $taskDataForUser['taskCount'],
+                'projects' => array_values($taskDataForUser['projects']),
+            ]));
+            break;
         }
 
         return Command::SUCCESS;

@@ -33,10 +33,9 @@ class TaskNotificationMail extends Mailable
      *
      * @return void
      */
-    public function __construct(string $emailTo, $data)
+    public function __construct($data)
     {
         $this->data = $data;
-        $this->emailTo = $emailTo;
     }
 
     /**
@@ -79,7 +78,7 @@ class TaskNotificationMail extends Mailable
         $address = env('MAIL_FROM_ADDRESS');
         $name = env('MAIL_FROM_NAME');
 
-        // $this->log($this->data['message']);
+        // error_log($this->data);
 
         return $this->view($this->viewName)
             ->from($address, $name)
@@ -87,70 +86,6 @@ class TaskNotificationMail extends Mailable
             // ->bcc($address, $name)
             ->replyTo($address, $name)
             ->subject($this->subject)
-            ->with(['task_message' => 'example']);
-    }
-
-    public function createAndSend()
-    {
-        $address = env('MAIL_FROM_ADDRESS');
-        $name = env('MAIL_FROM_NAME');
-
-        $transport = new Swift_SendmailTransport( '/usr/sbin/sendmail -t' );
-
-        $transport = (new Swift_SmtpTransport(env('MAIL_HOST'), env('MAIL_PORT')))
-            ->setUsername(env('MAIL_USERNAME'))
-            ->setPassword(env('MAIL_PASSWORD'));
-
-        // Create the Mailer using your created Transport
-        $mailer = new Swift_Mailer($transport);
-
-        // Create a message
-        $message = (new Swift_Message($this->mailSubject))
-            ->setFrom([$address => $name])
-            ->setTo(['jones.godel@gmail.com'])
-            // ->setTo([$this->emailTo => $this->emailTo])
-            ->setBody('Here is the message itself');
-
-        // Send the message
-        $result = $mailer->send($message);
-
-        print_r($result);
-    }
-
-    public function send_test(string $emailTo, $data)
-    {
-        $address = env('MAIL_FROM_ADDRESS');
-        $name = env('MAIL_FROM_NAME');
-
-        $ch = curl_init();
-
-        curl_setopt($ch, CURLOPT_URL, 'https://api.sendgrid.com/v3/mail/send');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode([
-            'personalizations' => [
-                ['to' => [
-                    ['email' => $emailTo]
-                ]]
-            ],
-            'from' => ['email' => $address, 'name' => $name],
-            'subject' => $this->mailSubject,
-            'content' => [
-                ['type' => 'text/plain', 'value' => 'This is an example!']
-            ]
-        ]));
-
-        $headers = array();
-        $headers[] = 'Authorization: Bearer ' . env('MAIL_PASSWORD');
-        $headers[] = 'Content-Type: application/json';
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-        $result = curl_exec($ch);
-        if (curl_errno($ch)) {
-            print 'Error:' . curl_error($ch);
-        } else {
-            print "SUCCESSS!";
-        }
-        curl_close($ch);
+            ->with($this->data);
     }
 }

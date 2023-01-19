@@ -175,11 +175,11 @@ nav {
   color: $priority-high;
 }
 
-input:focus {
-  border-bottom: 1px solid $subtle-color !important;
-  box-shadow: 0 2px 0 0 $subtle-color !important;
-  box-sizing: border-box !important;
-}
+// input:focus {
+//   border-bottom: 1px solid $subtle-color !important;
+//   box-shadow: 0 2px 0 0 $subtle-color !important;
+//   box-sizing: border-box !important;
+// }
 
 .main-btn {
   //border-radius: 8px;
@@ -221,6 +221,9 @@ input:focus {
 }
 .align-center {
   align-items: center;
+}
+.align-baseline {
+  align-items: baseline;
 }
 
 ul.inline {

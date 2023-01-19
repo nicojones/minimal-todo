@@ -1,23 +1,20 @@
 @charset "UTF-8";
 
+@import "src/sass/colors";
+
 // https://materializecss.com/icons.html
 
 // Color
-@import "../../node_modules/materialize-css/sass/components/color-variables";
-@import "../../node_modules/materialize-css/sass/components/color-classes";
+// @import "../../node_modules/materialize-css/sass/components/color-variables";
+// @import "../../node_modules/materialize-css/sass/components/color-classes";
 
 $secondary-color: color("materialize-red", "lighten-1") !default;
 $font-family: "Maven Pro", "Roboto", sans-serif;
 // Variables;
-@import "../../node_modules/materialize-css/sass/components/variables";
+// @import "../../node_modules/materialize-css/sass/components/variables";
 
 // Reset
-@import "../../node_modules/materialize-css/sass/components/normalize";
-
-
-html {
-  box-sizing: border-box;
-}
+// @import "../../node_modules/materialize-css/sass/components/normalize";
 
 *,
 *:before,
@@ -33,18 +30,35 @@ html {
 .z-depth-4,
 .z-depth-5,
 .no-select {
-  abc: none;
+  // abc: none;
 }
 
+$button-border: none;
+$button-radius: 10px;
+$button-height: 2rem;
+$button-padding: .3rem;
+$button-font-size: inherit;
+$button-icon-font-size: inherit;
+$button-large-font-size: 1.2rem;
+$button-large-icon-font-size: 1.2rem;
+
+$h1-fontsize: 3rem;
+$h2-fontsize: 2.2rem;
+$h3-fontsize: 2rem;
+$h4-fontsize: 1.8rem;
+$h5-fontsize: 1.5rem;
+$h6-fontsize: 1.2rem;
+
 // shared styles
-.btn {
+.btn, button {
   border: $button-border;
   border-radius: $button-radius;
   display: inline-block;
   height: $button-height;
   line-height: $button-height;
   padding: $button-padding;
-  text-transform: uppercase;
+  font-size: $button-font-size;
+  // text-transform: uppercase;
   vertical-align: middle;
   background: transparent;
   -webkit-tap-highlight-color: transparent; // Gets rid of tap active state
@@ -54,7 +68,6 @@ html {
 .btn,
 .btn-large,
 .btn-small {
-  font-size: $button-font-size;
   outline: 0;
 
   i {
@@ -98,9 +111,9 @@ i.material-icons {
 //}
 //@import "../../node_modules/materialize-css/sass/components/buttons";
 
-@import "../../node_modules/materialize-css/sass/components/grid";
-@import "../../node_modules/materialize-css/sass/components/modal";
-@import "../../node_modules/materialize-css/sass/components/forms/forms";
+// @import "../../node_modules/materialize-css/sass/components/grid";
+// @import "../../node_modules/materialize-css/sass/components/modal";
+// @import "../../node_modules/materialize-css/sass/components/forms/forms";
 
 ul {
   list-style-type: none;
@@ -125,7 +138,7 @@ a {
 html {
   line-height: 1.5;
   font-weight: normal;
-  color: $off-black;
+  color: $black;
   font-family: $font-family;
 }
 
@@ -190,15 +203,6 @@ h6 {
 
 
 
-.modal {
-
-  display: inline-block;
-  z-index: 1000; // after 996 it's visible over the navbar
-  top: 10%;
-  max-height: 85%;
-
-
-}
 
 .fixed-action-btn {
   position: fixed;
@@ -219,58 +223,54 @@ input.as-title.h5 {
   @extend h5;
 }
 
-input.invisible {
-  height: 1.5rem;
-  margin: 0;
-  border-bottom: 0;
-  font-size: 1rem;
-
-  &:focus {
-    border-bottom: 0 !important;
-    box-shadow: none !important;
-  }
-
-  &[disabled] {
-    border-bottom: none;
+%no-outline-input {
+  // border: 0;
+  box-shadow: none !important;
+  outline: none;
+  border-width: 0 0 2px 0;
+  border-style: solid;
+  transition: border 300ms;
+  min-height: 1.5rem;
+  
+  &:focus, &:active, &:focus-visible {
   }
 }
 
+input, textarea {
+  @extend %no-outline-input;
 
-.material-cb {
-
-  &+div {
-    cursor: pointer;
-    margin-right: 10px;
-    display: inline-block;
-    margin-top: -3px;
+  &.lg {
+    min-height: 3rem;
   }
 
-  &+div:after {
-    content: "check_box_outline_blank";
-    font-family: "Material Icons", sans-serif;
-    font-size: 1.3rem;
-    //top: -.25rem;
-    position: relative;
-
-    //content: "";
-    //background-image: url('../assets/check/empty.svg');
-    //width: 20px;
-    //height: 20px;
-    //display: inline-block;
-    //top: 2px;
+  &.invisible {
+    margin: 0;
+    font-size: 1rem;
+    background: transparent;
+    border: none;
+  
+  
+    &[disabled] {
+      border-bottom: none;
+    }
   }
 
-  &:checked+div:after {
-    content: "check_box";
-    //content: "";
-    // background-image: url('../assets/check/full.svg');
+  &.input {
+    border-color: $subtle-color;
   }
 
-  //&:hover + div:after {
-  //  content: "";
-  //  background-image: url('../assets/check/half.svg');
-  //}
 
+  &.transparent {
+    border-color: transparent;
+    background-color: transparent;
+    &:focus, &:active, &:focus-visible {
+      border-bottom-color: $subtle-color;
+    }
+  }
+
+  &.w-100 {
+    width: 100%;
+  }
 }
 
 .material-icons {
@@ -289,12 +289,4 @@ input.invisible {
 .material-icons {
   text-rendering: optimizeLegibility;
   font-feature-settings: 'liga';
-}
-
-.modal {
-
-  .modal-header {
-    padding: 1.5rem 1.5rem 0.5rem 1.5rem;
-    font-size: 1.5rem;
-  }
 }
