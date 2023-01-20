@@ -31,3 +31,6 @@ functions/util/config.js
 functions/firebase-debug.log
 firestore-debug.log
 ui-debug.log
+
+# located in the server
+env.production 
