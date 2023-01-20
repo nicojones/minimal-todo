@@ -40,6 +40,7 @@ class Project extends Model
         'users'
     ];
 
+    public $pivotTableUserId;
 
     public function users()
     {
@@ -67,22 +68,26 @@ class Project extends Model
 
     public function getShowCompletedAttribute()
     {
-        return $this->userPivotTable()->show_completed;
+        $pivotTable = $this->userPivotTable();
+        return $pivotTable ? $pivotTable->show_completed : false;
     }
 
     public function getIconAttribute()
     {
-        return $this->userPivotTable()->icon;
+        $pivotTable = $this->userPivotTable();
+        return $pivotTable ? $pivotTable->icon : ProjectIconEnum::CIRCLE;
     }
 
     public function getColorAttribute()
     {
-        return $this->userPivotTable()->color;
+        $pivotTable = $this->userPivotTable();
+        return $pivotTable ? $pivotTable->color : null;
     }
 
     public function getSortAttribute()
     {
-        return $this->userPivotTable()->sort;
+        $pivotTable = $this->userPivotTable();
+        return $pivotTable ? $pivotTable->sort : ProjectSortEnum::OLDEST_FIRST;
     }
 
     public function delete()
@@ -101,7 +106,7 @@ class Project extends Model
         return $this
             ->projectUsers()
             ->where("project_id", $this->id)
-            ->where("user_id", Auth::id())
+            ->where("user_id", Auth::id() ?? $this->pivotTableUserId)
             ->first();
     }
 }

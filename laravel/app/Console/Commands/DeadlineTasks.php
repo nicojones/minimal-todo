@@ -34,14 +34,13 @@ class DeadlineTasks extends Command
      */
     public function handle()
     {
-        $fromHoursInAdvance = 23;
-        $toHoursInAdvance = 24;
+        $fromHoursInAdvance = 0;
+        $toHoursInAdvance = 1;
 
-        $tasksWithDeadline = Task::whereNotNull('deadline')
-            ->where('alert', true)
-            ->where('deadline', '<', Functions::getFutureTime($toHoursInAdvance * 60 * 60))
-            ->where('deadline', '>', Functions::getFutureTime($fromHoursInAdvance * 60 * 60))
-            ->with('project.users')
+        $tasksWithDeadline = Task::whereNotNull('alert')
+            ->where('alert', '>', Functions::getFutureTime($fromHoursInAdvance * 60 * 60))
+            ->where('alert', '<', Functions::getFutureTime($toHoursInAdvance * 60 * 60))
+            ->with('project', 'project.users')
             ->get();
 
 
@@ -49,6 +48,9 @@ class DeadlineTasks extends Command
         foreach ($tasksWithDeadline as $task) {
             $taskUsers = $task->project->users;
             foreach ($taskUsers as $user) {
+                // Manually set the userID we need to retrieve Pivot Table data from.
+                $task->project->pivotTableUserId = $user->id;
+                
                 if (empty($taskDataByUser[$user->id])) {
                     $taskDataByUser[$user->id] = [
                         'user' => $user,
@@ -78,6 +80,8 @@ class DeadlineTasks extends Command
 
         foreach ($taskDataByUser as $taskDataForUser) {
             $user = $taskDataForUser['user'];
+
+            $this->info("sending to: " . $user->email);
 
             Mail::to($user->email)->send(new TaskNotificationMail([
                 'user' => $taskDataForUser['user'],

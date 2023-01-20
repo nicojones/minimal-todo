@@ -1,26 +1,3 @@
-length? 2
-TASK: [{"id":"00000000-ac96-41ea-b594-e8e2c6ebee5f","name":"Nico","email":"nico@kupfer.es","is_admin":true},{"id":"984043b5-464c-424f-964e-8dd510aede6c","name":"Laverna Kunde","email":"abraham.schroeder@example.org","is_admin":false}]
-TASK: sed et est for user nico@kupfer.es
-
-   SendGrid\Mail\TypeException 
-
-  "$email" must be an instance of SendGrid\Mail\From or a valid email address
-
-  at vendor/sendgrid/sendgrid/lib/helper/Assert.php:33
-     29▕                 $property,
-     30▕                 $value
-     31▕             );
-     32▕ 
-  ➜  33▕             throw new TypeException($message);
-     34▕         }
-     35▕     }
-     36▕ 
-     37▕     /**
-
-      [2m+2 vendor frames [22m
-  3   app/Mail/TaskNotificationMail.php:76
-      SendGrid\Mail\Mail::setFrom()
-
-      [2m+12 vendor frames [22m
-  16  app/Console/Commands/DeadlineTasks.php:58
-      Illuminate\Mail\PendingMail::send(Object(App\Mail\TaskNotificationMail))
+[{"id":"98429b8f-91ff-479b-bc62-e519d277e83d","created_at":"2023-01-19T08:54:11.000000Z","updated_at":"2023-01-20T02:22:39.000000Z","name":"id illum nobis","description":"sit ut repudiandae rerum ut esse et","done":false,"expanded":false,"level":1,"priority":2,"deadline":"2023-01-21T14:12:33.000000Z","alert":"2023-01-20T03:02:00.000000Z","notify_me":false,"email_me":false,"starred":false,"background_color":"","url":"","notes":"","parent_id":null,"project_id":"98429b8f-6afe-4897-a8fa-115dfc90b7b9","icon":"circle","dotColor":null,"tags":[]}]
+{"id":"98429b8f-6afe-4897-a8fa-115dfc90b7b9","created_at":"2023-01-19T08:54:11.000000Z","updated_at":"2023-01-19T08:54:11.000000Z","name":"dolorem voluptatum quod","shared":true,"sort":"OLDEST_FIRST","show_completed":false,"color":null,"icon":"circle"}
+sending to: nico@kupfer.es

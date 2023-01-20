@@ -12,13 +12,12 @@
   <h1><img src="{{ env('APP_URL') }}/logo.png" style="height: 40px;"> MinimalTodo</h1>
 
   <h2>Hello {{ $user->name }}!</h2>
-  <h2 style="font-family: 'Maven Pro', 'Roboto', sans-serif;">The deadline for <i>{{ $projects[0]['taskData'][0]['name'] }}</i>
+  <h2 style="font-family: 'Maven Pro', 'Roboto', sans-serif;">You set an alert for
         @if ($taskCount > 1)
-          and {{ $taskCount - 1 }} other tasks are
-        @else 
-          is
+          <i>{{ $projects[0]['taskData'][0]['name'] }}</i> and {{ $taskCount - 1 }} other tasks.
+        @else
+          <i>{{ $projects[0]['taskData'][0]['name'] }}</i>.
         @endif
-        in 24 hours or sooner.
   </h2>
 
   @foreach ($projects as $project)
