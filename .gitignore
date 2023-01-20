@@ -3,7 +3,6 @@
 # dependencies
 /app/node_modules
 /app/build
-functions/node_modules
 
 /.pnp
 .pnp.js
@@ -25,12 +24,6 @@ functions/node_modules
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-# DO NOT UPLOAD the configuration file to github
-functions/util/config.js
-functions/firebase-debug.log
-firestore-debug.log
-ui-debug.log
 
 # located in the server
 env.production 
