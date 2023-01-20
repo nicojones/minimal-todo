@@ -129,6 +129,7 @@ export const text = {
 
   project: {
     s: "Projects",
+    goTo: "Go to project",
     noSelected: "Select a project or create a new one.",
     inspire: () =>
       randArray([

@@ -3,8 +3,10 @@ import todoLogo from "assets/logo.png";
 import { Link } from "react-router-dom";
 import { urls } from "config";
 
+import styles from "./Logo.module.scss"
+
 export const Logo = () => (
-  <Link className="btn center-logo" to={urls.home}>
+  <Link className={styles.centerLogo} to={urls.home}>
     <img src={todoLogo} alt="Logo" width="100%" />
   </Link>
 );

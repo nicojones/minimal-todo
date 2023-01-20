@@ -14,8 +14,9 @@
     color: $primary-color-text;
   }
 
-  &.done {
-    .task-name {
+  .task-name {
+    min-width: max-content;
+    &.done {
       text-decoration: line-through;
       color: $subtle-color;
     }

@@ -75,4 +75,7 @@ export const constants = {
     PB_USER: "PB_USER",
     AUTH_TOKEN: "AUTH_TOKEN",
   },
+  alertFormat: "dd/mm/yyyy 'at' HH:MM",
+  deadlineFormat: "dd/mm/yyyy",
+  deadlineTooltipFormat: "dd/mm/yyyy 'at' HH:MM"
 };

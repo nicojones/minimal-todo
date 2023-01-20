@@ -17,6 +17,7 @@
   "dependencies": {
     "@primer/octicons-react": "^17.10.2",
     "axios": "^0.21.0",
+    "dateformat": "^5.0.3",
     "jotai": "^1.12.1",
     "jwt-decode": "3.1.2",
     "react": "^18.2.0",
@@ -35,6 +36,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/user-event": "^14.4.3",
+    "@types/dateformat": "^5.0.0",
     "@types/jest": "^26.0.20",
     "@types/node": "^14.14.21",
     "@types/react": "^18.0.26",

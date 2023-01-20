@@ -163,6 +163,8 @@ $max-fff: 100 - $fff;
 .btn {
   border: 0;
   cursor: pointer;
+  border-radius: 0;
+  padding: .5rem 1rem ;
 
   &:focus, &:hover {
     background: transparent;
@@ -286,6 +288,7 @@ button {
   padding: .3rem;
   background-color: $very-subtle-color;
   font-size: .5rem;
+  min-width: max-content;
 }
 
 .react-calendar__month-view__days__day {

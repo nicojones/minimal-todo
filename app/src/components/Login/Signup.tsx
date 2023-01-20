@@ -78,6 +78,7 @@ export const Signup = () => {
             onChange={(e) => updateSignup({ name: e.target.value })}
             placeholder={text.login.f.name.ph}
             required
+            className="w-100 input lg"
             autoComplete="off"
           />
           {signupError.name && <small>{signupError.name}</small>}
@@ -91,6 +92,7 @@ export const Signup = () => {
             placeholder={text.login.f.email.ph}
             type="email"
             required
+            className="w-100 input lg"
             autoFocus
             autoComplete="off"
           />
@@ -114,6 +116,7 @@ export const Signup = () => {
             onChange={(e) => updateSignup({ password: e.target.value })}
             placeholder={text.login.f.password.ph}
             type="password"
+            className="w-100 input lg"
             required
             autoComplete="off"
           />

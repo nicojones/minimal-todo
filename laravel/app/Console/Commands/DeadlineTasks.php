@@ -50,7 +50,7 @@ class DeadlineTasks extends Command
             foreach ($taskUsers as $user) {
                 // Manually set the userID we need to retrieve Pivot Table data from.
                 $task->project->pivotTableUserId = $user->id;
-                
+
                 if (empty($taskDataByUser[$user->id])) {
                     $taskDataByUser[$user->id] = [
                         'user' => $user,
@@ -80,8 +80,6 @@ class DeadlineTasks extends Command
 
         foreach ($taskDataByUser as $taskDataForUser) {
             $user = $taskDataForUser['user'];
-
-            $this->info("sending to: " . $user->email);
 
             Mail::to($user->email)->send(new TaskNotificationMail([
                 'user' => $taskDataForUser['user'],

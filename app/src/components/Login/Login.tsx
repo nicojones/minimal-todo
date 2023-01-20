@@ -63,6 +63,7 @@ export const Login = () => {
           <label>{text.login.f.email._}</label>
           <input
             value={loginFormData.email || ""}
+            className="w-100 input lg"
             onChange={(e) =>
               setLoginFormData({
                 ...loginFormData,
@@ -79,6 +80,7 @@ export const Login = () => {
           <label>{text.login.f.password._}</label>
           <input
             value={loginFormData.password || ""}
+            className="w-100 input lg"
             onChange={(e) =>
               setLoginFormData({
                 ...loginFormData,

@@ -31,7 +31,7 @@ export const LandingPage = () => (
           />
         </div>
       </div>
-      <a data-name="features" style={{ position: "relative", top: -80 }} />
+      <a data-name="features" id="features" style={{ position: "relative", top: -80 }} />
       <div className="section-box">
         <h6 className="section-title">{text.landing.feature._}</h6>
         <div className="features-section">

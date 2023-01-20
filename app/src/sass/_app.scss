@@ -106,6 +106,7 @@ nav {
 
   .navbar-btn {
     color: $navbar-color-text;
+    padding: $navbar-item-padding;
   }
 
 }
@@ -144,7 +145,7 @@ nav {
 
   > .dropdown-item {
     display: flex;
-    padding: 0 4px;
+    padding: 0; // 4px;
     width: 100%;
     background: $dropdown-color;
     &:hover {
@@ -194,17 +195,6 @@ nav {
   }
 }
 
-.center-logo {
-  $icon-size: 0.8 * $header-height;
-  position: fixed;
-  height: $header-height;
-  width: $icon-size;
-  left: 50%;
-  margin-left: -0.5 * $icon-size;
-  display: flex;
-  align-items: center;
-}
-
 .p-0 {
   padding: 0;
 }
@@ -224,6 +214,9 @@ nav {
 }
 .align-baseline {
   align-items: baseline;
+}
+.justify-between {
+  justify-content: space-between;
 }
 
 ul.inline {

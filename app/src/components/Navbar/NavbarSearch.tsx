@@ -65,7 +65,7 @@ export const NavbarSearch = () => {
                 showDot={true}
                 showActions={true}
                 onTaskToggle={() => reloadProjectTasks().subscribe()}
-                showGoToProject={false}
+                showGoToProject={true}
                 singleLevel={true}
               />
             ))}

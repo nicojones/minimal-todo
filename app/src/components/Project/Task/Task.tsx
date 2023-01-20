@@ -9,7 +9,7 @@ import "./_task.scss";
 import { useHistory } from "react-router-dom";
 import { Observable, of, switchMap, tap } from "rxjs";
 import { useAtom } from "jotai";
-import { projectAtom } from "store";
+import { projectAtom, projectsAtom } from "store";
 import { TaskInfo } from "./TaskInfo";
 import { Checkbox } from "components/Checkbox/Checkbox";
 
@@ -31,16 +31,16 @@ export const Task = ({
   showGoToProject,
   singleLevel,
 }: TaskAttrs) => {
-  const history = useHistory();
   const [subtasks, setSubtasks] = useState<ITask[]>(task.subtasks || []);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [expandedTask, setExpandedTask] = useState<boolean>(
     task.expanded || false
   );
 
-  const { reloadProjectTasks } = useContext<IProjectContext>(ProjectContext);
+  const { reloadProjectTasks, changeToProject } = useContext<IProjectContext>(ProjectContext);
 
   const [project] = useAtom<IProject | null>(projectAtom);
+  const [projects] = useAtom<IProject[]>(projectsAtom);
 
   const doneClass = (task.done && project?.show_completed && "done") || "";
   // const doneClass = (task.checked ? (project.show_completed ? 'done' : '') : '');
@@ -131,7 +131,8 @@ export const Task = ({
         {showGoToProject ? (
           <button
             className="btn p-0"
-            onClick={() => history.push(urls.project(task.project_id))}
+            title={text.project.goTo}
+            onClick={() => changeToProject(projects.find((p: IProject) => p.id === task.project_id) as IProject)}
           >
             <i className="material-icons small-icon mr-11">login</i>
           </button>

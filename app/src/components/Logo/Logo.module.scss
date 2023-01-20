@@ -1,0 +1,12 @@
+@import "src/sass/colors";
+
+.centerLogo {
+  $icon-size: 0.4 * $header-height;
+  position: fixed;
+  height: $header-height;
+  width: $icon-size;
+  left: 50%;
+  margin-left: -0.5 * $icon-size;
+  display: flex;
+  align-items: center;
+}

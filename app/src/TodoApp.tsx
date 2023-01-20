@@ -91,10 +91,6 @@ export const TodoApp = () => {
     if (value && value?.id !== project?.id) {
       setProject(value as IProject);
       history.push(urls.project(value?.id || ""));
-      return;
-    } else {
-      history.push(urls.app);
-      setProject(null);
     }
   };
 

@@ -16,6 +16,10 @@ $header-btn-m: 10px;
   display: inline-block;
 }
 
+.mobile .navbar-brand {
+  display: none;
+}
+
 .navbar {
   display: flex;
   flex-direction: row;
@@ -67,10 +71,12 @@ $header-btn-m: 10px;
     }
   }
 
-  .desktop & {
-      
+  .right-links {
+    margin-left: auto;
+  }
+
+  .desktop & {   
     .right-links {
-      margin-left: auto;
       display: flex;
       align-items: center;
       flex-direction: row;
