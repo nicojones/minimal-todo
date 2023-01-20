@@ -31,3 +31,4 @@ echo "COPY ENV"
 cp /var/www/minimaltodo-api/env.production /var/www/minimaltodo-api/laravel/.env
 
 echo "DONE"
+
