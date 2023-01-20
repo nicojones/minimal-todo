@@ -33,62 +33,6 @@ class TaskController extends Controller
         $tasks = [];
 
 
-        $fromHoursInAdvance = 0;
-        $toHoursInAdvance = 1;
-
-        $tasksWithDeadline = Task::whereNotNull('alert')
-            ->where('alert', '>', Functions::getFutureTime($fromHoursInAdvance * 60 * 60))
-            ->where('alert', '<', Functions::getFutureTime($toHoursInAdvance * 60 * 60))
-            ->with('project', 'project.users')
-            ->get();
-
-        error_log(json_encode($tasksWithDeadline));
-        error_log(json_encode($tasksWithDeadline[0]->project->users));
-        error_log(json_encode($tasksWithDeadline[0]->project));
-
-        return [];
-        $taskDataByUser = [];
-        foreach ($tasksWithDeadline as $task) {
-            $taskUsers = $task->project->users;
-            foreach ($taskUsers as $user) {
-                if (empty($taskDataByUser[$user->id])) {
-                    $taskDataByUser[$user->id] = [
-                        'user' => $user,
-                        'taskCount' => 0,
-                        'projects' => []
-                    ];
-                }
-                if (empty($taskDataByUser[$user->id]['projects'][$task->project->id])) {
-                    $taskDataByUser[$user->id]['projects'][$task->project->id] = [
-                        'project' => $task->project,
-                        'hasOtherUsers' => count($task->project->users) > 1,
-                        'task' => [],
-                        'users' => array_filter(
-                            $task->project->users->toArray(),
-                            function ($_user) use ($user) {
-                                return $user->id !== $_user['id'];
-                            }
-                        )
-                    ];
-                }
-
-                ++$taskDataByUser[$user->id]['taskCount'];
-
-                $taskDataByUser[$user->id]['projects'][$task->project->id]['taskData'][] = $task;
-            }
-        }
-
-        foreach ($taskDataByUser as $taskDataForUser) {
-            $user = $taskDataForUser['user'];
-
-            Mail::to($user->email)->send(new TaskNotificationMail([
-                'user' => $taskDataForUser['user'],
-                'taskCount' => $taskDataForUser['taskCount'],
-                'projects' => array_values($taskDataForUser['projects']),
-            ]));
-            break;
-        }
-
         switch ($projectId) {
             case "today":
                 $tasks = Task::topLevelWithSubtasks()
