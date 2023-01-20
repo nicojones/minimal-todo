@@ -78,8 +78,12 @@ class DeadlineTasks extends Command
             }
         }
 
+        if (!count($taskDataByUser)) {
+            $this->info("No tasks on deadline");
+        }
         foreach ($taskDataByUser as $taskDataForUser) {
             $user = $taskDataForUser['user'];
+            $this->info("sending email to " . $user->email . " with " . $taskDataForUser['taskCount'] . " tasks.");
 
             Mail::to($user->email)->send(new TaskNotificationMail([
                 'user' => $taskDataForUser['user'],
