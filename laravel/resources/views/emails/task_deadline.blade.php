@@ -36,7 +36,7 @@
   @foreach ($project['taskData'] as $taskData)
   @include('components.task', [
     'name' => $taskData['name'],
-    'deadline' => $taskData['deadline']
+    'deadline' => $taskData['deadline'],
     'priority' => $taskData['priority']
   ])
   @endforeach
