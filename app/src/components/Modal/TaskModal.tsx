@@ -263,7 +263,14 @@ export const TaskModal = ({
                   setTaskDeadline(+date);
                   setTaskAlert(+date);
                 }}
+                showLeadingZeros={true}
+                calendarIcon={null}
                 required={false}
+                hourPlaceholder="hh"
+                minutePlaceholder="mm"
+                yearPlaceholder="yyyy"
+                monthPlaceholder="mm"
+                dayPlaceholder="dd"
                 value={taskDeadline ? new Date(taskDeadline) : undefined}
               />
             </span>
@@ -275,6 +282,12 @@ export const TaskModal = ({
                 onChange={(date: Date) => {
                   setTaskAlert(+date);
                 }}
+                hourPlaceholder="hh"
+                minutePlaceholder="mm"
+                yearPlaceholder="yyyy"
+                monthPlaceholder="mm"
+                dayPlaceholder="dd"
+                calendarIcon={null}
                 required={false}
                 value={taskAlert ? new Date(taskAlert) : undefined}
               />

@@ -1,1 +1,24 @@
-No tasks on deadline
+sending email to nico@kupfer.es with 1 tasks.
+
+   Symfony\Component\Mailer\Exception\TransportException 
+
+  Expected response code "250" but got code "450", with message "450 Your SMTP account is not yet activated. Please contact us at contact@sendinblue.com to request activation.".
+
+  at vendor/symfony/mailer/Transport/Smtp/SmtpTransport.php:337
+    333▕         if (!$valid || !$response) {
+    334▕             $codeStr = $code ? sprintf('code "%s"', $code) : 'empty code';
+    335▕             $responseStr = $response ? sprintf(', with message "%s"', trim($response)) : '';
+    336▕ 
+  ➜ 337▕             throw new TransportException(sprintf('Expected response code "%s" but got ', implode('/', $codes)).$codeStr.$responseStr.'.', $code ?: 0);
+    338▕         }
+    339▕     }
+    340▕ 
+    341▕     private function getFullResponse(): string
+
+      [2m+13 vendor frames [22m
+  14  app/Console/Commands/DeadlineTasks.php:91
+      Illuminate\Mail\PendingMail::send(Object(App\Mail\TaskNotificationMail))
+
+      [2m+13 vendor frames [22m
+  28  artisan:37
+      Illuminate\Foundation\Console\Kernel::handle(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))

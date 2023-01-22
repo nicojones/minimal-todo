@@ -7,6 +7,8 @@ export const urls = {
   login: '/secure/login',
   signup: '/secure/signup',
 
+  settings: '/settings',
+
   inboxUrl: SpecialProjectUrl.INBOX,
   priorityUrl: SpecialProjectUrl.PRIORITY,
   deadlineUrl: SpecialProjectUrl.DEADLINE,

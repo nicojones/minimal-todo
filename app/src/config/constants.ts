@@ -48,7 +48,7 @@ export const constants = {
     position: "bottom-center",
     renderIcon: () => "",
     onClick: () => (window as any).hideCogoToast(),
-  } as any,
+  },
   maxDepth: 10,
   defaultSort: projectSort.OLDEST_FIRST,
   sortOptions: [

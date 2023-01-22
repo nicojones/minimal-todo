@@ -14,9 +14,9 @@ export const text = {
     name: "Name of the task",
     tags: "#tags for this task",
     url: "http://example.com",
-    deadline: "Deadline",
+    deadline: "Deadline on",
     alert: {
-      _: "Notify me",
+      _: "Notify me on ",
       title: "Notify me via email one day before the deadline",
       yes: "Notify me",
       no: "Do not notify"
@@ -243,4 +243,8 @@ export const text = {
       explore: "Reduce procrastination, work better and get more of life",
     },
   },
+
+  settings: {
+    _: "Settings"
+  }
 };

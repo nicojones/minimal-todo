@@ -92,6 +92,10 @@ export const TodoApp = () => {
       setProject(value as IProject);
       history.push(urls.project(value?.id || ""));
     }
+    if (!value) {
+      setProject(null);
+      history.push(urls.app);
+    }
   };
 
   const reloadProjects = (): Observable<IProject[]> => {

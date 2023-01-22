@@ -1,12 +1,15 @@
 import { LoggedInUserContext } from 'App';
-import { text } from 'config';
+import { text, urls } from 'config';
 import { useContext, useState } from 'react';
 import { AuthService } from 'services/auth.service';
 import { ILoggedInUserContext, PDefault } from '../../interfaces';
 import { showToast } from 'services';
+import { useHistory } from 'react-router-dom';
 
 
 export function UserSettingsDropdown () {
+
+  const history = useHistory();
 
   const [dropdownShown, setDropdownShown] = useState<boolean>(false);
 
@@ -32,6 +35,11 @@ export function UserSettingsDropdown () {
                 {/*<i className="material-icons subtle left">exit_to_app</i>*/}
                 {/*<span className="left">{ text.Login.logout }</span>*/}
                 { text.login.logout }
+              </button>
+            </li>
+            <li className="dropdown-item">
+              <button className="ib left left-align w-100" onClick={e => history.push(urls.settings)}>
+                { text.settings._ }
               </button>
             </li>
             <li className="">
