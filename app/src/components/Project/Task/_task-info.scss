@@ -1,2 +1,9 @@
 @import "src/sass/colors";
 
+.task-info-button {
+    text-align: left;
+    padding-top: 4px;
+    display: flex;
+    position: relative;
+    top: .2rem;
+}

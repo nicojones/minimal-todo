@@ -10,6 +10,7 @@ import { TaskService } from "services";
 import { projectAtom, projectsAtom } from "store";
 import { format } from "timeago.js";
 import { TaskInfo } from "./TaskInfo";
+
 import "./_task.scss";
 
 interface TaskAttrs {
@@ -150,7 +151,7 @@ export const Task = ({
           <Checkbox checked={task.done} onChange={() => toggleCompleted(task)} />
         </label>
         <button
-          className={"left-align ib pt-4 d-flex " + (task.done ? "" : "")}
+          className={"task-info-button ib " + (task.done ? "" : "")}
           onClick={() => setModalOpen(true)}
         >
           <TaskInfo task={task} subtasks={subtasks}/>
