@@ -35,7 +35,7 @@ class DeadlineTasks extends Command
     public function handle()
     {
         $fromHoursInAdvance = 0;
-        $toHoursInAdvance = 1;
+        $toHoursInAdvance = 0.25;
 
         $tasksWithDeadline = Task::whereNotNull('alert')
             ->where('alert', '>', Functions::getFutureTime($fromHoursInAdvance * 60 * 60))
