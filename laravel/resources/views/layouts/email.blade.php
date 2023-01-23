@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Maven+Pro&family=Roboto:wght@300&display=swap" rel="stylesheet">
 </head>
 <body style="font-family: 'Maven Pro', 'Roboto', sans-serif !important; font-size: 16px;">
-  <h1><img src="{{ env('APP_URL') }}/logo.png" style="height: 40px;"> MinimalTodo</h1>
+  <h1><img src="{{ env('APP_URL') }}/assets/logo.png" style="height: 40px;"> MinimalTodo</h1>
 
   <main>
     @yield('content')
