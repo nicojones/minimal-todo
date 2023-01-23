@@ -43,7 +43,8 @@ class Task extends Model
     protected $appends = [
         'icon',
         'dotColor',
-        'tags'
+        'tags',
+        'projectName'
     ];
 
     protected $hidden = [
@@ -101,6 +102,11 @@ class Task extends Model
     public function getDotColorAttribute()
     {
         return $this->project->color;
+    }
+
+    public function getProjectNameAttribute()
+    {
+        return $this->project->name;
     }
 
 

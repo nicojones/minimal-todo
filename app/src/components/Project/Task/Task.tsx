@@ -1,17 +1,16 @@
 import { ProjectContext } from "TodoApp";
-import { TaskModal } from "components/Modal/TaskModal";
-import { constants, text, urls } from "config";
-import { IProject, IProjectContext, ITask } from "interfaces";
-import { useContext, useEffect, useState } from "react";
-import { TaskService } from "services";
-import { format } from "timeago.js";
-import "./_task.scss";
-import { useHistory } from "react-router-dom";
-import { Observable, of, switchMap, tap } from "rxjs";
-import { useAtom } from "jotai";
-import { projectAtom, projectsAtom } from "store";
-import { TaskInfo } from "./TaskInfo";
 import { Checkbox } from "components/Checkbox/Checkbox";
+import { TaskModal } from "components/Modal/TaskModal";
+import { constants, text } from "config";
+import { IProject, IProjectContext, ITask } from "interfaces";
+import { useAtom } from "jotai";
+import { useContext, useEffect, useState } from "react";
+import { Observable, switchMap, tap } from "rxjs";
+import { TaskService } from "services";
+import { projectAtom, projectsAtom } from "store";
+import { format } from "timeago.js";
+import { TaskInfo } from "./TaskInfo";
+import "./_task.scss";
 
 interface TaskAttrs {
   task: ITask;
@@ -93,10 +92,10 @@ export const Task = ({
   /**
    * If you want to say the toggle state, just update this function
    */
-  const toggleExpanded = (isExpanded: boolean): Observable<ITask | void> => {
+  const toggleExpanded = (isExpanded: boolean): void => {
     task.expanded = isExpanded;
     setExpandedTask(isExpanded);
-    return TaskService.updateTask({ ...task });
+    TaskService.toggleTaskExpand(task).subscribe();
   };
 
   const onDelete = (task: ITask): void => {
@@ -130,7 +129,7 @@ export const Task = ({
         </button>
         {showGoToProject ? (
           <button
-            className="btn p-0"
+            className="btn p-0 go-to-project"
             title={text.project.goTo}
             onClick={() => changeToProject(projects.find((p: IProject) => p.id === task.project_id) as IProject)}
           >

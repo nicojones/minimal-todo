@@ -94,8 +94,6 @@ class TaskController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
      * @return \Illuminate\Http\Response
      */
     public function toggleTask(Request $request)
@@ -105,6 +103,17 @@ class TaskController extends Controller
         $task->save();
 
         $this->toggleSubtasks($task->subtasks, $task->done);
+        return response()->json($task);
+    }
+    /**
+     * @return \Illuminate\Http\Response
+     */
+    public function toggleExpandTask(Request $request)
+    {
+        $task = Task::withSubtasks()->find($request->route('taskId'));
+        $task->expanded = (int)!$task->expanded;
+        $task->save();
+
         return response()->json($task);
     }
 

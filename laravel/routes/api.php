@@ -49,6 +49,7 @@ Route::controller(TaskController::class)->group(function () {
     Route::get('/tasks', 'index');
     Route::post('/tasks', 'create');
     Route::patch('/tasks/toggle/{taskId}', 'toggleTask');
+    Route::patch('/tasks/toggle-expand/{taskId}', 'toggleExpandTask');
     Route::put('/tasks', 'update');
     Route::get('/tasks/search', 'searchTasks');
     Route::delete('/tasks/{taskId}', 'delete');

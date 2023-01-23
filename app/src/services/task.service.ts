@@ -49,6 +49,16 @@ export class TaskService {
     );
   };
 
+  public static toggleTaskExpand = (
+    task: ITask,
+  ): Observable<ITask> => {
+    return minimalAxios<ITask>(
+      "PATCH",
+      `/api/tasks/toggle-expand/${task.id}`,
+      { error: "Couldn't toggle task expansion", default: task }
+    );
+  };
+
   public static searchTask = (searchTerm: string): Observable<ITask[]> => {
     return minimalAxios<ITask[]>("GET", `/api/tasks/search/?q=${searchTerm}`, {
       error: `Error searching tasks for "${searchTerm}`,
