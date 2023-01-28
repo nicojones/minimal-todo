@@ -24,7 +24,6 @@ import {
 } from "react";
 import { Observable, catchError, of, switchMap } from "rxjs";
 import { TaskService, showToast } from "services";
-import { projectAtom, tasksAtom } from "store";
 
 import "./task-modal.scss";
 import { Checkbox } from "components/Checkbox/Checkbox";
